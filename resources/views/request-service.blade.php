@@ -62,7 +62,14 @@
 
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/25 backdrop-blur-xl sm:p-8">
             @if(session('success'))
-                <div class="mb-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-emerald-200">{{ session('success') }}</div>
+                <div class="mb-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-emerald-200">
+                    <p>{{ session('success') }}</p>
+                    @if(session('offers_url'))
+                        <a href="{{ session('offers_url') }}" class="mt-3 inline-flex min-h-11 items-center justify-center rounded-2xl bg-emerald-300/15 px-4 py-3 text-sm font-black text-emerald-100 hover:bg-emerald-300/20">
+                            Виж получените оферти
+                        </a>
+                    @endif
+                </div>
             @endif
 
             @if($errors->any())

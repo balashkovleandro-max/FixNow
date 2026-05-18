@@ -222,7 +222,8 @@
                 @forelse($acceptedOffers as $offer)
                     <article class="rounded-[28px] border border-emerald-300/20 bg-emerald-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                         <div class="flex flex-wrap items-center gap-2">
-                            <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Вашата оферта беше приета</span>
+                            <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Избран изпълнител</span>
+                            <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-black text-cyan-100">Вашата оферта беше приета</span>
                             <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/60">{{ $offer->updated_at?->format('d.m.Y H:i') }}</span>
                         </div>
                         <h3 class="mt-4 text-xl font-black">{{ $offer->serviceRequest?->category ?: 'Заявка' }} · {{ $offer->serviceRequest?->city }}</h3>
@@ -330,6 +331,15 @@
                         <h3 class="mt-4 text-xl font-black">{{ $offer->serviceRequest?->category ?: 'Заявка' }} · {{ $offer->serviceRequest?->city }}</h3>
                         <p class="mt-2 text-sm text-white/60">Цена: <strong class="text-white">{{ $offer->price_estimate }}</strong> · Срок: <strong class="text-white">{{ $offer->timeframe }}</strong></p>
                         <p class="mt-3 line-clamp-3 text-sm leading-6 text-white/65">{{ $offer->message }}</p>
+                        @if($offer->status === 'not_selected')
+                            <p class="mt-4 rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm font-bold text-amber-100">
+                                Клиентът вече избра друг изпълнител.
+                            </p>
+                        @elseif($offer->status === 'accepted')
+                            <p class="mt-4 rounded-2xl border border-emerald-300/20 bg-emerald-400/10 px-4 py-3 text-sm font-bold text-emerald-100">
+                                Избран изпълнител: вашата оферта е приета.
+                            </p>
+                        @endif
                     </article>
                 @empty
                     <div class="rounded-[28px] border border-white/10 bg-white/10 p-8 text-center shadow-xl shadow-black/20 backdrop-blur-xl lg:col-span-2">

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class ServiceRequest extends Model
 {
@@ -25,6 +27,7 @@ class ServiceRequest extends Model
 
     protected $fillable = [
         'customer_id',
+        'public_token',
         'name',
         'phone',
         'email',
@@ -49,6 +52,37 @@ class ServiceRequest extends Model
             'accepted_offer_at' => 'datetime',
             'closed_at' => 'datetime',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (ServiceRequest $serviceRequest) {
+            if (Schema::hasColumn($serviceRequest->getTable(), 'public_token') && blank($serviceRequest->public_token)) {
+                $serviceRequest->public_token = static::newPublicToken();
+            }
+        });
+    }
+
+    public static function newPublicToken(): string
+    {
+        do {
+            $token = Str::random(40);
+        } while (static::where('public_token', $token)->exists());
+
+        return $token;
+    }
+
+    public function ensurePublicToken(): string
+    {
+        if (!Schema::hasColumn($this->getTable(), 'public_token')) {
+            return '';
+        }
+
+        if (blank($this->public_token)) {
+            $this->forceFill(['public_token' => static::newPublicToken()])->save();
+        }
+
+        return $this->public_token;
     }
 
     public function assignedBusiness()

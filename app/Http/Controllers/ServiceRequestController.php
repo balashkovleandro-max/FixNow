@@ -123,6 +123,7 @@ class ServiceRequestController extends Controller
 
         return redirect()
             ->route('request.service')
-            ->with('success', 'Заявката ви е изпратена успешно. Подходящи изпълнители ще могат да ви изпратят оферта.');
+            ->with('success', 'Заявката ви е изпратена успешно. Подходящи изпълнители ще могат да ви изпратят оферта.')
+            ->with('offers_url', $serviceRequest->public_token ? route('service-requests.offers.show', ['serviceRequest' => $serviceRequest->public_token]) : null);
     }
 }

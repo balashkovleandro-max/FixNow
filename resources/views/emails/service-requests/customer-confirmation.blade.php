@@ -25,7 +25,12 @@
                 <p style="margin:0;color:#475569;line-height:1.6;">{{ $serviceRequest->description }}</p>
             </div>
 
-            <a href="{{ $homeUrl }}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-weight:700;border-radius:12px;padding:13px 18px;">Отвори FixNow.bg</a>
+            <p style="margin:0 0 14px;color:#475569;line-height:1.6;">
+                Можете да следите получените оферти тук:
+            </p>
+
+            <a href="{{ $offersUrl }}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-weight:700;border-radius:12px;padding:13px 18px;margin-right:8px;">Виж офертите</a>
+            <a href="{{ $homeUrl }}" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;font-weight:700;border-radius:12px;padding:13px 18px;">Отвори FixNow.bg</a>
         </div>
     </div>
 </body>

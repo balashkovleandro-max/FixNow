@@ -13,11 +13,16 @@ class CustomerServiceRequestConfirmationMail extends Mailable
 
     public ServiceRequest $serviceRequest;
     public string $homeUrl;
+    public string $offersUrl;
 
     public function __construct(ServiceRequest $serviceRequest)
     {
         $this->serviceRequest = $serviceRequest->loadMissing('assignedBusiness');
         $this->homeUrl = url('/');
+        $token = $this->serviceRequest->ensurePublicToken();
+        $this->offersUrl = $token
+            ? route('service-requests.offers.show', ['serviceRequest' => $token])
+            : $this->homeUrl;
     }
 
     public function build()
