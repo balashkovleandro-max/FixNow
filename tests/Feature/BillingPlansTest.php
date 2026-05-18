@@ -1,0 +1,530 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Tests\TestCase;
+
+class BillingPlansTest extends TestCase
+{
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutVite();
+
+        config([
+            'services.stripe.secret' => 'sk_test_fixnow',
+            'services.stripe.webhook_secret' => 'whsec_fixnow',
+            'services.stripe.standard_price_id' => 'price_standard_fixnow',
+            'services.stripe.premium_price_id' => 'price_premium_fixnow',
+        ]);
+    }
+
+    public function test_public_plans_page_loads(): void
+    {
+        $this->get(route('plans'))
+            ->assertOk()
+            ->assertSee('Standard')
+            ->assertSee('Premium')
+            ->assertSee('18,99')
+            ->assertSee('24,99');
+    }
+
+    public function test_pricing_redirects_to_plans(): void
+    {
+        $this->get('/pricing')
+            ->assertRedirect('/plans');
+    }
+
+    public function test_business_user_can_see_billing_page(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $this->actingAs($business)
+            ->get(route('business.billing'))
+            ->assertOk()
+            ->assertSee('Standard')
+            ->assertSee('Управление на плана');
+    }
+
+    public function test_client_cannot_see_business_billing_page(): void
+    {
+        $client = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $this->actingAs($client)
+            ->get(route('business.billing'))
+            ->assertForbidden();
+    }
+
+    public function test_business_dashboard_shows_billing_card(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $this->actingAs($business)
+            ->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('dashboard-billing-card', false)
+            ->assertSee('Управление на плана');
+    }
+
+    public function test_standard_business_sees_upgrade_cta(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $this->actingAs($business)
+            ->get(route('business.billing'))
+            ->assertOk()
+            ->assertSee('Ъпгрейд към Premium')
+            ->assertSee('Вземи Premium');
+    }
+
+    public function test_premium_business_sees_premium_benefits(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+        ]);
+
+        $this->actingAs($business)
+            ->get(route('business.billing'))
+            ->assertOk()
+            ->assertSee('Вашият бизнес има Premium предимство')
+            ->assertSee('Приоритет при matching на заявки');
+    }
+
+    public function test_upgrade_placeholder_does_not_activate_premium_without_payment(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.upgrade-premium'))
+            ->assertRedirect(route('business.billing'))
+            ->assertSessionHas('success');
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+    }
+
+    public function test_business_can_start_checkout_for_standard(): void
+    {
+        Http::fake([
+            'https://api.stripe.com/v1/checkout/sessions' => Http::response([
+                'url' => 'https://checkout.stripe.test/standard',
+            ]),
+        ]);
+
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'standard'])
+            ->assertRedirect('https://checkout.stripe.test/standard');
+
+        Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/checkout/sessions'
+            && str_contains($request->body(), 'price_standard_fixnow')
+            && str_contains($request->body(), 'metadata%5Bplan%5D=standard'));
+    }
+
+    public function test_business_can_start_checkout_for_premium(): void
+    {
+        Http::fake([
+            'https://api.stripe.com/v1/checkout/sessions' => Http::response([
+                'url' => 'https://checkout.stripe.test/premium',
+            ]),
+        ]);
+
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'premium'])
+            ->assertRedirect('https://checkout.stripe.test/premium');
+
+        Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/checkout/sessions'
+            && str_contains($request->body(), 'price_premium_fixnow')
+            && str_contains($request->body(), 'metadata%5Bplan%5D=premium'));
+    }
+
+    public function test_client_cannot_start_business_checkout(): void
+    {
+        $client = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $this->actingAs($client)
+            ->post(route('business.billing.checkout'), ['plan' => 'premium'])
+            ->assertForbidden();
+    }
+
+    public function test_guest_is_redirected_to_login_for_checkout(): void
+    {
+        $this->post(route('business.billing.checkout'), ['plan' => 'premium'])
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_business_user_can_open_customer_portal_with_stripe_customer_id(): void
+    {
+        Http::fake([
+            'https://api.stripe.com/v1/billing_portal/sessions' => Http::response([
+                'url' => 'https://billing.stripe.test/session',
+            ]),
+        ]);
+
+        $business = $this->business([
+            'stripe_customer_id' => 'cus_portal_fixnow',
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.portal'))
+            ->assertRedirect('https://billing.stripe.test/session');
+
+        Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/billing_portal/sessions'
+            && str_contains($request->body(), 'customer=cus_portal_fixnow')
+            && str_contains($request->body(), 'return_url='));
+    }
+
+    public function test_guest_is_redirected_to_login_for_customer_portal(): void
+    {
+        $this->post(route('business.billing.portal'))
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_client_cannot_open_customer_portal(): void
+    {
+        $client = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $this->actingAs($client)
+            ->post(route('business.billing.portal'))
+            ->assertForbidden();
+    }
+
+    public function test_admin_cannot_open_customer_portal(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
+        $this->actingAs($admin)
+            ->post(route('business.billing.portal'))
+            ->assertForbidden();
+    }
+
+    public function test_customer_portal_requires_stripe_customer_id(): void
+    {
+        $business = $this->business([
+            'stripe_customer_id' => null,
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.portal'))
+            ->assertRedirect(route('business.billing'))
+            ->assertSessionHasErrors('stripe');
+    }
+
+    public function test_webhook_activates_correct_plan(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'trial',
+            'trial_started_at' => now()->subDay(),
+            'trial_ends_at' => now()->addDays(10),
+            'stripe_customer_id' => null,
+            'stripe_subscription_id' => null,
+        ]);
+
+        $periodEnd = now()->addMonth()->timestamp;
+        $payload = $this->checkoutCompletedPayload($business, 'premium', $periodEnd);
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('premium', $business->subscription_plan);
+        $this->assertSame('active', $business->subscription_status);
+        $this->assertSame('cus_fixnow', $business->stripe_customer_id);
+        $this->assertSame('sub_fixnow', $business->stripe_subscription_id);
+        $this->assertNotNull($business->subscription_ends_at);
+        $this->assertNull($business->cancelled_at);
+    }
+
+    public function test_subscription_updated_syncs_active_premium(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'stripe_customer_id' => 'cus_lifecycle_fixnow',
+            'stripe_subscription_id' => 'sub_lifecycle_fixnow',
+        ]);
+
+        $periodEnd = now()->addMonth()->timestamp;
+        $payload = $this->subscriptionUpdatedPayload($business, 'active', 'price_premium_fixnow', $periodEnd);
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('premium', $business->subscription_plan);
+        $this->assertSame('active', $business->subscription_status);
+        $this->assertTrue($business->isPremium());
+        $this->assertNotNull($business->subscription_ends_at);
+        $this->assertNull($business->cancelled_at);
+    }
+
+    public function test_subscription_updated_with_past_due_removes_premium_benefits(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+            'subscription_status' => 'active',
+            'stripe_customer_id' => 'cus_past_due_fixnow',
+            'stripe_subscription_id' => 'sub_past_due_fixnow',
+        ]);
+
+        $payload = $this->subscriptionUpdatedPayload($business, 'past_due', 'price_premium_fixnow');
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('premium', $business->subscription_plan);
+        $this->assertSame('past_due', $business->subscription_status);
+        $this->assertFalse($business->isPremium());
+        $this->assertTrue($business->hasPaymentIssue());
+    }
+
+    public function test_subscription_deleted_removes_premium_benefits(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+            'subscription_status' => 'active',
+            'stripe_customer_id' => 'cus_deleted_fixnow',
+            'stripe_subscription_id' => 'sub_deleted_fixnow',
+        ]);
+
+        $payload = $this->subscriptionDeletedPayload($business);
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('canceled', $business->subscription_status);
+        $this->assertFalse($business->isPremium());
+        $this->assertNotNull($business->cancelled_at);
+    }
+
+    public function test_invoice_payment_failed_removes_premium_benefits(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+            'subscription_status' => 'active',
+            'stripe_customer_id' => 'cus_failed_fixnow',
+            'stripe_subscription_id' => 'sub_failed_fixnow',
+        ]);
+
+        $payload = $this->invoicePaymentFailedPayload($business);
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('payment_failed', $business->subscription_status);
+        $this->assertFalse($business->isPremium());
+        $this->assertTrue($business->hasPaymentIssue());
+    }
+
+    public function test_webhook_rejects_invalid_signature(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $payload = $this->checkoutCompletedPayload($business, 'premium');
+
+        $this->call('POST', '/stripe/webhook', [], [], [], [
+            'HTTP_STRIPE_SIGNATURE' => 't='.time().',v1=invalid',
+            'CONTENT_TYPE' => 'application/json',
+        ], $payload)->assertStatus(400);
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+    }
+
+    public function test_checkout_does_not_activate_premium_without_webhook(): void
+    {
+        Http::fake([
+            'https://api.stripe.com/v1/checkout/sessions' => Http::response([
+                'url' => 'https://checkout.stripe.test/premium',
+            ]),
+        ]);
+
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'premium'])
+            ->assertRedirect('https://checkout.stripe.test/premium');
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+    }
+
+    private function checkoutCompletedPayload(User $business, string $plan, ?int $periodEnd = null): string
+    {
+        return json_encode([
+            'id' => 'evt_fixnow',
+            'type' => 'checkout.session.completed',
+            'data' => [
+                'object' => [
+                    'id' => 'cs_fixnow',
+                    'client_reference_id' => (string) $business->id,
+                    'customer' => 'cus_fixnow',
+                    'subscription' => 'sub_fixnow',
+                    'metadata' => [
+                        'user_id' => (string) $business->id,
+                        'plan' => $plan,
+                    ],
+                    'current_period_end' => $periodEnd,
+                ],
+            ],
+        ]);
+    }
+
+    private function subscriptionUpdatedPayload(User $business, string $status, string $priceId, ?int $periodEnd = null): string
+    {
+        return json_encode([
+            'id' => 'evt_subscription_updated_fixnow',
+            'type' => 'customer.subscription.updated',
+            'data' => [
+                'object' => [
+                    'id' => $business->stripe_subscription_id,
+                    'customer' => $business->stripe_customer_id,
+                    'status' => $status,
+                    'current_period_end' => $periodEnd ?: now()->addMonth()->timestamp,
+                    'items' => [
+                        'data' => [
+                            [
+                                'price' => [
+                                    'id' => $priceId,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    private function subscriptionDeletedPayload(User $business, ?int $periodEnd = null): string
+    {
+        return json_encode([
+            'id' => 'evt_subscription_deleted_fixnow',
+            'type' => 'customer.subscription.deleted',
+            'data' => [
+                'object' => [
+                    'id' => $business->stripe_subscription_id,
+                    'customer' => $business->stripe_customer_id,
+                    'status' => 'canceled',
+                    'current_period_end' => $periodEnd ?: now()->addDay()->timestamp,
+                    'items' => [
+                        'data' => [
+                            [
+                                'price' => [
+                                    'id' => 'price_premium_fixnow',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    private function invoicePaymentFailedPayload(User $business, ?int $periodEnd = null): string
+    {
+        return json_encode([
+            'id' => 'evt_invoice_failed_fixnow',
+            'type' => 'invoice.payment_failed',
+            'data' => [
+                'object' => [
+                    'id' => 'in_failed_fixnow',
+                    'customer' => $business->stripe_customer_id,
+                    'subscription' => $business->stripe_subscription_id,
+                    'lines' => [
+                        'data' => [
+                            [
+                                'price' => [
+                                    'id' => 'price_premium_fixnow',
+                                ],
+                                'period' => [
+                                    'end' => $periodEnd ?: now()->addMonth()->timestamp,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    private function postStripeWebhook(string $payload)
+    {
+        return $this->call('POST', '/stripe/webhook', [], [], [], [
+            'HTTP_STRIPE_SIGNATURE' => $this->stripeSignature($payload),
+            'CONTENT_TYPE' => 'application/json',
+        ], $payload);
+    }
+
+    private function stripeSignature(string $payload): string
+    {
+        $timestamp = time();
+        $signature = hash_hmac('sha256', $timestamp.'.'.$payload, 'whsec_fixnow');
+
+        return 't='.$timestamp.',v1='.$signature;
+    }
+
+    private function business(array $overrides = []): User
+    {
+        return User::factory()->create(array_merge([
+            'role' => 'business',
+            'business_name' => 'FixNow Billing Test',
+            'business_category' => 'Автосервиз',
+            'city' => 'София',
+            'subscription_status' => 'active',
+            'subscription_plan' => 'standard',
+            'subscription_started_at' => now()->subDay(),
+            'subscription_ends_at' => now()->addDays(30),
+            'trial_started_at' => null,
+            'trial_ends_at' => null,
+            'cancelled_at' => null,
+            'is_verified' => false,
+            'verified_at' => null,
+            'service_cities' => ['София'],
+            'service_categories' => ['Автосервиз'],
+        ], $overrides));
+    }
+}
