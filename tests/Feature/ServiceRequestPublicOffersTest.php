@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Mail\NewServiceRequestOfferCustomerMail;
+use App\Mail\ServiceRequestOfferAcceptedBusinessMail;
+use App\Mail\ServiceRequestOfferNotSelectedBusinessMail;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestOffer;
 use App\Models\User;
@@ -60,6 +63,63 @@ class ServiceRequestPublicOffersTest extends TestCase
             ->assertSee('Все още няма получени оферти');
     }
 
+    public function test_customer_receives_email_when_business_sends_offer(): void
+    {
+        Mail::fake();
+
+        $business = $this->business(['offer_points_balance' => 30]);
+        $serviceRequest = $this->serviceRequest([
+            'email' => 'customer-offers@example.com',
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.service-requests.offers.store', $serviceRequest), $this->offerPayload())
+            ->assertRedirect(route('business.service-requests.index'));
+
+        Mail::assertSent(NewServiceRequestOfferCustomerMail::class, function (NewServiceRequestOfferCustomerMail $mail) {
+            return $mail->hasTo('customer-offers@example.com')
+                && str_contains($mail->offersUrl, '/zayavka/');
+        });
+    }
+
+    public function test_no_customer_email_is_sent_if_request_is_already_accepted_or_closed(): void
+    {
+        Mail::fake();
+
+        $business = $this->business(['offer_points_balance' => 30]);
+        $serviceRequest = $this->serviceRequest([
+            'status' => ServiceRequest::STATUS_IN_PROGRESS,
+            'email' => 'customer-closed@example.com',
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.service-requests.offers.store', $serviceRequest), $this->offerPayload())
+            ->assertForbidden();
+
+        Mail::assertNotSent(NewServiceRequestOfferCustomerMail::class);
+    }
+
+    public function test_missing_customer_email_does_not_crash_offer_flow(): void
+    {
+        Mail::fake();
+
+        $business = $this->business(['offer_points_balance' => 30]);
+        $serviceRequest = $this->serviceRequest([
+            'customer_id' => null,
+            'email' => null,
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.service-requests.offers.store', $serviceRequest), $this->offerPayload())
+            ->assertRedirect(route('business.service-requests.index'));
+
+        Mail::assertNotSent(NewServiceRequestOfferCustomerMail::class);
+        $this->assertDatabaseHas('service_request_offers', [
+            'service_request_id' => $serviceRequest->id,
+            'business_id' => $business->id,
+        ]);
+    }
+
     public function test_customer_can_accept_an_offer_from_public_token_page(): void
     {
         Mail::fake();
@@ -89,6 +149,13 @@ class ServiceRequestPublicOffersTest extends TestCase
         $this->assertSame(ServiceRequestOffer::STATUS_ACCEPTED, $acceptedOffer->status);
         $this->assertSame(ServiceRequestOffer::STATUS_NOT_SELECTED, $otherOffer->status);
         $this->assertNotNull($serviceRequest->accepted_offer_at);
+
+        Mail::assertSent(ServiceRequestOfferAcceptedBusinessMail::class, function (ServiceRequestOfferAcceptedBusinessMail $mail) {
+            return $mail->hasTo('chosen@example.com');
+        });
+        Mail::assertSent(ServiceRequestOfferNotSelectedBusinessMail::class, function (ServiceRequestOfferNotSelectedBusinessMail $mail) {
+            return $mail->hasTo('other@example.com');
+        });
     }
 
     public function test_accepting_one_offer_prevents_accepting_another_offer(): void
@@ -136,6 +203,54 @@ class ServiceRequestPublicOffersTest extends TestCase
             ->assertOk()
             ->assertSee('Избран изпълнител')
             ->assertSee('Вашата оферта беше приета');
+    }
+
+    public function test_business_dashboard_shows_selected_instruction_for_accepted_business(): void
+    {
+        $business = $this->business(['email' => 'accepted-dashboard@example.com']);
+        $serviceRequest = $this->serviceRequest([
+            'status' => ServiceRequest::STATUS_IN_PROGRESS,
+            'assigned_business_id' => $business->id,
+        ]);
+        $offer = $this->offer($serviceRequest, $business, [
+            'status' => ServiceRequestOffer::STATUS_ACCEPTED,
+        ]);
+
+        $serviceRequest->forceFill([
+            'selected_offer_id' => $offer->id,
+            'accepted_offer_at' => now(),
+        ])->save();
+
+        $this->actingAs($business)
+            ->get(route('business.service-requests.index'))
+            ->assertOk()
+            ->assertSee('Клиентът избра вас');
+    }
+
+    public function test_business_dashboard_shows_closed_instruction_for_not_selected_business(): void
+    {
+        $selectedBusiness = $this->business(['email' => 'selected-dashboard@example.com']);
+        $notSelectedBusiness = $this->business(['email' => 'not-selected-dashboard@example.com']);
+        $serviceRequest = $this->serviceRequest([
+            'status' => ServiceRequest::STATUS_IN_PROGRESS,
+            'assigned_business_id' => $selectedBusiness->id,
+        ]);
+        $acceptedOffer = $this->offer($serviceRequest, $selectedBusiness, [
+            'status' => ServiceRequestOffer::STATUS_ACCEPTED,
+        ]);
+        $this->offer($serviceRequest, $notSelectedBusiness, [
+            'status' => ServiceRequestOffer::STATUS_NOT_SELECTED,
+        ]);
+
+        $serviceRequest->forceFill([
+            'selected_offer_id' => $acceptedOffer->id,
+            'accepted_offer_at' => now(),
+        ])->save();
+
+        $this->actingAs($notSelectedBusiness)
+            ->get(route('business.service-requests.index'))
+            ->assertOk()
+            ->assertSee('Заявката е затворена. Клиентът избра друг изпълнител.');
     }
 
     public function test_business_cannot_send_new_offer_after_request_is_accepted(): void

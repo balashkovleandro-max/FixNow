@@ -535,10 +535,13 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/admin/businesses/{user}/verify', [AdminBusinessController::class, 'verify'])->name('admin.businesses.verify');
     Route::patch('/admin/businesses/{user}/unverify', [AdminBusinessController::class, 'unverify'])->name('admin.businesses.unverify');
     Route::get('/admin/service-requests', [AdminServiceRequestController::class, 'index'])->name('admin.service-requests.index');
+    Route::get('/admin/service-requests/{serviceRequest}', [AdminServiceRequestController::class, 'show'])->name('admin.service-requests.show');
     Route::patch('/admin/reviews/{review}/approve', [AdminReviewController::class, 'approve'])->name('admin.reviews.approve');
     Route::patch('/admin/reviews/{review}/reject', [AdminReviewController::class, 'reject'])->name('admin.reviews.reject');
     Route::patch('/admin/service-requests/{serviceRequest}/contacted', [AdminServiceRequestController::class, 'markContacted'])->name('admin.service-requests.contacted');
     Route::patch('/admin/service-requests/{serviceRequest}/closed', [AdminServiceRequestController::class, 'markClosed'])->name('admin.service-requests.closed');
+    Route::patch('/admin/service-requests/{serviceRequest}/completed', [AdminServiceRequestController::class, 'markCompleted'])->name('admin.service-requests.completed');
+    Route::patch('/admin/service-requests/{serviceRequest}/cancelled', [AdminServiceRequestController::class, 'markCancelled'])->name('admin.service-requests.cancelled');
     Route::patch('/service-request-assignments/{assignment}/contacted', [ServiceRequestAssignmentController::class, 'contacted'])->name('service-request-assignments.contacted');
     Route::patch('/service-request-assignments/{assignment}/declined', [ServiceRequestAssignmentController::class, 'declined'])->name('service-request-assignments.declined');
     Route::patch('/service-request-assignments/{assignment}/closed', [ServiceRequestAssignmentController::class, 'closed'])->name('service-request-assignments.closed');

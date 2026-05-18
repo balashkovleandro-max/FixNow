@@ -9,27 +9,28 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AcceptedOfferExecutorMail extends Mailable
+class NewServiceRequestOfferCustomerMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public ServiceRequestOffer $offer;
     public ServiceRequest $serviceRequest;
     public User $executor;
-    public string $dashboardUrl;
+    public string $offersUrl;
 
     public function __construct(ServiceRequestOffer $offer)
     {
         $this->offer = $offer->loadMissing(['serviceRequest', 'business']);
         $this->serviceRequest = $this->offer->serviceRequest;
         $this->executor = $this->offer->business;
-        $this->dashboardUrl = route('business.service-requests.index');
+        $token = $this->serviceRequest->ensurePublicToken();
+        $this->offersUrl = route('service-requests.offers.show', ['serviceRequest' => $token]);
     }
 
     public function build()
     {
         return $this
-            ->subject('Клиент избра вашата оферта във FixNow.bg')
-            ->view('emails.service-requests.offer-accepted-executor');
+            ->subject('Получихте нова оферта във FixNow.bg')
+            ->view('emails.service-requests.new-offer-customer');
     }
 }

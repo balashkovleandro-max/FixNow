@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\AcceptedOfferExecutorMail;
+use App\Mail\ServiceRequestOfferAcceptedBusinessMail;
+use App\Mail\ServiceRequestOfferNotSelectedBusinessMail;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestOffer;
 use Illuminate\Http\RedirectResponse;
@@ -84,20 +85,52 @@ class ServiceRequestPublicOfferController extends Controller
             $serviceRequest->forceFill($payload)->save();
         });
 
-        try {
-            if (filled($offer->business?->email)) {
-                Mail::to($offer->business->email)->send(new AcceptedOfferExecutorMail($offer->fresh(['serviceRequest', 'business'])));
-            }
-        } catch (Throwable $exception) {
-            Log::warning('FixNow public accepted offer email failed.', [
-                'offer_id' => $offer->id,
-                'service_request_id' => $serviceRequest->id,
-                'exception' => $exception->getMessage(),
-            ]);
-        }
+        $this->sendAcceptedOfferEmails($serviceRequest, $offer);
 
         return redirect()
             ->route('service-requests.offers.show', $routeParameters)
             ->with('success', 'Изпълнителят е избран успешно. Можете да се свържете директно с него.');
+    }
+
+    private function sendAcceptedOfferEmails(ServiceRequest $serviceRequest, ServiceRequestOffer $acceptedOffer): void
+    {
+        $acceptedOffer = $acceptedOffer->fresh(['serviceRequest', 'business']);
+
+        if ($acceptedOffer && filled($acceptedOffer->business?->email)) {
+            $this->sendSafely(
+                fn () => Mail::to($acceptedOffer->business->email)->send(new ServiceRequestOfferAcceptedBusinessMail($acceptedOffer)),
+                'selected executor accepted offer email',
+                ['offer_id' => $acceptedOffer->id, 'business_id' => $acceptedOffer->business_id]
+            );
+        }
+
+        ServiceRequestOffer::query()
+            ->with(['serviceRequest', 'business'])
+            ->where('service_request_id', $serviceRequest->id)
+            ->whereKeyNot($acceptedOffer?->id)
+            ->where('status', ServiceRequestOffer::STATUS_NOT_SELECTED)
+            ->get()
+            ->each(function (ServiceRequestOffer $notSelectedOffer) {
+                if (blank($notSelectedOffer->business?->email)) {
+                    return;
+                }
+
+                $this->sendSafely(
+                    fn () => Mail::to($notSelectedOffer->business->email)->send(new ServiceRequestOfferNotSelectedBusinessMail($notSelectedOffer)),
+                    'not selected executor offer email',
+                    ['offer_id' => $notSelectedOffer->id, 'business_id' => $notSelectedOffer->business_id]
+                );
+            });
+    }
+
+    private function sendSafely(callable $send, string $context, array $meta = []): void
+    {
+        try {
+            $send();
+        } catch (Throwable $exception) {
+            Log::warning("FixNow mail failed: {$context}", array_merge($meta, [
+                'exception' => $exception->getMessage(),
+            ]));
+        }
     }
 }

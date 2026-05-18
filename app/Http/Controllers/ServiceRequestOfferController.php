@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewServiceRequestOfferCustomerMail;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestOffer;
 use App\Support\CategoryCatalog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
+use Throwable;
 
 class ServiceRequestOfferController extends Controller
 {
@@ -60,7 +64,7 @@ class ServiceRequestOfferController extends Controller
             'email.email' => 'Моля, въведете валиден имейл адрес.',
         ]);
 
-        ServiceRequestOffer::create([
+        $offer = ServiceRequestOffer::create([
             'service_request_id' => $serviceRequest->id,
             'business_id' => $business->id,
             'price_estimate' => $validated['price_estimate'],
@@ -73,9 +77,34 @@ class ServiceRequestOfferController extends Controller
         ]);
 
         $business->spendOfferPoints(ServiceRequestOffer::POINTS_COST);
+        $this->sendCustomerOfferEmail($serviceRequest, $offer);
 
         return redirect()
             ->route('business.service-requests.index')
             ->with('success', 'Офертата е изпратена успешно. От баланса ви са отнети 3 точки.');
+    }
+
+    private function sendCustomerOfferEmail(ServiceRequest $serviceRequest, ServiceRequestOffer $offer): void
+    {
+        if (!$serviceRequest->isOpenForOffers()) {
+            return;
+        }
+
+        $serviceRequest->loadMissing('customer');
+        $recipient = $serviceRequest->email ?: $serviceRequest->customer?->email;
+
+        if (blank($recipient)) {
+            return;
+        }
+
+        try {
+            Mail::to($recipient)->send(new NewServiceRequestOfferCustomerMail($offer->fresh(['serviceRequest.customer', 'business'])));
+        } catch (Throwable $exception) {
+            Log::warning('FixNow new offer customer email failed.', [
+                'offer_id' => $offer->id,
+                'service_request_id' => $serviceRequest->id,
+                'exception' => $exception->getMessage(),
+            ]);
+        }
     }
 }

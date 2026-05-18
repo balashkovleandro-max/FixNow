@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AcceptedOfferExecutorMail;
+use App\Mail\ServiceRequestOfferNotSelectedBusinessMail;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestOffer;
 use Illuminate\Http\RedirectResponse;
@@ -73,6 +74,8 @@ class CustomerOfferController extends Controller
             if (filled($offer->business?->email)) {
                 Mail::to($offer->business->email)->send(new AcceptedOfferExecutorMail($offer->fresh(['serviceRequest', 'business'])));
             }
+
+            $this->sendNotSelectedOfferEmails($serviceRequest, $offer);
         } catch (Throwable $exception) {
             Log::warning('FixNow accepted offer email failed.', [
                 'offer_id' => $offer->id,
@@ -84,5 +87,22 @@ class CustomerOfferController extends Controller
         return redirect()
             ->route('dashboard')
             ->with('success', 'Офертата е приета успешно. Избраният изпълнител ще бъде уведомен.');
+    }
+
+    private function sendNotSelectedOfferEmails(ServiceRequest $serviceRequest, ServiceRequestOffer $acceptedOffer): void
+    {
+        ServiceRequestOffer::query()
+            ->with(['serviceRequest', 'business'])
+            ->where('service_request_id', $serviceRequest->id)
+            ->whereKeyNot($acceptedOffer->id)
+            ->where('status', ServiceRequestOffer::STATUS_NOT_SELECTED)
+            ->get()
+            ->each(function (ServiceRequestOffer $notSelectedOffer) {
+                if (blank($notSelectedOffer->business?->email)) {
+                    return;
+                }
+
+                Mail::to($notSelectedOffer->business->email)->send(new ServiceRequestOfferNotSelectedBusinessMail($notSelectedOffer));
+            });
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AcceptedOfferExecutorMail extends Mailable
+class ServiceRequestOfferNotSelectedBusinessMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +29,7 @@ class AcceptedOfferExecutorMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Клиент избра вашата оферта във FixNow.bg')
-            ->view('emails.service-requests.offer-accepted-executor');
+            ->subject('Заявката беше затворена във FixNow.bg')
+            ->view('emails.service-requests.offer-not-selected-business');
     }
 }
