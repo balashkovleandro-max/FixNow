@@ -89,7 +89,7 @@
                     Управление на плана за {{ $business->business_name ?: $business->name }}
                 </h1>
                     <p class="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
-                    Тук виждате текущия план, статус, лимити и Stripe Checkout действията. Планът се активира само след успешен Stripe webhook или админ действие.
+                    Тук виждате текущия план, статус, лимити и действия за управление на абонамента. Планът се активира само след успешно потвърдено плащане през Stripe или админ действие.
                 </p>
 
                 <div class="mt-8 grid gap-4 sm:grid-cols-3">
@@ -150,7 +150,7 @@
                             Активирай Standard - 18,99 €/месец
                         </button>
                     </form>
-                    <p class="mt-3 text-xs leading-5 text-white/50">Планът се активира само след успешен Stripe webhook. Натискането на бутона само стартира checkout.</p>
+                    <p class="mt-3 text-xs leading-5 text-white/50">Планът се активира само след успешно потвърдено плащане през Stripe. Натискането на бутона само стартира процеса по плащане.</p>
                 @endif
 
                 @if($canOpenBillingPortal)

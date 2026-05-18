@@ -21,7 +21,7 @@
             <nav class="hidden items-center gap-6 md:flex">
                 <a href="{{ url('/') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Начало</a>
                 <a href="{{ route('services.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Услуги</a>
-                <a href="{{ route('businesses.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Бизнеси</a>
+                <a href="{{ route('businesses.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Изпълнители</a>
                 <a href="{{ route('business.landing') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">За изпълнители</a>
                 <a href="{{ url('/contact') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Контакт</a>
             </nav>

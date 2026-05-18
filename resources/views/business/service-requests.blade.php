@@ -131,7 +131,7 @@
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h2 class="text-xl font-black">Допълнителни точки</h2>
-                    <p class="mt-2 text-sm leading-6 text-white/60">Покупката на допълнителни точки ще бъде отделна от абонаментите. Засега пакетите са подготвени като UI, без активен checkout.</p>
+                    <p class="mt-2 text-sm leading-6 text-white/60">Допълнителните пакети точки ще се активират поетапно. Ако имате нужда от повече оферти преди това, свържете се с екипа на FixNow.</p>
                 </div>
                 <div class="grid gap-2 sm:grid-cols-3">
                     <button disabled class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-black text-white/45">30 точки - 4.99 €</button>

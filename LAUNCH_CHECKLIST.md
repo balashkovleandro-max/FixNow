@@ -1,102 +1,89 @@
-# FixNow.bg Launch Checklist
+# FixNow.bg Soft Launch Checklist
 
-## Local/dev preparation
+## Pre-deploy
 
-- [ ] Run `composer install`
-- [ ] Run `npm install`
-- [ ] Copy `.env.example` to `.env`
-- [ ] Set `APP_URL` to the real local/staging/production URL
-- [ ] Run `php artisan key:generate`
-- [ ] Configure database connection in `.env`
-- [ ] Run `php artisan migrate`
-- [ ] Run `php artisan migrate:fresh --seed` for local/demo preview
-- [ ] Run `php artisan test`
-- [ ] Run `npm run build`
-- [ ] Run `php artisan route:list`
+- [ ] `php artisan test` минава без failing tests.
+- [ ] `npm run build` минава успешно.
+- [ ] `git status` е прегледан и няма неочаквани промени.
+- [ ] `.env` е прегледан за production/test средата.
+- [ ] `APP_ENV=production` за production.
+- [ ] `APP_DEBUG=false` за production.
+- [ ] `APP_URL` сочи към реалния домейн.
+- [ ] Database credentials са production/test, не local/demo.
+- [ ] Real mail provider е настроен.
+- [ ] `MAIL_FROM_ADDRESS` и `MAIL_FROM_NAME` са коректни.
+- [ ] Stripe test/live mode е избран съзнателно.
+- [ ] `STRIPE_KEY`, `STRIPE_SECRET`, `STRIPE_WEBHOOK_SECRET` са настроени.
+- [ ] `STRIPE_STANDARD_PRICE_ID` и `STRIPE_PREMIUM_PRICE_ID` са настроени.
+- [ ] Stripe Customer Portal е enabled.
+- [ ] Stripe webhook endpoint е настроен към `/stripe/webhook`.
+- [ ] Admin user е създаден.
+- [ ] `php artisan storage:link` е изпълнен.
+- [ ] Permissions за `storage/` и `bootstrap/cache/` са проверени.
+- [ ] Backup стратегия за database е избрана.
+- [ ] `public/hot` не присъства на production server.
+- [ ] `robots.txt` и `sitemap.xml` са проверени.
+- [ ] `/health` връща 200.
 
-## Stripe test mode
+## Deploy commands
 
-- [ ] Set `STRIPE_KEY`
-- [ ] Set `STRIPE_SECRET`
-- [ ] Set `STRIPE_WEBHOOK_SECRET`
-- [ ] Set `STRIPE_STANDARD_PRICE_ID`
-- [ ] Set `STRIPE_PREMIUM_PRICE_ID`
-- [ ] Enable Stripe Customer Portal in Stripe dashboard
-- [ ] Configure webhook endpoint: `/stripe/webhook`
-- [ ] Test Standard checkout in Stripe test mode
-- [ ] Test Premium checkout in Stripe test mode
-- [ ] Confirm Standard/Premium activate only after valid webhook
-- [ ] Confirm subscription updates/deletes/payment failures sync correctly
+```bash
+composer install --no-dev --optimize-autoloader
+npm ci
+npm run build
+php artisan migrate --force
+php artisan storage:link
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
 
-## Public trust and legal
+Ако `route:cache` върне грешка за Closure routes, пропуснете само `route:cache` за този deploy и оставете останалите cache команди.
 
-- [ ] Review `/terms`
-- [ ] Review `/privacy`
-- [ ] Review `/cookies`
-- [ ] Review `/contact`
-- [ ] Review `/how-it-works`
-- [ ] Confirm footer links work on mobile and desktop
-- [ ] Replace or confirm contact email: `hello@fixnow.bg`
-- [ ] Confirm `MAIL_FROM_ADDRESS` and `MAIL_FROM_NAME`
-- [ ] Have Terms/Privacy/Cookies reviewed by a lawyer before official launch
+## Post-deploy
 
-## Business readiness
+- [ ] Homepage `/` зарежда.
+- [ ] `/services` зарежда.
+- [ ] `/businesses` зарежда.
+- [ ] `/top-biznesi` зарежда.
+- [ ] `/plans` зарежда.
+- [ ] `/zayavi-oferta` зарежда.
+- [ ] `/how-it-works`, `/contact`, `/terms`, `/privacy`, `/cookies` зареждат.
+- [ ] Login/register работят.
+- [ ] Business/executor dashboard зарежда.
+- [ ] `/business/billing` зарежда и не активира план без Stripe webhook.
+- [ ] Admin dashboard зарежда.
+- [ ] `/admin/service-requests` зарежда само за admin.
+- [ ] Request form работи.
+- [ ] Offer flow работи: заявка, оферта, избор на изпълнител.
+- [ ] Customer offer link `/zayavka/{public_token}/offers` работи.
+- [ ] Email към клиент при нова оферта се получава.
+- [ ] Email към избран изпълнител се получава.
+- [ ] Stripe checkout работи в избрания test/live режим.
+- [ ] Stripe webhook активира правилния план.
+- [ ] Mobile check passed за homepage, listings, request form, offer page и dashboards.
+- [ ] Няма хоризонтален scroll на основните mobile страници.
 
-- [ ] Add first real business profiles
-- [ ] Verify at least one real business through admin dashboard
-- [ ] Confirm Standard business limits
-- [ ] Confirm Premium badge and ranking boost
-- [ ] Confirm expired/cancelled businesses are hidden publicly
-- [ ] Confirm business onboarding checklist is clear
-- [ ] Confirm business billing page shows current plan and limits
-- [ ] Confirm `/business/service-requests` shows only the current business requests
-- [ ] Confirm `/business/billing` does not activate plans without Stripe webhook
+## Soft launch
 
-## User flows
+- [ ] Добавени са 5-10 реални изпълнители.
+- [ ] Профилите имат реални описания, градове, категории и снимки.
+- [ ] Поне един изпълнител е маркиран като verified от admin.
+- [ ] Поне един Standard и един Premium профил са тествани.
+- [ ] Тествана е една реална клиентска заявка.
+- [ ] Тествана е поне една реална оферта от изпълнител.
+- [ ] Клиентът е избрал изпълнител през offer link.
+- [ ] Събрана е обратна връзка от първите клиенти/изпълнители.
+- [ ] Error logs се наблюдават ежедневно.
+- [ ] Stripe dashboard се наблюдава при първите checkout тестове.
+- [ ] Mail delivery logs се наблюдават при първите заявки.
 
-- [ ] Test homepage from a phone
-- [ ] Test `/businesses` from a phone
-- [ ] Test `/services` from a phone
-- [ ] Test `/top-biznesi` from a phone
-- [ ] Test `/plans` from a phone
-- [ ] Test `/zayavi-oferta` from a phone
-- [ ] Test business detail sticky CTA from a phone
-- [ ] Submit a request via `/zayavi-oferta`
-- [ ] Confirm admin sees the request
-- [ ] Confirm auto-assigned business sees only its assigned requests
-- [ ] Submit a direct request from a public business profile
-- [ ] Confirm the target business sees the direct request in `/business/service-requests`
-- [ ] Confirm admin sees all direct requests in `/admin/service-requests`
-- [ ] Submit a review and approve it from admin dashboard
-- [ ] Confirm analytics/click events are visible in business dashboard
-- [ ] Confirm phone click tracking increments business analytics
+## Legal and trust
 
-## Soft launch QA
-
-- [ ] Run `php artisan migrate`
-- [ ] Run `php artisan migrate:fresh --seed` in local/demo environment
-- [ ] Run `php artisan test`
-- [ ] Run `npm run build`
-- [ ] Test Stripe checkout in test mode for Standard and Premium
-- [ ] Test Stripe webhook activation with Stripe CLI or dashboard test event
-- [ ] Test Stripe Customer Portal access from `/business/billing`
-- [ ] Create first real businesses
-- [ ] Verify at least one real business from admin dashboard
-- [ ] Test public request from `/zayavi-oferta`
-- [ ] Test direct request from business profile
-- [ ] Test business dashboard on mobile
-- [ ] Test admin dashboard on mobile
-- [ ] Check legal pages on mobile and desktop
-- [ ] Check no horizontal scroll on main public pages
-
-## Production notes
-
-- [ ] Set `APP_ENV=production`
-- [ ] Set `APP_DEBUG=false`
-- [ ] Configure production mail sender
-- [ ] Configure queue/session/cache drivers as needed
-- [ ] Run `php artisan config:cache`
-- [ ] Run `php artisan route:cache`
-- [ ] Run `php artisan view:cache`
-- [ ] Confirm `storage` is linked if using uploads: `php artisan storage:link`
-- [ ] Confirm SSL/HTTPS is active
+- [ ] `/terms` е прегледана.
+- [ ] `/privacy` е прегледана.
+- [ ] `/cookies` е прегледана.
+- [ ] `/contact` съдържа коректен email.
+- [ ] Footer линковете към legal страниците работят.
+- [ ] Текстовете са прегледани от юрист преди официален launch.

@@ -51,7 +51,7 @@
         </div>
 
         <h3 class="text-xl font-black">{{ $businessName }}</h3>
-        <p class="mt-1 text-sm font-semibold text-cyan-200">{{ $business->business_category ?: 'Локален бизнес' }}</p>
+        <p class="mt-1 text-sm font-semibold text-cyan-200">{{ $business->business_category ?: 'Локален изпълнител' }}</p>
 
         <div class="mt-3 flex flex-wrap gap-2 text-xs font-bold">
             <span class="rounded-full bg-white/10 px-3 py-1 text-white/70">{{ implode(', ', array_slice($business->serviceCities(), 0, 2)) ?: 'България' }}</span>

@@ -25,7 +25,7 @@
                 <div class="grid gap-3 text-sm text-white/70">
                     <p class="rounded-2xl bg-white/10 p-4">Профил с категория, град и контакти</p>
                     <p class="rounded-2xl bg-white/10 p-4">Доверителни badges и premium визуално представяне</p>
-                    <p class="rounded-2xl bg-white/10 p-4">Запитвания, чат и мнения като следващ етап</p>
+                    <p class="rounded-2xl bg-white/10 p-4">Запитвания, оферти и мнения като следващ етап</p>
                 </div>
                 @auth
                     <a href="{{ route('services.create') }}" class="mt-5 block rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 text-center font-black text-white">Добави услуга</a>

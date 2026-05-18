@@ -30,6 +30,20 @@ use App\Models\User;
 use App\Support\BusinessGrowthMetrics;
 use App\Support\CategoryCatalog;
 use Illuminate\Support\Facades\Schema;
+
+Route::get('/health', fn () => response()->json([
+    'status' => 'ok',
+    'app' => 'FixNow.bg',
+]))->name('health');
+
+Route::get('/robots.txt', fn () => response(file_get_contents(public_path('robots.txt')), 200, [
+    'Content-Type' => 'text/plain; charset=UTF-8',
+]))->name('robots');
+
+Route::get('/sitemap.xml', fn () => response(file_get_contents(public_path('sitemap.xml')), 200, [
+    'Content-Type' => 'application/xml; charset=UTF-8',
+]))->name('sitemap');
+
 Route::get('/', function () {
     $featuredBusinesses = collect();
     $topBusinesses = collect();

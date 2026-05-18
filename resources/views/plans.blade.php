@@ -183,7 +183,7 @@
                 <div class="mt-6 grid gap-4">
                     @foreach([
                         ['Има ли trial?', 'Да. Всеки изпълнител започва с 30-дневен пробен период и 45 точки за оферти.'],
-                        ['Premium активира ли се автоматично?', 'Не при натискане на бутона. Планът се активира само след успешен Stripe webhook.'],
+                        ['Premium активира ли се автоматично?', 'Не при натискане на бутона. Планът се активира след успешно потвърдено плащане през Stripe.'],
                         ['Колко точки струва една оферта?', 'Една изпратена оферта струва 3 точки. Standard включва 30 точки месечно, Premium - 90 точки месечно.'],
                         ['Има ли доплащане за градове?', 'Не на този етап. Градовете служат за лимити, филтър, релевантност и насочване на заявки.'],
                     ] as $faq)
@@ -198,7 +198,7 @@
             <div class="rounded-[32px] border border-cyan-300/20 bg-gradient-to-br from-cyan-400/12 via-blue-500/10 to-violet-600/12 p-6 backdrop-blur-xl sm:p-8">
                 <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-100">Следваща стъпка</p>
                 <h2 class="mt-4 text-3xl font-black sm:text-4xl">Създайте профил и вижте първите релевантни заявки.</h2>
-                <p class="mt-4 text-white/70">FixNow показва лимити, статус, точки и CTA за checkout в панела на изпълнител. Premium не се активира без успешен Stripe webhook.</p>
+                <p class="mt-4 text-white/70">FixNow показва лимити, статус, точки и управление на плана в панела на изпълнител. Premium се активира само след успешно потвърдено плащане през Stripe.</p>
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                     <a href="{{ route('register') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-4 text-center font-black text-slate-950">Стани изпълнител</a>
                     <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Пусни заявка</a>

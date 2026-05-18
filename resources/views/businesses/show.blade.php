@@ -164,7 +164,7 @@
                         </div>
                         <div class="rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-4">
                             <p class="text-sm font-black text-cyan-100">Директен контакт</p>
-                            <p class="mt-2 text-xs leading-5 text-white/55">Телефон, запитване, чат intent и social/website кликове се проследяват като реална активност.</p>
+                            <p class="mt-2 text-xs leading-5 text-white/55">Телефон, запитване и social/website кликове се проследяват като реална активност.</p>
                         </div>
                     </div>
 
@@ -399,7 +399,7 @@
                         </div>
                         <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
                             <p class="text-lg font-black">Бърз контакт</p>
-                            <p class="mt-3 text-sm leading-6 text-white/60">Бутоните за оферта, телефон и чат са подготвени да събират реални клиентски намерения.</p>
+                            <p class="mt-3 text-sm leading-6 text-white/60">Бутоните за оферта, телефон и запитване помагат на клиентите да се свържат с изпълнителя по най-бързия начин.</p>
                         </div>
                     </div>
                 </section>
@@ -543,7 +543,7 @@
                         @if($user->phone)
                             <a href="{{ route('businesses.track.phone', $user) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center font-black text-white hover:bg-white/10">Обади се</a>
                         @endif
-                        <a href="{{ route('businesses.track.chat', $user) }}" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4 text-center font-black text-cyan-100 hover:bg-cyan-300/15">Отвори чат</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4 text-center font-black text-cyan-100 hover:bg-cyan-300/15">Изпрати запитване</a>
                         @if($whatsappUrl)
                             <a href="{{ route('businesses.track.social', [$user, 'whatsapp']) }}" target="_blank" rel="noopener" class="rounded-2xl border border-emerald-300/20 bg-emerald-300/10 px-5 py-4 text-center font-black text-emerald-100">WhatsApp</a>
                         @endif
@@ -596,7 +596,7 @@
             @if($user->phone)
                 <a href="{{ route('businesses.track.phone', $user) }}" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-center font-black text-white">Обади се</a>
             @else
-                <a href="{{ route('businesses.track.chat', $user) }}" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-center font-black text-white">Чат</a>
+                <a href="{{ route('request.service') }}" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-center font-black text-white">Заяви оферта</a>
             @endif
             <a href="{{ route('businesses.track.inquiry', $user) }}" class="flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-3 text-center font-black text-white">Запитване</a>
         </div>

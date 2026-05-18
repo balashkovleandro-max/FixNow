@@ -18,7 +18,7 @@
 
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
             <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Как работи</p>
-            <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">От нужда до доверен бизнес в три ясни стъпки.</h1>
+            <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">От нужда до доверен изпълнител в три ясни стъпки.</h1>
             <div class="mt-10 grid gap-4 md:grid-cols-3">
                 @foreach([
                     ['step' => '01', 'title' => 'Търсиш', 'text' => 'Избираш услуга, град и радиус. UI-то е направено за бързо сравнение.'],

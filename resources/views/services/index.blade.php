@@ -13,7 +13,7 @@
         $categories = ['Ремонти и строителство', 'ВиК услуги', 'Електроуслуги', 'Автосервизи', 'Почистване', 'Ремонт на техника', 'Услуги за малки бизнеси', 'Красота и лични услуги'];
         $trustFilters = [
             ['name' => 'premium', 'label' => 'Premium', 'value' => '1'],
-            ['name' => 'verified', 'label' => 'Потвърден бизнес', 'value' => '1'],
+            ['name' => 'verified', 'label' => 'Потвърден изпълнител', 'value' => '1'],
             ['name' => 'emergency', 'label' => 'Спешни услуги', 'value' => '1'],
             ['name' => 'works_24_7', 'label' => '24/7', 'value' => '1'],
             ['name' => 'rating', 'label' => '4+ рейтинг', 'value' => '4plus'],
@@ -37,7 +37,7 @@
                 <a href="{{ route('request.service') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Заяви оферта</a>
             </nav>
             @auth
-                <a href="{{ route('services.create') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-2.5 text-sm font-black text-white shadow-lg shadow-blue-600/25">Добави услуга</a>
+                <a href="{{ route('dashboard') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-2.5 text-sm font-black text-white shadow-lg shadow-blue-600/25">Табло</a>
             @else
                 <a href="{{ route('login') }}" class="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-black text-white hover:bg-white/10">Вход</a>
             @endauth
@@ -49,7 +49,7 @@
             <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Услуги и оферти</p>
-                    <h1 class="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl">Намерете услуга от активен бизнес във FixNow</h1>
+                    <h1 class="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl">Намерете услуга от активен изпълнител във FixNow</h1>
                     <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Филтрирайте по категория, град и trust сигнали. Резултатите идват само от публично видими active или trial профили на изпълнители.</p>
                 </div>
                 <a href="{{ route('request.service') }}" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-6 py-4 text-center font-black text-cyan-100 hover:bg-cyan-300/15">Заяви оферта</a>
