@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пусни заявка за оферта | FixNow.bg</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     @php
@@ -55,7 +56,7 @@
                 <div class="mb-6 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-emerald-200">
                     <p>{{ session('success') }}</p>
                     @if(session('offers_url'))
-                        <a href="{{ session('offers_url') }}" class="mt-3 inline-flex min-h-11 items-center justify-center rounded-2xl bg-emerald-300/15 px-4 py-3 text-sm font-black text-emerald-100 hover:bg-emerald-300/20">
+                        <a href="{{ session('offers_url') }}" data-track="cta_view_offers" class="mt-3 inline-flex min-h-11 items-center justify-center rounded-2xl bg-emerald-300/15 px-4 py-3 text-sm font-black text-emerald-100 hover:bg-emerald-300/20">
                             Виж получените оферти
                         </a>
                     @endif
@@ -177,7 +178,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25 transition hover:shadow-blue-500/40">
+                <button type="submit" data-track="cta_request" class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25 transition hover:shadow-blue-500/40">
                     Изпрати заявка
                 </button>
             </form>

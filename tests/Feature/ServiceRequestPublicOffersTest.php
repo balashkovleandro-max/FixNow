@@ -39,7 +39,8 @@ class ServiceRequestPublicOffersTest extends TestCase
             ->assertSee('Получени оферти')
             ->assertSee('FixNow Executor')
             ->assertSee($offer->price_estimate)
-            ->assertSee('Избери изпълнител');
+            ->assertSee('Избери изпълнител')
+            ->assertSee('data-track="offer_accept"', false);
     }
 
     public function test_invalid_or_missing_token_does_not_expose_request(): void
@@ -78,7 +79,8 @@ class ServiceRequestPublicOffersTest extends TestCase
 
         Mail::assertSent(NewServiceRequestOfferCustomerMail::class, function (NewServiceRequestOfferCustomerMail $mail) {
             return $mail->hasTo('customer-offers@example.com')
-                && str_contains($mail->offersUrl, '/zayavka/');
+                && str_contains($mail->offersUrl, '/zayavka/')
+                && str_contains($mail->render(), $mail->offersUrl);
         });
     }
 
@@ -137,7 +139,9 @@ class ServiceRequestPublicOffersTest extends TestCase
         $this->post(route('service-requests.offers.accept', [
             'serviceRequest' => $serviceRequest->public_token,
             'offer' => $acceptedOffer,
-        ]))->assertRedirect(route('service-requests.offers.show', ['serviceRequest' => $serviceRequest->public_token]));
+        ]))
+            ->assertRedirect(route('service-requests.offers.show', ['serviceRequest' => $serviceRequest->public_token]))
+            ->assertSessionHas('success', 'Изпълнителят е избран успешно. Можете да се свържете директно с него.');
 
         $serviceRequest->refresh();
         $acceptedOffer->refresh();

@@ -20,8 +20,8 @@ class BillingPlansTest extends TestCase
         config([
             'services.stripe.secret' => 'sk_test_fixnow',
             'services.stripe.webhook_secret' => 'whsec_fixnow',
-            'services.stripe.standard_price_id' => 'price_standard_fixnow',
-            'services.stripe.premium_price_id' => 'price_premium_fixnow',
+            'services.stripe.standard_price_id' => 'price_1TYmByRqvGMkwX9rN7HTUunp',
+            'services.stripe.premium_price_id' => 'price_1TYmCcRqvGMkwX9rE8ichDo4',
         ]);
     }
 
@@ -137,7 +137,7 @@ class BillingPlansTest extends TestCase
             ->assertRedirect('https://checkout.stripe.test/standard');
 
         Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/checkout/sessions'
-            && str_contains($request->body(), 'price_standard_fixnow')
+            && str_contains($request->body(), 'price_1TYmByRqvGMkwX9rN7HTUunp')
             && str_contains($request->body(), 'metadata%5Bplan%5D=standard'));
     }
 
@@ -158,8 +158,25 @@ class BillingPlansTest extends TestCase
             ->assertRedirect('https://checkout.stripe.test/premium');
 
         Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/checkout/sessions'
-            && str_contains($request->body(), 'price_premium_fixnow')
+            && str_contains($request->body(), 'price_1TYmCcRqvGMkwX9rE8ichDo4')
             && str_contains($request->body(), 'metadata%5Bplan%5D=premium'));
+    }
+
+    public function test_checkout_rejects_invalid_plan(): void
+    {
+        Http::fake();
+
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+        ]);
+
+        $this->actingAs($business)
+            ->from(route('business.billing'))
+            ->post(route('business.billing.checkout'), ['plan' => 'enterprise'])
+            ->assertRedirect(route('business.billing'))
+            ->assertSessionHasErrors('plan');
+
+        Http::assertNothingSent();
     }
 
     public function test_client_cannot_start_business_checkout(): void
@@ -276,7 +293,7 @@ class BillingPlansTest extends TestCase
         ]);
 
         $periodEnd = now()->addMonth()->timestamp;
-        $payload = $this->subscriptionUpdatedPayload($business, 'active', 'price_premium_fixnow', $periodEnd);
+        $payload = $this->subscriptionUpdatedPayload($business, 'active', 'price_1TYmCcRqvGMkwX9rE8ichDo4', $periodEnd);
 
         $this->postStripeWebhook($payload)
             ->assertOk();
@@ -290,6 +307,37 @@ class BillingPlansTest extends TestCase
         $this->assertNull($business->cancelled_at);
     }
 
+    public function test_subscription_updated_syncs_stripe_identifiers_from_metadata(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'trial',
+            'stripe_customer_id' => null,
+            'stripe_subscription_id' => null,
+        ]);
+
+        $periodEnd = now()->addMonth()->timestamp;
+        $payload = $this->subscriptionUpdatedPayload(
+            $business,
+            'active',
+            'price_1TYmByRqvGMkwX9rN7HTUunp',
+            $periodEnd,
+            'sub_synced_fixnow',
+            'cus_synced_fixnow'
+        );
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+        $this->assertSame('active', $business->subscription_status);
+        $this->assertSame('cus_synced_fixnow', $business->stripe_customer_id);
+        $this->assertSame('sub_synced_fixnow', $business->stripe_subscription_id);
+        $this->assertNotNull($business->subscription_ends_at);
+    }
+
     public function test_subscription_updated_with_past_due_removes_premium_benefits(): void
     {
         $business = $this->business([
@@ -299,7 +347,7 @@ class BillingPlansTest extends TestCase
             'stripe_subscription_id' => 'sub_past_due_fixnow',
         ]);
 
-        $payload = $this->subscriptionUpdatedPayload($business, 'past_due', 'price_premium_fixnow');
+        $payload = $this->subscriptionUpdatedPayload($business, 'past_due', 'price_1TYmCcRqvGMkwX9rE8ichDo4');
 
         $this->postStripeWebhook($payload)
             ->assertOk();
@@ -330,6 +378,7 @@ class BillingPlansTest extends TestCase
 
         $this->assertSame('canceled', $business->subscription_status);
         $this->assertFalse($business->isPremium());
+        $this->assertFalse($business->isPubliclyVisible());
         $this->assertNotNull($business->cancelled_at);
     }
 
@@ -351,6 +400,7 @@ class BillingPlansTest extends TestCase
 
         $this->assertSame('payment_failed', $business->subscription_status);
         $this->assertFalse($business->isPremium());
+        $this->assertFalse($business->isPubliclyVisible());
         $this->assertTrue($business->hasPaymentIssue());
     }
 
@@ -393,6 +443,46 @@ class BillingPlansTest extends TestCase
         $this->assertSame('standard', $business->subscription_plan);
     }
 
+    public function test_success_return_url_does_not_activate_plan_directly(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'active',
+            'stripe_customer_id' => null,
+            'stripe_subscription_id' => null,
+        ]);
+
+        $this->actingAs($business)
+            ->get(route('business.billing', ['stripe' => 'success', 'session_id' => 'cs_test_fixnow']))
+            ->assertOk()
+            ->assertSee('stripe-return-success', false);
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+        $this->assertSame('active', $business->subscription_status);
+        $this->assertNull($business->stripe_customer_id);
+        $this->assertNull($business->stripe_subscription_id);
+    }
+
+    public function test_cancel_return_url_shows_feedback_without_changing_plan(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'active',
+        ]);
+
+        $this->actingAs($business)
+            ->get(route('business.billing', ['stripe' => 'cancelled']))
+            ->assertOk()
+            ->assertSee('stripe-return-cancelled', false);
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+        $this->assertSame('active', $business->subscription_status);
+    }
+
     private function checkoutCompletedPayload(User $business, string $plan, ?int $periodEnd = null): string
     {
         return json_encode([
@@ -414,16 +504,26 @@ class BillingPlansTest extends TestCase
         ]);
     }
 
-    private function subscriptionUpdatedPayload(User $business, string $status, string $priceId, ?int $periodEnd = null): string
+    private function subscriptionUpdatedPayload(
+        User $business,
+        string $status,
+        string $priceId,
+        ?int $periodEnd = null,
+        ?string $subscriptionId = null,
+        ?string $customerId = null
+    ): string
     {
         return json_encode([
             'id' => 'evt_subscription_updated_fixnow',
             'type' => 'customer.subscription.updated',
             'data' => [
                 'object' => [
-                    'id' => $business->stripe_subscription_id,
-                    'customer' => $business->stripe_customer_id,
+                    'id' => $subscriptionId ?: $business->stripe_subscription_id,
+                    'customer' => $customerId ?: $business->stripe_customer_id,
                     'status' => $status,
+                    'metadata' => [
+                        'user_id' => (string) $business->id,
+                    ],
                     'current_period_end' => $periodEnd ?: now()->addMonth()->timestamp,
                     'items' => [
                         'data' => [
@@ -454,7 +554,7 @@ class BillingPlansTest extends TestCase
                         'data' => [
                             [
                                 'price' => [
-                                    'id' => 'price_premium_fixnow',
+                                    'id' => 'price_1TYmCcRqvGMkwX9rE8ichDo4',
                                 ],
                             ],
                         ],
@@ -478,7 +578,7 @@ class BillingPlansTest extends TestCase
                         'data' => [
                             [
                                 'price' => [
-                                    'id' => 'price_premium_fixnow',
+                                    'id' => 'price_1TYmCcRqvGMkwX9rE8ichDo4',
                                 ],
                                 'period' => [
                                     'end' => $periodEnd ?: now()->addMonth()->timestamp,

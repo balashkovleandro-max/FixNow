@@ -6,6 +6,7 @@
     <title>{{ $user->business_name ?: $user->name }} | FixNow.bg</title>
     <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags(($user->short_description ?: $user->description ?: 'Профил на изпълнител във FixNow.bg с услуги, контакти, отзиви и директно запитване.')), 155) }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-44 text-white md:pb-28 lg:pb-0">
     @php
@@ -160,7 +161,7 @@
                     @endif
 
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">Изпрати запитване</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">Изпрати запитване</a>
                         @if($user->phone)
                             <a href="{{ route('businesses.track.phone', $user) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Обади се</a>
                         @endif
@@ -264,7 +265,7 @@
                                 @error('message')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                             </label>
 
-                            <button type="submit" class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">
+                            <button type="submit" data-track="cta_send_inquiry" class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">
                                 Изпрати заявка
                             </button>
                         </form>
@@ -334,7 +335,7 @@
                             <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Услуги</p>
                             <h2 class="mt-3 text-3xl font-black">Какво предлага изпълнителят</h2>
                         </div>
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" class="hidden rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-3 text-sm font-black text-cyan-100 hover:bg-cyan-300/15 sm:inline-flex">Заяви оферта</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="hidden rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-3 text-sm font-black text-cyan-100 hover:bg-cyan-300/15 sm:inline-flex">Заяви оферта</a>
                     </div>
 
                     <div class="mt-6 grid gap-4 md:grid-cols-2">
@@ -356,7 +357,7 @@
                                 <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 text-xl font-black">F</p>
                                 <p class="mt-4 text-lg font-black">Все още няма добавени услуги с цени</p>
                                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Можете да изпратите запитване, за да получите индивидуална оферта от този изпълнител.</p>
-                                <a href="{{ route('businesses.track.inquiry', $user) }}" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Изпрати запитване</a>
+                                <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Изпрати запитване</a>
                             </div>
                         @endforelse
                     </div>
@@ -507,11 +508,11 @@
                     <p class="mt-2 text-sm leading-6 text-white/60">Изберете удобен начин за връзка с изпълнителя.</p>
 
                     <div class="mt-6 grid gap-3">
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Заяви оферта</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Заяви оферта</a>
                         @if($user->phone)
                             <a href="{{ route('businesses.track.phone', $user) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center font-black text-white hover:bg-white/10">Обади се</a>
                         @endif
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4 text-center font-black text-cyan-100 hover:bg-cyan-300/15">Изпрати запитване</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4 text-center font-black text-cyan-100 hover:bg-cyan-300/15">Изпрати запитване</a>
                         @if($whatsappUrl)
                             <a href="{{ route('businesses.track.social', [$user, 'whatsapp']) }}" target="_blank" rel="noopener" class="rounded-2xl border border-emerald-300/20 bg-emerald-300/10 px-5 py-4 text-center font-black text-emerald-100">WhatsApp</a>
                         @endif
@@ -564,9 +565,9 @@
             @if($user->phone)
                 <a href="{{ route('businesses.track.phone', $user) }}" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-center font-black text-white">Обади се</a>
             @else
-                <a href="{{ route('request.service') }}" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-center font-black text-white">Заяви оферта</a>
+                <a href="{{ route('request.service') }}" data-track="cta_request" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-center font-black text-white">Заяви оферта</a>
             @endif
-            <a href="{{ route('businesses.track.inquiry', $user) }}" class="flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-3 text-center font-black text-white">Запитване</a>
+            <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-3 text-center font-black text-white">Запитване</a>
         </div>
     </div>
     @include('partials.mobile-bottom-nav')

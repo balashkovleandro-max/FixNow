@@ -21,7 +21,7 @@
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" stroke-linejoin="round"/></svg>
             <span>Категории</span>
         </a>
-        <a href="{{ route('request.service') }}" class="{{ $itemBase }} {{ request()->routeIs('request.service') || request()->routeIs('request.service.store') ? $itemActive : $itemIdle }}">
+        <a href="{{ route('request.service') }}" data-track="cta_request" class="{{ $itemBase }} {{ request()->routeIs('request.service') || request()->routeIs('request.service.store') ? $itemActive : $itemIdle }}">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke-linejoin="round"/></svg>
             <span>Заявка</span>
         </a>

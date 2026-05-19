@@ -6,6 +6,7 @@
     <title>Изпълнители | FixNow.bg</title>
     <meta name="description" content="Разгледайте активни изпълнители във FixNow.bg. Филтрирайте по град, категория, Premium, потвърдени профили, рейтинг и локални услуги.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     @php

@@ -6,6 +6,7 @@
     <title>Планове и цени | FixNow.bg</title>
     <meta name="description" content="Планове за изпълнители във FixNow.bg: Standard 18.99 €/месец и Premium 24.99 €/месец с профил, ревюта, заявки, точки за оферти и Premium видимост.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(34,211,238,0.16),transparent_32%),radial-gradient(circle_at_82%_12%,rgba(168,85,247,0.16),transparent_30%),linear-gradient(180deg,#020812,#061426_48%,#020812)]"></div>
@@ -30,8 +31,8 @@
                     Започнете с 30-дневен trial, изградете професионален профил и използвайте точки, за да изпращате оферти към подходящи клиентски заявки.
                 </p>
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <a href="{{ route('register') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 text-center font-black text-white shadow-xl shadow-blue-600/25">Стартирай безплатно</a>
-                    <a href="{{ route('business.landing') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Виж ползите</a>
+                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 text-center font-black text-white shadow-xl shadow-blue-600/25">Стартирай безплатно</a>
+                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Виж ползите</a>
                 </div>
             </div>
 
@@ -176,8 +177,8 @@
                 <h2 class="mt-4 text-3xl font-black sm:text-4xl">Създайте профил и вижте първите релевантни заявки.</h2>
                 <p class="mt-4 text-white/70">FixNow показва лимити, статус, точки и управление на плана в панела на изпълнител. Premium се активира само след успешно потвърдено плащане през Stripe.</p>
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <a href="{{ route('register') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-4 text-center font-black text-slate-950">Стани изпълнител</a>
-                    <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Пусни заявка</a>
+                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-4 text-center font-black text-slate-950">Стани изпълнител</a>
+                    <a href="{{ route('request.service') }}" data-track="cta_request" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Пусни заявка</a>
                 </div>
             </div>
         </section>

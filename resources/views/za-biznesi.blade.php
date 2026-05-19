@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>За изпълнители | FixNow.bg</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10">
@@ -30,13 +31,13 @@
 
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                         @guest
-                            <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 font-black text-white shadow-lg shadow-blue-600/25">Стани изпълнител</a>
+                            <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 font-black text-white shadow-lg shadow-blue-600/25">Стани изпълнител</a>
                         @endguest
                         @auth
                             <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 font-black text-white shadow-lg shadow-blue-600/25">Към таблото</a>
                         @endauth
                         <a href="#plans" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 font-black text-white hover:bg-white/10">Виж плановете</a>
-                        <a href="{{ route('request.service') }}" class="inline-flex items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-7 py-4 font-black text-cyan-100 hover:bg-cyan-300/15">Виж как клиентите заявяват оферта</a>
+                        <a href="{{ route('request.service') }}" data-track="cta_request" class="inline-flex items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-7 py-4 font-black text-cyan-100 hover:bg-cyan-300/15">Виж как клиентите заявяват оферта</a>
                     </div>
 
                     <div class="mt-10 grid gap-3 sm:grid-cols-3">
@@ -182,7 +183,7 @@
                     <h2 class="mt-3 text-3xl font-black">FixNow събира реални заявки за услуги</h2>
                     <p class="mt-3 max-w-3xl text-sm leading-6 text-white/70">Клиентите могат да изпратят заявка с град, категория, описание, спешност и бюджет. Това превръща профила ви от обикновен listing в канал за директни потенциални клиенти.</p>
                 </div>
-                <a href="{{ route('request.service') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Виж формата</a>
+                <a href="{{ route('request.service') }}" data-track="cta_request" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Виж формата</a>
             </div>
         </section>
 
@@ -216,7 +217,7 @@
                         <p class="mt-5 max-w-2xl text-base leading-8 text-white/70">Колкото по-рано изградите профила си, толкова по-бързо започвате да трупате видимост, доверие и активност.</p>
                     </div>
                     @guest
-                        <a href="{{ route('register') }}" class="inline-flex justify-center rounded-2xl bg-white px-7 py-4 font-black text-slate-950 hover:bg-cyan-50">Стани изпълнител сега</a>
+                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex justify-center rounded-2xl bg-white px-7 py-4 font-black text-slate-950 hover:bg-cyan-50">Стани изпълнител сега</a>
                     @endguest
                     @auth
                         <a href="{{ route('dashboard') }}" class="inline-flex justify-center rounded-2xl bg-white px-7 py-4 font-black text-slate-950 hover:bg-cyan-50">Към таблото</a>

@@ -40,9 +40,9 @@ class ServiceRequestController extends Controller
             'description' => 'required|string|max:5000',
             'urgency' => 'nullable|in:normal,urgent,this_week,this_month,no_deadline',
             'budget' => 'nullable|string|max:255',
-            'image' => 'nullable|file|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image' => 'nullable|file|image|mimetypes:image/jpeg,image/png,image/webp|mimes:jpg,jpeg,png,webp|max:2048',
             'photos' => 'nullable|array|max:5',
-            'photos.*' => 'nullable|file|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'photos.*' => 'nullable|file|image|mimetypes:image/jpeg,image/png,image/webp|mimes:jpg,jpeg,png,webp|max:4096',
         ], [
             'name.required' => 'Моля, въведете име.',
             'phone.required' => 'Моля, въведете телефон.',

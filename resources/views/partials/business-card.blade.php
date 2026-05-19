@@ -133,16 +133,16 @@
         </div>
 
         <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
-            <a href="{{ route('businesses.track.inquiry', ['user' => $business, 'source' => 'business_card']) }}" class="flex min-h-12 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-400/12 px-4 py-3 text-center font-black text-cyan-100 transition hover:bg-cyan-400/20 active:scale-[0.99]">
+            <a href="{{ route('businesses.track.inquiry', ['user' => $business, 'source' => 'business_card']) }}" data-track="cta_send_inquiry" class="flex min-h-12 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-400/12 px-4 py-3 text-center font-black text-cyan-100 transition hover:bg-cyan-400/20 active:scale-[0.99]">
                 Изпрати запитване
             </a>
-            <a href="{{ route('businesses.show', $business) }}" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] px-4 py-3 text-center font-black text-white transition hover:bg-white/15 active:scale-[0.99]">
+            <a href="{{ route('businesses.show', $business) }}" data-track="cta_view_business" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] px-4 py-3 text-center font-black text-white transition hover:bg-white/15 active:scale-[0.99]">
                 Виж профил
             </a>
         </div>
 
         @if($hasRequestBasedCategory)
-            <a href="{{ route('request.service', ['category' => $serviceCategories[0] ?? $business->business_category, 'city' => $serviceCities[0] ?? $business->city]) }}" class="mt-3 flex min-h-11 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 px-4 py-3 text-center text-sm font-black text-violet-100 transition hover:bg-violet-400/20 active:scale-[0.99]">
+            <a href="{{ route('request.service', ['category' => $serviceCategories[0] ?? $business->business_category, 'city' => $serviceCities[0] ?? $business->city]) }}" data-track="cta_request" class="mt-3 flex min-h-11 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 px-4 py-3 text-center text-sm font-black text-violet-100 transition hover:bg-violet-400/20 active:scale-[0.99]">
                 Пусни заявка в тази категория
             </a>
         @endif

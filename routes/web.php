@@ -166,10 +166,10 @@ Route::get('/grad/{city}', [SeoPageController::class, 'city'])->name('seo.city')
 Route::get('/grad/{city}/{category}', [SeoPageController::class, 'cityCategory'])->name('seo.city.category');
 Route::get('/uslugi/{category}/{city}', [SeoPageController::class, 'categoryCity'])->name('seo.service.city');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.post');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:3,1')->name('register.post');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::view('/how-it-works', 'how-it-works');
@@ -517,30 +517,30 @@ Route::redirect('/request-service', '/zayavi-oferta');
 Route::redirect('/request', '/zayavi-oferta');
 Route::redirect('/zayavka', '/zayavi-oferta');
 Route::get('/zayavka/{serviceRequest:public_token}/offers', [ServiceRequestPublicOfferController::class, 'show'])->name('service-requests.offers.show');
-Route::post('/zayavka/{serviceRequest:public_token}/offers/{offer}/accept', [ServiceRequestPublicOfferController::class, 'accept'])->name('service-requests.offers.accept');
+Route::post('/zayavka/{serviceRequest:public_token}/offers/{offer}/accept', [ServiceRequestPublicOfferController::class, 'accept'])->middleware('throttle:10,1')->name('service-requests.offers.accept');
 Route::get('/zayavi-oferta', [ServiceRequestController::class, 'create'])->name('request.service');
-Route::post('/zayavi-oferta', [ServiceRequestController::class, 'store'])->name('request.service.store');
+Route::post('/zayavi-oferta', [ServiceRequestController::class, 'store'])->middleware('throttle:6,1')->name('request.service.store');
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name('stripe.webhook');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
-    Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
+    Route::post('/services', [ServiceController::class, 'store'])->middleware('throttle:10,1')->name('services.store');
 
     Route::get('/business/profile/edit', [BusinessProfileController::class, 'edit'])->name('business.profile.edit');
-    Route::put('/business/profile/update', [BusinessProfileController::class, 'update'])->name('business.profile.update');
-    Route::post('/business/profile/photos', [BusinessPhotoController::class, 'store'])->name('business.profile.photos.store');
+    Route::put('/business/profile/update', [BusinessProfileController::class, 'update'])->middleware('throttle:20,1')->name('business.profile.update');
+    Route::post('/business/profile/photos', [BusinessPhotoController::class, 'store'])->middleware('throttle:20,1')->name('business.profile.photos.store');
     Route::delete('/business/profile/photos/{businessPhoto}', [BusinessPhotoController::class, 'destroy'])->name('business.profile.photos.destroy');
     Route::get('/business/service-requests', [BusinessServiceRequestController::class, 'index'])->name('business.service-requests.index');
     Route::patch('/business/service-requests/{serviceRequest}/contacted', [BusinessServiceRequestController::class, 'contacted'])->name('business.service-requests.contacted');
     Route::patch('/business/service-requests/{serviceRequest}/completed', [BusinessServiceRequestController::class, 'completed'])->name('business.service-requests.completed');
     Route::patch('/business/service-requests/{serviceRequest}/cancelled', [BusinessServiceRequestController::class, 'cancelled'])->name('business.service-requests.cancelled');
-    Route::post('/business/service-requests/{serviceRequest}/offers', [ServiceRequestOfferController::class, 'store'])->name('business.service-requests.offers.store');
+    Route::post('/business/service-requests/{serviceRequest}/offers', [ServiceRequestOfferController::class, 'store'])->middleware('throttle:10,1')->name('business.service-requests.offers.store');
     Route::get('/business/billing', [BillingController::class, 'show'])->name('business.billing');
-    Route::post('/business/billing/checkout', [BillingController::class, 'checkout'])->name('business.billing.checkout');
-    Route::post('/business/billing/portal', [BillingController::class, 'portal'])->name('business.billing.portal');
-    Route::post('/business/billing/upgrade-premium', [BillingController::class, 'upgradePremium'])->name('business.billing.upgrade-premium');
+    Route::post('/business/billing/checkout', [BillingController::class, 'checkout'])->middleware('throttle:10,1')->name('business.billing.checkout');
+    Route::post('/business/billing/portal', [BillingController::class, 'portal'])->middleware('throttle:10,1')->name('business.billing.portal');
+    Route::post('/business/billing/upgrade-premium', [BillingController::class, 'upgradePremium'])->middleware('throttle:10,1')->name('business.billing.upgrade-premium');
 
     Route::patch('/admin/businesses/{user}/activate-30-days', [AdminBusinessController::class, 'activate'])->name('admin.businesses.activate');
     Route::patch('/admin/businesses/{user}/extend-trial', [AdminBusinessController::class, 'extendTrial'])->name('admin.businesses.extend-trial');
@@ -569,7 +569,7 @@ Route::get('/businesses/{user}/track/website', [BusinessAnalyticsController::cla
 Route::get('/businesses/{user}/track/inquiry', [BusinessAnalyticsController::class, 'inquiry'])->name('businesses.track.inquiry');
 Route::get('/businesses/{user}/track/chat', [BusinessAnalyticsController::class, 'chat'])->name('businesses.track.chat');
 Route::get('/businesses/{user}/track/social/{platform}', [BusinessAnalyticsController::class, 'social'])->name('businesses.track.social');
-Route::post('/businesses/{user}/service-requests', [BusinessServiceRequestController::class, 'store'])->name('businesses.service-requests.store');
-Route::post('/businesses/{user}/reviews', [ReviewController::class, 'store'])->name('businesses.reviews.store');
-Route::post('/businesses/{user}/recommend', [BusinessRecommendationController::class, 'store'])->name('businesses.recommendations.store');
+Route::post('/businesses/{user}/service-requests', [BusinessServiceRequestController::class, 'store'])->middleware('throttle:6,1')->name('businesses.service-requests.store');
+Route::post('/businesses/{user}/reviews', [ReviewController::class, 'store'])->middleware('throttle:10,1')->name('businesses.reviews.store');
+Route::post('/businesses/{user}/recommend', [BusinessRecommendationController::class, 'store'])->middleware('throttle:20,1')->name('businesses.recommendations.store');
 Route::get('/businesses/{user}', [BusinessController::class, 'show'])->name('businesses.show');

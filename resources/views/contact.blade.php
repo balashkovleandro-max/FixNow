@@ -6,6 +6,7 @@
     <meta name="description" content="Свържете се с FixNow.bg за въпроси за профили на изпълнители, заявки за оферта, партньорства и поддръжка.">
     <title>Контакт | FixNow.bg</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     @php

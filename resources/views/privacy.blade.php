@@ -6,6 +6,7 @@
     <meta name="description" content="Политика за поверителност на FixNow.bg - какви данни събираме, защо ги използваме и как се обработват плащанията чрез Stripe.">
     <title>Политика за поверителност | FixNow.bg</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_84%_12%,rgba(168,85,247,0.16),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>

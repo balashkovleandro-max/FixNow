@@ -23,7 +23,9 @@ class RequestOffersAndPointsTest extends TestCase
     {
         $this->post(route('request.service.store'), $this->requestPayload([
             'category' => 'Ремонти и строителство',
-        ]))->assertRedirect(route('request.service'));
+        ]))
+            ->assertRedirect(route('request.service'))
+            ->assertSessionHas('offers_url');
 
         $this->assertDatabaseHas('service_requests', [
             'name' => 'Offer Client',
@@ -49,7 +51,8 @@ class RequestOffersAndPointsTest extends TestCase
             ->get(route('business.service-requests.index'))
             ->assertOk()
             ->assertSee('Нови заявки за оферти')
-            ->assertSee('Изпрати оферта');
+            ->assertSee('Изпрати оферта')
+            ->assertSee('data-track="offer_submit"', false);
     }
 
     public function test_expired_business_does_not_see_offer_flow(): void

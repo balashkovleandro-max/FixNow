@@ -60,6 +60,18 @@
             </div>
         @endif
 
+        @if(request('stripe') === 'success')
+            <div class="mb-6 rounded-3xl border border-emerald-300/25 bg-emerald-400/10 p-5 text-emerald-50" data-testid="stripe-return-success">
+                <p class="font-black">Stripe Checkout беше завършен.</p>
+                <p class="mt-2 text-sm leading-6 text-emerald-50/80">Планът ще бъде активиран само след валиден Stripe webhook. Ако статусът не се обнови веднага, изчакайте няколко секунди и презаредете страницата.</p>
+            </div>
+        @elseif(request('stripe') === 'cancelled')
+            <div class="mb-6 rounded-3xl border border-amber-300/25 bg-amber-400/10 p-5 text-amber-50" data-testid="stripe-return-cancelled">
+                <p class="font-black">Stripe Checkout беше прекъснат.</p>
+                <p class="mt-2 text-sm leading-6 text-amber-50/80">Не е активиран платен план. Можете да стартирате checkout отново, когато сте готови.</p>
+            </div>
+        @endif
+
         @if($errors->has('stripe'))
             <div class="mb-6 rounded-3xl border border-rose-300/25 bg-rose-400/10 p-5 text-rose-50" data-testid="billing-stripe-error">
                 {{ $errors->first('stripe') }}

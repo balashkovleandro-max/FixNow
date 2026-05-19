@@ -169,10 +169,10 @@
                     <button type="submit" class="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white/10">Изход</button>
                 </form>
             @endauth
-            <a href="{{ route('request.service') }}" class="fn-public-cta rounded-2xl bg-gradient-to-r from-blue-500 to-fuchsia-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-blue-600/25">Пусни заявка</a>
+            <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-public-cta rounded-2xl bg-gradient-to-r from-blue-500 to-fuchsia-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-blue-600/25">Пусни заявка</a>
         </div>
 
-        <a href="{{ route('request.service') }}" class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white md:hidden" aria-label="Пусни заявка">
+        <a href="{{ route('request.service') }}" data-track="cta_request" class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white md:hidden" aria-label="Пусни заявка">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke-linejoin="round"/></svg>
         </a>
     </div>

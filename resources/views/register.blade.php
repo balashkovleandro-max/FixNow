@@ -81,7 +81,7 @@
                     <div class="grid gap-4 sm:grid-cols-2">
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-white/75">Парола</label>
-                            <input type="password" name="password" placeholder="Минимум 6 символа" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-cyan-300/50">
+                            <input type="password" name="password" placeholder="Минимум 8 символа" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-cyan-300/50">
                             @error('password')<p class="mt-2 text-sm text-red-300">{{ $message }}</p>@enderror
                         </div>
                         <div>

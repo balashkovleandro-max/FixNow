@@ -6,6 +6,7 @@
     <title>FixNow.bg | Проверени изпълнители и заявки за оферти</title>
     <meta name="description" content="FixNow.bg помага да намерите проверен локален изпълнител или да пуснете заявка и да получите оферти за услуги във вашия град.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
     <style>
         @keyframes fnFadeUp {
             from {
@@ -257,8 +258,8 @@
                     <p class="fn-fade-up fn-delay-2 mt-5 max-w-[680px] text-base leading-7 text-white/70 sm:mt-6 sm:text-lg sm:leading-8">FixNow.bg свързва клиенти с проверени изпълнители по град, категория и реална нужда — от първа заявка до избран изпълнител.</p>
 
                     <div class="fn-fade-up fn-delay-2 mt-7 flex flex-col gap-3 sm:flex-row">
-                        <a href="{{ route('request.service') }}" class="fn-cta-glow inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Пусни заявка</a>
-                        <a href="{{ route('businesses.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-7 py-4 text-center font-black text-white hover:bg-white/15">Разгледай изпълнители</a>
+                        <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-cta-glow inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Пусни заявка</a>
+                        <a href="{{ route('businesses.index') }}" data-track="cta_view_business" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-7 py-4 text-center font-black text-white hover:bg-white/15">Разгледай изпълнители</a>
                     </div>
 
                     <div class="fn-fade-up fn-delay-3 mt-5 flex flex-wrap gap-2">
@@ -408,7 +409,7 @@
                                     <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 text-xl font-black">F</p>
                                     <h3 class="mt-4 text-xl font-black">Очакваме първите изпълнители</h3>
                                     <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-white/60">Когато има active или trial профили, тук ще се покажат препоръчани изпълнители около клиента.</p>
-                                    <a href="{{ route('business.landing') }}" class="mt-5 inline-flex rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Добави профил на изпълнител</a>
+                                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="mt-5 inline-flex rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Добави профил на изпълнител</a>
                                 </div>
                             @endforelse
                         </div>
@@ -446,7 +447,7 @@
                         <h2 class="mt-2 text-2xl font-black">FixNow.bg стартира поетапно</h2>
                         <p class="mt-2 max-w-3xl text-sm leading-6 text-white/65">В момента добавяме първите проверени изпълнители по градове и категории, за да изградим качествена мрежа от реални локални изпълнители.</p>
                     </div>
-                    <a href="{{ route('business.landing') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/15">Стани част от старта</a>
+                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/15">Стани част от старта</a>
                 </div>
             </div>
         </section>
@@ -458,7 +459,7 @@
                     <h2 class="mt-3 text-3xl font-black">Опишете какво търсите и стигнете до подходящ изпълнител</h2>
                     <p class="mt-3 max-w-2xl text-sm leading-6 text-white/65">Подходящо за ремонт, спешна услуга, сервизна диагностика, почистване или оферта от локален професионалист.</p>
                 </div>
-                <a href="{{ route('request.service') }}" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white">Заяви оферта</a>
+                <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white">Заяви оферта</a>
             </div>
         </section>
 
@@ -469,7 +470,7 @@
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Как работи</p>
                         <h2 class="mt-2 text-2xl font-black sm:text-3xl">От заявка до избран изпълнител</h2>
                     </div>
-                    <a href="{{ route('request.service') }}" class="text-sm font-bold text-blue-300 transition hover:text-cyan-200">Пусни заявка →</a>
+                    <a href="{{ route('request.service') }}" data-track="cta_request" class="text-sm font-bold text-blue-300 transition hover:text-cyan-200">Пусни заявка →</a>
                 </div>
 
                 <div class="grid gap-4 md:grid-cols-3">
@@ -531,7 +532,7 @@
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-200/80">За изпълнители</p>
                     <h2 class="mt-3 text-2xl font-black">Профилът ти трябва да бъде откриваем</h2>
                     <p class="mt-4 text-sm leading-6 text-white/65">Профил във FixNow показва услуги, градове, телефон, отзиви, препоръки, статистика и план, който дава реална видимост пред локални клиенти.</p>
-                    <a href="{{ route('business.landing') }}" class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Стани изпълнител</a>
+                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Стани изпълнител</a>
                 </article>
 
                 <article class="fn-hover-lift rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
@@ -562,7 +563,7 @@
                             @endforeach
                         </div>
                         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                            <a href="{{ route('business.landing') }}" class="fn-cta-glow inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white">Добави профил</a>
+                            <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="fn-cta-glow inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white">Добави профил</a>
                             <a href="{{ route('plans') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-6 py-4 font-black text-white hover:bg-white/15">Виж плановете</a>
                         </div>
                     </div>
@@ -707,7 +708,7 @@
                     <h2 class="mt-3 max-w-3xl text-3xl font-black leading-tight sm:text-4xl">Първите 50 изпълнители получават стартово предимство</h2>
                     <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Създайте професионален профил, споделете го с клиентите си и започнете да събирате преглеждания, кликове, отзиви и препоръки.</p>
                 </div>
-                <a href="{{ route('business.landing') }}" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-blue-500 to-fuchsia-600 px-8 py-4 text-center text-base font-black text-white shadow-xl shadow-blue-600/25">Стани изпълнител</a>
+                <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-blue-500 to-fuchsia-600 px-8 py-4 text-center text-base font-black text-white shadow-xl shadow-blue-600/25">Стани изпълнител</a>
             </div>
         </section>
     </main>

@@ -70,7 +70,41 @@ class PreLaunchAuditTest extends TestCase
             ->assertSee('/za-biznesi', false)
             ->assertSee('/plans', false)
             ->assertSee('/businesses', false)
-            ->assertSee('/top-biznesi', false);
+            ->assertSee('/top-biznesi', false)
+            ->assertSee('data-track="cta_request"', false)
+            ->assertSee('data-track="cta_business_signup"', false)
+            ->assertSee('data-track="cta_view_business"', false);
+    }
+
+    public function test_analytics_snippets_are_not_rendered_when_ids_are_empty(): void
+    {
+        config([
+            'services.analytics.ga_measurement_id' => null,
+            'services.analytics.meta_pixel_id' => null,
+            'services.analytics.clarity_project_id' => null,
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertDontSee('googletagmanager.com/gtag/js', false)
+            ->assertDontSee('connect.facebook.net/en_US/fbevents.js', false)
+            ->assertDontSee('clarity.ms/tag', false);
+    }
+
+    public function test_analytics_snippets_render_when_ids_are_configured(): void
+    {
+        config([
+            'services.analytics.ga_measurement_id' => 'G-FIXNOWTEST',
+            'services.analytics.meta_pixel_id' => '123456789',
+            'services.analytics.clarity_project_id' => 'claritytest',
+        ]);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('googletagmanager.com/gtag/js?id=G-FIXNOWTEST', false)
+            ->assertSee("fbq('init', '123456789')", false)
+            ->assertSee('www.clarity.ms/tag', false)
+            ->assertSee('claritytest', false);
     }
 
     public function test_customer_offer_page_loads_with_valid_public_token(): void

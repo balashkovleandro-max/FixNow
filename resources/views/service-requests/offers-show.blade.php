@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оферти по заявка | FixNow.bg</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     @php
@@ -199,7 +200,7 @@
                             @elseif(in_array($offer->status, ['sent', 'viewed'], true))
                                 <form action="{{ route('service-requests.offers.accept', ['serviceRequest' => $serviceRequest->public_token, 'offer' => $offer]) }}" method="POST">
                                     @csrf
-                                    <button class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 font-black text-white shadow-lg shadow-blue-950/30">
+                                    <button data-track="offer_accept" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 font-black text-white shadow-lg shadow-blue-950/30">
                                         Избери изпълнител
                                     </button>
                                 </form>

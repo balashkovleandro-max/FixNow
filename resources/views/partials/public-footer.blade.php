@@ -23,9 +23,9 @@
         <nav class="grid gap-3 text-sm text-white/60" aria-label="За изпълнители">
             <p class="font-black text-white">За изпълнители</p>
             <a href="{{ route('plans') }}" class="hover:text-cyan-200">Планове</a>
-            <a href="{{ route('business.landing') }}" class="hover:text-cyan-200">Стани изпълнител</a>
-            <a href="{{ route('business.landing') }}" class="hover:text-cyan-200">За изпълнители</a>
-            <a href="{{ route('request.service') }}" class="hover:text-cyan-200">Заяви оферта</a>
+            <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="hover:text-cyan-200">Стани изпълнител</a>
+            <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="hover:text-cyan-200">За изпълнители</a>
+            <a href="{{ route('request.service') }}" data-track="cta_request" class="hover:text-cyan-200">Заяви оферта</a>
             <a href="{{ route('contact') }}" class="hover:text-cyan-200">Контакт</a>
         </nav>
 

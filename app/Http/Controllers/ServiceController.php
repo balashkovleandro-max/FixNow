@@ -137,10 +137,10 @@ class ServiceController extends Controller
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'city' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required|string|max:5000',
             'price' => 'nullable|numeric',
             'phone' => 'required|string|max:50',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image' => 'nullable|file|image|mimetypes:image/jpeg,image/png,image/webp|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
             'title.required' => 'Полето за заглавие е задължително.',
             'category.required' => 'Моля, избери категория.',

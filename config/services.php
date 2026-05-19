@@ -43,4 +43,10 @@ return [
         'premium_price_id' => env('STRIPE_PREMIUM_PRICE_ID'),
     ],
 
+    'analytics' => [
+        'ga_measurement_id' => env('GA_MEASUREMENT_ID'),
+        'meta_pixel_id' => env('META_PIXEL_ID'),
+        'clarity_project_id' => env('CLARITY_PROJECT_ID'),
+    ],
+
 ];

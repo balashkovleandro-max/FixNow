@@ -17,7 +17,7 @@ class BusinessPhotoController extends Controller
 
         $validated = $request->validate([
             'photos' => ['required', 'array', 'min:1'],
-            'photos.*' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'photos.*' => ['required', 'file', 'image', 'mimetypes:image/jpeg,image/png,image/webp', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ], [
             'photos.required' => 'Моля, изберете поне една снимка.',
             'photos.array' => 'Моля, изберете валидни снимки.',

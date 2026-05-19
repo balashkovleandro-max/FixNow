@@ -196,7 +196,7 @@
                                         <input name="email" value="{{ old('email', $business->email) }}" class="mt-2 min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 text-white outline-none focus:border-cyan-300/40">
                                     </label>
                                 </div>
-                                <button class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 font-black text-white shadow-lg shadow-blue-950/30">
+                                <button data-track="offer_submit" class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 font-black text-white shadow-lg shadow-blue-950/30">
                                     Изпрати оферта - 3 точки
                                 </button>
                             </form>

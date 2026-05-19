@@ -6,6 +6,7 @@
     <title>{{ $seoTitle }}</title>
     <meta name="description" content="{{ $intro }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.22),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(168,85,247,0.17),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>

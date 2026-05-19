@@ -15,6 +15,8 @@
 - [ ] Stripe test/live mode е избран съзнателно.
 - [ ] `STRIPE_KEY`, `STRIPE_SECRET`, `STRIPE_WEBHOOK_SECRET` са настроени.
 - [ ] `STRIPE_STANDARD_PRICE_ID` и `STRIPE_PREMIUM_PRICE_ID` са настроени.
+- [ ] Local test Price IDs: Standard `price_1TYmByRqvGMkwX9rN7HTUunp`, Premium `price_1TYmCcRqvGMkwX9rE8ichDo4`.
+- [ ] `STRIPE_WEBHOOK_SECRET` е попълнен след Stripe webhook testing (`whsec_...`); докато е празен, `/stripe/webhook` правилно отхвърля webhook заявки.
 - [ ] Stripe Customer Portal е enabled.
 - [ ] Stripe webhook endpoint е настроен към `/stripe/webhook`.
 - [ ] Admin user е създаден чрез `php artisan fixnow:create-admin`.
@@ -81,6 +83,36 @@ php artisan view:cache
 - [ ] Error logs се наблюдават ежедневно.
 - [ ] Stripe dashboard се наблюдава при първите checkout тестове.
 - [ ] Mail delivery logs се наблюдават при първите заявки.
+
+## Final manual QA
+
+- [ ] Client request flow: homepage → `Пусни заявка` → `/zayavi-oferta` → success message → `Виж получените оферти`.
+- [ ] Customer offer page: `/zayavka/{public_token}/offers` показва empty state без оферти и cards при получени оферти.
+- [ ] Customer accept flow: клиентът избира една оферта, вижда success state и не може да избере втора оферта.
+- [ ] Business offer flow: изпълнителят вижда релевантни заявки, изпраща оферта, точките се намаляват и вижда success message.
+- [ ] Accepted executor view: избраният изпълнител вижда `Активна поръчка` и инструкция да се свърже с клиента.
+- [ ] Not selected executor view: неизбраният изпълнител вижда, че клиентът е избрал друг изпълнител.
+- [ ] Admin overview: `/admin/service-requests` и detail page показват заявки, оферти, selected executor и public offer link.
+- [ ] Email delivery: customer confirmation, new offer, accepted offer и not selected emails съдържат правилните links.
+- [ ] Mobile check: homepage, listings, business detail, request form, customer offer page, business service requests и admin service requests.
+- [ ] Analytics enabled: `GA_MEASUREMENT_ID`, `META_PIXEL_ID` и `CLARITY_PROJECT_ID` са попълнени само когато реално ще се използват.
+- [ ] Test request completed: една реална заявка е пусната, има оферта, избран изпълнител и admin вижда статуса.
+
+## Production security checklist
+
+- [ ] `APP_DEBUG=false` е настроено за production.
+- [ ] `.env` не е committed и съдържа реалните secrets само на server-а.
+- [ ] Login, register, public request forms, review/recommend forms и billing checkout имат rate limiting.
+- [ ] Admin routes са достъпни само за authenticated admin потребител.
+- [ ] Business dashboard/billing/profile routes са достъпни само за role `business`.
+- [ ] Public uploads приемат само JPG, PNG и WEBP с реален image MIME type и лимит на размера.
+- [ ] Изпълними файлове, SVG/script payloads и non-image uploads се отхвърлят.
+- [ ] User-generated content се показва с escaped Blade output `{{ }}`, без raw `{!! !!}` за клиентски текстове.
+- [ ] Website/social redirects приемат само очаквани safe URL схеми.
+- [ ] Security headers са налични: `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`.
+- [ ] Stripe webhook endpoint `/stripe/webhook` има валиден `STRIPE_WEBHOOK_SECRET` и отхвърля неподписани заявки.
+- [ ] Contact page е статична; ако бъде добавена POST contact форма, route-ът трябва да получи validation и throttle middleware.
+- [ ] Password reset route не е активен; ако бъде добавен, трябва да използва Laravel signed tokens и throttle middleware.
 
 ## Legal and trust
 
