@@ -31,7 +31,10 @@
             default => 'border-rose-300/30 bg-rose-400/10 text-rose-100',
         };
         $hasPaymentIssue = $business->hasPaymentIssue();
-        $canOpenBillingPortal = filled($business->stripe_customer_id) || $business->hasActiveSubscription();
+        $hasActiveStripeSubscription = $hasActiveStripeSubscription ?? false;
+        $mustManageExistingStripeSubscription = $mustManageExistingStripeSubscription ?? false;
+        $canStartCheckout = $canStartCheckout ?? true;
+        $canOpenBillingPortal = $canOpenBillingPortal ?? (filled($business->stripe_customer_id) || $business->hasActiveSubscription());
         $currentPlan = $plans[$business->planKey()];
         $limitCards = [
             ['label' => 'Градове', 'used' => $usage['cities'], 'limit' => $usage['city_limit'], 'note' => 'Включени според плана: '.$usage['included_city_limit']],
@@ -82,6 +85,18 @@
             <div class="mb-6 rounded-3xl border border-amber-300/25 bg-amber-400/10 p-5 text-amber-50" data-testid="billing-payment-warning">
                 <p class="font-black">Има проблем с плащането по абонамента.</p>
                 <p class="mt-2 text-sm leading-6 text-amber-50/80">Premium предимствата са спрени, докато плащането не бъде възстановено през Stripe Customer Portal.</p>
+            </div>
+        @endif
+
+        @if($hasActiveStripeSubscription)
+            <div class="mb-6 rounded-3xl border border-cyan-300/25 bg-cyan-300/10 p-5 text-cyan-50" data-testid="active-stripe-subscription-notice">
+                <p class="font-black">Вече имате активен Stripe абонамент.</p>
+                <p class="mt-2 text-sm leading-6 text-cyan-50/80">Промени на плана, upgrade или downgrade се управляват през Stripe Customer Portal, за да избегнем дублирани абонаменти.</p>
+            </div>
+        @elseif($mustManageExistingStripeSubscription)
+            <div class="mb-6 rounded-3xl border border-amber-300/25 bg-amber-400/10 p-5 text-amber-50" data-testid="manage-existing-stripe-subscription-notice">
+                <p class="font-black">Имате съществуващ Stripe абонамент, който трябва да се управлява през Customer Portal.</p>
+                <p class="mt-2 text-sm leading-6 text-amber-50/80">Отворете Customer Portal, за да коригирате плащането или да промените плана без риск от втори абонамент.</p>
             </div>
         @endif
 
@@ -137,32 +152,44 @@
                         @endforeach
                         <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-violet-300"></span><span>Приоритет при matching на заявки</span></li>
                     </ul>
-                    <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
-                        @csrf
-                        <input type="hidden" name="plan" value="standard">
-                         <button type="submit" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 font-black text-white hover:bg-white/20" data-testid="checkout-standard-button">
-                            Премини към Standard - 18,99 €/месец
-                        </button>
-                    </form>
+                    @if($canStartCheckout)
+                        <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
+                            @csrf
+                            <input type="hidden" name="plan" value="standard">
+                             <button type="submit" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 font-black text-white hover:bg-white/20" data-testid="checkout-standard-button">
+                                Премини към Standard - 18,99 €/месец
+                            </button>
+                        </form>
+                    @else
+                        <div class="mt-6 rounded-3xl border border-cyan-300/20 bg-cyan-300/10 p-5 text-sm leading-6 text-cyan-50" data-testid="checkout-blocked-existing-subscription">
+                            Управлявайте промяната на плана през Stripe Customer Portal. Така няма да се създаде втори активен абонамент.
+                        </div>
+                    @endif
                 @else
                     <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200">Upgrade</p>
                     <h2 class="mt-4 text-3xl font-black">Ъпгрейд към Premium</h2>
                     <p class="mt-3 text-sm leading-6 text-white/70">Premium отключва до 5 града, 5 категории/услуги, 15 снимки, препоръчан badge и приоритет при matching на заявки.</p>
-                    <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
-                        @csrf
-                        <input type="hidden" name="plan" value="premium">
-                         <button type="submit" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-4 font-black text-white shadow-xl shadow-blue-600/25" data-testid="upgrade-premium-button">
-                            Вземи Premium - 24,99 €/месец
-                        </button>
-                    </form>
-                    <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-3">
-                        @csrf
-                        <input type="hidden" name="plan" value="standard">
-                         <button type="submit" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 font-black text-white hover:bg-white/20" data-testid="checkout-standard-button">
-                            Активирай Standard - 18,99 €/месец
-                        </button>
-                    </form>
-                    <p class="mt-3 text-xs leading-5 text-white/50">Планът се активира само след успешно потвърдено плащане през Stripe. Натискането на бутона само стартира процеса по плащане.</p>
+                    @if($canStartCheckout)
+                        <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
+                            @csrf
+                            <input type="hidden" name="plan" value="premium">
+                             <button type="submit" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-4 font-black text-white shadow-xl shadow-blue-600/25" data-testid="upgrade-premium-button">
+                                Вземи Premium - 24,99 €/месец
+                            </button>
+                        </form>
+                        <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-3">
+                            @csrf
+                            <input type="hidden" name="plan" value="standard">
+                             <button type="submit" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 font-black text-white hover:bg-white/20" data-testid="checkout-standard-button">
+                                Активирай Standard - 18,99 €/месец
+                            </button>
+                        </form>
+                        <p class="mt-3 text-xs leading-5 text-white/50">Планът се активира само след успешно потвърдено плащане през Stripe. Натискането на бутона само стартира процеса по плащане.</p>
+                    @else
+                        <div class="mt-6 rounded-3xl border border-cyan-300/20 bg-cyan-300/10 p-5 text-sm leading-6 text-cyan-50" data-testid="checkout-blocked-existing-subscription">
+                            Вече има Stripe абонамент към този профил. Upgrade/downgrade се прави през Customer Portal, за да не се създава дублиран абонамент.
+                        </div>
+                    @endif
                 @endif
 
                 @if($canOpenBillingPortal)

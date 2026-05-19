@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -33,12 +34,19 @@ class BillingController extends Controller
         $endDate = $subscriptionStatus === 'trial'
             ? $business->trial_ends_at
             : $business->subscription_ends_at;
+        $hasActiveStripeSubscription = $this->hasActiveStripeSubscription($business);
+        $mustManageExistingStripeSubscription = $this->mustManageExistingStripeSubscription($business);
 
         return view('business.billing', [
             'business' => $business,
             'plans' => $this->planDefinitions(),
             'subscriptionStatus' => $subscriptionStatus,
             'endDate' => $endDate,
+            'hasActiveStripeSubscription' => $hasActiveStripeSubscription,
+            'mustManageExistingStripeSubscription' => $mustManageExistingStripeSubscription,
+            'canStartCheckout' => !($hasActiveStripeSubscription || $mustManageExistingStripeSubscription),
+            'canOpenBillingPortal' => filled($business->stripe_customer_id)
+                && ($hasActiveStripeSubscription || $mustManageExistingStripeSubscription || $business->hasPaymentIssue()),
             'usage' => [
                 'cities' => $business->serviceCityCount(),
                 'city_limit' => $business->cityLimit(),
@@ -67,6 +75,20 @@ class BillingController extends Controller
         $validated = $request->validate([
             'plan' => ['required', 'in:standard,premium'],
         ]);
+
+        if ($this->hasActiveStripeSubscription($business)) {
+            return redirect()
+                ->route('business.billing')
+                ->with('success', 'Вече имате активен абонамент. Можете да го управлявате от Customer Portal.');
+        }
+
+        if ($this->mustManageExistingStripeSubscription($business)) {
+            return redirect()
+                ->route('business.billing')
+                ->withErrors([
+                    'stripe' => 'Имате съществуващ Stripe абонамент. Моля, управлявайте плащането или промяната на плана през Customer Portal.',
+                ]);
+        }
 
         $plan = $validated['plan'];
         $secret = config('services.stripe.secret');
@@ -202,6 +224,22 @@ class BillingController extends Controller
             'premium' => config('services.stripe.premium_price_id'),
             default => null,
         };
+    }
+
+    private function hasActiveStripeSubscription(User $business): bool
+    {
+        return filled($business->stripe_subscription_id)
+            && in_array($business->subscription_status, ['active', 'trialing'], true)
+            && (
+                $business->subscription_ends_at === null
+                || $business->subscription_ends_at->greaterThanOrEqualTo(now())
+            );
+    }
+
+    private function mustManageExistingStripeSubscription(User $business): bool
+    {
+        return filled($business->stripe_subscription_id)
+            && in_array($business->subscription_status, ['past_due', 'unpaid', 'incomplete'], true);
     }
 
     private function planDefinitions(): array

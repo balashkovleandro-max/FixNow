@@ -162,6 +162,158 @@ class BillingPlansTest extends TestCase
             && str_contains($request->body(), 'metadata%5Bplan%5D=premium'));
     }
 
+    public function test_active_subscribed_business_cannot_start_another_checkout(): void
+    {
+        Http::fake();
+
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+            'subscription_status' => 'active',
+            'stripe_customer_id' => 'cus_active_fixnow',
+            'stripe_subscription_id' => 'sub_active_fixnow',
+            'subscription_ends_at' => now()->addMonth(),
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'standard'])
+            ->assertRedirect(route('business.billing'))
+            ->assertSessionHas('success', 'Вече имате активен абонамент. Можете да го управлявате от Customer Portal.');
+
+        Http::assertNothingSent();
+    }
+
+    public function test_trialing_subscribed_business_cannot_start_another_checkout(): void
+    {
+        Http::fake();
+
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'trialing',
+            'stripe_customer_id' => 'cus_trialing_fixnow',
+            'stripe_subscription_id' => 'sub_trialing_fixnow',
+            'subscription_ends_at' => now()->addWeeks(2),
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'premium'])
+            ->assertRedirect(route('business.billing'))
+            ->assertSessionHas('success', 'Вече имате активен абонамент. Можете да го управлявате от Customer Portal.');
+
+        Http::assertNothingSent();
+    }
+
+    public function test_cancelled_business_can_start_checkout_again(): void
+    {
+        Http::fake([
+            'https://api.stripe.com/v1/checkout/sessions' => Http::response([
+                'url' => 'https://checkout.stripe.test/restart-cancelled',
+            ]),
+        ]);
+
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'canceled',
+            'stripe_customer_id' => 'cus_cancelled_fixnow',
+            'stripe_subscription_id' => 'sub_cancelled_fixnow',
+            'subscription_ends_at' => now()->subDay(),
+            'cancelled_at' => now()->subDay(),
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'premium'])
+            ->assertRedirect('https://checkout.stripe.test/restart-cancelled');
+
+        Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/checkout/sessions'
+            && str_contains($request->body(), 'price_1TYmCcRqvGMkwX9rE8ichDo4'));
+    }
+
+    public function test_expired_business_can_start_checkout_again(): void
+    {
+        Http::fake([
+            'https://api.stripe.com/v1/checkout/sessions' => Http::response([
+                'url' => 'https://checkout.stripe.test/restart-expired',
+            ]),
+        ]);
+
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'expired',
+            'stripe_customer_id' => 'cus_expired_fixnow',
+            'stripe_subscription_id' => 'sub_expired_fixnow',
+            'subscription_ends_at' => now()->subDay(),
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'premium'])
+            ->assertRedirect('https://checkout.stripe.test/restart-expired');
+
+        Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/checkout/sessions'
+            && str_contains($request->body(), 'price_1TYmCcRqvGMkwX9rE8ichDo4'));
+    }
+
+    public function test_payment_failed_business_can_start_checkout_again(): void
+    {
+        Http::fake([
+            'https://api.stripe.com/v1/checkout/sessions' => Http::response([
+                'url' => 'https://checkout.stripe.test/restart-payment-failed',
+            ]),
+        ]);
+
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+            'subscription_status' => 'payment_failed',
+            'stripe_customer_id' => 'cus_payment_failed_fixnow',
+            'stripe_subscription_id' => 'sub_payment_failed_fixnow',
+            'subscription_ends_at' => now()->subDay(),
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'standard'])
+            ->assertRedirect('https://checkout.stripe.test/restart-payment-failed');
+
+        Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/checkout/sessions'
+            && str_contains($request->body(), 'price_1TYmByRqvGMkwX9rN7HTUunp'));
+    }
+
+    public function test_past_due_business_must_use_customer_portal_instead_of_new_checkout(): void
+    {
+        Http::fake();
+
+        $business = $this->business([
+            'subscription_plan' => 'premium',
+            'subscription_status' => 'past_due',
+            'stripe_customer_id' => 'cus_past_due_checkout_fixnow',
+            'stripe_subscription_id' => 'sub_past_due_checkout_fixnow',
+            'subscription_ends_at' => now()->addMonth(),
+        ]);
+
+        $this->actingAs($business)
+            ->post(route('business.billing.checkout'), ['plan' => 'standard'])
+            ->assertRedirect(route('business.billing'))
+            ->assertSessionHasErrors('stripe');
+
+        Http::assertNothingSent();
+    }
+
+    public function test_customer_portal_button_is_available_for_active_stripe_subscription(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'active',
+            'stripe_customer_id' => 'cus_active_portal_fixnow',
+            'stripe_subscription_id' => 'sub_active_portal_fixnow',
+            'subscription_ends_at' => now()->addMonth(),
+        ]);
+
+        $this->actingAs($business)
+            ->get(route('business.billing'))
+            ->assertOk()
+            ->assertSee('active-stripe-subscription-notice', false)
+            ->assertSee('billing-portal-button', false)
+            ->assertDontSee('upgrade-premium-button', false)
+            ->assertDontSee('checkout-standard-button', false);
+    }
+
     public function test_checkout_rejects_invalid_plan(): void
     {
         Http::fake();
