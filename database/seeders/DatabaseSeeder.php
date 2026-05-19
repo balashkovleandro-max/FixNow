@@ -21,6 +21,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        if (app()->environment('production')) {
+            if (!app()->runningUnitTests()) {
+                $this->command?->warn('DatabaseSeeder skipped in production. Use SoftLaunchPlevenSeeder explicitly for controlled soft-launch data.');
+            }
+
+            return;
+        }
+
         $password = Hash::make('password');
 
         $admin = $this->user('admin@example.com', [

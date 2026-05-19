@@ -10,12 +10,9 @@
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.20),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
-    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <a href="{{ url('/') }}" class="mb-10 inline-flex items-center gap-3">
-            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</div>
-            <span class="text-xl font-black">FixNow.bg</span>
-        </a>
+    @include('partials.public-header')
 
+    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
             <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Как работи</p>
             <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">От нужда до доверен изпълнител в три ясни стъпки.</h1>

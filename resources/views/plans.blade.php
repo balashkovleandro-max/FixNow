@@ -10,34 +10,10 @@
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(34,211,238,0.16),transparent_32%),radial-gradient(circle_at_82%_12%,rgba(168,85,247,0.16),transparent_30%),linear-gradient(180deg,#020812,#061426_48%,#020812)]"></div>
 
-    <header class="border-b border-white/10 bg-slate-950/55 backdrop-blur-xl">
-        <nav class="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-            <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 text-xl font-black">F</span>
-                <span class="text-xl font-black">FixNow.bg</span>
-            </a>
 
-            <div class="hidden items-center gap-7 text-sm font-bold text-white/70 lg:flex">
-                <a href="{{ url('/') }}" class="hover:text-white">Начало</a>
-                <a href="{{ route('businesses.index') }}" class="hover:text-white">Намери изпълнител</a>
-                <a href="{{ route('request.service') }}" class="hover:text-white">Пусни заявка</a>
-                <a href="{{ route('business.landing') }}" class="hover:text-white">За изпълнители</a>
-                <a href="{{ route('plans') }}" class="text-cyan-200">Планове</a>
-            </div>
+    @include('partials.public-header')
 
-            <div class="flex items-center gap-2">
-                @auth
-                    <a href="{{ auth()->user()->role === 'business' ? route('business.billing') : route('dashboard') }}" class="hidden min-h-11 items-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/80 hover:bg-white/10 sm:inline-flex">Моят план</a>
-                    <a href="{{ route('dashboard') }}" class="inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-2 text-sm font-black text-white shadow-lg shadow-blue-600/20">Табло</a>
-                @else
-                    <a href="{{ route('login') }}" class="hidden min-h-11 items-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/80 hover:bg-white/10 sm:inline-flex">Вход</a>
-                    <a href="{{ route('register') }}" class="inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-2 text-sm font-black text-white shadow-lg shadow-blue-600/20">Стани изпълнител</a>
-                @endauth
-            </div>
-        </nav>
-    </header>
-
-    <main class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:px-8">
+<main class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:px-8">
         @if($errors->has('stripe'))
             <div class="mb-6 rounded-3xl border border-rose-300/25 bg-rose-400/10 p-5 text-rose-50">
                 {{ $errors->first('stripe') }}

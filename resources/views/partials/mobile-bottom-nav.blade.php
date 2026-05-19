@@ -1,6 +1,5 @@
 @php
     $profileHref = auth()->check() ? route('dashboard') : route('login');
-    $savedHref = auth()->check() ? route('dashboard') : route('login');
     $profileLabel = auth()->check() ? 'Профил' : 'Вход';
     $itemBase = 'flex min-w-0 flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 text-[11px] font-black transition';
     $itemIdle = 'text-white/55 hover:bg-white/10 hover:text-white';
@@ -22,9 +21,9 @@
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" stroke-linejoin="round"/></svg>
             <span>Категории</span>
         </a>
-        <a href="{{ $savedHref }}" class="{{ $itemBase }} {{ request()->is('favorites') ? $itemActive : $itemIdle }}">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 1 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Любими</span>
+        <a href="{{ route('request.service') }}" class="{{ $itemBase }} {{ request()->routeIs('request.service') || request()->routeIs('request.service.store') ? $itemActive : $itemIdle }}">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke-linejoin="round"/></svg>
+            <span>Заявка</span>
         </a>
         <a href="{{ $profileHref }}" class="{{ $itemBase }} {{ request()->routeIs('dashboard') || request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('business.billing') ? $itemActive : $itemIdle }}">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0" stroke-linecap="round"/></svg>

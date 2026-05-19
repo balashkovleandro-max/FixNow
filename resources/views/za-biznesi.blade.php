@@ -12,35 +12,10 @@
         <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent"></div>
     </div>
 
-    <header class="sticky top-0 z-50 border-b border-white/10 bg-[#030712]/80 backdrop-blur-2xl">
-        <div class="mx-auto flex max-w-[1500px] items-center justify-between px-4 py-4 sm:px-6 lg:px-12">
-            <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black shadow-lg shadow-blue-600/25">F</div>
-                <span class="text-xl font-black">FixNow.bg</span>
-            </a>
 
-            <nav class="hidden items-center gap-7 lg:flex">
-                <a href="{{ url('/') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Начало</a>
-                <a href="{{ url('/categories') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Категории</a>
-                <a href="{{ route('services.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Услуги</a>
-                <a href="{{ route('businesses.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Изпълнители</a>
-                <a href="{{ route('request.service') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Заяви оферта</a>
-                <a href="{{ route('business.landing') }}" class="text-sm font-black text-cyan-200">За изпълнители</a>
-            </nav>
+    @include('partials.public-header')
 
-            <div class="flex items-center gap-3">
-                @guest
-                    <a href="{{ route('login') }}" class="hidden rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-bold text-white/75 hover:bg-white/10 sm:inline-flex">Вход</a>
-                    <a href="{{ route('register') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-2.5 text-sm font-black text-white shadow-lg shadow-blue-600/25">Стани изпълнител</a>
-                @endguest
-                @auth
-                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-2.5 text-sm font-black text-white shadow-lg shadow-blue-600/25">Моето табло</a>
-                @endauth
-            </div>
-        </div>
-    </header>
-
-    <main>
+<main>
         <section class="relative overflow-hidden">
             <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_72%_24%,rgba(59,130,246,0.26),transparent_26%),radial-gradient(circle_at_88%_42%,rgba(168,85,247,0.20),transparent_28%)]"></div>
             <div class="mx-auto grid max-w-[1500px] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_520px] lg:px-12 lg:py-20">

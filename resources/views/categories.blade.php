@@ -9,24 +9,10 @@
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(34,211,238,0.18),transparent_30%),radial-gradient(circle_at_82%_20%,rgba(168,85,247,0.16),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
-    <header class="border-b border-white/10 bg-[#030712]/80 backdrop-blur-2xl">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</div>
-                <span class="text-xl font-black">FixNow.bg</span>
-            </a>
-            <nav class="hidden items-center gap-6 md:flex">
-                <a href="{{ url('/') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Начало</a>
-                <a href="{{ route('top.businesses') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Топ изпълнители</a>
-                <a href="{{ route('services.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Услуги</a>
-                <a href="{{ route('businesses.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Изпълнители</a>
-                <a href="{{ route('request.service') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Заяви оферта</a>
-                <a href="{{ route('business.landing') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">За изпълнители</a>
-            </nav>
-        </div>
-    </header>
 
-    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    @include('partials.public-header')
+
+<main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <section class="mb-8 rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
             <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Категории</p>
             <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-5xl">Открий точните услуги и изпълнители по категория</h1>

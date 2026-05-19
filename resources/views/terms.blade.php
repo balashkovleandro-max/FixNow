@@ -10,17 +10,10 @@
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_15%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_85%_20%,rgba(168,85,247,0.16),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
-    <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <a href="{{ url('/') }}" class="inline-flex items-center gap-3">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</span>
-                <span class="text-xl font-black">FixNow.bg</span>
-            </a>
-            <a href="{{ route('contact') }}" class="rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-sm font-black text-white hover:bg-white/15">Контакт</a>
-        </div>
-    </header>
 
-    <main class="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+    @include('partials.public-header')
+
+<main class="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
             <p class="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">Правна информация</p>
             <h1 class="mt-6 text-4xl font-black leading-tight sm:text-5xl">Общи условия</h1>

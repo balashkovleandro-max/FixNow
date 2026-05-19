@@ -95,6 +95,38 @@ php artisan storage:link
 php artisan migrate:fresh --seed
 ```
 
+## Soft launch data setup
+
+Създайте admin акаунт без да записвате парола в Git или в публична документация:
+
+```bash
+php artisan fixnow:create-admin --name="FixNow Admin" --email="admin@fixnow.bg"
+```
+
+Ако не подадете `--password`, command-ът ще я поиска интерактивно и няма да я показва в output. За non-interactive staging setup може да подадете:
+
+```bash
+php artisan fixnow:create-admin --name="FixNow Admin" --email="admin@fixnow.bg" --password="temporary-secure-password"
+```
+
+По желание за test/soft launch в Плевен може да заредите контролирани примерни изпълнители:
+
+```bash
+php artisan db:seed --class=SoftLaunchPlevenSeeder
+```
+
+Този seeder създава 5+ профила за Плевен в категории ремонти, ВиК, електроуслуги, почистване и автосервизи. Използва placeholder телефони и `@fixnow.test` email-и, за да не изглежда като реални фирмени данни. Не seed-ва fake reviews или fake analytics, за да започнат тези метрики от реална активност.
+
+Default `DatabaseSeeder` е само за local/demo preview и е защитен да не се изпълнява в `APP_ENV=production`. Не пускайте `migrate:fresh --seed` на production, защото изтрива реални данни.
+
+След soft-launch seed проверете:
+
+- Login като admin работи.
+- `/businesses?city=Плевен` показва seeded изпълнители.
+- `/grad/pleven` и `/grad/pleven/vik-uslugi` зареждат.
+- Поне един Premium и един verified профил се виждат публично.
+- Expired/cancelled профили не се показват публично.
+
 ## Permissions
 
 Linux пример:

@@ -42,17 +42,10 @@
 
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(34,211,238,0.18),transparent_30%),radial-gradient(circle_at_86%_12%,rgba(168,85,247,0.2),transparent_34%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
-    <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <a href="{{ url('/') }}" class="inline-flex items-center gap-3">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</span>
-                <span class="text-xl font-black">FixNow.bg</span>
-            </a>
-            <a href="{{ route('request.service') }}" class="hidden rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100 hover:bg-cyan-300/15 sm:inline-flex">Пусни нова заявка</a>
-        </div>
-    </header>
 
-    <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    @include('partials.public-header')
+
+<main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         @if(session('success'))
             <div class="mb-6 rounded-3xl border border-emerald-300/20 bg-emerald-400/10 p-5 text-emerald-100">
                 {{ session('success') }}

@@ -9,6 +9,8 @@
 <body class="min-h-screen bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
+    @include('partials.public-header')
+
     <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         @php
             $business = $service->user;

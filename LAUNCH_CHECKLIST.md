@@ -17,7 +17,10 @@
 - [ ] `STRIPE_STANDARD_PRICE_ID` и `STRIPE_PREMIUM_PRICE_ID` са настроени.
 - [ ] Stripe Customer Portal е enabled.
 - [ ] Stripe webhook endpoint е настроен към `/stripe/webhook`.
-- [ ] Admin user е създаден.
+- [ ] Admin user е създаден чрез `php artisan fixnow:create-admin`.
+- [ ] Ако е нужен контролиран Pleven test dataset, изпълнен е `php artisan db:seed --class=SoftLaunchPlevenSeeder`.
+- [ ] Demo seeders не са пускани на production, освен ако това е умишлен staging тест.
+- [ ] Проверено е, че seeded изпълнителите се виждат в `/businesses?city=Плевен`.
 - [ ] `php artisan storage:link` е изпълнен.
 - [ ] Permissions за `storage/` и `bootstrap/cache/` са проверени.
 - [ ] Backup стратегия за database е избрана.

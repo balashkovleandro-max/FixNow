@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\BusinessRecommendation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -130,6 +131,11 @@ class SeoPagesTest extends TestCase
             'verified_at' => now(),
             'created_at' => now()->subDay(),
             'updated_at' => now()->subDay(),
+        ]);
+
+        BusinessRecommendation::query()->create([
+            'business_id' => $premiumVerified->id,
+            'ip_hash' => hash('sha256', 'premium-verified-seo-ranking-business'),
         ]);
 
         $this->get('/grad/pleven/avtoservizi')

@@ -19,20 +19,10 @@
 
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
-    <header class="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
-        <a href="{{ url('/') }}" class="flex items-center gap-3">
-            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</div>
-            <span class="text-xl font-black">FixNow.bg</span>
-        </a>
-        <nav class="hidden items-center gap-2 text-sm font-bold text-white/70 md:flex">
-            <a href="{{ url('/') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Начало</a>
-            <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Намери изпълнител</a>
-            <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Услуги</a>
-            <a href="{{ route('top.businesses') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Топ изпълнители</a>
-        </nav>
-    </header>
 
-    <main class="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-4 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
+    @include('partials.public-header')
+
+<main class="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-4 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
         <section class="flex flex-col justify-center">
             <p class="mb-4 inline-flex w-fit rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100">Безплатна заявка за оферта</p>
             <h1 class="max-w-2xl text-4xl font-black leading-tight sm:text-6xl">

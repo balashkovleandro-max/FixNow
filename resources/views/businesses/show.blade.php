@@ -72,25 +72,10 @@
 
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.24),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.20),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
-    <header class="sticky top-0 z-50 border-b border-white/10 bg-[#030712]/80 backdrop-blur-2xl">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black shadow-lg shadow-blue-600/25">F</div>
-                <span class="text-xl font-black">FixNow.bg</span>
-            </a>
-            <nav class="hidden items-center gap-6 md:flex">
-                <a href="{{ route('top.businesses') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Топ изпълнители</a>
-                <a href="{{ route('businesses.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Изпълнители</a>
-                <a href="{{ route('services.index') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Услуги</a>
-                <a href="{{ url('/categories') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Категории</a>
-                <a href="{{ route('business.landing') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">За изпълнители</a>
-                <a href="{{ route('request.service') }}" class="text-sm font-semibold text-white/70 hover:text-cyan-200">Заяви оферта</a>
-            </nav>
-            <a href="{{ route('businesses.index') }}" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/75 hover:bg-white/10">Назад</a>
-        </div>
-    </header>
 
-    <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    @include('partials.public-header')
+
+<main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <section class="overflow-hidden rounded-[34px] border border-white/10 bg-white/10 shadow-2xl shadow-black/25 backdrop-blur-xl">
             <div class="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
                 <div class="relative min-h-[430px] p-6 sm:p-8 lg:p-10">
@@ -505,24 +490,7 @@
 
                     <div data-testid="similar-businesses" class="mt-6 grid gap-4 md:grid-cols-3">
                         @forelse($similarBusinesses as $similarBusiness)
-                            <a href="{{ route('businesses.show', $similarBusiness) }}" class="rounded-3xl border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-white/10">
-                                <div class="flex items-start justify-between gap-3">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 font-black">
-                                        {{ strtoupper(mb_substr($similarBusiness->business_name ?: $similarBusiness->name, 0, 1)) }}
-                                    </div>
-                                    <div class="flex flex-wrap justify-end gap-2">
-                                        @if($similarBusiness->isPremium())
-                                            <span class="rounded-full bg-violet-400/10 px-2 py-1 text-[11px] font-black text-violet-100">Premium</span>
-                                        @endif
-                                        @if($similarBusiness->is_verified)
-                                            <span class="rounded-full bg-emerald-400/10 px-2 py-1 text-[11px] font-black text-emerald-100">Потвърден</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <p class="mt-4 text-lg font-black">{{ $similarBusiness->business_name ?: $similarBusiness->name }}</p>
-                                <p class="mt-2 text-sm text-cyan-200">{{ $similarBusiness->business_category ?: 'Локален изпълнител' }}</p>
-                                <p class="mt-2 text-sm text-white/55">{{ $similarBusiness->city ?: 'България' }}</p>
-                            </a>
+                            @include('partials.business-card', ['business' => $similarBusiness])
                         @empty
                             <div class="md:col-span-3 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
                                 <p class="font-black">Все още няма подобни активни изпълнители</p>

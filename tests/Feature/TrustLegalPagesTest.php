@@ -75,4 +75,27 @@ class TrustLegalPagesTest extends TestCase
         $this->get(route('plans'))->assertOk();
         $this->get('/categories')->assertOk();
     }
+
+    public function test_core_public_pages_share_premium_header(): void
+    {
+        $pages = [
+            '/',
+            route('services.index'),
+            route('businesses.index'),
+            route('plans'),
+            route('business.landing'),
+            route('request.service'),
+            '/how-it-works',
+        ];
+
+        foreach ($pages as $page) {
+            $this->get($page)
+                ->assertOk()
+                ->assertSee('Услуги')
+                ->assertSee('За клиенти')
+                ->assertSee('За изпълнители')
+                ->assertSee('Планове')
+                ->assertSee('Пусни заявка');
+        }
+    }
 }

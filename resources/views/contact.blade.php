@@ -14,17 +14,10 @@
 
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
-    <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <a href="{{ url('/') }}" class="inline-flex items-center gap-3">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</span>
-                <span class="text-xl font-black">FixNow.bg</span>
-            </a>
-            <a href="{{ route('request.service') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-2 text-sm font-black text-white shadow-lg shadow-blue-600/25">Заяви оферта</a>
-        </div>
-    </header>
 
-    <main class="mx-auto grid max-w-7xl items-start gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_520px] lg:px-8">
+    @include('partials.public-header')
+
+<main class="mx-auto grid max-w-7xl items-start gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_520px] lg:px-8">
         <section class="pt-4 lg:pt-12">
             <p class="mb-4 inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">Контакт</p>
             <h1 class="max-w-2xl text-4xl font-black leading-tight sm:text-6xl">Нека направим услугите по-лесни за намиране.</h1>

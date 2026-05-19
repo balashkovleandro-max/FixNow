@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BusinessRecommendation;
+use App\Models\BusinessPhoto;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -27,6 +28,86 @@ class GrowthFeaturesTest extends TestCase
 
         $this->get('/top-businesses')
             ->assertRedirect('/top-biznesi');
+    }
+
+    public function test_public_businesses_page_shows_rich_executor_card_copy(): void
+    {
+        $this->business([
+            'business_name' => 'Premium Card Executor',
+            'business_category' => 'ВиК услуги',
+            'service_categories' => ['ВиК услуги', 'Ремонти'],
+            'city' => 'Плевен',
+            'service_cities' => ['Плевен'],
+            'short_description' => 'Аварийни ВиК ремонти и диагностика за домове и офиси.',
+            'is_verified' => true,
+            'verified_at' => now(),
+        ]);
+
+        $this->get(route('businesses.index'))
+            ->assertOk()
+            ->assertSee('executor-card', false)
+            ->assertSee('Premium Card Executor')
+            ->assertSee('ВиК услуги')
+            ->assertSee('Плевен')
+            ->assertSee('Изпрати запитване')
+            ->assertSee('Виж профил');
+    }
+
+    public function test_executor_card_uses_fallback_visual_without_photo(): void
+    {
+        $this->business([
+            'business_name' => 'No Photo Executor Card',
+            'business_category' => 'Почистване',
+            'service_categories' => ['Почистване'],
+            'city' => 'Плевен',
+            'service_cities' => ['Плевен'],
+        ]);
+
+        $this->get(route('businesses.index'))
+            ->assertOk()
+            ->assertSee('No Photo Executor Card')
+            ->assertSee('executor-card-fallback-visual', false);
+    }
+
+    public function test_executor_card_with_photo_loads_on_public_listing(): void
+    {
+        $business = $this->business([
+            'business_name' => 'Photo Executor Card',
+            'business_category' => 'Електроуслуги',
+            'service_categories' => ['Електроуслуги'],
+            'city' => 'Плевен',
+            'service_cities' => ['Плевен'],
+        ]);
+
+        BusinessPhoto::create([
+            'business_id' => $business->id,
+            'path' => 'business-photos/card-preview.jpg',
+            'original_name' => 'card-preview.jpg',
+            'alt_text' => 'Снимка на изпълнител',
+            'sort_order' => 1,
+        ]);
+
+        $this->get(route('businesses.index'))
+            ->assertOk()
+            ->assertSee('Photo Executor Card')
+            ->assertSee('executor-card-cover-image', false)
+            ->assertSee('business-photos/card-preview.jpg', false);
+    }
+
+    public function test_top_businesses_page_shows_profile_cta_on_executor_card(): void
+    {
+        $this->business([
+            'business_name' => 'Top Card CTA Executor',
+            'business_category' => 'Автосервизи',
+            'service_categories' => ['Автосервизи'],
+            'city' => 'Плевен',
+            'service_cities' => ['Плевен'],
+        ]);
+
+        $this->get(route('top.businesses'))
+            ->assertOk()
+            ->assertSee('Top Card CTA Executor')
+            ->assertSee('Виж профил');
     }
 
     public function test_expired_and_cancelled_businesses_are_hidden_from_top_rankings(): void
@@ -161,6 +242,15 @@ class GrowthFeaturesTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
+            ->assertSee('Пуснете заявка веднъж')
+            ->assertSee('Получете оферти')
+            ->assertSee('Избран изпълнител')
+            ->assertSee('Добави профил')
+            ->assertSee('Услуги')
+            ->assertSee('За клиенти')
+            ->assertSee('За изпълнители')
+            ->assertSee('Планове')
+            ->assertSee('Пусни заявка')
             ->assertSee('Топ изпълнители')
             ->assertSee('Най-препоръчвани')
             ->assertSee('Проверени изпълнители')
