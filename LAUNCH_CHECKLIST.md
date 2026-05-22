@@ -7,6 +7,7 @@
 - [ ] Scalingo `.buildpacks` файлът е commit-нат и съдържа Node.js buildpack преди PHP buildpack.
 - [ ] Scalingo deploy logs показват `npm ci`/`npm install` и `npm run build`.
 - [ ] След deploy съществува `public/build/manifest.json`.
+- [ ] След deploy НЕ съществува `public/hot` (иначе `@vite` ще сочи към dev server).
 - [ ] `git status` е прегледан и няма неочаквани промени.
 - [ ] `.env` е прегледан за production/test средата.
 - [ ] `APP_ENV=production` за production.
@@ -45,6 +46,7 @@ Scalingo трябва да изпълни Node.js buildpack преди PHP build
 
 ```bash
 scalingo --app <app-name> run 'ls -la public/build/manifest.json'
+scalingo --app <app-name> run 'test ! -f public/hot'
 ```
 
 Generic/manual server commands:

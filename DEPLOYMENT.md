@@ -65,10 +65,15 @@ Verify after deploy:
 
 ```bash
 scalingo --app <app-name> run 'ls -la public/build/manifest.json'
+scalingo --app <app-name> run 'test ! -f public/hot'
 ```
 
 If the file is missing, inspect the deploy logs for the Node.js buildpack step and confirm
 that `npm ci` and `npm run build` ran before the PHP/Laravel app started.
+
+If the page renders as unstyled HTML while `public/build/manifest.json` exists, check that
+`public/hot` is not present in production. A stale `public/hot` makes Laravel `@vite` point to
+the local Vite dev server instead of the built `/build/assets/...` files.
 
 ## `.env` настройка
 
