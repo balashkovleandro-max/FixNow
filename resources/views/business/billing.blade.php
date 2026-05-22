@@ -70,8 +70,8 @@
             </div>
         @elseif(request('stripe') === 'cancelled')
             <div class="mb-6 rounded-3xl border border-amber-300/25 bg-amber-400/10 p-5 text-amber-50" data-testid="stripe-return-cancelled">
-                <p class="font-black">Stripe Checkout беше прекъснат.</p>
-                <p class="mt-2 text-sm leading-6 text-amber-50/80">Не е активиран платен план. Можете да стартирате checkout отново, когато сте готови.</p>
+                <p class="font-black">Плащането не беше завършено. Абонаментът не е активиран.</p>
+                <p class="mt-2 text-sm leading-6 text-amber-50/80">Можете да стартирате Stripe Checkout отново, когато сте готови. Текущият план и статус остават непроменени.</p>
             </div>
         @endif
 
@@ -196,7 +196,7 @@
                     <form action="{{ route('business.billing.portal') }}" method="POST" class="mt-5">
                         @csrf
                         <button type="submit" class="min-h-12 w-full rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4 font-black text-cyan-50 hover:bg-cyan-300/15" data-testid="billing-portal-button">
-                            Управление на абонамента
+                            Управлявай абонамента
                         </button>
                     </form>
                 @endif

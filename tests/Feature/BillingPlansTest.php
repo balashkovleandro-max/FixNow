@@ -310,6 +310,7 @@ class BillingPlansTest extends TestCase
             ->assertOk()
             ->assertSee('active-stripe-subscription-notice', false)
             ->assertSee('billing-portal-button', false)
+            ->assertSee('Управлявай абонамента')
             ->assertDontSee('upgrade-premium-button', false)
             ->assertDontSee('checkout-standard-button', false);
     }
@@ -556,6 +557,54 @@ class BillingPlansTest extends TestCase
         $this->assertTrue($business->hasPaymentIssue());
     }
 
+    public function test_invoice_payment_failed_does_not_upgrade_to_failed_paid_plan(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'active',
+            'stripe_customer_id' => 'cus_failed_upgrade_fixnow',
+            'stripe_subscription_id' => 'sub_failed_upgrade_fixnow',
+        ]);
+
+        $payload = $this->invoicePaymentFailedPayload($business);
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+        $this->assertSame('payment_failed', $business->subscription_status);
+        $this->assertFalse($business->isPremium());
+        $this->assertFalse($business->isPubliclyVisible());
+        $this->assertTrue($business->hasPaymentIssue());
+    }
+
+    public function test_checkout_completed_with_unpaid_payment_status_does_not_activate_plan(): void
+    {
+        $business = $this->business([
+            'subscription_plan' => 'standard',
+            'subscription_status' => 'trial',
+            'trial_started_at' => now()->subDay(),
+            'trial_ends_at' => now()->addDays(10),
+            'stripe_customer_id' => null,
+            'stripe_subscription_id' => null,
+        ]);
+
+        $payload = $this->checkoutCompletedPayload($business, 'premium', now()->addMonth()->timestamp, 'unpaid');
+
+        $this->postStripeWebhook($payload)
+            ->assertOk();
+
+        $business->refresh();
+
+        $this->assertSame('standard', $business->subscription_plan);
+        $this->assertSame('trial', $business->subscription_status);
+        $this->assertNull($business->stripe_customer_id);
+        $this->assertNull($business->stripe_subscription_id);
+        $this->assertFalse($business->isPremium());
+    }
+
     public function test_webhook_rejects_invalid_signature(): void
     {
         $business = $this->business([
@@ -627,7 +676,8 @@ class BillingPlansTest extends TestCase
         $this->actingAs($business)
             ->get(route('business.billing', ['stripe' => 'cancelled']))
             ->assertOk()
-            ->assertSee('stripe-return-cancelled', false);
+            ->assertSee('stripe-return-cancelled', false)
+            ->assertSee('Плащането не беше завършено. Абонаментът не е активиран.');
 
         $business->refresh();
 
@@ -635,7 +685,12 @@ class BillingPlansTest extends TestCase
         $this->assertSame('active', $business->subscription_status);
     }
 
-    private function checkoutCompletedPayload(User $business, string $plan, ?int $periodEnd = null): string
+    private function checkoutCompletedPayload(
+        User $business,
+        string $plan,
+        ?int $periodEnd = null,
+        string $paymentStatus = 'paid'
+    ): string
     {
         return json_encode([
             'id' => 'evt_fixnow',
@@ -646,6 +701,7 @@ class BillingPlansTest extends TestCase
                     'client_reference_id' => (string) $business->id,
                     'customer' => 'cus_fixnow',
                     'subscription' => 'sub_fixnow',
+                    'payment_status' => $paymentStatus,
                     'metadata' => [
                         'user_id' => (string) $business->id,
                         'plan' => $plan,

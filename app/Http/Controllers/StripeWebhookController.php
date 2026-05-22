@@ -111,10 +111,6 @@ class StripeWebhookController extends Controller
             'subscription_ends_at' => $this->periodEndFromStripeObject($invoice) ?: $business->subscription_ends_at,
         ];
 
-        if ($plan = $this->planFromStripeObject($invoice)) {
-            $updates['subscription_plan'] = $plan;
-        }
-
         $business->forceFill($updates)->save();
     }
 
@@ -165,8 +161,13 @@ class StripeWebhookController extends Controller
     {
         $plan = Arr::get($session, 'metadata.plan');
         $businessId = Arr::get($session, 'metadata.user_id') ?: Arr::get($session, 'client_reference_id');
+        $paymentStatus = Arr::get($session, 'payment_status');
 
         if (!in_array($plan, ['standard', 'premium'], true) || !$businessId) {
+            return;
+        }
+
+        if ($paymentStatus !== 'paid') {
             return;
         }
 
