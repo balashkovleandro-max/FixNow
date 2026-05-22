@@ -30,6 +30,46 @@ npm run build
 php artisan test
 ```
 
+## Scalingo + Vite build
+
+FixNow uses Laravel Vite through `@vite(...)` in Blade views. In production this requires
+`public/build/manifest.json`. The repository includes a `.buildpacks` file so Scalingo runs
+the Node.js buildpack before the PHP buildpack:
+
+```text
+https://github.com/Scalingo/nodejs-buildpack
+https://github.com/Scalingo/php-buildpack
+```
+
+The `package.json` build script must stay present:
+
+```json
+"build": "vite build"
+```
+
+Recommended Scalingo environment setting when using the dedicated Node.js buildpack:
+
+```bash
+scalingo --app <app-name> env-set PHP_BUILDPACK_NO_NODE=true
+```
+
+Deploy:
+
+```bash
+git add .buildpacks package.json package-lock.json
+git commit -m "Configure Scalingo Vite build"
+git push scalingo main
+```
+
+Verify after deploy:
+
+```bash
+scalingo --app <app-name> run 'ls -la public/build/manifest.json'
+```
+
+If the file is missing, inspect the deploy logs for the Node.js buildpack step and confirm
+that `npm ci` and `npm run build` ran before the PHP/Laravel app started.
+
 ## `.env` настройка
 
 ```bash

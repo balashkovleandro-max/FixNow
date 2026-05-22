@@ -4,6 +4,9 @@
 
 - [ ] `php artisan test` минава без failing tests.
 - [ ] `npm run build` минава успешно.
+- [ ] Scalingo `.buildpacks` файлът е commit-нат и съдържа Node.js buildpack преди PHP buildpack.
+- [ ] Scalingo deploy logs показват `npm ci`/`npm install` и `npm run build`.
+- [ ] След deploy съществува `public/build/manifest.json`.
 - [ ] `git status` е прегледан и няма неочаквани промени.
 - [ ] `.env` е прегледан за production/test средата.
 - [ ] `APP_ENV=production` за production.
@@ -31,6 +34,20 @@
 - [ ] `/health` връща 200.
 
 ## Deploy commands
+
+```bash
+scalingo --app <app-name> env-set PHP_BUILDPACK_NO_NODE=true
+git push scalingo main
+```
+
+Scalingo трябва да изпълни Node.js buildpack преди PHP buildpack от `.buildpacks`.
+След deploy проверете Vite manifest:
+
+```bash
+scalingo --app <app-name> run 'ls -la public/build/manifest.json'
+```
+
+Generic/manual server commands:
 
 ```bash
 composer install --no-dev --optimize-autoloader
