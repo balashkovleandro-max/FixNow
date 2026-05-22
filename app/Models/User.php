@@ -176,7 +176,7 @@ class User extends Authenticatable
         }
 
         if (Schema::hasColumn('users', 'is_verified')) {
-            $query->orderByRaw("CASE WHEN is_verified = 1 THEN 0 ELSE 1 END");
+            $query->orderByRaw("CASE WHEN is_verified IS TRUE THEN 0 ELSE 1 END");
         }
 
         return $query->orderByRaw(
