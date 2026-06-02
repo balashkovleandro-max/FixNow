@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('metadata')->nullable();
             $table->timestamps();
 
-            $table->index(['business_id', 'event_type', 'created_at']);
+            $table->index(['business_id', 'event_type', 'created_at'], 'bae_business_event_created_idx');
         });
     }
 
