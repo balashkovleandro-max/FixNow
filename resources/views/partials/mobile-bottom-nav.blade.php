@@ -3,11 +3,11 @@
     $profileLabel = auth()->check() ? 'Профил' : 'Вход';
     $itemBase = 'flex min-w-0 flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 text-[11px] font-black transition';
     $itemIdle = 'text-white/55 hover:bg-white/10 hover:text-white';
-    $itemActive = 'bg-cyan-300/10 text-cyan-100 shadow-[0_0_24px_rgba(34,211,238,0.12)]';
+    $itemActive = 'bg-orange-300/10 text-orange-100 shadow-[0_0_24px_rgba(249,115,22,0.14)]';
     $isHome = request()->path() === '/';
 @endphp
 
-<nav class="fixed inset-x-0 bottom-0 z-[70] border-t border-white/10 bg-slate-950/92 px-3 pt-2 backdrop-blur-2xl md:hidden" style="padding-bottom: max(0.6rem, env(safe-area-inset-bottom));" aria-label="Мобилна навигация">
+<nav class="fixed inset-x-0 bottom-0 z-[70] border-t border-white/10 bg-[#020617]/94 px-3 pt-2 backdrop-blur-2xl md:hidden" style="padding-bottom: max(0.6rem, env(safe-area-inset-bottom));" aria-label="Мобилна навигация">
     <div class="mx-auto grid max-w-md grid-cols-5 gap-1">
         <a href="{{ url('/') }}" class="{{ $itemBase }} {{ $isHome ? $itemActive : $itemIdle }}">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v10h5v-6h4v6h5V10" stroke-linecap="round" stroke-linejoin="round"/></svg>

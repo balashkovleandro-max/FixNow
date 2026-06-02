@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" role="img" aria-label="Blurred city architecture at night">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="0.45" stop-color="#0b1728"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="70%" cy="42%" r="55%">
+      <stop offset="0" stop-color="#f59e0b" stop-opacity=".55"/>
+      <stop offset=".38" stop-color="#f97316" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="deepBlur">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1100" fill="url(#sky)"/>
+  <rect width="1600" height="1100" fill="url(#warm)" opacity=".9"/>
+  <g filter="url(#deepBlur)" opacity=".45">
+    <circle cx="1290" cy="246" r="64" fill="#fbbf24"/>
+    <circle cx="1140" cy="355" r="22" fill="#fb923c"/>
+    <circle cx="1390" cy="510" r="28" fill="#f59e0b"/>
+  </g>
+
+  <g filter="url(#softBlur)" opacity=".78">
+    <path d="M270 780V382l105-85 96 85v398z" fill="#111827"/>
+    <path d="M490 780V320h178v460z" fill="#0f172a"/>
+    <path d="M710 780V250h102v530z" fill="#111827"/>
+    <path d="M850 780V342h270v438z" fill="#0f172a"/>
+    <path d="M1160 780V415h130v365z" fill="#111827"/>
+    <path d="M1320 780V300h78v480z" fill="#0b1220"/>
+  </g>
+
+  <g opacity=".68">
+    <path d="M228 803h1210v38H228z" fill="#0b1220"/>
+    <path d="M278 365h258v28H278zM842 325h315v30H842zM457 305h232v22H457z" fill="#1f2937"/>
+    <path d="M306 430h42v76h-42zM388 430h42v76h-42zM518 382h42v78h-42zM604 382h42v78h-42zM889 402h46v78h-46zM984 402h46v78h-46zM1079 402h46v78h-46zM1204 480h38v74h-38zM1342 360h34v72h-34z" fill="#f59e0b" opacity=".55"/>
+    <path d="M306 548h42v76h-42zM388 548h42v76h-42zM518 510h42v78h-42zM604 510h42v78h-42zM889 530h46v78h-46zM984 530h46v78h-46zM1079 530h46v78h-46zM1204 602h38v74h-38zM1342 482h34v72h-34z" fill="#fbbf24" opacity=".36"/>
+  </g>
+
+  <rect width="1600" height="1100" fill="#020617" opacity=".20"/>
+</svg>

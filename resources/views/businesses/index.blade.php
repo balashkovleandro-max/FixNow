@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
     @php
         $businesses = $businesses ?? collect();
         $filterChips = [
@@ -21,7 +21,7 @@
         $categories = ['Ремонти и строителство', 'ВиК услуги', 'Електроуслуги', 'Автосервизи', 'Почистване', 'Ремонт на техника', 'Услуги за малки бизнеси', 'Красота и лични услуги'];
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
 
     @include('partials.public-header')
@@ -30,11 +30,11 @@
         <section class="overflow-hidden rounded-[34px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
             <div class="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">FixNow marketplace</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">FixNow marketplace</p>
                     <h1 class="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl">Открийте активни изпълнители, проверени профили и препоръчани услуги</h1>
                     <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Публичните резултати показват само active и trial изпълнители. Premium и потвърдените профили получават предимство в подреждането.</p>
                 </div>
-                <div class="rounded-3xl border border-cyan-300/20 bg-cyan-300/10 p-5">
+                <div class="rounded-3xl border border-orange-300/20 bg-orange-300/10 p-5">
                     <p class="text-3xl font-black">{{ $businesses->count() }}</p>
                     <p class="mt-2 text-sm leading-6 text-white/70">публично видими профила на изпълнители според текущите филтри</p>
                 </div>
@@ -43,7 +43,7 @@
             <details class="mt-6 rounded-3xl border border-white/10 bg-slate-950/70 p-3 lg:hidden">
                 <summary class="flex cursor-pointer list-none items-center justify-between rounded-2xl bg-white/10 px-4 py-4 text-base font-black">
                     <span>Филтри и търсене</span>
-                    <span class="text-cyan-200">Отвори</span>
+                    <span class="text-orange-300">Отвори</span>
                 </summary>
                 <form method="GET" action="{{ route('businesses.index') }}" class="mt-3 grid gap-3">
                     <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
@@ -62,14 +62,14 @@
                     <div class="grid gap-2">
                         @foreach($filterChips as $chip)
                             <label class="flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-bold text-white/75">
-                                <input type="checkbox" name="{{ $chip['name'] }}" value="{{ $chip['value'] }}" {{ request($chip['name']) == $chip['value'] ? 'checked' : '' }} class="rounded border-white/20 bg-slate-950 text-cyan-400">
+                                <input type="checkbox" name="{{ $chip['name'] }}" value="{{ $chip['value'] }}" {{ request($chip['name']) == $chip['value'] ? 'checked' : '' }} class="rounded border-white/20 bg-slate-950 text-orange-400">
                                 {{ $chip['label'] }}
                             </label>
                         @endforeach
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <a href="{{ route('businesses.index') }}" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black text-white">Изчисти</a>
-                        <button type="submit" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-4 font-black text-white">Приложи</button>
+                        <button type="submit" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-4 py-4 font-black text-white">Приложи</button>
                     </div>
                 </form>
             </details>
@@ -90,12 +90,12 @@
                     <input name="city" value="{{ request('city') }}" placeholder="София, Плевен, Варна..." class="mt-2 w-full bg-transparent text-white outline-none placeholder:text-white/40">
                 </label>
 
-                <button type="submit" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">Филтрирай</button>
+                <button type="submit" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">Филтрирай</button>
 
                 <div class="lg:col-span-3 flex flex-wrap gap-2">
                     @foreach($filterChips as $chip)
                         <label class="flex cursor-pointer items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/75 hover:bg-white/10">
-                            <input type="checkbox" name="{{ $chip['name'] }}" value="{{ $chip['value'] }}" {{ request($chip['name']) == $chip['value'] ? 'checked' : '' }} class="rounded border-white/20 bg-slate-950 text-cyan-400">
+                            <input type="checkbox" name="{{ $chip['name'] }}" value="{{ $chip['value'] }}" {{ request($chip['name']) == $chip['value'] ? 'checked' : '' }} class="rounded border-white/20 bg-slate-950 text-orange-400">
                             {{ $chip['label'] }}
                         </label>
                     @endforeach
@@ -107,12 +107,12 @@
         <section class="mt-8">
             @if($businesses->isEmpty())
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-10 text-center shadow-xl shadow-black/20 backdrop-blur-xl" data-testid="public-businesses-empty-state">
-                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 text-2xl font-black">F</p>
+                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-2xl font-black">F</p>
                     <h2 class="mt-5 text-2xl font-black">Все още няма активни изпълнители тук</h2>
                     <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ изпълнител. Ако предлагаш услуги в тази категория, добави профил и стани видим за първите клиенти.</p>
                     <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                        <a href="{{ route('request.service') }}" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-6 py-4 font-black text-cyan-100 hover:bg-cyan-300/15">Пусни заявка</a>
-                        <a href="{{ route('business.landing') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white">Стани изпълнител</a>
+                        <a href="{{ route('request.service') }}" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-6 py-4 font-black text-orange-100 hover:bg-orange-400/15">Пусни заявка</a>
+                        <a href="{{ route('business.landing') }}" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Стани изпълнител</a>
                     </div>
                 </div>
             @else

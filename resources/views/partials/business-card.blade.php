@@ -34,7 +34,7 @@
         ->values();
 @endphp
 
-<article data-testid="executor-card" class="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.08] shadow-xl shadow-black/20 backdrop-blur-xl transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-white/[0.11] hover:shadow-2xl hover:shadow-cyan-950/20">
+<article data-testid="executor-card" class="group relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/55 shadow-xl shadow-black/25 backdrop-blur-2xl transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:border-orange-300/35 hover:bg-white/[0.075] hover:shadow-2xl hover:shadow-orange-950/20">
     <div class="relative h-28 overflow-hidden">
         @if($coverImage)
             <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $businessName }}" loading="lazy" data-testid="executor-card-cover-image" class="h-full w-full object-cover opacity-90 transition duration-300 group-hover:scale-[1.02]">
@@ -48,12 +48,12 @@
                 </div>
             @endif
         @else
-            <div data-testid="executor-card-fallback-visual" class="absolute inset-0 bg-gradient-to-br from-cyan-400/20 via-blue-500/12 to-violet-600/25"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_22%_24%,rgba(34,211,238,0.34),transparent_28%),radial-gradient(circle_at_78%_12%,rgba(168,85,247,0.30),transparent_32%),linear-gradient(180deg,transparent,rgba(2,8,18,0.50))]"></div>
-            <div class="absolute left-4 top-4 rounded-2xl border border-white/10 bg-slate-950/45 px-3 py-2 text-xs font-black text-cyan-100 backdrop-blur-xl">
+            <div data-testid="executor-card-fallback-visual" class="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-slate-950"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_22%_24%,rgba(251,146,60,0.34),transparent_28%),radial-gradient(circle_at_78%_12%,rgba(245,158,11,0.24),transparent_32%),linear-gradient(180deg,transparent,rgba(2,8,18,0.56))]"></div>
+            <div class="absolute left-4 top-4 rounded-2xl border border-white/10 bg-slate-950/50 px-3 py-2 text-xs font-black text-orange-100 backdrop-blur-xl">
                 {{ $primaryCategory }}
             </div>
-            <div class="absolute bottom-4 right-4 h-14 w-14 rounded-3xl border border-cyan-300/20 bg-cyan-300/10 blur-sm"></div>
+            <div class="absolute bottom-4 right-4 h-14 w-14 rounded-3xl border border-orange-300/20 bg-orange-300/10 blur-sm"></div>
         @endif
     </div>
 
@@ -63,7 +63,7 @@
                 @if(!empty($business->avatar))
                     <img src="{{ asset('storage/' . $business->avatar) }}" alt="{{ $businessName }}" loading="lazy" class="h-16 w-16 rounded-3xl border-4 border-[#020812] object-cover shadow-lg shadow-black/35">
                 @else
-                    <div class="flex h-16 w-16 items-center justify-center rounded-3xl border-4 border-[#020812] bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 text-2xl font-black text-white shadow-lg shadow-black/35">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-3xl border-4 border-[#020812] bg-gradient-to-br from-orange-500 via-amber-400 to-orange-700 text-2xl font-black text-white shadow-lg shadow-black/35">
                         {{ strtoupper(mb_substr($businessName, 0, 1)) }}
                     </div>
                 @endif
@@ -71,7 +71,7 @@
 
             <div class="flex flex-wrap justify-end gap-2 pb-1">
                 @if($hasPremiumBenefits)
-                    <span class="rounded-full bg-violet-400/15 px-3 py-1 text-xs font-black text-violet-100 shadow-[0_0_20px_rgba(168,85,247,0.18)] ring-1 ring-violet-300/25">Premium</span>
+                    <span class="rounded-full bg-orange-400/15 px-3 py-1 text-xs font-black text-orange-100 shadow-[0_0_20px_rgba(249,115,22,0.20)] ring-1 ring-orange-300/25">Premium</span>
                 @endif
                 @if($recommendationsCount > 0)
                     <span class="rounded-full bg-amber-300/15 px-3 py-1 text-xs font-black text-amber-100 shadow-[0_0_18px_rgba(251,191,36,0.16)] ring-1 ring-amber-200/25">Препоръчан</span>
@@ -84,10 +84,10 @@
 
         <div class="min-w-0">
             <a href="{{ route('businesses.show', $business) }}" class="block">
-                <h3 class="line-clamp-1 text-xl font-black text-white transition group-hover:text-cyan-100">{{ $businessName }}</h3>
+                <h3 class="line-clamp-1 text-xl font-black text-white transition group-hover:text-orange-100">{{ $businessName }}</h3>
             </a>
             <div class="mt-2 flex flex-wrap items-center gap-2 text-sm font-bold">
-                <span class="text-cyan-200">{{ $primaryCategory }}</span>
+                <span class="text-orange-200">{{ $primaryCategory }}</span>
                 <span class="h-1 w-1 rounded-full bg-white/30"></span>
                 <span class="text-white/65">{{ $primaryCity }}</span>
             </div>
@@ -103,7 +103,7 @@
             @endforeach
             @foreach(array_slice($serviceCities, 0, 2) as $city)
                 @if($city !== $primaryCity)
-                    <span class="rounded-full border border-cyan-300/15 bg-cyan-300/[0.08] px-3 py-1 text-xs font-bold text-cyan-100">{{ $city }}</span>
+                    <span class="rounded-full border border-orange-300/15 bg-orange-300/[0.08] px-3 py-1 text-xs font-bold text-orange-100">{{ $city }}</span>
                 @endif
             @endforeach
             @foreach($extraBadges as $badge)
@@ -123,26 +123,26 @@
             </div>
             <div class="rounded-2xl border border-white/10 bg-slate-950/42 p-3">
                 <span class="sr-only">{{ $recommendationsCount }} препоръки</span>
-                <p class="font-black text-violet-100">{{ $recommendationsCount }}</p>
+                <p class="font-black text-orange-100">{{ $recommendationsCount }}</p>
                 <p class="mt-1 text-[11px] font-bold text-white/45">препоръки</p>
             </div>
             <div class="rounded-2xl border border-white/10 bg-slate-950/42 p-3">
-                <p class="font-black text-cyan-100">{{ $profileViews }}</p>
+                <p class="font-black text-orange-100">{{ $profileViews }}</p>
                 <p class="mt-1 text-[11px] font-bold text-white/45">прегледа</p>
             </div>
         </div>
 
         <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
-            <a href="{{ route('businesses.track.inquiry', ['user' => $business, 'source' => 'business_card']) }}" data-track="cta_send_inquiry" class="flex min-h-12 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-400/12 px-4 py-3 text-center font-black text-cyan-100 transition hover:bg-cyan-400/20 active:scale-[0.99]">
+            <a href="{{ route('businesses.track.inquiry', ['user' => $business, 'source' => 'business_card']) }}" data-track="cta_send_inquiry" class="fn-amber-cta flex min-h-12 items-center justify-center rounded-2xl px-4 py-3 text-center font-black active:scale-[0.99]">
                 Изпрати запитване
             </a>
-            <a href="{{ route('businesses.show', $business) }}" data-track="cta_view_business" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] px-4 py-3 text-center font-black text-white transition hover:bg-white/15 active:scale-[0.99]">
+            <a href="{{ route('businesses.show', $business) }}" data-track="cta_view_business" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] px-4 py-3 text-center font-black text-white transition hover:border-orange-300/30 hover:bg-orange-400/10 active:scale-[0.99]">
                 Виж профил
             </a>
         </div>
 
         @if($hasRequestBasedCategory)
-            <a href="{{ route('request.service', ['category' => $serviceCategories[0] ?? $business->business_category, 'city' => $serviceCities[0] ?? $business->city]) }}" data-track="cta_request" class="mt-3 flex min-h-11 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-400/10 px-4 py-3 text-center text-sm font-black text-violet-100 transition hover:bg-violet-400/20 active:scale-[0.99]">
+            <a href="{{ route('request.service', ['category' => $serviceCategories[0] ?? $business->business_category, 'city' => $serviceCities[0] ?? $business->city]) }}" data-track="cta_request" class="mt-3 flex min-h-11 items-center justify-center rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-center text-sm font-black text-amber-100 transition hover:bg-amber-400/20 active:scale-[0.99]">
                 Пусни заявка в тази категория
             </a>
         @endif

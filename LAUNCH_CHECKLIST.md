@@ -19,7 +19,7 @@
 - [ ] Stripe test/live mode е избран съзнателно.
 - [ ] `STRIPE_KEY`, `STRIPE_SECRET`, `STRIPE_WEBHOOK_SECRET` са настроени.
 - [ ] `STRIPE_STANDARD_PRICE_ID` и `STRIPE_PREMIUM_PRICE_ID` са настроени.
-- [ ] Local test Price IDs: Standard `price_1TYmByRqvGMkwX9rN7HTUunp`, Premium `price_1TYmCcRqvGMkwX9rE8ichDo4`.
+- [ ] Stripe Price IDs са зададени само като environment variables; не са hardcoded/committed.
 - [ ] `STRIPE_WEBHOOK_SECRET` е попълнен след Stripe webhook testing (`whsec_...`); докато е празен, `/stripe/webhook` правилно отхвърля webhook заявки.
 - [ ] Stripe Customer Portal е enabled.
 - [ ] Stripe webhook endpoint е настроен към `/stripe/webhook`.

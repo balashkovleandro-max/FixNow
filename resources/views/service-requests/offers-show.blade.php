@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
     @php
         $statusLabels = [
             'new' => 'Нова',
@@ -41,7 +41,7 @@
         $mainPhoto = $photos->first()?->path ?: $serviceRequest->image;
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(34,211,238,0.18),transparent_30%),radial-gradient(circle_at_86%_12%,rgba(168,85,247,0.2),transparent_34%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(251,146,60,0.18),transparent_30%),radial-gradient(circle_at_86%_12%,rgba(245,158,11,0.2),transparent_34%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
 
     @include('partials.public-header')
@@ -67,10 +67,10 @@
         <section class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-8">
                 <div class="flex flex-wrap items-center gap-2">
-                    <span class="rounded-full border border-cyan-300/25 bg-cyan-400/10 px-3 py-1 text-xs font-black text-cyan-100">
+                    <span class="rounded-full border border-orange-300/25 bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">
                         {{ $statusLabels[$serviceRequest->status] ?? $serviceRequest->status }}
                     </span>
-                    <span class="rounded-full border border-violet-300/20 bg-violet-400/10 px-3 py-1 text-xs font-black text-violet-100">
+                    <span class="rounded-full border border-orange-300/20 bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">
                         {{ $urgencyLabels[$serviceRequest->urgency] ?? $serviceRequest->urgency }}
                     </span>
                     @if($selectedOffer)
@@ -80,7 +80,7 @@
                     @endif
                 </div>
 
-                <p class="mt-5 text-sm font-black uppercase tracking-[0.22em] text-cyan-200/70">Вашата заявка</p>
+                <p class="mt-5 text-sm font-black uppercase tracking-[0.22em] text-orange-300/70">Вашата заявка</p>
                 <h1 class="mt-3 text-3xl font-black leading-tight sm:text-5xl">
                     {{ $serviceRequest->service ?: $serviceRequest->category ?: 'Заявка за услуга' }}
                 </h1>
@@ -114,7 +114,7 @@
                 @else
                     <div class="flex h-56 w-full items-center justify-center rounded-3xl border border-white/10 bg-slate-950/45 text-center">
                         <div>
-                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 text-xl font-black">F</p>
+                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
                             <p class="mt-3 text-sm font-bold text-white/65">Няма качени снимки към заявката</p>
                         </div>
                     </div>
@@ -128,8 +128,8 @@
                     </div>
                 @endif
 
-                <div class="mt-5 rounded-3xl border border-cyan-300/15 bg-cyan-400/10 p-4">
-                    <p class="font-black text-cyan-100">Следете офертите от този линк</p>
+                <div class="mt-5 rounded-3xl border border-orange-300/15 bg-orange-400/10 p-4">
+                    <p class="font-black text-orange-100">Следете офертите от този линк</p>
                     <p class="mt-2 text-sm leading-6 text-white/60">Не е нужен вход. Линкът е защитен с уникален token към тази заявка.</p>
                 </div>
             </aside>
@@ -159,10 +159,10 @@
                                 <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70">{{ $offerStatusLabels[$offer->status] ?? $offer->status }}</span>
                             @endif
                             @if($executor && method_exists($executor, 'isPremium') && $executor->isPremium())
-                                <span class="rounded-full bg-violet-400/15 px-3 py-1 text-xs font-black text-violet-100">Premium</span>
+                                <span class="rounded-full bg-orange-400/15 px-3 py-1 text-xs font-black text-orange-100">Premium</span>
                             @endif
                             @if($executor?->is_verified)
-                                <span class="rounded-full bg-cyan-400/15 px-3 py-1 text-xs font-black text-cyan-100">Потвърден</span>
+                                <span class="rounded-full bg-orange-400/15 px-3 py-1 text-xs font-black text-orange-100">Потвърден</span>
                             @endif
                             <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/55">{{ $offer->created_at?->format('d.m.Y H:i') }}</span>
                         </div>
@@ -200,7 +200,7 @@
                             @elseif(in_array($offer->status, ['sent', 'viewed'], true))
                                 <form action="{{ route('service-requests.offers.accept', ['serviceRequest' => $serviceRequest->public_token, 'offer' => $offer]) }}" method="POST">
                                     @csrf
-                                    <button data-track="offer_accept" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 font-black text-white shadow-lg shadow-blue-950/30">
+                                    <button data-track="offer_accept" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-3 font-black text-white shadow-lg shadow-orange-950/30">
                                         Избери изпълнител
                                     </button>
                                 </form>
@@ -213,7 +213,7 @@
                     </article>
                 @empty
                     <div class="rounded-[32px] border border-white/10 bg-white/10 p-8 text-center shadow-xl shadow-black/20 backdrop-blur-xl lg:col-span-2">
-                        <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-cyan-400 via-blue-500 to-violet-600 text-2xl font-black">F</p>
+                        <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-500 via-amber-400 to-orange-600 text-2xl font-black">F</p>
                         <h3 class="mt-5 text-2xl font-black">Все още няма получени оферти</h3>
                         <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">
                             Ще ви уведомим, когато изпълнители изпратят предложения. Запазете този линк, за да проверявате офертите по заявката.

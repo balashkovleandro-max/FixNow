@@ -8,7 +8,7 @@
     @include('partials.analytics-head')
 </head>
 <body class="min-h-screen bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
     @include('partials.public-header')
 
@@ -24,19 +24,19 @@
                 @if($service->image)
                     <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}" class="h-[360px] w-full object-cover">
                 @else
-                    <div class="flex h-[360px] items-center justify-center bg-gradient-to-br from-cyan-400/20 via-blue-500/10 to-violet-600/20 text-white/50">
+                    <div class="flex h-[360px] items-center justify-center bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-orange-600/20 text-white/50">
                         Галерията ще бъде добавена от изпълнителя
                     </div>
                 @endif
                 <div class="p-6 sm:p-8">
                     <div class="mb-4 flex flex-wrap gap-2">
-                        <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-bold text-cyan-200">{{ $service->category }}</span>
+                        <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-300">{{ $service->category }}</span>
                         <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/70">{{ $service->city }}</span>
                         @if($business?->is_verified)
                             <span class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-200">Потвърден</span>
                         @endif
                         @if($business?->isPremium())
-                            <span class="rounded-full bg-violet-400/10 px-3 py-1 text-xs font-bold text-violet-200">Premium</span>
+                            <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-bold text-amber-200">Premium</span>
                         @endif
                     </div>
                     <h1 class="text-3xl font-black leading-tight sm:text-5xl">{{ $service->title }}</h1>
@@ -64,9 +64,9 @@
             <aside class="lg:sticky lg:top-8 lg:self-start">
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-xl">
                     @if($service->price)
-                        <p class="text-3xl font-black text-cyan-200">{{ number_format($service->price, 2) }} €</p>
+                        <p class="text-3xl font-black text-orange-300">{{ number_format($service->price, 2) }} €</p>
                     @else
-                        <p class="text-2xl font-black text-cyan-200">Цена по договаряне</p>
+                        <p class="text-2xl font-black text-orange-300">Цена по договаряне</p>
                     @endif
                     <p class="mt-2 text-sm text-white/60">Публикувана на {{ $service->created_at->format('d.m.Y') }}</p>
 
@@ -77,9 +77,9 @@
                     </div>
 
                     <div class="mt-5 grid gap-3">
-                        <a href="{{ route('request.service') }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Изпрати запитване</a>
+                        <a href="{{ route('request.service') }}" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-orange-600/25">Изпрати запитване</a>
                         <a href="tel:{{ $service->phone }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center font-black text-white hover:bg-white/10">Обади се</a>
-                        <a href="{{ route('request.service', ['service' => $service->title]) }}" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4 text-center font-black text-cyan-100">Заяви оферта</a>
+                        <a href="{{ route('request.service', ['service' => $service->title]) }}" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-4 text-center font-black text-orange-100">Заяви оферта</a>
                     </div>
                 </div>
             </aside>

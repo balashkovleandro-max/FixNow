@@ -8,8 +8,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(34,211,238,0.16),transparent_32%),radial-gradient(circle_at_82%_12%,rgba(168,85,247,0.16),transparent_30%),linear-gradient(180deg,#020812,#061426_48%,#020812)]"></div>
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(251,146,60,0.16),transparent_32%),radial-gradient(circle_at_82%_12%,rgba(245,158,11,0.16),transparent_30%),linear-gradient(180deg,#020812,#061426_48%,#020812)]"></div>
 
 
     @include('partials.public-header')
@@ -23,7 +23,7 @@
 
         <section class="grid gap-8 py-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-14">
             <div>
-                <p class="text-sm font-black uppercase tracking-[0.28em] text-cyan-200/80">Абонаменти за изпълнители</p>
+                <p class="text-sm font-black uppercase tracking-[0.28em] text-orange-200/80">Абонаменти за изпълнители</p>
                 <h1 class="mt-5 max-w-4xl text-3xl font-black leading-tight sm:text-6xl">
                     Ясни планове за видимост, заявки и оферти във FixNow.bg
                 </h1>
@@ -31,14 +31,14 @@
                     Започнете с 30-дневен trial, изградете професионален профил и използвайте точки, за да изпращате оферти към подходящи клиентски заявки.
                 </p>
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 text-center font-black text-white shadow-xl shadow-blue-600/25">Стартирай безплатно</a>
+                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 text-center font-black text-white shadow-xl shadow-orange-600/25">Стартирай безплатно</a>
                     <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Виж ползите</a>
                 </div>
             </div>
 
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl">
-                <div class="rounded-[28px] border border-cyan-300/20 bg-slate-950/55 p-6">
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200">Trial старт</p>
+                <div class="rounded-[28px] border border-orange-300/20 bg-slate-950/55 p-6">
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-300">Trial старт</p>
                     <div class="mt-6 grid gap-4 sm:grid-cols-3">
                         <div class="rounded-3xl border border-white/10 bg-white/10 p-5">
                             <p class="text-3xl font-black">30</p>
@@ -64,16 +64,16 @@
                     $plan = $plans[$planKey];
                     $points = $planKey === 'premium' ? 90 : 30;
                 @endphp
-                <article class="relative overflow-hidden rounded-[32px] border {{ $planKey === 'premium' ? 'border-violet-300/40 bg-violet-400/12 shadow-violet-950/35 ring-1 ring-violet-300/20' : 'border-cyan-300/20 bg-white/10 shadow-black/20' }} p-5 shadow-2xl backdrop-blur-xl sm:p-8">
+                <article class="relative overflow-hidden rounded-[32px] border {{ $planKey === 'premium' ? 'border-orange-300/40 bg-orange-400/12 shadow-orange-950/35 ring-1 ring-orange-300/20' : 'border-orange-300/20 bg-white/10 shadow-black/20' }} p-5 shadow-2xl backdrop-blur-xl sm:p-8">
                     @if($planKey === 'premium')
-                        <div class="absolute right-5 top-5 rounded-full bg-gradient-to-r from-cyan-400 to-violet-600 px-4 py-2 text-xs font-black shadow-lg shadow-violet-600/20">Препоръчан</div>
+                        <div class="absolute right-5 top-5 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-xs font-black shadow-lg shadow-orange-600/20">Препоръчан</div>
                     @endif
-                    <p class="text-sm font-black uppercase tracking-[0.25em] {{ $planKey === 'premium' ? 'text-violet-200' : 'text-cyan-200' }}">{{ $plan['label'] }}</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] {{ $planKey === 'premium' ? 'text-amber-200' : 'text-orange-300' }}">{{ $plan['label'] }}</p>
                     <div class="mt-5 flex flex-wrap items-end gap-2">
                         <span class="text-[2.75rem] font-black leading-none sm:text-5xl">{{ number_format($plan['price'], 2, ',', ' ') }} €</span>
                         <span class="pb-2 text-white/60">/месец</span>
                     </div>
-                    <p class="mt-2 text-sm font-bold {{ $planKey === 'premium' ? 'text-violet-100' : 'text-cyan-100' }}">
+                    <p class="mt-2 text-sm font-bold {{ $planKey === 'premium' ? 'text-orange-100' : 'text-orange-100' }}">
                         {{ $planKey === 'premium' ? 'Premium видимост, badge и приоритет при matching' : 'Публичен профил и стабилно присъствие в търсене' }}
                     </p>
                     <div class="mt-6 grid gap-3 sm:grid-cols-4">
@@ -96,7 +96,7 @@
                     </div>
                     <ul class="mt-6 grid gap-3 text-sm leading-6 text-white/70">
                         @foreach($plan['features'] as $feature)
-                            <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-cyan-300"></span><span>{{ $feature }}</span></li>
+                            <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-orange-400"></span><span>{{ $feature }}</span></li>
                         @endforeach
                     </ul>
                     <div class="mt-8">
@@ -105,17 +105,17 @@
                                 <form action="{{ route('business.billing.checkout') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="plan" value="{{ $planKey }}">
-                                    <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
+                                    <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
                                         {{ $planKey === 'premium' ? 'Вземи Premium' : 'Избери Standard' }}
                                     </button>
                                 </form>
                             @else
-                                <a href="{{ route('dashboard') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
+                                <a href="{{ route('dashboard') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
                                     Към таблото
                                 </a>
                             @endif
                         @else
-                            <a href="{{ route('register') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
+                            <a href="{{ route('register') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
                                 {{ $planKey === 'premium' ? 'Вземи Premium' : 'Стартирай безплатно' }}
                             </a>
                         @endauth
@@ -126,15 +126,15 @@
 
         <section class="mt-10 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 backdrop-blur-xl sm:p-8">
-                <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Сравнение</p>
+                <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Сравнение</p>
                 <h2 class="mt-3 text-3xl font-black">Standard срещу Premium</h2>
                 <p class="mt-3 text-white/60">Premium не е неограничен план. Той дава по-големи лимити, по-добро подреждане и повече точки за оферти, без да променя основната абонаментна цена.</p>
             </div>
             <div class="overflow-hidden rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-xl">
                 <div class="grid grid-cols-3 border-b border-white/10 bg-slate-950/45 text-sm font-black">
                     <div class="p-4">Функция</div>
-                    <div class="p-4 text-cyan-100">Standard</div>
-                    <div class="p-4 text-violet-100">Premium</div>
+                    <div class="p-4 text-orange-100">Standard</div>
+                    <div class="p-4 text-orange-100">Premium</div>
                 </div>
                 @foreach([
                     ['Градове', 'до 2', 'до 5'],
@@ -164,7 +164,7 @@
                         ['Колко точки струва една оферта?', 'Една изпратена оферта струва 3 точки. Standard включва 30 точки месечно, Premium - 90 точки месечно.'],
                         ['Има ли доплащане за градове?', 'Не на този етап. Градовете служат за лимити, филтър, релевантност и насочване на заявки.'],
                     ] as $faq)
-                        <details class="rounded-3xl border border-white/10 bg-slate-950/45 p-5 open:border-cyan-300/25">
+                        <details class="rounded-3xl border border-white/10 bg-slate-950/45 p-5 open:border-orange-300/25">
                             <summary class="cursor-pointer list-none font-black">{{ $faq[0] }}</summary>
                             <p class="mt-3 text-sm leading-6 text-white/60">{{ $faq[1] }}</p>
                         </details>
@@ -172,8 +172,8 @@
                 </div>
             </div>
 
-            <div class="rounded-[32px] border border-cyan-300/20 bg-gradient-to-br from-cyan-400/12 via-blue-500/10 to-violet-600/12 p-6 backdrop-blur-xl sm:p-8">
-                <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-100">Следваща стъпка</p>
+            <div class="rounded-[32px] border border-orange-300/20 bg-gradient-to-br from-orange-500/12 via-amber-400/10 to-orange-600/12 p-6 backdrop-blur-xl sm:p-8">
+                <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-100">Следваща стъпка</p>
                 <h2 class="mt-4 text-3xl font-black sm:text-4xl">Създайте профил и вижте първите релевантни заявки.</h2>
                 <p class="mt-4 text-white/70">FixNow показва лимити, статус, точки и управление на плана в панела на изпълнител. Premium се активира само след успешно потвърдено плащане през Stripe.</p>
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">

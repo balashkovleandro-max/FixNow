@@ -8,15 +8,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_15%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_85%_20%,rgba(168,85,247,0.16),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_15%,rgba(251,146,60,0.16),transparent_30%),radial-gradient(circle_at_85%_20%,rgba(245,158,11,0.16),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
 
     @include('partials.public-header')
 
 <main class="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
-            <p class="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">Cookies</p>
+            <p class="inline-flex rounded-full border border-orange-300/20 bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">Cookies</p>
             <h1 class="mt-6 text-4xl font-black leading-tight sm:text-5xl">Политика за бисквитки</h1>
             <p class="mt-4 max-w-3xl text-base leading-7 text-white/70">
                 Тази страница обяснява как FixNow.bg използва бисквитки и подобни технологии, за да поддържа вход, сигурност, заявки, analytics и стабилна работа на платформата.

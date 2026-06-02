@@ -175,7 +175,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-28 text-white md:pb-0">
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-32 text-white md:pb-0">
     @php
         $topBusinesses = $topBusinesses ?? collect();
         $mostRecommendedBusinesses = $mostRecommendedBusinesses ?? collect();
@@ -222,68 +222,78 @@
     @endphp
 
     <div class="fixed inset-0 -z-10">
-        <div class="fn-glow-drift absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(37,99,235,0.24),transparent_28%),radial-gradient(circle_at_82%_10%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712_0%,#05111f_48%,#020812_100%)]"></div>
-        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent"></div>
+        <div class="fn-glow-drift absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(249,115,22,0.24),transparent_28%),radial-gradient(circle_at_82%_10%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712_0%,#05111f_48%,#020812_100%)]"></div>
+        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/50 to-transparent"></div>
     </div>
 
     @include('partials.public-header')
 
     <main>
-        <section class="relative overflow-hidden">
-            <div class="absolute inset-0">
-                <div class="fn-glow-drift absolute inset-y-0 right-0 hidden w-1/2 bg-[radial-gradient(circle_at_55%_35%,rgba(59,130,246,0.35),transparent_26%),radial-gradient(circle_at_80%_55%,rgba(168,85,247,0.28),transparent_30%)] lg:block"></div>
-                <div class="absolute bottom-10 right-10 hidden h-[360px] w-[620px] opacity-80 lg:block">
-                    <div class="absolute bottom-0 left-10 h-44 w-16 rounded-t-lg bg-slate-950/72 ring-1 ring-blue-300/10"></div>
-                    <div class="absolute bottom-0 left-32 h-72 w-24 rounded-t-2xl bg-slate-900/72 ring-1 ring-blue-300/10"></div>
-                    <div class="absolute bottom-0 left-72 h-56 w-20 rounded-t-xl bg-slate-950/78 ring-1 ring-blue-300/10"></div>
-                    <div class="absolute bottom-0 left-[430px] h-80 w-24 rounded-t-2xl bg-slate-900/74 ring-1 ring-blue-300/10"></div>
-                    <svg class="absolute bottom-8 left-20 h-40 w-[500px] overflow-visible" viewBox="0 0 500 150">
-                        <path d="M15 98 C90 32, 148 136, 225 78 S345 42, 485 104" fill="none" stroke="rgba(59,130,246,0.88)" stroke-width="3" stroke-dasharray="8 10"/>
-                        <path d="M117 42c-18 0-32 14-32 32 0 24 32 58 32 58s32-34 32-58c0-18-14-32-32-32Z" fill="#3b82f6"/>
-                        <circle cx="117" cy="74" r="10" fill="#06111f"/>
-                        <path d="M455 70c-18 0-32 14-32 32 0 24 32 58 32 58s32-34 32-58c0-18-14-32-32-32Z" fill="#a855f7"/>
-                        <circle cx="455" cy="102" r="10" fill="#06111f"/>
-                    </svg>
-                </div>
-            </div>
+        <section class="relative isolate overflow-hidden">
+            <div class="fn-hero-photo absolute inset-0"></div>
+            <div class="absolute inset-0 bg-[#020617]/45"></div>
+            <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#020617] to-transparent"></div>
 
-            <div class="relative mx-auto grid max-w-[1500px] gap-8 px-4 pb-8 pt-7 sm:gap-10 sm:px-6 sm:pb-10 sm:pt-10 lg:min-h-[500px] lg:grid-cols-2 lg:items-start lg:px-12 lg:pb-10 lg:pt-8">
+            <div class="relative mx-auto grid max-w-[1500px] gap-8 px-4 pb-8 pt-7 sm:gap-10 sm:px-6 sm:pb-12 sm:pt-12 lg:min-h-[610px] lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center lg:px-12 lg:pb-16 lg:pt-14">
                 <div class="min-w-0 max-w-4xl">
-                    <p class="fn-fade-up inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">Жива платформа за локални услуги</p>
-                    <h1 class="fn-fade-up fn-delay-1 mt-5 max-w-[760px] text-4xl font-black leading-[1.12] tracking-normal text-white sm:mt-6 sm:text-5xl lg:text-[3.55rem]">
-                        Пуснете заявка веднъж.
-                        <span class="block bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-500 bg-clip-text text-transparent">Получете оферти от подходящи изпълнители.</span>
+                    <p class="fn-fade-up inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/45 px-4 py-2 text-sm font-black text-white/80 backdrop-blur-2xl">
+                        <span class="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_18px_rgba(251,146,60,0.85)]"></span>
+                        Проверени бизнеси близо до вас
+                    </p>
+                    <h1 class="fn-fade-up fn-delay-1 mt-5 max-w-[780px] text-4xl font-black leading-[1.06] tracking-normal text-white sm:mt-6 sm:text-5xl lg:text-6xl">
+                        Намери точния бизнес за всяка задача.
+                        <span class="sr-only">Пуснете заявка веднъж. Получете оферти от подходящи изпълнители.</span>
                     </h1>
 
-                    <p class="fn-fade-up fn-delay-2 mt-5 max-w-[680px] text-base leading-7 text-white/70 sm:mt-6 sm:text-lg sm:leading-8">FixNow.bg свързва клиенти с проверени изпълнители по град, категория и реална нужда — от първа заявка до избран изпълнител.</p>
+                    <p class="fn-fade-up fn-delay-2 mt-4 max-w-[680px] text-lg font-bold leading-8 text-slate-200 sm:text-xl">Сравни услуги, отзиви и контактирай директно.</p>
 
-                    <div class="fn-fade-up fn-delay-2 mt-7 flex flex-col gap-3 sm:flex-row">
-                        <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-cta-glow inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Пусни заявка</a>
-                        <a href="{{ route('businesses.index') }}" data-track="cta_view_business" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-7 py-4 text-center font-black text-white hover:bg-white/15">Разгледай изпълнители</a>
+                    <div class="fn-fade-up fn-delay-2 mt-5 flex flex-wrap gap-2">
+                        @foreach(['Проверени бизнеси', 'Реални отзиви', 'Бърза връзка'] as $trustItem)
+                            <span class="rounded-full border border-white/10 bg-slate-950/45 px-4 py-2 text-xs font-black text-white/80 backdrop-blur-xl">{{ $trustItem }}</span>
+                        @endforeach
                     </div>
 
-                    <div class="fn-fade-up fn-delay-3 mt-5 flex flex-wrap gap-2">
-                        @foreach(['Проверени изпълнители', 'Заявки по градове', 'Standard и Premium профили', 'Активните абонаменти се показват публично'] as $trustItem)
-                            <span class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-black text-white/75 backdrop-blur-xl">{{ $trustItem }}</span>
+                    <form method="GET" action="{{ route('services.index') }}" class="fn-fade-up fn-delay-3 fn-glass-card mt-6 grid gap-3 rounded-[28px] p-3 sm:mt-8 md:grid-cols-[1fr_0.8fr_auto]">
+                        <label class="fn-premium-input rounded-2xl px-4 py-3">
+                            <span class="flex items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-white/55">
+                                <svg class="h-4 w-4 text-orange-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                                Каква услуга търсиш?
+                            </span>
+                            <input type="text" name="category" class="mt-2 min-h-11 w-full bg-transparent text-base font-bold text-white outline-none placeholder:text-white/40" placeholder="ВиК, ремонт, почистване...">
+                        </label>
+                        <label class="fn-premium-input rounded-2xl px-4 py-3">
+                            <span class="flex items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-white/55">
+                                <svg class="h-4 w-4 text-orange-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.35 7-11a7 7 0 1 0-14 0c0 6.65 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Град / район
+                            </span>
+                            <input type="text" name="city" class="mt-2 min-h-11 w-full bg-transparent text-base font-bold text-white outline-none placeholder:text-white/40" placeholder="Плевен, София...">
+                        </label>
+                        <button type="submit" data-track="cta_view_business" class="fn-amber-cta min-h-14 rounded-2xl px-7 py-4 text-base font-black md:self-stretch">Търси бизнес</button>
+                        <a href="{{ route('request.service') }}" data-track="cta_request" class="col-span-full inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-black text-white/78 transition hover:border-orange-300/30 hover:bg-orange-400/10 hover:text-orange-100">или пусни заявка и получи оферти</a>
+                    </form>
+
+                    <div class="fn-fade-up fn-delay-4 mt-5 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
+                        @foreach(['ВиК', 'Електро', 'Ремонти', 'Почистване', 'Автосервиз', 'Красота'] as $chip)
+                            <a href="{{ route('businesses.index', ['category' => $chip]) }}" class="shrink-0 rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-2 text-sm font-black text-white/78 backdrop-blur-xl transition hover:border-orange-300/35 hover:bg-orange-400/10 hover:text-orange-100">{{ $chip }}</a>
                         @endforeach
                     </div>
 
                     <div class="hidden">
-                        <a href="{{ route('request.service') }}" class="fn-hover-lift rounded-[28px] border border-cyan-300/20 bg-cyan-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
-                            <span class="inline-flex rounded-full bg-cyan-300/10 px-3 py-1 text-xs font-black text-cyan-100">Получете оферти</span>
+                        <a href="{{ route('request.service') }}" class="fn-hover-lift rounded-[28px] border border-orange-300/20 bg-orange-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
+                            <span class="inline-flex rounded-full bg-orange-300/10 px-3 py-1 text-xs font-black text-orange-100">Получете оферти</span>
                             <h2 class="mt-4 text-2xl font-black">Пусни заявка</h2>
                             <p class="mt-2 text-sm leading-6 text-white/65">За ремонт, ВиК, електро, почистване, хамали, техника и други услуги. Опишете какво ви трябва и получете оферти.</p>
-                            <span class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 text-sm font-black text-white">Пусни заявка</span>
+                            <span class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 px-5 py-3 text-sm font-black text-white">Пусни заявка</span>
                         </a>
-                        <a href="{{ route('businesses.index') }}" class="fn-hover-lift rounded-[28px] border border-violet-300/20 bg-violet-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
-                            <span class="inline-flex rounded-full bg-violet-300/10 px-3 py-1 text-xs font-black text-violet-100">Директно търсене</span>
+                        <a href="{{ route('businesses.index') }}" class="fn-hover-lift rounded-[28px] border border-orange-300/20 bg-orange-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
+                            <span class="inline-flex rounded-full bg-orange-300/10 px-3 py-1 text-xs font-black text-orange-100">Директно търсене</span>
                             <h2 class="mt-4 text-2xl font-black">Намери изпълнител</h2>
                             <p class="mt-2 text-sm leading-6 text-white/65">Търсете автосервизи, счетоводители, фризьори, адвокати, магазини и други локални изпълнители.</p>
                             <span class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-white/10 px-5 py-3 text-sm font-black text-white">Намери изпълнител</span>
                         </a>
                     </div>
 
-                    <form method="GET" action="{{ route('services.index') }}" class="fn-fade-up fn-delay-3 mt-6 grid gap-3 rounded-3xl border border-white/10 bg-white/10 p-3 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-2xl sm:mt-7 md:grid-cols-[1.15fr_1fr_0.65fr_auto]">
+                    <form method="GET" action="{{ route('services.index') }}" class="fn-fade-up fn-delay-3 mt-6 hidden gap-3 rounded-3xl border border-white/10 bg-white/10 p-3 shadow-[0_18px_60px_rgba(0,0,0,0.32)] backdrop-blur-2xl sm:mt-7 md:grid-cols-[1.15fr_1fr_0.65fr_auto]">
                         <label class="rounded-2xl border border-white/10 bg-slate-950/35 px-4 py-3 md:border-x-0 md:border-y-0 md:border-r md:bg-transparent md:px-3">
                             <span class="block text-xs font-black text-white">Каква услуга търсите?</span>
                             <input type="text" name="category" class="mt-2 min-h-12 w-full bg-transparent text-base text-white outline-none placeholder:text-white/50 md:min-h-0 md:text-sm" placeholder="ВиК, ремонт, автосервиз, почистване...">
@@ -301,37 +311,37 @@
                                 <option class="bg-slate-950" value="all">Навсякъде</option>
                             </select>
                         </label>
-                        <button type="submit" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-blue-500 to-fuchsia-600 px-8 py-4 text-base font-black text-white shadow-lg shadow-blue-600/25 md:py-3 md:text-sm">Търси</button>
+                        <button type="submit" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 px-8 py-4 text-base font-black text-white shadow-lg shadow-orange-600/25 md:py-3 md:text-sm">Търси</button>
                     </form>
 
                     <div class="fn-fade-up fn-delay-4 mt-5 hidden flex-wrap items-center gap-3 text-sm sm:flex">
                         <span class="font-medium text-white/60">Популярни търсения:</span>
                         @foreach($popularSearches as $search)
-                            <a href="{{ route('services.index', ['category' => $search]) }}" class="rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-white/80 transition duration-200 hover:-translate-y-0.5 hover:border-blue-300/50 hover:bg-blue-400/10 hover:text-blue-100">{{ $search }}</a>
+                            <a href="{{ route('services.index', ['category' => $search]) }}" class="rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-white/80 transition duration-200 hover:-translate-y-0.5 hover:border-orange-300/50 hover:bg-orange-400/10 hover:text-orange-100">{{ $search }}</a>
                         @endforeach
                     </div>
                 </div>
 
-                <aside class="fn-fade-up fn-delay-3 relative min-w-0 lg:pt-4">
-                    <div class="absolute -inset-6 rounded-[42px] bg-gradient-to-br from-cyan-400/12 via-blue-500/10 to-violet-600/18 blur-2xl"></div>
-                    <div class="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/35 backdrop-blur-2xl sm:rounded-[34px] sm:p-5">
+                <aside class="fn-fade-up fn-delay-3 relative hidden min-w-0 lg:block lg:pt-0">
+                    <div class="absolute -inset-6 rounded-[42px] bg-gradient-to-br from-orange-500/18 via-amber-400/10 to-slate-950/20 blur-2xl"></div>
+                    <div class="relative overflow-hidden rounded-[30px] border border-white/10 bg-slate-950/55 p-4 shadow-2xl shadow-black/40 backdrop-blur-2xl sm:rounded-[34px] sm:p-5">
                         <div class="flex items-start justify-between gap-4">
                             <div>
-                                <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Marketplace flow</p>
+                                <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Marketplace flow</p>
                                 <h2 class="mt-2 text-xl font-black sm:text-2xl">От заявка до избран изпълнител</h2>
                                 <p class="mt-2 hidden text-sm leading-6 text-white/60 sm:block">FixNow показва нуждата, matching-а, офертите и избора в един ясен процес.</p>
                             </div>
-                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-300/10 text-cyan-100 ring-1 ring-cyan-300/20">
+                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-300/10 text-orange-100 ring-1 ring-orange-300/20">
                                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.35 7-11a7 7 0 1 0-14 0c0 6.65 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
                             </span>
                         </div>
 
                         <div class="mt-6 grid gap-3">
-                            <div class="fn-hover-lift rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-4">
+                            <div class="fn-hover-lift rounded-3xl border border-orange-300/25 bg-orange-400/10 p-4">
                                 <div class="flex items-start gap-3">
-                                    <span class="fn-pulse-dot mt-1 h-3 w-3 shrink-0 rounded-full bg-cyan-300"></span>
+                                    <span class="fn-pulse-dot mt-1 h-3 w-3 shrink-0 rounded-full bg-orange-400"></span>
                                     <div class="min-w-0">
-                                        <p class="text-xs font-black uppercase tracking-[0.2em] text-cyan-100/80">Нова заявка</p>
+                                        <p class="text-xs font-black uppercase tracking-[0.2em] text-orange-100/80">Нова заявка</p>
                                         <h3 class="mt-2 text-lg font-black">Ремонт на баня · Плевен</h3>
                                         <p class="mt-1 text-sm text-white/60">Бюджет: до 2000 лв.</p>
                                     </div>
@@ -339,22 +349,22 @@
                             </div>
                             <div class="grid gap-3 sm:grid-cols-3">
                                 <div class="fn-hover-lift rounded-3xl border border-white/10 bg-slate-950/45 p-4">
-                                    <p class="text-xs font-black uppercase tracking-[0.18em] text-blue-200/75">Matching</p>
+                                    <p class="text-xs font-black uppercase tracking-[0.18em] text-orange-200/75">Matching</p>
                                     <p class="mt-2 text-sm font-black leading-5">3 подходящи изпълнители</p>
                                 </div>
                                 <div class="fn-hover-lift rounded-3xl border border-white/10 bg-slate-950/45 p-4">
-                                    <p class="text-xs font-black uppercase tracking-[0.18em] text-violet-200/75">Получени оферти</p>
+                                    <p class="text-xs font-black uppercase tracking-[0.18em] text-amber-200/75">Получени оферти</p>
                                     <p class="mt-2 text-sm font-black leading-5">2 оферти с цена и срок</p>
                                 </div>
                                 <div class="fn-hover-lift rounded-3xl border border-white/10 bg-slate-950/45 p-4">
                                     <p class="text-xs font-black uppercase tracking-[0.18em] text-emerald-200/75">Избран изпълнител</p>
-                                    <p class="mt-2 text-sm font-black leading-5">Проверен профил · <span class="text-violet-200">Premium badge</span></p>
+                                    <p class="mt-2 text-sm font-black leading-5">Проверен профил · <span class="text-orange-200">Premium badge</span></p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-5 hidden grid-cols-2 gap-3 sm:grid">
-                            <div class="rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-4">
+                            <div class="rounded-3xl border border-orange-300/20 bg-orange-400/10 p-4">
                                 <p class="text-3xl font-black">{{ $heroStats['requests_this_month'] }}</p>
                                 <p class="mt-1 text-xs font-bold leading-5 text-white/60">Нови заявки този месец</p>
                             </div>
@@ -366,7 +376,7 @@
                                 <p class="text-3xl font-black">{{ $heroStats['businesses'] }}</p>
                                 <p class="mt-1 text-xs font-bold leading-5 text-white/60">Изпълнители в платформата</p>
                             </div>
-                            <div class="rounded-3xl border border-violet-300/20 bg-violet-400/10 p-4">
+                            <div class="rounded-3xl border border-orange-300/20 bg-orange-400/10 p-4">
                                 <p class="text-3xl font-black">{{ $heroStats['premium_businesses'] }}</p>
                                 <p class="mt-1 text-xs font-bold leading-5 text-white/60">Premium с приоритет</p>
                             </div>
@@ -383,41 +393,41 @@
 
                         <div class="hidden">
                             @forelse($featuredBusinesses->take(3) as $business)
-                                <a href="{{ route('businesses.show', $business) }}" class="group rounded-3xl border border-white/10 bg-slate-950/50 p-4 transition duration-200 hover:-translate-y-0.5 hover:border-cyan-300/30 hover:bg-white/10">
+                                <a href="{{ route('businesses.show', $business) }}" class="group rounded-3xl border border-white/10 bg-slate-950/50 p-4 transition duration-200 hover:-translate-y-0.5 hover:border-orange-300/30 hover:bg-white/10">
                                     <div class="flex items-start gap-3">
-                                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black text-white">
+                                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black text-white">
                                             {{ strtoupper(mb_substr($business->business_name ?: $business->name, 0, 1)) }}
                                         </div>
                                         <div class="min-w-0 flex-1">
                                             <div class="flex flex-wrap items-center gap-2">
                                                 <p class="truncate font-black">{{ $business->business_name ?: $business->name }}</p>
                                                 @if($business->isPremium())
-                                                    <span class="rounded-full bg-violet-400/15 px-2 py-0.5 text-[11px] font-black text-violet-100">Premium</span>
+                                                    <span class="rounded-full bg-orange-400/15 px-2 py-0.5 text-[11px] font-black text-orange-100">Premium</span>
                                                 @endif
                                                 @if($business->is_verified)
                                                     <span class="rounded-full bg-emerald-400/15 px-2 py-0.5 text-[11px] font-black text-emerald-100">Потвърден</span>
                                                 @endif
                                             </div>
-                                            <p class="mt-1 text-sm text-cyan-200">{{ $business->business_category ?: 'Локален изпълнител' }}</p>
+                                            <p class="mt-1 text-sm text-orange-200">{{ $business->business_category ?: 'Локален изпълнител' }}</p>
                                             <p class="mt-1 text-xs text-white/50">{{ implode(', ', array_slice($business->serviceCities(), 0, 2)) ?: 'България' }}</p>
                                         </div>
                                         <span class="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.8)]"></span>
                                     </div>
                                 </a>
                             @empty
-                                <div class="rounded-3xl border border-dashed border-cyan-300/25 bg-slate-950/45 p-5 text-center">
-                                    <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 text-xl font-black">F</p>
+                                <div class="rounded-3xl border border-dashed border-orange-300/25 bg-slate-950/45 p-5 text-center">
+                                    <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 text-xl font-black">F</p>
                                     <h3 class="mt-4 text-xl font-black">Очакваме първите изпълнители</h3>
                                     <p class="mx-auto mt-2 max-w-sm text-sm leading-6 text-white/60">Когато има active или trial профили, тук ще се покажат препоръчани изпълнители около клиента.</p>
-                                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="mt-5 inline-flex rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Добави профил на изпълнител</a>
+                                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="mt-5 inline-flex rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white">Добави профил на изпълнител</a>
                                 </div>
                             @endforelse
                         </div>
 
                         <div class="hidden">
                             @foreach(['Плевен', 'София', 'Варна'] as $city)
-                                <a href="{{ route('businesses.index', ['city' => $city]) }}" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center text-xs font-black text-white/70 hover:border-cyan-300/30 hover:text-cyan-100">
-                                    <span class="mx-auto mb-2 block h-2 w-2 rounded-full bg-cyan-300"></span>
+                                <a href="{{ route('businesses.index', ['city' => $city]) }}" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center text-xs font-black text-white/70 hover:border-orange-300/30 hover:text-orange-100">
+                                    <span class="mx-auto mb-2 block h-2 w-2 rounded-full bg-orange-300"></span>
                                     {{ $city }}
                                 </a>
                             @endforeach
@@ -426,11 +436,11 @@
                         <div class="hidden">
                             <div class="flex items-center justify-between gap-3">
                                 <p class="text-sm font-black text-white">Топ категории</p>
-                                <a href="{{ url('/categories') }}" class="text-xs font-black text-cyan-200 hover:text-white">Виж всички</a>
+                                <a href="{{ url('/categories') }}" class="text-xs font-black text-orange-200 hover:text-white">Виж всички</a>
                             </div>
                             <div class="mt-3 flex flex-wrap gap-2">
                                 @foreach(($popularCategories->pluck('name')->take(4)->values()->all() ?: array_slice($categoryFallbacks, 0, 4)) as $category)
-                                    <a href="{{ route('businesses.index', ['category' => $category]) }}" class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-white/70 hover:bg-cyan-300/10 hover:text-cyan-100">{{ $category }}</a>
+                                    <a href="{{ route('businesses.index', ['category' => $category]) }}" class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-white/70 hover:bg-orange-300/10 hover:text-orange-100">{{ $category }}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -440,10 +450,10 @@
         </section>
 
         <section data-testid="homepage-soft-launch-note" class="fn-section-fade mx-auto max-w-[1500px] px-4 py-6 sm:px-6 lg:px-12">
-            <div class="rounded-[30px] border border-cyan-300/20 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6">
+            <div class="rounded-[30px] border border-orange-300/20 bg-slate-950/50 p-5 shadow-xl shadow-black/25 backdrop-blur-xl sm:p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Soft launch</p>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Soft launch</p>
                         <h2 class="mt-2 text-2xl font-black">FixNow.bg стартира поетапно</h2>
                         <p class="mt-2 max-w-3xl text-sm leading-6 text-white/65">В момента добавяме първите проверени изпълнители по градове и категории, за да изградим качествена мрежа от реални локални изпълнители.</p>
                     </div>
@@ -453,13 +463,13 @@
         </section>
 
         <section data-testid="homepage-offer-cta" class="fn-section-fade mx-auto max-w-[1500px] px-4 py-6 sm:px-6 lg:px-12">
-            <div class="fn-hover-lift grid gap-6 rounded-[32px] border border-cyan-300/20 bg-gradient-to-br from-cyan-400/12 via-blue-500/10 to-violet-600/15 p-6 shadow-2xl shadow-blue-950/25 backdrop-blur-2xl lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
+            <div class="fn-hover-lift grid gap-6 rounded-[32px] border border-orange-300/20 bg-gradient-to-br from-orange-500/14 via-amber-400/8 to-slate-950/60 p-6 shadow-2xl shadow-orange-950/20 backdrop-blur-2xl lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Заяви оферта</p>
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Заяви оферта</p>
                     <h2 class="mt-3 text-3xl font-black">Опишете какво търсите и стигнете до подходящ изпълнител</h2>
                     <p class="mt-3 max-w-2xl text-sm leading-6 text-white/65">Подходящо за ремонт, спешна услуга, сервизна диагностика, почистване или оферта от локален професионалист.</p>
                 </div>
-                <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 text-center font-black text-white">Заяви оферта</a>
+                <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-amber-cta rounded-2xl px-7 py-4 text-center font-black">Заяви оферта</a>
             </div>
         </section>
 
@@ -467,10 +477,10 @@
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                 <div class="mb-6 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Как работи</p>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Как работи</p>
                         <h2 class="mt-2 text-2xl font-black sm:text-3xl">От заявка до избран изпълнител</h2>
                     </div>
-                    <a href="{{ route('request.service') }}" data-track="cta_request" class="text-sm font-bold text-blue-300 transition hover:text-cyan-200">Пусни заявка →</a>
+                    <a href="{{ route('request.service') }}" data-track="cta_request" class="text-sm font-bold text-orange-300 transition hover:text-amber-200">Пусни заявка →</a>
                 </div>
 
                 <div class="grid gap-4 md:grid-cols-3">
@@ -481,7 +491,7 @@
                     ] as $item)
                         <article class="fn-hover-lift rounded-3xl border border-white/10 bg-slate-950/45 p-5">
                             <div class="flex items-center justify-between gap-3">
-                                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-400/10 text-sm font-black text-cyan-100 ring-1 ring-cyan-300/15">{{ $item['step'] }}</span>
+                                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-400/10 text-sm font-black text-orange-100 ring-1 ring-orange-300/15">{{ $item['step'] }}</span>
                                 <span class="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-black text-white/60">{{ $item['badge'] }}</span>
                             </div>
                             <h3 class="mt-5 text-xl font-black">{{ $item['title'] }}</h3>
@@ -496,7 +506,7 @@
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                 <div class="mb-5 flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Доверие</p>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Доверие</p>
                         <h2 class="text-2xl font-black sm:text-3xl">Кратки сигнали, които помагат при избора</h2>
                     </div>
                     <p class="max-w-xl text-sm leading-6 text-white/60">Без излишен шум: профили, оферти, badge-и и модерация, които правят marketplace flow-а по-ясен.</p>
@@ -511,7 +521,7 @@
                         'Premium/Verified badges',
                     ] as $trustSignal)
                         <div class="fn-hover-lift rounded-3xl border border-white/10 bg-slate-950/45 p-4">
-                            <span class="mb-4 block h-2 w-10 rounded-full bg-gradient-to-r from-cyan-300 to-violet-400"></span>
+                            <span class="mb-4 block h-2 w-10 rounded-full bg-gradient-to-r from-orange-300 to-orange-400"></span>
                             <p class="text-sm font-black leading-5 text-white/80">{{ $trustSignal }}</p>
                         </div>
                     @endforeach
@@ -521,18 +531,18 @@
 
         <section data-testid="homepage-client-business-benefits" class="fn-section-fade mx-auto max-w-[1500px] px-4 py-7 sm:px-6 lg:px-12">
             <div class="grid gap-5 lg:grid-cols-3">
-                <article class="fn-hover-lift rounded-[32px] border border-cyan-300/20 bg-cyan-400/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">За клиенти</p>
+                <article class="fn-hover-lift rounded-[32px] border border-orange-300/20 bg-orange-400/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">За клиенти</p>
                     <h2 class="mt-3 text-2xl font-black">По-малко търсене, повече сигурност</h2>
                     <p class="mt-4 text-sm leading-6 text-white/65">FixNow помага да намерите активни изпълнители, да сравните доверие и да направите директен контакт без дълго обикаляне из случайни каталози.</p>
                     <a href="{{ route('services.index') }}" class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-white px-5 py-3 text-sm font-black text-slate-950">Намери услуга</a>
                 </article>
 
-                <article class="fn-hover-lift rounded-[32px] border border-violet-300/20 bg-violet-400/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-200/80">За изпълнители</p>
+                <article class="fn-hover-lift rounded-[32px] border border-orange-300/20 bg-orange-400/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">За изпълнители</p>
                     <h2 class="mt-3 text-2xl font-black">Профилът ти трябва да бъде откриваем</h2>
                     <p class="mt-4 text-sm leading-6 text-white/65">Профил във FixNow показва услуги, градове, телефон, отзиви, препоръки, статистика и план, който дава реална видимост пред локални клиенти.</p>
-                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Стани изпълнител</a>
+                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="mt-5 inline-flex min-h-11 items-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white">Стани изпълнител</a>
                 </article>
 
                 <article class="fn-hover-lift rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
@@ -545,10 +555,10 @@
         </section>
 
         <section data-testid="homepage-business-acquisition" class="fn-section-fade mx-auto max-w-[1500px] px-4 py-7 sm:px-6 lg:px-12">
-            <div class="fn-hover-lift overflow-hidden rounded-[34px] border border-violet-300/20 bg-gradient-to-br from-slate-950/80 via-blue-950/35 to-violet-950/45 p-6 shadow-2xl shadow-blue-950/25 backdrop-blur-xl sm:p-8 lg:p-10">
+            <div class="fn-hover-lift overflow-hidden rounded-[34px] border border-orange-300/20 bg-gradient-to-br from-slate-950/80 via-orange-950/35 to-orange-950/45 p-6 shadow-2xl shadow-orange-950/25 backdrop-blur-xl sm:p-8 lg:p-10">
                 <div class="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-center">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.24em] text-violet-200/80">Растеж за изпълнители</p>
+                        <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Растеж за изпълнители</p>
                         <h2 class="mt-4 max-w-3xl text-3xl font-black leading-tight sm:text-4xl">Повече видимост, повече доверие, повече директни запитвания</h2>
                         <p class="mt-4 max-w-2xl text-base leading-8 text-white/68">Standard е стабилен публичен профил за локално откриване. Premium добавя препоръчан badge, по-високо подреждане, повече градове, повече снимки и по-силен шанс в matching на заявки.</p>
                         <div class="mt-6 grid gap-3 sm:grid-cols-2">
@@ -563,26 +573,26 @@
                             @endforeach
                         </div>
                         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                            <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="fn-cta-glow inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white">Добави профил</a>
+                            <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="fn-cta-glow inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-4 font-black text-white">Добави профил</a>
                             <a href="{{ route('plans') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-6 py-4 font-black text-white hover:bg-white/15">Виж плановете</a>
                         </div>
                     </div>
 
                     <div class="grid gap-3">
-                        <div class="rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-5">
+                        <div class="rounded-3xl border border-orange-300/20 bg-orange-400/10 p-5">
                             <div class="flex items-end justify-between gap-4">
                                 <div>
-                                    <p class="text-sm font-black text-cyan-100">Standard</p>
+                                    <p class="text-sm font-black text-orange-100">Standard</p>
                                     <p class="mt-2 text-3xl font-black">18,99 €</p>
                                 </div>
                                 <p class="text-sm text-white/60">/месец</p>
                             </div>
                             <p class="mt-3 text-sm text-white/60">До 2 града, 2 категории/услуги и 5 снимки.</p>
                         </div>
-                        <div class="rounded-3xl border border-violet-300/30 bg-violet-400/15 p-5 ring-1 ring-violet-300/15">
+                        <div class="rounded-3xl border border-orange-300/30 bg-orange-400/15 p-5 ring-1 ring-orange-300/15">
                             <div class="flex items-end justify-between gap-4">
                                 <div>
-                                    <p class="text-sm font-black text-violet-100">Premium</p>
+                                    <p class="text-sm font-black text-orange-100">Premium</p>
                                     <p class="mt-2 text-3xl font-black">24,99 €</p>
                                 </div>
                                 <p class="text-sm text-white/60">/месец</p>
@@ -598,14 +608,14 @@
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                 <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Популярни градове и услуги</p>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Популярни градове и услуги</p>
                         <h2 class="mt-2 text-2xl font-black">Търсения, които клиентите използват</h2>
                     </div>
-                    <a href="{{ route('seo.city', ['city' => 'pleven']) }}" class="text-sm font-bold text-blue-300 transition hover:text-cyan-200">Всички услуги в Плевен →</a>
+                    <a href="{{ route('seo.city', ['city' => 'pleven']) }}" class="text-sm font-bold text-orange-300 transition hover:text-orange-200">Всички услуги в Плевен →</a>
                 </div>
                 <div class="flex flex-wrap gap-3">
                     @foreach($seoPopularLinks as $link)
-                        <a href="{{ $link['url'] }}" class="rounded-2xl border border-white/10 bg-slate-950/45 px-5 py-3 text-sm font-black text-white/75 transition hover:-translate-y-0.5 hover:border-cyan-300/30 hover:text-cyan-100">{{ $link['label'] }}</a>
+                        <a href="{{ $link['url'] }}" class="rounded-2xl border border-white/10 bg-slate-950/45 px-5 py-3 text-sm font-black text-white/75 transition hover:-translate-y-0.5 hover:border-orange-300/30 hover:text-orange-100">{{ $link['label'] }}</a>
                     @endforeach
                 </div>
             </div>
@@ -627,7 +637,7 @@
                         <h2 class="text-2xl font-black">{{ $section['title'] }}</h2>
                         <p class="mt-2 text-sm text-white/55">{{ $section['subtitle'] }}</p>
                     </div>
-                    <a href="{{ $section['url'] }}" class="hidden text-sm font-bold text-blue-300 transition hover:text-cyan-200 sm:block">Виж всички →</a>
+                    <a href="{{ $section['url'] }}" class="hidden text-sm font-bold text-orange-300 transition hover:text-orange-200 sm:block">Виж всички →</a>
                 </div>
 
                 @if($section['items']->isNotEmpty())
@@ -651,7 +661,7 @@
                     <h2 class="text-2xl font-black">Популярни категории</h2>
                     <p class="mt-2 text-sm text-white/55">Базирани на реално публикувани профили на изпълнители и услуги.</p>
                 </div>
-                <a href="{{ url('/categories') }}" class="hidden text-sm font-bold text-blue-300 transition hover:text-cyan-200 sm:block">Всички категории →</a>
+                <a href="{{ url('/categories') }}" class="hidden text-sm font-bold text-orange-300 transition hover:text-orange-200 sm:block">Всички категории →</a>
             </div>
 
             <div class="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-8">
@@ -686,7 +696,7 @@
                                 <p class="mt-1 text-sm text-amber-200">{{ str_repeat('★', (int) $review->rating) }} <span class="text-white/45">· {{ $review->rating }}/5</span></p>
                             </div>
                             @if($review->business)
-                                <a href="{{ route('businesses.show', $review->business) }}" class="text-xs font-black text-cyan-200 hover:text-white">Профил</a>
+                                <a href="{{ route('businesses.show', $review->business) }}" class="text-xs font-black text-orange-200 hover:text-white">Профил</a>
                             @endif
                         </div>
                         <p class="mt-4 line-clamp-3 text-sm leading-6 text-white/70">{{ $review->comment }}</p>
@@ -702,16 +712,22 @@
         </section>
 
         <section data-testid="homepage-first-50" class="fn-section-fade mx-auto max-w-[1500px] px-4 py-10 sm:px-6 lg:px-12">
-            <div class="fn-hover-lift grid gap-8 overflow-hidden rounded-[34px] border border-violet-300/20 bg-gradient-to-br from-blue-500/15 via-cyan-400/10 to-fuchsia-600/15 p-6 shadow-2xl shadow-blue-950/25 backdrop-blur-2xl lg:grid-cols-[1fr_auto] lg:items-center lg:p-10">
+            <div class="fn-hover-lift grid gap-8 overflow-hidden rounded-[34px] border border-orange-300/20 bg-gradient-to-br from-orange-500/15 via-orange-400/10 to-amber-600/15 p-6 shadow-2xl shadow-orange-950/25 backdrop-blur-2xl lg:grid-cols-[1fr_auto] lg:items-center lg:p-10">
                 <div>
-                    <p class="text-sm font-black uppercase text-cyan-200/80">За изпълнители</p>
+                    <p class="text-sm font-black uppercase text-orange-200/80">За изпълнители</p>
                     <h2 class="mt-3 max-w-3xl text-3xl font-black leading-tight sm:text-4xl">Първите 50 изпълнители получават стартово предимство</h2>
                     <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Създайте професионален профил, споделете го с клиентите си и започнете да събирате преглеждания, кликове, отзиви и препоръки.</p>
                 </div>
-                <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-blue-500 to-fuchsia-600 px-8 py-4 text-center text-base font-black text-white shadow-xl shadow-blue-600/25">Стани изпълнител</a>
+                <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="fn-cta-glow rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 px-8 py-4 text-center text-base font-black text-white shadow-xl shadow-orange-600/25">Стани изпълнител</a>
             </div>
         </section>
     </main>
+
+    <div class="mx-auto mt-2 max-w-[1500px] px-4 md:hidden">
+        <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-amber-cta flex min-h-14 items-center justify-center rounded-2xl text-base font-black">
+            Пусни заявка
+        </a>
+    </div>
 
     @include('partials.public-footer')
 
@@ -720,31 +736,31 @@
         <div class="mx-auto grid max-w-[1500px] gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_1fr] lg:px-12">
             <div>
                 <div class="flex items-center gap-3">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</div>
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
                     <span class="text-xl font-black">FixNow.bg</span>
                 </div>
                 <p class="mt-4 max-w-md text-sm leading-7 text-white/60">Premium marketplace за локални услуги, изпълнители, сервизи, майстори и професионалисти.</p>
             </div>
             <div class="grid gap-3 text-sm text-white/60">
                 <p class="font-black text-white">Навигация</p>
-                <a href="{{ route('top.businesses') }}" class="hover:text-cyan-200">Топ изпълнители</a>
-                <a href="{{ route('services.index') }}" class="hover:text-cyan-200">Услуги</a>
-                <a href="{{ route('businesses.index') }}" class="hover:text-cyan-200">Изпълнители</a>
+                <a href="{{ route('top.businesses') }}" class="hover:text-orange-200">Топ изпълнители</a>
+                <a href="{{ route('services.index') }}" class="hover:text-orange-200">Услуги</a>
+                <a href="{{ route('businesses.index') }}" class="hover:text-orange-200">Изпълнители</a>
             </div>
             <div class="grid gap-3 text-sm text-white/60">
                 <p class="font-black text-white">Изпълнители</p>
-                <a href="{{ route('business.landing') }}" class="hover:text-cyan-200">За изпълнители</a>
-                <a href="{{ route('request.service') }}" class="hover:text-cyan-200">Заяви оферта</a>
-                <a href="{{ url('/contact') }}" class="hover:text-cyan-200">Контакт</a>
+                <a href="{{ route('business.landing') }}" class="hover:text-orange-200">За изпълнители</a>
+                <a href="{{ route('request.service') }}" class="hover:text-orange-200">Заяви оферта</a>
+                <a href="{{ url('/contact') }}" class="hover:text-orange-200">Контакт</a>
             </div>
             <div class="grid gap-3 text-sm text-white/60">
                 <p class="font-black text-white">Профил</p>
                 @guest
-                    <a href="{{ route('login') }}" class="hover:text-cyan-200">Вход</a>
-                    <a href="{{ route('register') }}" class="hover:text-cyan-200">Регистрация</a>
+                    <a href="{{ route('login') }}" class="hover:text-orange-200">Вход</a>
+                    <a href="{{ route('register') }}" class="hover:text-orange-200">Регистрация</a>
                 @endguest
                 @auth
-                    <a href="{{ route('dashboard') }}" class="hover:text-cyan-200">Табло</a>
+                    <a href="{{ route('dashboard') }}" class="hover:text-orange-200">Табло</a>
                 @endauth
             </div>
         </div>

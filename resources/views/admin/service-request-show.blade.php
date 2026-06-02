@@ -20,10 +20,10 @@
             'closed' => 'Closed',
         ];
         $statusClasses = [
-            'new' => 'border-cyan-300/25 bg-cyan-400/10 text-cyan-100',
-            'open' => 'border-cyan-300/25 bg-cyan-400/10 text-cyan-100',
-            'contacted' => 'border-blue-300/25 bg-blue-400/10 text-blue-100',
-            'in_progress' => 'border-violet-300/25 bg-violet-400/10 text-violet-100',
+            'new' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
+            'open' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
+            'contacted' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
+            'in_progress' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
             'completed' => 'border-emerald-300/25 bg-emerald-400/10 text-emerald-100',
             'cancelled' => 'border-rose-300/25 bg-rose-400/10 text-rose-100',
             'closed' => 'border-slate-300/20 bg-white/10 text-white/70',
@@ -36,23 +36,23 @@
             'not_selected' => 'not_selected',
         ];
         $offerStatusClasses = [
-            'sent' => 'border-cyan-300/25 bg-cyan-400/10 text-cyan-100',
-            'viewed' => 'border-blue-300/25 bg-blue-400/10 text-blue-100',
+            'sent' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
+            'viewed' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
             'accepted' => 'border-emerald-300/25 bg-emerald-400/10 text-emerald-100',
             'rejected' => 'border-rose-300/25 bg-rose-400/10 text-rose-100',
             'not_selected' => 'border-white/10 bg-white/10 text-white/60',
         ];
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(168,85,247,0.18),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(251,146,60,0.16),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(245,158,11,0.18),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
     <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
         <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('admin.service-requests.index') }}" class="inline-flex items-center gap-3">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</span>
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</span>
                 <span class="text-lg font-black sm:text-xl">Admin заявки</span>
             </a>
-            <a href="{{ route('dashboard') }}" class="rounded-2xl bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">Admin табло</a>
+            <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">Admin табло</a>
         </div>
     </header>
 
@@ -70,7 +70,7 @@
                     {{ $statusLabels[$serviceRequest->status] ?? $serviceRequest->status }}
                 </span>
                 @if($serviceRequest->offers->isNotEmpty())
-                    <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-black text-cyan-100">Has offers</span>
+                    <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">Has offers</span>
                 @else
                     <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/55">No offers</span>
                 @endif
@@ -81,7 +81,7 @@
 
             <div class="mt-5 grid gap-6 lg:grid-cols-[1fr_360px]">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Marketplace request</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Marketplace request</p>
                     <h1 class="mt-3 text-3xl font-black sm:text-5xl">{{ $title }}</h1>
                     <p class="mt-4 max-w-3xl text-sm leading-6 text-white/65">{{ $serviceRequest->description }}</p>
                 </div>
@@ -141,7 +141,7 @@
                             <h2 class="text-2xl font-black">Оферти по заявката</h2>
                             <p class="mt-1 text-sm text-white/55">Следете кой изпълнител е изпратил оферта и дали клиентът е избрал някого.</p>
                         </div>
-                        <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-black text-cyan-100">{{ $serviceRequest->offers->count() }} оферти</span>
+                        <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $serviceRequest->offers->count() }} оферти</span>
                     </div>
 
                     <div class="mt-5 grid gap-4">
@@ -183,7 +183,7 @@
                     <div class="mt-5 grid gap-4">
                         @foreach($timeline as $event)
                             <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
-                                <p class="text-xs font-black uppercase tracking-[0.16em] text-cyan-200/70">{{ $event['date']?->format('d.m.Y H:i') }}</p>
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-orange-200/70">{{ $event['date']?->format('d.m.Y H:i') }}</p>
                                 <h3 class="mt-2 font-black">{{ $event['label'] }}</h3>
                                 <p class="mt-1 text-sm text-white/55">{{ $event['note'] }}</p>
                             </div>
@@ -196,8 +196,8 @@
                 <article class="rounded-[28px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <h2 class="text-xl font-black">Customer offers URL</h2>
                     @if($publicOffersUrl)
-                        <p class="mt-2 break-all rounded-2xl bg-slate-950/55 p-4 text-sm text-cyan-100">{{ $publicOffersUrl }}</p>
-                        <a href="{{ $publicOffersUrl }}" target="_blank" rel="noopener" class="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-3 text-sm font-black text-cyan-100">
+                        <p class="mt-2 break-all rounded-2xl bg-slate-950/55 p-4 text-sm text-orange-100">{{ $publicOffersUrl }}</p>
+                        <a href="{{ $publicOffersUrl }}" target="_blank" rel="noopener" class="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-3 text-sm font-black text-orange-100">
                             Отвори customer view
                         </a>
                     @else

@@ -8,32 +8,32 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
     @php
         $contactEmail = config('mail.from.address') ?: 'hello@fixnow.bg';
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_20%,rgba(251,146,60,0.16),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
 
     @include('partials.public-header')
 
 <main class="mx-auto grid max-w-7xl items-start gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_520px] lg:px-8">
         <section class="pt-4 lg:pt-12">
-            <p class="mb-4 inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">Контакт</p>
+            <p class="mb-4 inline-flex rounded-full border border-orange-300/20 bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">Контакт</p>
             <h1 class="max-w-2xl text-4xl font-black leading-tight sm:text-6xl">Нека направим услугите по-лесни за намиране.</h1>
             <p class="mt-6 max-w-xl text-lg leading-8 text-white/70">
                 Пишете ни за профил на изпълнител, заявка, партньорство, проблем с акаунт или идея за развитие на FixNow.bg.
             </p>
 
             <div class="mt-8 grid gap-4 sm:grid-cols-2">
-                <a href="{{ route('business.landing') }}" class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl hover:border-cyan-300/30">
-                    <p class="text-sm font-black text-cyan-100">За изпълнители</p>
+                <a href="{{ route('business.landing') }}" class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl hover:border-orange-300/30">
+                    <p class="text-sm font-black text-orange-100">За изпълнители</p>
                     <h2 class="mt-2 text-xl font-black">Добавете профил</h2>
                     <p class="mt-2 text-sm leading-6 text-white/60">Вижте как FixNow.bg може да носи повече видимост, директни обаждания и заявки.</p>
                 </a>
-                <a href="{{ route('request.service') }}" class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl hover:border-violet-300/30">
-                    <p class="text-sm font-black text-violet-100">За клиенти</p>
+                <a href="{{ route('request.service') }}" class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl hover:border-orange-300/30">
+                    <p class="text-sm font-black text-orange-100">За клиенти</p>
                     <h2 class="mt-2 text-xl font-black">Заявете оферта</h2>
                     <p class="mt-2 text-sm leading-6 text-white/60">Опишете каква услуга търсите и ще насочим заявката към подходящи изпълнители.</p>
                 </a>
@@ -45,7 +45,7 @@
             <div class="mt-6 grid gap-4">
                 <a href="mailto:{{ $contactEmail }}" class="block rounded-3xl border border-white/10 bg-slate-950/50 p-5 hover:bg-white/10">
                     <p class="text-sm text-white/60">Имейл</p>
-                    <p class="mt-1 break-words text-xl font-black text-cyan-200">{{ $contactEmail }}</p>
+                    <p class="mt-1 break-words text-xl font-black text-orange-300">{{ $contactEmail }}</p>
                     <p class="mt-2 text-sm leading-6 text-white/55">За партньорства, профили на изпълнители, правни въпроси и поддръжка.</p>
                 </a>
 
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="grid gap-3 sm:grid-cols-2">
-                    <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 text-center font-black text-white">
+                    <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 text-center font-black text-white">
                         Заяви оферта
                     </a>
                     <a href="{{ route('plans') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/15">

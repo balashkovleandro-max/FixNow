@@ -72,11 +72,11 @@ password
 STRIPE_KEY=
 STRIPE_SECRET=
 STRIPE_WEBHOOK_SECRET=
-STRIPE_STANDARD_PRICE_ID=price_1TYmByRqvGMkwX9rN7HTUunp
-STRIPE_PREMIUM_PRICE_ID=price_1TYmCcRqvGMkwX9rE8ichDo4
+STRIPE_STANDARD_PRICE_ID=
+STRIPE_PREMIUM_PRICE_ID=
 ```
 
-За local Stripe test mode използвайте test keys и горните test Price IDs. `STRIPE_WEBHOOK_SECRET` може да остане празен, докато не стартирате webhook testing; след като Stripe CLI/Dashboard върне `whsec_...`, добавете стойността в `.env`, защото `/stripe/webhook` отхвърля неподписани webhook заявки.
+За local Stripe test mode използвайте Stripe test keys и test Price IDs от вашия Stripe Dashboard. Не commit-вайте Price IDs или secret keys. `STRIPE_WEBHOOK_SECRET` може да остане празен, докато не стартирате webhook testing; след като Stripe CLI/Dashboard върне `whsec_...`, добавете стойността в `.env`, защото `/stripe/webhook` отхвърля неподписани webhook заявки.
 
 Плановете Standard/Premium не се активират от UI бутон. Активирането става само след валиден Stripe webhook.
 

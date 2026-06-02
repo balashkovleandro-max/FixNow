@@ -26,25 +26,25 @@
             'closed' => 'Closed',
         ];
         $statusClasses = [
-            'new' => 'border-cyan-300/25 bg-cyan-400/10 text-cyan-100',
-            'open' => 'border-cyan-300/25 bg-cyan-400/10 text-cyan-100',
-            'contacted' => 'border-blue-300/25 bg-blue-400/10 text-blue-100',
-            'in_progress' => 'border-violet-300/25 bg-violet-400/10 text-violet-100',
+            'new' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
+            'open' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
+            'contacted' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
+            'in_progress' => 'border-orange-300/25 bg-orange-400/10 text-orange-100',
             'completed' => 'border-emerald-300/25 bg-emerald-400/10 text-emerald-100',
             'cancelled' => 'border-rose-300/25 bg-rose-400/10 text-rose-100',
             'closed' => 'border-slate-300/20 bg-white/10 text-white/70',
         ];
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(251,146,60,0.16),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_32%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
     <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-3">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</span>
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</span>
                 <span class="text-xl font-black">FixNow Admin</span>
             </a>
-            <a href="{{ route('dashboard') }}" class="rounded-2xl bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">Admin табло</a>
+            <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">Admin табло</a>
         </div>
     </header>
 
@@ -56,7 +56,7 @@
         @endif
 
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-8">
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Marketplace overview</p>
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Marketplace overview</p>
             <div class="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <h1 class="text-3xl font-black sm:text-5xl">Всички клиентски заявки</h1>
@@ -64,7 +64,7 @@
                         Следете целия flow: заявка, получени оферти, избран изпълнител и финален статус.
                     </p>
                 </div>
-                <span class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-4 py-3 text-sm font-black text-cyan-100">
+                <span class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-4 py-3 text-sm font-black text-orange-100">
                     {{ $serviceRequests->total() }} заявки
                 </span>
             </div>
@@ -113,7 +113,7 @@
                     </select>
                 </label>
                 <div class="flex items-end gap-2 lg:col-span-1">
-                    <button class="min-h-12 flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 font-black text-white">Филтрирай</button>
+                    <button class="min-h-12 flex-1 rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-4 font-black text-white">Филтрирай</button>
                     <a href="{{ route('admin.service-requests.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 text-sm font-black text-white hover:bg-white/15">Reset</a>
                 </div>
             </form>
@@ -135,7 +135,7 @@
                                 </span>
                                 <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/60">{{ $serviceRequest->created_at?->format('d.m.Y H:i') }}</span>
                                 @if(($serviceRequest->offers_count ?? $serviceRequest->offers->count()) > 0)
-                                    <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-black text-cyan-100">Has offers</span>
+                                    <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">Has offers</span>
                                 @else
                                     <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/50">No offers</span>
                                 @endif
@@ -165,7 +165,7 @@
                                     <p class="mt-1 text-sm font-black text-white">{{ $serviceRequest->selectedOffer->price_estimate ?: 'Без посочена цена' }}</p>
                                 </div>
                             @endif
-                            <a href="{{ route('admin.service-requests.show', $serviceRequest) }}" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">
+                            <a href="{{ route('admin.service-requests.show', $serviceRequest) }}" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white">
                                 Детайли
                             </a>
                         </aside>
@@ -173,7 +173,7 @@
                 </article>
             @empty
                 <div class="rounded-[28px] border border-white/10 bg-white/10 p-8 text-center shadow-xl shadow-black/20 backdrop-blur-xl">
-                    <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 text-xl font-black">F</p>
+                    <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 text-xl font-black">F</p>
                     <h2 class="mt-4 text-2xl font-black">Няма заявки по този филтър</h2>
                     <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">Променете филтрите или вижте всички заявки, за да проследите marketplace flow-а.</p>
                     <a href="{{ route('admin.service-requests.index') }}" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/15">Виж всички заявки</a>

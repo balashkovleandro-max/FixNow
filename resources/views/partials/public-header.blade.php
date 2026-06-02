@@ -5,7 +5,7 @@
         }
 
         .fn-public-cta:hover {
-            box-shadow: 0 0 0 1px rgba(125, 211, 252, .22), 0 18px 48px rgba(59, 130, 246, .32);
+            box-shadow: 0 0 0 1px rgba(251, 146, 60, .28), 0 18px 48px rgba(249, 115, 22, .34);
             filter: saturate(1.08);
             transform: translateY(-1px);
         }
@@ -16,8 +16,8 @@
         }
 
         .fn-public-hover:hover {
-            border-color: rgba(125, 211, 252, .34);
-            box-shadow: 0 22px 58px rgba(2, 8, 18, .42), 0 0 0 1px rgba(59, 130, 246, .10);
+            border-color: rgba(251, 146, 60, .36);
+            box-shadow: 0 22px 58px rgba(2, 8, 18, .42), 0 0 0 1px rgba(249, 115, 22, .12);
             transform: translateY(-4px);
         }
 
@@ -25,8 +25,8 @@
             display: none;
             left: 50%;
             top: calc(100% + .75rem);
-            background-color: rgba(2, 6, 23, .98);
-            box-shadow: 0 26px 80px rgba(0, 0, 0, .58), 0 0 0 1px rgba(125, 211, 252, .08);
+            background: linear-gradient(145deg, rgba(2, 6, 23, .98), rgba(7, 17, 31, .98));
+            box-shadow: 0 26px 80px rgba(0, 0, 0, .58), 0 0 0 1px rgba(251, 146, 60, .10);
             transform: translate3d(-50%, 8px, 0);
         }
 
@@ -47,6 +47,12 @@
             .fn-mega-panel {
                 display: none !important;
             }
+        }
+
+        .fn-mobile-summary::marker,
+        .fn-mobile-summary::-webkit-details-marker {
+            display: none;
+            content: "";
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -89,27 +95,27 @@
     ];
 @endphp
 
-<header id="fn-main-header" class="sticky top-0 z-50 border-b border-white/10 bg-[#030712]/82 backdrop-blur-2xl">
+<header id="fn-main-header" class="sticky top-0 z-50 border-b border-white/10 bg-[#020617]/88 backdrop-blur-2xl">
     <div class="mx-auto flex h-[76px] max-w-[1500px] items-center justify-between px-4 sm:px-6 lg:px-12">
         <a href="{{ url('/') }}" class="flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black shadow-[0_0_26px_rgba(59,130,246,0.42)]">F</div>
-            <span class="text-xl font-black tracking-tight">FixNow.bg</span>
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 via-amber-400 to-orange-600 font-black text-white shadow-[0_0_28px_rgba(249,115,22,0.42)]">F</div>
+            <span class="text-xl font-black tracking-tight">Fix<span class="text-orange-400">Now</span>.bg</span>
         </a>
 
         <nav id="fn-desktop-mega-nav" class="hidden items-center gap-2 lg:flex" aria-label="Основна навигация">
             <div class="fn-mega-trigger relative" data-mega-trigger>
-                <button type="button" aria-expanded="false" class="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-cyan-100 focus:bg-white/10 focus:text-cyan-100 focus:outline-none">
+                <button type="button" aria-expanded="false" class="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-orange-100 focus:bg-white/10 focus:text-orange-100 focus:outline-none">
                     Услуги
                     <svg class="h-4 w-4 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
                 </button>
                 <div class="fn-mega-panel fn-mega-panel-wide absolute z-[90] rounded-[30px] border border-white/15 p-4 shadow-2xl backdrop-blur-2xl transition duration-200" data-mega-panel>
                     <div class="grid grid-cols-2 gap-3">
                         @foreach($publicServiceMenu as $item)
-                            <a href="{{ $item['url'] }}" class="fn-public-hover group/card rounded-3xl border border-white/10 bg-white/5 p-4 hover:bg-cyan-300/10">
+                            <a href="{{ $item['url'] }}" class="fn-public-hover group/card rounded-3xl border border-white/10 bg-white/5 p-4 hover:bg-orange-400/10">
                                 <div class="flex gap-3">
-                                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-300/10 text-sm font-black text-cyan-100 ring-1 ring-cyan-300/15">{{ $item['icon'] }}</span>
+                                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-400/10 text-sm font-black text-orange-100 ring-1 ring-orange-300/15">{{ $item['icon'] }}</span>
                                     <span>
-                                        <span class="block font-black text-white group-hover/card:text-cyan-100">{{ $item['title'] }}</span>
+                                        <span class="block font-black text-white group-hover/card:text-orange-100">{{ $item['title'] }}</span>
                                         <span class="mt-1 block text-sm leading-5 text-white/55">{{ $item['description'] }}</span>
                                     </span>
                                 </div>
@@ -120,15 +126,15 @@
             </div>
 
             <div class="fn-mega-trigger relative" data-mega-trigger>
-                <button type="button" aria-expanded="false" class="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-cyan-100 focus:bg-white/10 focus:text-cyan-100 focus:outline-none">
+                <button type="button" aria-expanded="false" class="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-orange-100 focus:bg-white/10 focus:text-orange-100 focus:outline-none">
                     За клиенти
                     <svg class="h-4 w-4 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
                 </button>
                 <div class="fn-mega-panel fn-mega-panel-compact absolute z-[90] rounded-[30px] border border-white/15 p-4 shadow-2xl backdrop-blur-2xl transition duration-200" data-mega-panel>
                     <div class="grid grid-cols-2 gap-3">
                         @foreach($publicClientMenu as $item)
-                            <a href="{{ $item['url'] }}" class="fn-public-hover rounded-3xl border border-white/10 bg-white/5 p-4 hover:bg-blue-300/10">
-                                <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-300/10 text-sm font-black text-blue-100 ring-1 ring-blue-300/15">{{ $item['icon'] }}</span>
+                            <a href="{{ $item['url'] }}" class="fn-public-hover rounded-3xl border border-white/10 bg-white/5 p-4 hover:bg-amber-300/10">
+                                <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-300/10 text-sm font-black text-amber-100 ring-1 ring-amber-300/15">{{ $item['icon'] }}</span>
                                 <span class="block font-black text-white">{{ $item['title'] }}</span>
                                 <span class="mt-1 block text-sm leading-5 text-white/55">{{ $item['description'] }}</span>
                             </a>
@@ -138,15 +144,15 @@
             </div>
 
             <div class="fn-mega-trigger relative" data-mega-trigger>
-                <button type="button" aria-expanded="false" class="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-cyan-100 focus:bg-white/10 focus:text-cyan-100 focus:outline-none">
+                <button type="button" aria-expanded="false" class="inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-orange-100 focus:bg-white/10 focus:text-orange-100 focus:outline-none">
                     За изпълнители
                     <svg class="h-4 w-4 transition" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd"/></svg>
                 </button>
                 <div class="fn-mega-panel fn-mega-panel-compact absolute z-[90] rounded-[30px] border border-white/15 p-4 shadow-2xl backdrop-blur-2xl transition duration-200" data-mega-panel>
                     <div class="grid grid-cols-2 gap-3">
                         @foreach($publicExecutorMenu as $item)
-                            <a href="{{ $item['url'] }}" class="fn-public-hover rounded-3xl border border-white/10 bg-white/5 p-4 hover:bg-violet-300/10">
-                                <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-300/10 text-sm font-black text-violet-100 ring-1 ring-violet-300/15">{{ $item['icon'] }}</span>
+                            <a href="{{ $item['url'] }}" class="fn-public-hover rounded-3xl border border-white/10 bg-white/5 p-4 hover:bg-orange-300/10">
+                                <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-300/10 text-sm font-black text-orange-100 ring-1 ring-orange-300/15">{{ $item['icon'] }}</span>
                                 <span class="block font-black text-white">{{ $item['title'] }}</span>
                                 <span class="mt-1 block text-sm leading-5 text-white/55">{{ $item['description'] }}</span>
                             </a>
@@ -155,7 +161,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('plans') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-cyan-100">Планове</a>
+            <a href="{{ route('plans') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 transition hover:bg-white/10 hover:text-orange-100">Планове</a>
         </nav>
 
         <div class="hidden items-center gap-4 md:flex">
@@ -169,12 +175,31 @@
                     <button type="submit" class="rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white/10">Изход</button>
                 </form>
             @endauth
-            <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-public-cta rounded-2xl bg-gradient-to-r from-blue-500 to-fuchsia-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-blue-600/25">Пусни заявка</a>
+            <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-public-cta rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-3 text-sm font-black text-white shadow-lg shadow-orange-600/25">Пусни заявка</a>
         </div>
 
-        <a href="{{ route('request.service') }}" data-track="cta_request" class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white md:hidden" aria-label="Пусни заявка">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke-linejoin="round"/></svg>
-        </a>
+        <details class="group relative md:hidden">
+            <summary class="fn-mobile-summary flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-orange-300/25 bg-orange-400/10 text-orange-100" aria-label="Меню">
+                <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+                <svg class="hidden h-6 w-6 group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+            </summary>
+            <div class="absolute right-0 top-14 w-[min(18rem,calc(100vw-2rem))] rounded-3xl border border-white/10 bg-[#020617]/96 p-3 shadow-2xl shadow-black/45 backdrop-blur-2xl">
+                <div class="grid gap-2">
+                    <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 hover:bg-white/10 hover:text-orange-100">Услуги</a>
+                    <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 hover:bg-white/10 hover:text-orange-100">Изпълнители</a>
+                    <a href="{{ route('top.businesses') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 hover:bg-white/10 hover:text-orange-100">Топ изпълнители</a>
+                    <a href="{{ route('plans') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 hover:bg-white/10 hover:text-orange-100">Планове</a>
+                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 hover:bg-white/10 hover:text-orange-100">Стани изпълнител</a>
+                    @guest
+                        <a href="{{ route('login') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 hover:bg-white/10 hover:text-orange-100">Вход</a>
+                    @endguest
+                    @auth
+                        <a href="{{ route('dashboard') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-white/75 hover:bg-white/10 hover:text-orange-100">Табло</a>
+                    @endauth
+                    <a href="{{ route('request.service') }}" data-track="cta_request" class="fn-amber-cta mt-1 rounded-2xl px-4 py-3 text-center text-sm font-black">Пусни заявка</a>
+                </div>
+            </div>
+        </details>
     </div>
 </header>
 

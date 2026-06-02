@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
     @php
         $requestCategories = $requestCategories ?? collect();
         $urgencies = [
@@ -18,14 +18,14 @@
         ];
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
 
     @include('partials.public-header')
 
 <main class="mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-4 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
         <section class="flex flex-col justify-center">
-            <p class="mb-4 inline-flex w-fit rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100">Безплатна заявка за оферта</p>
+            <p class="mb-4 inline-flex w-fit rounded-full border border-orange-300/20 bg-orange-300/10 px-4 py-2 text-sm font-semibold text-orange-100">Безплатна заявка за оферта</p>
             <h1 class="max-w-2xl text-4xl font-black leading-tight sm:text-6xl">
                 Опишете задачата и получете подходящи оферти.
             </h1>
@@ -40,13 +40,13 @@
                     ['value' => '3', 'label' => 'Получавате оферти'],
                 ] as $step)
                     <div class="rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur-xl">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 text-sm font-black">{{ $step['value'] }}</span>
+                        <span class="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-sm font-black">{{ $step['value'] }}</span>
                         <p class="mt-3 text-sm font-bold text-white/75">{{ $step['label'] }}</p>
                     </div>
                 @endforeach
             </div>
 
-            <div class="mt-6 rounded-3xl border border-violet-300/15 bg-violet-400/10 p-5 text-sm leading-6 text-white/65">
+            <div class="mt-6 rounded-3xl border border-orange-300/15 bg-orange-400/10 p-5 text-sm leading-6 text-white/65">
                 <strong class="text-white">Важно:</strong> заявките са само за категории, в които офертите имат смисъл. За автосервизи, фризьори, адвокати, магазини и други directory категории използвайте “Намери изпълнител”.
             </div>
         </section>
@@ -79,7 +79,7 @@
 
                 <div>
                     <label for="category" class="mb-2 block text-sm font-semibold text-white/75">Категория/услуга</label>
-                    <select id="category" name="category" class="min-h-12 w-full rounded-2xl border {{ $errors->has('category') ? 'border-red-300/60' : 'border-white/10' }} bg-slate-950 px-4 py-4 text-white outline-none focus:border-cyan-300/50">
+                    <select id="category" name="category" class="min-h-12 w-full rounded-2xl border {{ $errors->has('category') ? 'border-red-300/60' : 'border-white/10' }} bg-slate-950 px-4 py-4 text-white outline-none focus:border-orange-300/50">
                         <option value="">Изберете категория за оферти</option>
                         @foreach($requestCategories as $category)
                             <option value="{{ $category['name'] }}" {{ old('category', request('category')) === $category['name'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
@@ -93,7 +93,7 @@
                 <div class="grid gap-5 sm:grid-cols-2">
                     <div>
                         <label for="service" class="mb-2 block text-sm font-semibold text-white/75">Конкретна услуга</label>
-                        <input id="service" type="text" name="service" value="{{ old('service') }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('service') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Напр. ремонт на баня, смяна на бойлер">
+                        <input id="service" type="text" name="service" value="{{ old('service') }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('service') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Напр. ремонт на баня, смяна на бойлер">
                         @error('service')
                             <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                         @enderror
@@ -101,7 +101,7 @@
 
                     <div>
                         <label for="city" class="mb-2 block text-sm font-semibold text-white/75">Град</label>
-                        <input id="city" type="text" name="city" value="{{ old('city', request('city')) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('city') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Напр. Плевен">
+                        <input id="city" type="text" name="city" value="{{ old('city', request('city')) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('city') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Напр. Плевен">
                         @error('city')
                             <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                         @enderror
@@ -110,7 +110,7 @@
 
                 <div>
                     <label for="description" class="mb-2 block text-sm font-semibold text-white/75">Описание на проблема/услугата</label>
-                    <textarea id="description" name="description" rows="5" class="w-full rounded-2xl border {{ $errors->has('description') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Опишете какво трябва да се направи, къде се намира обектът и важните детайли.">{{ old('description') }}</textarea>
+                    <textarea id="description" name="description" rows="5" class="w-full rounded-2xl border {{ $errors->has('description') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Опишете какво трябва да се направи, къде се намира обектът и важните детайли.">{{ old('description') }}</textarea>
                     @error('description')
                         <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                     @enderror
@@ -119,7 +119,7 @@
                 <div class="grid gap-5 sm:grid-cols-2">
                     <div>
                         <label for="photos" class="mb-2 block text-sm font-semibold text-white/75">Снимки <span class="text-white/40">(по желание)</span></label>
-                        <input id="photos" type="file" name="photos[]" multiple accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="min-h-12 w-full rounded-2xl border {{ $errors->has('photos') || $errors->has('photos.*') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white file:mr-4 file:rounded-xl file:border-0 file:bg-cyan-400/20 file:px-4 file:py-2 file:font-bold file:text-cyan-100">
+                        <input id="photos" type="file" name="photos[]" multiple accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="min-h-12 w-full rounded-2xl border {{ $errors->has('photos') || $errors->has('photos.*') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white file:mr-4 file:rounded-xl file:border-0 file:bg-orange-400/20 file:px-4 file:py-2 file:font-bold file:text-orange-100">
                         @error('photos')
                             <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                         @enderror
@@ -130,7 +130,7 @@
 
                     <div>
                         <label for="budget" class="mb-2 block text-sm font-semibold text-white/75">Бюджет <span class="text-white/40">(по желание)</span></label>
-                        <input id="budget" type="text" name="budget" value="{{ old('budget') }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('budget') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Напр. до 500 лв.">
+                        <input id="budget" type="text" name="budget" value="{{ old('budget') }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('budget') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Напр. до 500 лв.">
                         @error('budget')
                             <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                         @enderror
@@ -141,7 +141,7 @@
                     <span class="mb-2 block text-sm font-semibold text-white/75">Срок/спешност</span>
                     <div class="grid gap-3 sm:grid-cols-2">
                         @foreach($urgencies as $value => $label)
-                            <label class="cursor-pointer rounded-2xl border border-white/10 bg-white/10 p-4 text-sm font-bold text-white/75 has-[:checked]:border-cyan-300/50 has-[:checked]:bg-cyan-300/10">
+                            <label class="cursor-pointer rounded-2xl border border-white/10 bg-white/10 p-4 text-sm font-bold text-white/75 has-[:checked]:border-orange-300/50 has-[:checked]:bg-orange-300/10">
                                 <input type="radio" name="urgency" value="{{ $value }}" class="sr-only" {{ old('urgency', 'no_deadline') === $value ? 'checked' : '' }}>
                                 {{ $label }}
                             </label>
@@ -155,7 +155,7 @@
                 <div class="grid gap-5 sm:grid-cols-2">
                     <div>
                         <label for="name" class="mb-2 block text-sm font-semibold text-white/75">Име на клиента</label>
-                        <input id="name" type="text" name="name" value="{{ old('name') }}" autocomplete="name" class="min-h-12 w-full rounded-2xl border {{ $errors->has('name') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Вашето име">
+                        <input id="name" type="text" name="name" value="{{ old('name') }}" autocomplete="name" class="min-h-12 w-full rounded-2xl border {{ $errors->has('name') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Вашето име">
                         @error('name')
                             <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                         @enderror
@@ -163,7 +163,7 @@
 
                     <div>
                         <label for="phone" class="mb-2 block text-sm font-semibold text-white/75">Телефон</label>
-                        <input id="phone" type="text" name="phone" value="{{ old('phone') }}" autocomplete="tel" class="min-h-12 w-full rounded-2xl border {{ $errors->has('phone') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="+359 ...">
+                        <input id="phone" type="text" name="phone" value="{{ old('phone') }}" autocomplete="tel" class="min-h-12 w-full rounded-2xl border {{ $errors->has('phone') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="+359 ...">
                         @error('phone')
                             <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                         @enderror
@@ -172,13 +172,13 @@
 
                 <div>
                     <label for="email" class="mb-2 block text-sm font-semibold text-white/75">Email <span class="text-white/40">(по желание)</span></label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" autocomplete="email" class="min-h-12 w-full rounded-2xl border {{ $errors->has('email') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="name@example.com">
+                    <input id="email" type="email" name="email" value="{{ old('email') }}" autocomplete="email" class="min-h-12 w-full rounded-2xl border {{ $errors->has('email') ? 'border-red-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="name@example.com">
                     @error('email')
                         <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <button type="submit" data-track="cta_request" class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25 transition hover:shadow-blue-500/40">
+                <button type="submit" data-track="cta_request" class="fn-amber-cta min-h-12 rounded-2xl px-6 py-4 font-black">
                     Изпрати заявка
                 </button>
             </form>

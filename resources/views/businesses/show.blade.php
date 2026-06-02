@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-44 text-white md:pb-28 lg:pb-0">
+<body class="fn-premium-page min-h-screen overflow-x-hidden pb-44 text-white md:pb-28 lg:pb-0">
     @php
         $businessName = $user->business_name ?: $user->name;
         $businessCategories = $user->serviceCategories();
@@ -71,26 +71,26 @@
         };
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.24),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.20),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.24),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.20),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
 
     @include('partials.public-header')
 
 <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <section class="overflow-hidden rounded-[34px] border border-white/10 bg-white/10 shadow-2xl shadow-black/25 backdrop-blur-xl">
+        <section class="fn-glass-card overflow-hidden rounded-[34px]">
             <div class="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
                 <div class="relative min-h-[430px] p-6 sm:p-8 lg:p-10">
-                    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_15%,rgba(34,211,238,0.18),transparent_28%),radial-gradient(circle_at_80%_12%,rgba(147,51,234,0.20),transparent_28%)]"></div>
+                    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_15%,rgba(251,146,60,0.20),transparent_28%),radial-gradient(circle_at_80%_12%,rgba(245,158,11,0.16),transparent_28%)]"></div>
 
                     <div data-testid="main-business-badges" class="flex flex-wrap items-center gap-2">
                         @if($user->isPremium())
-                            <span class="rounded-full bg-violet-400/15 px-3 py-1 text-xs font-black text-violet-100 ring-1 ring-violet-300/20">Premium</span>
+                            <span class="rounded-full bg-orange-400/15 px-3 py-1 text-xs font-black text-orange-100 ring-1 ring-orange-300/20">Premium</span>
                         @endif
                         @if($user->is_verified)
                             <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100 ring-1 ring-emerald-300/20">Потвърден</span>
                         @endif
                         @if($user->isTrialActive())
-                            <span class="rounded-full bg-cyan-400/15 px-3 py-1 text-xs font-black text-cyan-100 ring-1 ring-cyan-300/20">Trial</span>
+                            <span class="rounded-full bg-orange-400/15 px-3 py-1 text-xs font-black text-orange-100 ring-1 ring-orange-300/20">Trial</span>
                         @endif
                         @foreach($publicBadges as $badge)
                             @unless(in_array($badge, ['Препоръчан', 'Потвърден'], true))
@@ -100,11 +100,11 @@
                     </div>
 
                     <div class="mt-8 flex flex-col gap-6 sm:flex-row sm:items-end">
-                        <div class="flex h-28 w-28 shrink-0 items-center justify-center rounded-[28px] border border-white/15 bg-gradient-to-br from-cyan-400 via-blue-500 to-violet-600 text-5xl font-black shadow-2xl shadow-blue-900/30">
+                        <div class="flex h-28 w-28 shrink-0 items-center justify-center rounded-[28px] border border-white/15 bg-gradient-to-br from-orange-500 via-amber-400 to-orange-600 text-5xl font-black shadow-2xl shadow-orange-950/30">
                             {{ strtoupper(mb_substr($businessName, 0, 1)) }}
                         </div>
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">{{ $category }}</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">{{ $category }}</p>
                             <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">{{ $businessName }}</h1>
                             <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">{{ $shortDescription }}</p>
                         </div>
@@ -135,7 +135,7 @@
                         <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
                             <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Препоръки</p>
                             <p class="mt-2 font-black">{{ $recommendationsCount }}</p>
-                            <p class="mt-1 text-xs text-violet-200">от клиенти във FixNow</p>
+                            <p class="mt-1 text-xs text-amber-200">от клиенти във FixNow</p>
                         </div>
                     </div>
 
@@ -144,12 +144,12 @@
                             <p class="text-sm font-black {{ $user->is_verified ? 'text-emerald-100' : 'text-white/70' }}">{{ $user->is_verified ? 'Потвърден изпълнител' : 'Очаква потвърждение' }}</p>
                             <p class="mt-2 text-xs leading-5 text-white/55">{{ $user->is_verified ? 'Админ е проверил основните данни на профила.' : 'Профилът е видим, но все още няма verified badge.' }}</p>
                         </div>
-                        <div class="rounded-3xl border {{ $user->isPremium() ? 'border-violet-300/25 bg-violet-400/10' : 'border-white/10 bg-slate-950/45' }} p-4">
-                            <p class="text-sm font-black {{ $user->isPremium() ? 'text-violet-100' : 'text-white/70' }}">{{ $user->isPremium() ? 'Premium профил' : 'Standard профил' }}</p>
+                        <div class="rounded-3xl border {{ $user->isPremium() ? 'border-orange-300/25 bg-orange-400/10' : 'border-white/10 bg-slate-950/45' }} p-4">
+                            <p class="text-sm font-black {{ $user->isPremium() ? 'text-orange-100' : 'text-white/70' }}">{{ $user->isPremium() ? 'Premium профил' : 'Standard профил' }}</p>
                             <p class="mt-2 text-xs leading-5 text-white/55">{{ $user->isPremium() ? 'Получава по-силно позициониране и Premium badge.' : 'Публичен профил с нормално показване.' }}</p>
                         </div>
-                        <div class="rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-4">
-                            <p class="text-sm font-black text-cyan-100">Директен контакт</p>
+                        <div class="rounded-3xl border border-orange-300/20 bg-orange-400/10 p-4">
+                            <p class="text-sm font-black text-orange-100">Директен контакт</p>
                             <p class="mt-2 text-xs leading-5 text-white/55">Телефон, запитване и social/website кликове се проследяват като реална активност.</p>
                         </div>
                     </div>
@@ -161,14 +161,14 @@
                     @endif
 
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">Изпрати запитване</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">Изпрати запитване</a>
                         @if($user->phone)
                             <a href="{{ route('businesses.track.phone', $user) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Обади се</a>
                         @endif
                         @if($user->isPubliclyVisible())
                             <form action="{{ route('businesses.recommendations.store', $user) }}" method="POST" class="sm:min-w-40">
                                 @csrf
-                                <button type="submit" class="w-full rounded-2xl border border-violet-300/20 bg-violet-400/10 px-6 py-4 font-black text-violet-100 hover:bg-violet-400/15">
+                                <button type="submit" class="w-full rounded-2xl border border-orange-300/20 bg-orange-400/10 px-6 py-4 font-black text-orange-100 hover:bg-orange-400/15">
                                     Препоръчай
                                 </button>
                             </form>
@@ -183,9 +183,9 @@
                         @if($mainImage)
                             <img src="{{ asset('storage/' . $mainImage) }}" alt="{{ $businessName }}" class="h-full min-h-[280px] w-full object-cover">
                         @else
-                            <div class="flex h-full min-h-[280px] items-center justify-center bg-gradient-to-br from-cyan-400/20 via-blue-500/10 to-violet-600/25">
+                            <div class="flex h-full min-h-[280px] items-center justify-center bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-orange-600/25">
                                 <div class="px-6 text-center">
-                                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-950/60 text-2xl font-black text-cyan-100">F</p>
+                                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-950/60 text-2xl font-black text-orange-100">F</p>
                                     <p class="mt-4 font-black">Снимките ще се появят тук</p>
                                     <p class="mt-2 text-sm text-white/55">Изпълнителят все още не е качил галерия.</p>
                                 </div>
@@ -201,7 +201,7 @@
                             @if($galleryImage)
                                 <img src="{{ asset('storage/' . $galleryImage) }}" alt="{{ $businessName }} снимка" loading="lazy" class="h-full w-full object-cover">
                             @else
-                                <div class="flex h-full items-center justify-center bg-gradient-to-br from-blue-500/20 via-cyan-400/10 to-violet-600/20 text-sm font-bold text-white/50">Галерия</div>
+                                <div class="flex h-full items-center justify-center bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-orange-600/20 text-sm font-bold text-white/50">Галерия</div>
                             @endif
                         </div>
                     @endforeach
@@ -212,10 +212,10 @@
         <section class="mt-6 grid gap-6 lg:grid-cols-[1fr_380px]">
             <div class="grid gap-6">
                 @if($user->isPubliclyVisible())
-                <section id="send-request" class="rounded-[32px] border border-cyan-300/20 bg-gradient-to-br from-cyan-400/10 via-blue-500/10 to-violet-600/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
+                <section id="send-request" class="rounded-[32px] border border-orange-300/20 bg-gradient-to-br from-orange-500/10 via-amber-400/10 to-orange-600/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Заявка към изпълнителя</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Заявка към изпълнителя</p>
                             <h2 class="mt-3 text-3xl font-black">Изпрати заявка</h2>
                             <p class="mt-3 text-sm leading-6 text-white/65">
                                 Опишете накратко от каква услуга имате нужда. Заявката отива директно към {{ $businessName }} и изпълнителят ще може да я управлява от своя панел.
@@ -234,13 +234,13 @@
                             <div class="grid gap-4 md:grid-cols-2">
                                 <label class="block">
                                     <span class="mb-2 block text-sm font-semibold text-white/75">Име</span>
-                                    <input name="customer_name" value="{{ old('customer_name', auth()->user()?->name) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('customer_name') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Вашето име">
+                                    <input name="customer_name" value="{{ old('customer_name', auth()->user()?->name) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('customer_name') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Вашето име">
                                     @error('customer_name')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                                 </label>
 
                                 <label class="block">
                                     <span class="mb-2 block text-sm font-semibold text-white/75">Телефон</span>
-                                    <input name="customer_phone" value="{{ old('customer_phone') }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('customer_phone') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="+359 ...">
+                                    <input name="customer_phone" value="{{ old('customer_phone') }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('customer_phone') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="+359 ...">
                                     @error('customer_phone')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                                 </label>
                             </div>
@@ -248,24 +248,24 @@
                             <div class="grid gap-4 md:grid-cols-2">
                                 <label class="block">
                                     <span class="mb-2 block text-sm font-semibold text-white/75">Имейл <span class="text-white/40">(по желание)</span></span>
-                                    <input type="email" name="customer_email" value="{{ old('customer_email', auth()->user()?->email) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('customer_email') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="email@example.com">
+                                    <input type="email" name="customer_email" value="{{ old('customer_email', auth()->user()?->email) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('customer_email') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="email@example.com">
                                     @error('customer_email')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                                 </label>
 
                                 <label class="block">
                                     <span class="mb-2 block text-sm font-semibold text-white/75">Град</span>
-                                    <input name="city" value="{{ old('city', $user->city) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('city') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Плевен, София...">
+                                    <input name="city" value="{{ old('city', $user->city) }}" class="min-h-12 w-full rounded-2xl border {{ $errors->has('city') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Плевен, София...">
                                     @error('city')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                                 </label>
                             </div>
 
                             <label class="block">
                                 <span class="mb-2 block text-sm font-semibold text-white/75">Описание на проблема</span>
-                                <textarea name="message" rows="5" class="w-full rounded-2xl border {{ $errors->has('message') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-cyan-300/50" placeholder="Опишете каква услуга търсите, кога ви е удобно и как изпълнителят да ви помогне.">{{ old('message') }}</textarea>
+                                <textarea name="message" rows="5" class="w-full rounded-2xl border {{ $errors->has('message') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Опишете каква услуга търсите, кога ви е удобно и как изпълнителят да ви помогне.">{{ old('message') }}</textarea>
                                 @error('message')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                             </label>
 
-                            <button type="submit" data-track="cta_send_inquiry" class="min-h-12 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">
+                            <button type="submit" data-track="cta_send_inquiry" class="min-h-12 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">
                                 Изпрати заявка
                             </button>
                         </form>
@@ -276,7 +276,7 @@
                 <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Описание</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Описание</p>
                             <h2 class="mt-3 text-3xl font-black">За {{ $businessName }}</h2>
                         </div>
                         <div class="flex flex-wrap gap-2">
@@ -306,7 +306,7 @@
                 <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Галерия</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Галерия</p>
                             <h2 class="mt-3 text-3xl font-black">Снимки от изпълнителя</h2>
                         </div>
                         <p class="text-sm font-bold text-white/50">{{ $businessPhotos->count() }} / {{ $user->photoLimit() }} снимки</p>
@@ -322,7 +322,7 @@
                         </div>
                     @else
                         <div class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
-                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 text-xl font-black">F</p>
+                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
                             <p class="mt-4 text-lg font-black">Все още няма качени снимки</p>
                             <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато изпълнителят добави снимки в своята галерия, те ще се показват тук.</p>
                         </div>
@@ -332,39 +332,39 @@
                 <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <div class="flex items-center justify-between gap-4">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Услуги</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Услуги</p>
                             <h2 class="mt-3 text-3xl font-black">Какво предлага изпълнителят</h2>
                         </div>
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="hidden rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-3 text-sm font-black text-cyan-100 hover:bg-cyan-300/15 sm:inline-flex">Заяви оферта</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="hidden rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-3 text-sm font-black text-orange-100 hover:bg-orange-400/15 sm:inline-flex">Заяви оферта</a>
                     </div>
 
                     <div class="mt-6 grid gap-4 md:grid-cols-2">
                         @forelse($user->services as $service)
-                            <a href="{{ route('services.show', $service) }}" class="rounded-3xl border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-white/10">
+                            <a href="{{ route('services.show', $service) }}" class="rounded-3xl border border-white/10 bg-slate-950/45 p-5 transition hover:border-orange-300/30 hover:bg-white/10">
                                 <div class="flex items-start justify-between gap-4">
                                     <div>
                                         <p class="text-lg font-black">{{ $service->title }}</p>
                                         <p class="mt-2 text-sm text-white/55">{{ $service->category }}</p>
                                     </div>
                                     @if($service->price)
-                                        <span class="rounded-2xl bg-cyan-300/10 px-3 py-2 text-sm font-black text-cyan-100">от {{ number_format($service->price, 2, ',', ' ') }} €</span>
+                                        <span class="rounded-2xl bg-orange-300/10 px-3 py-2 text-sm font-black text-orange-100">от {{ number_format($service->price, 2, ',', ' ') }} €</span>
                                     @endif
                                 </div>
                                 <p class="mt-4 line-clamp-2 text-sm leading-6 text-white/60">{{ $service->description }}</p>
                             </a>
                         @empty
                             <div class="md:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center" data-testid="business-profile-services-empty">
-                                <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-600 text-xl font-black">F</p>
+                                <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
                                 <p class="mt-4 text-lg font-black">Все още няма добавени услуги с цени</p>
                                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Можете да изпратите запитване, за да получите индивидуална оферта от този изпълнител.</p>
-                                <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white">Изпрати запитване</a>
+                                <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-3 text-sm font-black text-white">Изпрати запитване</a>
                             </div>
                         @endforelse
                     </div>
                 </section>
 
                 <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
-                    <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Доверие</p>
+                    <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Доверие</p>
                     <h2 class="mt-3 text-3xl font-black">Защо този профил вдъхва доверие</h2>
                     <div class="mt-6 grid gap-4 md:grid-cols-2">
                         @if($user->is_verified)
@@ -374,8 +374,8 @@
                             </div>
                         @endif
                         @if($user->isPremium())
-                            <div class="rounded-3xl border border-violet-300/20 bg-violet-400/10 p-5">
-                                <p class="text-lg font-black text-violet-100">Препоръчан изпълнител</p>
+                            <div class="rounded-3xl border border-orange-300/20 bg-orange-400/10 p-5">
+                                <p class="text-lg font-black text-orange-100">Препоръчан изпълнител</p>
                                 <p class="mt-3 text-sm leading-6 text-white/70">Premium профилите получават по-високо показване и по-силно визуално представяне в публичните резултати.</p>
                             </div>
                         @endif
@@ -393,7 +393,7 @@
                 <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Мнения</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Мнения</p>
                             <h2 class="mt-3 text-3xl font-black">Рейтинг и отзиви</h2>
                         </div>
                         <div class="rounded-3xl border border-amber-300/20 bg-amber-300/10 px-5 py-4 text-right">
@@ -441,12 +441,12 @@
                                 <div class="grid gap-4 md:grid-cols-2">
                                     <div>
                                         <label class="mb-2 block text-sm font-semibold text-white/75">Име</label>
-                                        <input type="text" name="reviewer_name" value="{{ old('reviewer_name', auth()->user()?->name) }}" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-cyan-300/50" placeholder="Вашето име">
+                                        <input type="text" name="reviewer_name" value="{{ old('reviewer_name', auth()->user()?->name) }}" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-orange-300/50" placeholder="Вашето име">
                                         @error('reviewer_name')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label class="mb-2 block text-sm font-semibold text-white/75">Имейл, по желание</label>
-                                        <input type="email" name="reviewer_email" value="{{ old('reviewer_email', auth()->user()?->email) }}" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-cyan-300/50" placeholder="email@example.com">
+                                        <input type="email" name="reviewer_email" value="{{ old('reviewer_email', auth()->user()?->email) }}" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-orange-300/50" placeholder="email@example.com">
                                         @error('reviewer_email')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
                                     </div>
                                 </div>
@@ -466,11 +466,11 @@
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-white/75">Коментар <span class="text-white/40">(по желание)</span></label>
-                                    <textarea name="comment" rows="4" maxlength="1500" class="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-cyan-300/50" placeholder="Разкажете накратко за опита си с този изпълнител.">{{ old('comment') }}</textarea>
+                                    <textarea name="comment" rows="4" maxlength="1500" class="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-orange-300/50" placeholder="Разкажете накратко за опита си с този изпълнител.">{{ old('comment') }}</textarea>
                                     @error('comment')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
                                 </div>
 
-                                <button type="submit" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white shadow-lg shadow-blue-600/25">Изпрати отзив за одобрение</button>
+                                <button type="submit" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">Изпрати отзив за одобрение</button>
                             </form>
                         @else
                             <div class="mt-4 rounded-2xl border border-rose-300/20 bg-rose-400/10 p-4 text-sm leading-6 text-rose-100">
@@ -483,10 +483,10 @@
                 <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <div class="flex items-end justify-between gap-4">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-cyan-200/80">Подобни</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Подобни</p>
                             <h2 class="mt-3 text-3xl font-black">Подобни изпълнители</h2>
                         </div>
-                        <a href="{{ route('businesses.index') }}" class="hidden text-sm font-black text-cyan-200 hover:text-white sm:block">Виж всички</a>
+                        <a href="{{ route('businesses.index') }}" class="hidden text-sm font-black text-orange-300 hover:text-white sm:block">Виж всички</a>
                     </div>
 
                     <div data-testid="similar-businesses" class="mt-6 grid gap-4 md:grid-cols-3">
@@ -508,16 +508,16 @@
                     <p class="mt-2 text-sm leading-6 text-white/60">Изберете удобен начин за връзка с изпълнителя.</p>
 
                     <div class="mt-6 grid gap-3">
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-blue-600/25">Заяви оферта</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-orange-600/25">Заяви оферта</a>
                         @if($user->phone)
                             <a href="{{ route('businesses.track.phone', $user) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center font-black text-white hover:bg-white/10">Обади се</a>
                         @endif
-                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4 text-center font-black text-cyan-100 hover:bg-cyan-300/15">Изпрати запитване</a>
+                        <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-4 text-center font-black text-orange-100 hover:bg-orange-400/15">Изпрати запитване</a>
                         @if($whatsappUrl)
                             <a href="{{ route('businesses.track.social', [$user, 'whatsapp']) }}" target="_blank" rel="noopener" class="rounded-2xl border border-emerald-300/20 bg-emerald-300/10 px-5 py-4 text-center font-black text-emerald-100">WhatsApp</a>
                         @endif
                         @if($viberUrl)
-                            <a href="{{ route('businesses.track.social', [$user, 'viber']) }}" target="_blank" rel="noopener" class="rounded-2xl border border-violet-300/20 bg-violet-300/10 px-5 py-4 text-center font-black text-violet-100">Viber</a>
+                            <a href="{{ route('businesses.track.social', [$user, 'viber']) }}" target="_blank" rel="noopener" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-4 text-center font-black text-orange-100">Viber</a>
                         @endif
                     </div>
 
@@ -567,7 +567,7 @@
             @else
                 <a href="{{ route('request.service') }}" data-track="cta_request" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-center font-black text-white">Заяви оферта</a>
             @endif
-            <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-4 py-3 text-center font-black text-white">Запитване</a>
+            <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-4 py-3 text-center font-black text-white">Запитване</a>
         </div>
     </div>
     @include('partials.mobile-bottom-nav')

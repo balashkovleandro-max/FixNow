@@ -8,8 +8,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.22),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(168,85,247,0.17),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+<body class="fn-premium-page min-h-screen pb-24 text-white md:pb-0">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.22),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(245,158,11,0.17),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
 
     @include('partials.public-header')
@@ -19,9 +19,9 @@
             <div class="grid gap-8 overflow-hidden rounded-[36px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl lg:grid-cols-[1fr_380px] lg:items-end sm:p-10">
                 <div>
                     <div class="mb-5 flex flex-wrap gap-2">
-                        <span class="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100">{{ $city }}</span>
+                        <span class="rounded-full border border-orange-300/20 bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">{{ $city }}</span>
                         @if($category)
-                            <span class="rounded-full border border-violet-300/20 bg-violet-400/10 px-4 py-2 text-sm font-black text-violet-100">{{ $category['label'] }}</span>
+                            <span class="rounded-full border border-orange-300/20 bg-orange-400/10 px-4 py-2 text-sm font-black text-orange-100">{{ $category['label'] }}</span>
                         @else
                             <span class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-black text-white/70">Всички категории</span>
                         @endif
@@ -31,16 +31,16 @@
                     <p class="mt-5 max-w-3xl text-base leading-8 text-white/70">{{ $intro }}</p>
 
                     <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-                        <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-7 py-4 font-black text-white shadow-lg shadow-blue-600/25">Заяви оферта</a>
+                        <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-7 py-4 font-black text-white shadow-lg shadow-orange-600/25">Заяви оферта</a>
                         <a href="{{ route('business.landing') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 font-black text-white hover:bg-white/10">Стани изпълнител</a>
                     </div>
                 </div>
 
                 <div class="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Бързи връзки</p>
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Бързи връзки</p>
                     <div class="mt-4 flex flex-wrap gap-2">
                         @foreach($quickCategoryLinks as $link)
-                            <a href="{{ $link['url'] }}" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/75 hover:border-cyan-300/30 hover:text-cyan-100">{{ $link['label'] }}</a>
+                            <a href="{{ $link['url'] }}" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/75 hover:border-orange-300/30 hover:text-orange-100">{{ $link['label'] }}</a>
                         @endforeach
                     </div>
                     <div class="mt-5 grid gap-2">
@@ -72,7 +72,7 @@
                     <p class="text-2xl font-black">Все още няма активни изпълнители тук</p>
                     <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ изпълнител. Ако си бизнес в този град или категория, добави профил и стани видим за първите клиенти.</p>
                     <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                        <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-4 font-black text-white">Пусни заявка</a>
+                        <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Пусни заявка</a>
                         <a href="{{ route('business.landing') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Стани изпълнител</a>
                     </div>
                 </div>
@@ -83,10 +83,10 @@
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
                 <div class="mb-5 flex items-end justify-between gap-4">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Ranking</p>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Ranking</p>
                         <h2 class="mt-2 text-2xl font-black">Топ изпълнители в тази страница</h2>
                     </div>
-                    <a href="{{ route('top.businesses') }}" class="text-sm font-bold text-cyan-200 hover:text-cyan-100">Всички класации →</a>
+                    <a href="{{ route('top.businesses') }}" class="text-sm font-bold text-orange-300 hover:text-orange-100">Всички класации →</a>
                 </div>
                 <div class="grid gap-3">
                     @forelse($topBusinesses as $business)
@@ -101,12 +101,12 @@
             </div>
 
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
-                <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-200/80">Последни отзиви</p>
+                <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Последни отзиви</p>
                 <div class="mt-5 grid gap-3">
                     @forelse($latestReviews as $review)
                         <article class="rounded-2xl bg-slate-950/45 px-4 py-3">
                             <p class="font-black">{{ $review->reviewer_name }} <span class="text-amber-200">{{ str_repeat('★', (int) $review->rating) }}</span></p>
-                            <p class="mt-1 text-xs text-cyan-200">{{ $review->business?->business_name ?: $review->business?->name }}</p>
+                            <p class="mt-1 text-xs text-orange-300">{{ $review->business?->business_name ?: $review->business?->name }}</p>
                             <p class="mt-2 line-clamp-2 text-sm leading-6 text-white/60">{{ $review->comment }}</p>
                         </article>
                     @empty
@@ -125,7 +125,7 @@
                     </p>
                     <div class="mt-5 flex flex-wrap gap-2">
                         @foreach($internalLinks as $link)
-                            <a href="{{ $link['url'] }}" class="rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:border-cyan-300/30 hover:text-cyan-100">{{ $link['label'] }}</a>
+                            <a href="{{ $link['url'] }}" class="rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:border-orange-300/30 hover:text-orange-100">{{ $link['label'] }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -134,20 +134,20 @@
                     <h2 class="text-xl font-black">Популярни градове</h2>
                     <div class="mt-4 flex flex-wrap gap-2">
                         @forelse($popularCities as $popularCity)
-                            <a href="{{ route('seo.city', ['city' => $popularCity['slug']]) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-cyan-100">{{ $popularCity['name'] }}</a>
+                            <a href="{{ route('seo.city', ['city' => $popularCity['slug']]) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-orange-100">{{ $popularCity['name'] }}</a>
                         @empty
-                            <a href="{{ route('seo.city', ['city' => 'pleven']) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-cyan-100">Плевен</a>
-                            <a href="{{ route('seo.city', ['city' => 'sofia']) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-cyan-100">София</a>
+                            <a href="{{ route('seo.city', ['city' => 'pleven']) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-orange-100">Плевен</a>
+                            <a href="{{ route('seo.city', ['city' => 'sofia']) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-orange-100">София</a>
                         @endforelse
                     </div>
 
                     <h2 class="mt-6 text-xl font-black">Популярни категории</h2>
                     <div class="mt-4 flex flex-wrap gap-2">
                         @forelse($popularCategories as $popularCategory)
-                            <a href="{{ route('businesses.index', ['category' => $popularCategory['name']]) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-cyan-100">{{ $popularCategory['name'] }}</a>
+                            <a href="{{ route('businesses.index', ['category' => $popularCategory['name']]) }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-orange-100">{{ $popularCategory['name'] }}</a>
                         @empty
                             @foreach($quickCategoryLinks as $link)
-                                <a href="{{ $link['url'] }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-cyan-100">{{ $link['label'] }}</a>
+                                <a href="{{ $link['url'] }}" class="rounded-2xl bg-slate-950/45 px-4 py-2 text-sm font-bold text-white/70 hover:text-orange-100">{{ $link['label'] }}</a>
                             @endforeach
                         @endforelse
                     </div>

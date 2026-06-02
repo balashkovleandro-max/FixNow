@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
     @php
         $adminStats = array_merge([
@@ -87,7 +87,7 @@
         <header class="mb-6 rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</div>
+                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
                     <div>
                         <p class="text-xl font-black">FixNow.bg</p>
                         <p class="text-xs text-white/50">Admin control</p>
@@ -100,7 +100,7 @@
                     <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Услуги</a>
                     <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Публични изпълнители</a>
                     <a href="{{ route('admin.service-requests.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Заявки</a>
-                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-cyan-300/10 px-4 py-2 text-cyan-100">Admin</a>
+                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-orange-100">Admin</a>
                 </nav>
 
                 <form action="{{ route('logout') }}" method="POST">
@@ -115,14 +115,14 @@
         @endif
 
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Admin Control MVP</p>
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Admin Control MVP</p>
             <div class="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <h1 class="text-3xl font-black sm:text-5xl">Управление на изпълнители и статуси</h1>
                     <p class="mt-3 max-w-3xl text-white/60">Контрол върху trial, active, expired, cancelled и verified статуси. Всички показатели са реални query counts.</p>
                 </div>
-                <div class="rounded-3xl border border-cyan-300/20 bg-cyan-300/10 px-5 py-4">
-                    <p class="text-sm text-cyan-100">Потенциален MRR</p>
+                <div class="rounded-3xl border border-orange-300/20 bg-orange-300/10 px-5 py-4">
+                    <p class="text-sm text-orange-100">Потенциален MRR</p>
                     <p class="mt-1 text-3xl font-black">{{ number_format($adminStats['potential_mrr'], 2, ',', ' ') }} €</p>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                                 <p class="truncate text-lg font-black">{{ $pendingBusiness->business_name ?: $pendingBusiness->name }}</p>
                                 <p class="mt-1 truncate text-sm text-white/50">{{ $pendingBusiness->email }}</p>
                                 <div class="mt-3 flex flex-wrap gap-2">
-                                    <span class="rounded-full bg-violet-400/10 px-3 py-1 text-xs font-black text-violet-100">{{ $pendingBusiness->planLabel() }}</span>
+                                    <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $pendingBusiness->planLabel() }}</span>
                                     <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70">{{ $statusLabels[$pendingStatus] ?? $pendingStatus }}</span>
                                     <span class="rounded-full bg-amber-400/10 px-3 py-1 text-xs font-black text-amber-100">{{ $pendingProfile['percent'] }}% профил</span>
                                 </div>
@@ -186,7 +186,7 @@
         <section class="mt-6 rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Platform analytics</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Platform analytics</p>
                     <h2 class="mt-3 text-2xl font-black sm:text-3xl">Обща активност във FixNow</h2>
                     <p class="mt-2 text-sm text-white/60">Преглеждания и кликове от публичните профили на изпълнители.</p>
                 </div>
@@ -221,7 +221,7 @@
                         @forelse($platformAnalytics['top_by_views'] as $row)
                             <div class="flex items-center justify-between gap-3 rounded-2xl bg-white/5 px-4 py-3">
                                 <span class="font-bold">{{ $row->business?->business_name ?: $row->business?->name ?: 'Изтрит изпълнител' }}</span>
-                                <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-black text-cyan-100">{{ $row->aggregate }}</span>
+                                <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $row->aggregate }}</span>
                             </div>
                         @empty
                             <p class="rounded-2xl bg-white/5 px-4 py-3 text-sm text-white/55">Все още няма profile views.</p>
@@ -235,7 +235,7 @@
                         @forelse($platformAnalytics['top_by_clicks'] as $row)
                             <div class="flex items-center justify-between gap-3 rounded-2xl bg-white/5 px-4 py-3">
                                 <span class="font-bold">{{ $row->business?->business_name ?: $row->business?->name ?: 'Изтрит изпълнител' }}</span>
-                                <span class="rounded-full bg-violet-400/10 px-3 py-1 text-xs font-black text-violet-100">{{ $row->aggregate }}</span>
+                                <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $row->aggregate }}</span>
                             </div>
                         @empty
                             <p class="rounded-2xl bg-white/5 px-4 py-3 text-sm text-white/55">Все още няма click events.</p>
@@ -265,7 +265,7 @@
                 <div class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <p class="text-sm text-white/60">{{ $stat['label'] }}</p>
                     <p class="mt-3 text-3xl font-black">{{ $stat['value'] }}</p>
-                    <p class="mt-2 text-sm text-cyan-200">{{ $stat['note'] }}</p>
+                    <p class="mt-2 text-sm text-orange-200">{{ $stat['note'] }}</p>
                 </div>
             @endforeach
         </section>
@@ -273,7 +273,7 @@
         <section class="mt-6 rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Lead generation</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Lead generation</p>
                     <h2 class="mt-2 text-2xl font-black">Заявки за оферта</h2>
                     <p class="mt-2 text-sm text-white/60">Реални заявки от публичната форма. Admin може да маркира заявките като contacted или closed.</p>
                 </div>
@@ -283,9 +283,9 @@
             <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 @foreach([
                     ['testid' => 'admin-service-requests-total', 'label' => 'Общо заявки', 'value' => $leadStats['total'], 'class' => 'text-white bg-white/10'],
-                    ['testid' => 'admin-service-requests-new', 'label' => 'Нови', 'value' => $leadStats['new'], 'class' => 'text-cyan-100 bg-cyan-400/10'],
+                    ['testid' => 'admin-service-requests-new', 'label' => 'Нови', 'value' => $leadStats['new'], 'class' => 'text-orange-100 bg-orange-400/10'],
                     ['testid' => 'admin-service-requests-contacted', 'label' => 'Свързани', 'value' => $leadStats['contacted'], 'class' => 'text-emerald-100 bg-emerald-400/10'],
-                    ['testid' => 'admin-service-requests-completed', 'label' => 'Завършени', 'value' => $leadStats['completed'], 'class' => 'text-violet-100 bg-violet-400/10'],
+                    ['testid' => 'admin-service-requests-completed', 'label' => 'Завършени', 'value' => $leadStats['completed'], 'class' => 'text-orange-100 bg-orange-400/10'],
                     ['testid' => 'admin-service-requests-cancelled', 'label' => 'Отказани', 'value' => $leadStats['cancelled'], 'class' => 'text-amber-100 bg-amber-400/10'],
                     ['testid' => 'admin-service-requests-urgent', 'label' => 'Спешни', 'value' => $leadStats['urgent'], 'class' => 'text-rose-100 bg-rose-400/10'],
                 ] as $stat)
@@ -306,7 +306,7 @@
                         <div class="flex items-start justify-between gap-3">
                             <div class="min-w-0">
                                 <p class="truncate text-lg font-black">{{ $serviceRequest->name }}</p>
-                                <p class="mt-1 text-sm font-bold text-cyan-200">{{ $serviceRequest->phone }}</p>
+                                <p class="mt-1 text-sm font-bold text-orange-200">{{ $serviceRequest->phone }}</p>
                                 @if($serviceRequest->email)
                                     <p class="mt-1 truncate text-xs text-white/45">{{ $serviceRequest->email }}</p>
                                 @endif
@@ -394,7 +394,7 @@
                                     <p class="font-bold">{{ $serviceRequest->category ?: 'Без категория' }}</p>
                                     <p class="mt-1 text-xs text-white/50">{{ $serviceRequest->service ?: 'Не е посочена конкретна услуга' }}</p>
                                     @if($serviceRequest->budget)
-                                        <p class="mt-2 rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-black text-cyan-100">{{ $serviceRequest->budget }}</p>
+                                        <p class="mt-2 rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $serviceRequest->budget }}</p>
                                     @endif
                                 </td>
                                 <td class="max-w-sm border-y border-white/10 bg-slate-950/55 px-4 py-4 align-top text-white/65">
@@ -479,7 +479,7 @@
                         <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                             <div>
                                 <p class="font-black">{{ $review->reviewer_name }} <span class="text-amber-200">{{ str_repeat('★', $review->rating) }}</span></p>
-                                <p class="mt-1 text-sm text-cyan-200">{{ $review->business?->business_name ?: $review->business?->name ?: 'Изтрит изпълнител' }}</p>
+                                <p class="mt-1 text-sm text-orange-200">{{ $review->business?->business_name ?: $review->business?->name ?: 'Изтрит изпълнител' }}</p>
                                 <p class="mt-3 text-sm leading-6 text-white/70">{{ $review->comment }}</p>
                                 <p class="mt-3 text-xs text-white/40">{{ $review->created_at?->format('d.m.Y H:i') }}</p>
                             </div>
@@ -514,7 +514,7 @@
                 </div>
                 <div class="flex max-w-full gap-2 overflow-x-auto pb-1 xl:flex-wrap xl:overflow-visible">
                     @foreach($filters as $value => $label)
-                        <a href="{{ $value === 'all' ? route('dashboard') : route('dashboard', ['status' => $value]) }}" class="shrink-0 rounded-2xl border px-4 py-2 text-sm font-bold {{ $businessFilter === $value ? 'border-cyan-300/40 bg-cyan-300/10 text-cyan-100' : 'border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white' }}">
+                        <a href="{{ $value === 'all' ? route('dashboard') : route('dashboard', ['status' => $value]) }}" class="shrink-0 rounded-2xl border px-4 py-2 text-sm font-bold {{ $businessFilter === $value ? 'border-orange-300/40 bg-orange-300/10 text-orange-100' : 'border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white' }}">
                             {{ $label }}
                         </a>
                     @endforeach
@@ -533,13 +533,13 @@
                             <div class="min-w-0">
                                 <p class="truncate text-lg font-black">{{ $business->business_name ?: $business->name }}</p>
                                 <p class="mt-1 truncate text-sm text-white/50">{{ $business->email }}</p>
-                                <a href="{{ route('businesses.show', $business) }}" class="mt-2 inline-flex text-sm font-bold text-cyan-200 hover:text-white">Виж профил</a>
+                                <a href="{{ route('businesses.show', $business) }}" class="mt-2 inline-flex text-sm font-bold text-orange-200 hover:text-white">Виж профил</a>
                             </div>
-                            <span class="shrink-0 rounded-full px-3 py-1 text-xs font-black {{ $business->planKey() === 'premium' ? 'bg-violet-400/10 text-violet-100' : 'bg-cyan-400/10 text-cyan-100' }}">{{ $business->planLabel() }}</span>
+                            <span class="shrink-0 rounded-full px-3 py-1 text-xs font-black {{ $business->planKey() === 'premium' ? 'bg-orange-400/10 text-orange-100' : 'bg-orange-400/10 text-orange-100' }}">{{ $business->planLabel() }}</span>
                         </div>
 
                         <div class="mt-4 flex flex-wrap gap-2">
-                            <span class="rounded-full px-3 py-1 text-xs font-black {{ $effectiveStatus === 'active' ? 'bg-emerald-400/10 text-emerald-200' : ($effectiveStatus === 'trial' ? 'bg-cyan-400/10 text-cyan-200' : 'bg-rose-400/10 text-rose-200') }}">{{ $statusLabels[$effectiveStatus] ?? $effectiveStatus }}</span>
+                            <span class="rounded-full px-3 py-1 text-xs font-black {{ $effectiveStatus === 'active' ? 'bg-emerald-400/10 text-emerald-200' : ($effectiveStatus === 'trial' ? 'bg-orange-400/10 text-orange-200' : 'bg-rose-400/10 text-rose-200') }}">{{ $statusLabels[$effectiveStatus] ?? $effectiveStatus }}</span>
                             <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70">{{ $business->is_verified ? 'Verified' : 'Unverified' }}</span>
                             <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70">{{ $business->serviceCityCount() }} / {{ $business->cityLimit() }} града</span>
                         </div>
@@ -562,7 +562,7 @@
                             <form action="{{ route('admin.businesses.extend-trial', $business) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="min-h-11 w-full rounded-xl bg-cyan-400/10 px-3 py-3 text-xs font-black text-cyan-100 hover:bg-cyan-400/20">+7 дни</button>
+                                <button type="submit" class="min-h-11 w-full rounded-xl bg-orange-400/10 px-3 py-3 text-xs font-black text-orange-100 hover:bg-orange-400/20">+7 дни</button>
                             </form>
                             <form action="{{ route('admin.businesses.expire', $business) }}" method="POST">
                                 @csrf
@@ -584,7 +584,7 @@
                                 <form action="{{ route('admin.businesses.verify', $business) }}" method="POST" class="col-span-2">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="min-h-11 w-full rounded-xl bg-violet-400/10 px-3 py-3 text-xs font-black text-violet-100 hover:bg-violet-400/20">Провери</button>
+                                    <button type="submit" class="min-h-11 w-full rounded-xl bg-orange-400/10 px-3 py-3 text-xs font-black text-orange-100 hover:bg-orange-400/20">Провери</button>
                                 </form>
                             @endif
                         </div>
@@ -627,7 +627,7 @@
                             <tr class="align-top">
                                 <td class="rounded-l-3xl border-y border-l border-white/10 bg-slate-950/50 px-4 py-4">
                                     <p class="font-black">{{ $business->business_name ?: $business->name }}</p>
-                                    <a href="{{ route('businesses.show', $business) }}" class="mt-1 inline-flex text-xs font-bold text-cyan-200 hover:text-white">Виж профил</a>
+                                    <a href="{{ route('businesses.show', $business) }}" class="mt-1 inline-flex text-xs font-bold text-orange-200 hover:text-white">Виж профил</a>
                                 </td>
                                 <td class="border-y border-white/10 bg-slate-950/50 px-4 py-4">
                                     <p class="font-semibold">{{ $business->name }}</p>
@@ -636,7 +636,7 @@
                                 <td class="border-y border-white/10 bg-slate-950/50 px-4 py-4 text-white/70">{{ $business->city ?: 'Няма' }}</td>
                                 <td class="border-y border-white/10 bg-slate-950/50 px-4 py-4 text-white/70">{{ $business->business_category ?: 'Няма' }}</td>
                                 <td class="border-y border-white/10 bg-slate-950/50 px-4 py-4">
-                                    <span class="rounded-full px-3 py-1 text-xs font-black {{ $business->planKey() === 'premium' ? 'bg-violet-400/10 text-violet-100' : 'bg-cyan-400/10 text-cyan-100' }}">
+                                    <span class="rounded-full px-3 py-1 text-xs font-black {{ $business->planKey() === 'premium' ? 'bg-orange-400/10 text-orange-100' : 'bg-orange-400/10 text-orange-100' }}">
                                         {{ $business->planLabel() }}
                                     </span>
                                 </td>
@@ -661,7 +661,7 @@
                                     <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/80">{{ $business->subscription_status ?: 'trial' }}</span>
                                 </td>
                                 <td class="border-y border-white/10 bg-slate-950/50 px-4 py-4">
-                                    <span class="rounded-full px-3 py-1 text-xs font-black {{ $effectiveStatus === 'active' ? 'bg-emerald-400/10 text-emerald-200' : ($effectiveStatus === 'trial' ? 'bg-cyan-400/10 text-cyan-200' : 'bg-rose-400/10 text-rose-200') }}">
+                                    <span class="rounded-full px-3 py-1 text-xs font-black {{ $effectiveStatus === 'active' ? 'bg-emerald-400/10 text-emerald-200' : ($effectiveStatus === 'trial' ? 'bg-orange-400/10 text-orange-200' : 'bg-rose-400/10 text-rose-200') }}">
                                         {{ $statusLabels[$effectiveStatus] ?? $effectiveStatus }}
                                     </span>
                                 </td>
@@ -691,7 +691,7 @@
                                         <form action="{{ route('admin.businesses.extend-trial', $business) }}" method="POST">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="w-full rounded-xl bg-cyan-400/10 px-3 py-2 text-xs font-black text-cyan-100 hover:bg-cyan-400/20">+7 дни trial</button>
+                                            <button type="submit" class="w-full rounded-xl bg-orange-400/10 px-3 py-2 text-xs font-black text-orange-100 hover:bg-orange-400/20">+7 дни trial</button>
                                         </form>
                                         <form action="{{ route('admin.businesses.expire', $business) }}" method="POST">
                                             @csrf
@@ -713,7 +713,7 @@
                                             <form action="{{ route('admin.businesses.verify', $business) }}" method="POST" class="col-span-2">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="w-full rounded-xl bg-violet-400/10 px-3 py-2 text-xs font-black text-violet-100 hover:bg-violet-400/20">Провери</button>
+                                                <button type="submit" class="w-full rounded-xl bg-orange-400/10 px-3 py-2 text-xs font-black text-orange-100 hover:bg-orange-400/20">Провери</button>
                                             </form>
                                         @endif
                                     </div>

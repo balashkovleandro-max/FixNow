@@ -26,13 +26,13 @@
     ];
 
     $statusClasses = [
-        'new' => 'border-cyan-300/30 bg-cyan-300/10 text-cyan-100',
-        'open' => 'border-blue-300/30 bg-blue-300/10 text-blue-100',
+        'new' => 'border-orange-300/30 bg-orange-300/10 text-orange-100',
+        'open' => 'border-orange-300/30 bg-orange-300/10 text-orange-100',
         'contacted' => 'border-emerald-300/30 bg-emerald-300/10 text-emerald-100',
         'closed' => 'border-slate-300/20 bg-white/10 text-white/70',
         'completed' => 'border-emerald-300/30 bg-emerald-300/10 text-emerald-100',
         'cancelled' => 'border-rose-300/30 bg-rose-300/10 text-rose-100',
-        'in_progress' => 'border-violet-300/30 bg-violet-300/10 text-violet-100',
+        'in_progress' => 'border-orange-300/30 bg-orange-300/10 text-orange-100',
     ];
 
     $offerStatusLabels = [
@@ -44,13 +44,13 @@
     ];
 @endphp
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(168,85,247,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
     <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <header class="mb-6 rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 via-blue-500 to-violet-600 font-black">F</div>
+                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
                     <div>
                         <p class="text-xl font-black">FixNow.bg</p>
                         <p class="text-xs text-white/50">Клиентски панел</p>
@@ -63,7 +63,7 @@
                     <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Услуги</a>
                         <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Изпълнители</a>
                     <a href="{{ route('request.service') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Пусни заявка</a>
-                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-cyan-300/10 px-4 py-2 text-cyan-100">Моето табло</a>
+                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-orange-100">Моето табло</a>
                 </nav>
 
                 <form action="{{ route('logout') }}" method="POST">
@@ -76,13 +76,13 @@
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-cyan-200/80">Клиентски панел</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Клиентски панел</p>
                     <h1 class="mt-3 text-3xl font-black sm:text-5xl">Моите заявки и оферти</h1>
                     <p class="mt-3 max-w-2xl text-base leading-7 text-white/65">
                         Следете изпратените заявки, получените оферти и избрания изпълнител от едно леко клиентско табло. Клиентският акаунт е безплатен и няма абонаментни функции.
                     </p>
                 </div>
-                <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-3 text-center font-black text-white shadow-lg shadow-blue-950/40">
+                <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3 text-center font-black text-white shadow-lg shadow-orange-950/40">
                     Пусни нова заявка
                 </a>
             </div>
@@ -98,7 +98,7 @@
                 <div class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <p class="text-sm text-white/60">{{ $stat['label'] }}</p>
                     <p class="mt-3 text-4xl font-black">{{ $stat['value'] }}</p>
-                    <p class="mt-2 text-sm text-cyan-200">{{ $stat['note'] }}</p>
+                    <p class="mt-2 text-sm text-orange-200">{{ $stat['note'] }}</p>
                 </div>
             @endforeach
         </section>
@@ -110,7 +110,7 @@
                         <h2 class="text-2xl font-black">Моите заявки</h2>
                         <p class="mt-1 text-sm text-white/55">Виждате само заявки, свързани с вашия клиентски акаунт.</p>
                     </div>
-                    <a href="{{ route('request.service') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-black text-cyan-100 hover:bg-cyan-300/15">
+                    <a href="{{ route('request.service') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-orange-300/30 bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100 hover:bg-orange-300/15">
                         Нова заявка
                     </a>
                 </div>
@@ -121,7 +121,7 @@
                         <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">
                             Когато пуснете заявка за услуга, тя ще се появи тук заедно с получените оферти и избрания изпълнител.
                         </p>
-                        <a href="{{ route('request.service') }}" class="mt-5 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-6 py-3 font-black text-white">
+                        <a href="{{ route('request.service') }}" class="mt-5 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3 font-black text-white">
                             Пусни първа заявка
                         </a>
                     </div>
@@ -155,7 +155,7 @@
                                         <h3 class="mt-4 text-xl font-black">
                                             {{ $serviceRequest->category ?: $serviceRequest->service ?: 'Заявка за услуга' }}
                                         </h3>
-                                        <p class="mt-1 text-sm font-semibold text-cyan-100">{{ $serviceRequest->city ?: 'Без посочен град' }}</p>
+                                        <p class="mt-1 text-sm font-semibold text-orange-100">{{ $serviceRequest->city ?: 'Без посочен град' }}</p>
                                         <p class="mt-3 line-clamp-4 text-sm leading-6 text-white/65">{{ $serviceRequest->description }}</p>
 
                                         <div class="mt-4 grid gap-2 text-sm text-white/60 sm:grid-cols-2">
@@ -178,7 +178,7 @@
                                             <p class="mt-3 font-black">{{ $selectedExecutor->business_name ?: $selectedExecutor->name }}</p>
                                             <p class="mt-1 text-sm text-white/55">{{ $selectedOffer ? 'Приета оферта' : 'Назначен изпълнител' }}</p>
                                             @if($serviceRequest->status === 'in_progress')
-                                                <p class="mt-3 rounded-2xl border border-violet-300/25 bg-violet-300/10 px-3 py-2 text-sm font-black text-violet-100">Статус: В процес</p>
+                                                <p class="mt-3 rounded-2xl border border-orange-300/25 bg-orange-300/10 px-3 py-2 text-sm font-black text-orange-100">Статус: В процес</p>
                                             @endif
                                         @else
                                             <p class="mt-3 text-sm leading-6 text-white/60">Все още няма избран изпълнител.</p>
@@ -203,7 +203,7 @@
                                                             <p class="font-black">{{ $offer->business?->business_name ?: $offer->business?->name ?: 'Изпълнител във FixNow' }}</p>
                                                             <p class="mt-1 text-sm text-white/55">{{ $offer->message }}</p>
                                                         </div>
-                                                        <span class="rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-1 text-xs font-black text-cyan-100">
+                                                        <span class="rounded-full border border-orange-300/25 bg-orange-300/10 px-3 py-1 text-xs font-black text-orange-100">
                                                             {{ $offerStatusLabels[$offer->status] ?? $offer->status }}
                                                         </span>
                                                     </div>
@@ -216,7 +216,7 @@
                                                         <form action="{{ route('customer.offers.accept', $offer) }}" method="POST" class="mt-4">
                                                             @csrf
                                                             @method('PATCH')
-                                                            <button class="min-h-11 w-full rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-blue-950/30">
+                                                            <button class="min-h-11 w-full rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-orange-950/30">
                                                                 Приеми офертата
                                                             </button>
                                                         </form>
@@ -260,7 +260,7 @@
                     <p class="mt-4 text-xs leading-5 text-white/45">Клиентският профил е само за заявки и оферти. Той няма публична изпълнителска страница, планове или Stripe абонамент.</p>
                 </div>
 
-                <div class="rounded-[32px] border border-cyan-300/20 bg-cyan-300/10 p-6 shadow-xl shadow-cyan-950/20 backdrop-blur-xl">
+                <div class="rounded-[32px] border border-orange-300/20 bg-orange-300/10 p-6 shadow-xl shadow-orange-950/20 backdrop-blur-xl">
                     <h2 class="text-xl font-black">Как работи</h2>
                     <div class="mt-5 space-y-3 text-sm leading-6 text-white/70">
                         <p>1. Пускате заявка с град, категория и описание.</p>
