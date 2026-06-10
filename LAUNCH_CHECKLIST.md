@@ -1,4 +1,4 @@
-# FixNow.bg Soft Launch Checklist
+# BON Soft Launch Checklist
 
 ## Pre-deploy
 
@@ -23,10 +23,10 @@
 - [ ] `STRIPE_WEBHOOK_SECRET` е попълнен след Stripe webhook testing (`whsec_...`); докато е празен, `/stripe/webhook` правилно отхвърля webhook заявки.
 - [ ] Stripe Customer Portal е enabled.
 - [ ] Stripe webhook endpoint е настроен към `/stripe/webhook`.
-- [ ] Admin user е създаден чрез `php artisan fixnow:create-admin`.
+- [ ] Admin user е създаден чрез `php artisan bon:create-admin`.
 - [ ] Ако е нужен контролиран Pleven test dataset, изпълнен е `php artisan db:seed --class=SoftLaunchPlevenSeeder`.
 - [ ] Demo seeders не са пускани на production, освен ако това е умишлен staging тест.
-- [ ] Проверено е, че seeded изпълнителите се виждат в `/businesses?city=Плевен`.
+- [ ] Проверено е, че seeded бизнесите се виждат в `/businesses?city=Плевен`.
 - [ ] `php artisan storage:link` е изпълнен.
 - [ ] Permissions за `storage/` и `bootstrap/cache/` са проверени.
 - [ ] Backup стратегия за database е избрана.
@@ -75,7 +75,7 @@ php artisan view:cache
 - [ ] `/zayavi-oferta` зарежда.
 - [ ] `/how-it-works`, `/contact`, `/terms`, `/privacy`, `/cookies` зареждат.
 - [ ] Login/register работят.
-- [ ] Business/executor dashboard зарежда.
+- [ ] Business dashboard зарежда.
 - [ ] `/business/billing` зарежда и не активира план без Stripe webhook.
 - [ ] Admin dashboard зарежда.
 - [ ] `/admin/service-requests` зарежда само за admin.
@@ -91,14 +91,14 @@ php artisan view:cache
 
 ## Soft launch
 
-- [ ] Добавени са 5-10 реални изпълнители.
+- [ ] Добавени са 5-10 реални бизнеси.
 - [ ] Профилите имат реални описания, градове, категории и снимки.
 - [ ] Поне един изпълнител е маркиран като verified от admin.
 - [ ] Поне един Standard и един Premium профил са тествани.
 - [ ] Тествана е една реална клиентска заявка.
 - [ ] Тествана е поне една реална оферта от изпълнител.
 - [ ] Клиентът е избрал изпълнител през offer link.
-- [ ] Събрана е обратна връзка от първите клиенти/изпълнители.
+- [ ] Събрана е обратна връзка от първите клиенти/бизнеси.
 - [ ] Error logs се наблюдават ежедневно.
 - [ ] Stripe dashboard се наблюдава при първите checkout тестове.
 - [ ] Mail delivery logs се наблюдават при първите заявки.

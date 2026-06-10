@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Топ изпълнители | FixNow.bg</title>
+    <title>Топ бизнеси | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -15,14 +15,14 @@
 
 <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <section class="overflow-hidden rounded-[34px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">FixNow rankings</p>
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">BON rankings</p>
             <div class="mt-3 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
                 <div>
-                    <h1 class="max-w-4xl text-4xl font-black leading-tight sm:text-6xl">Топ изпълнители, препоръки и класации</h1>
+                    <h1 class="max-w-4xl text-4xl font-black leading-tight sm:text-6xl">Топ бизнеси, препоръки и класации</h1>
                     <p class="mt-4 max-w-3xl text-base leading-8 text-white/70">Класациите използват реални сигнали: публична видимост, Premium, verified статус, рейтинг, отзиви, препоръки и активност.</p>
                     <div class="mt-6 flex flex-col gap-3 sm:flex-row">
                         <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">Заяви оферта</a>
-                        <a href="{{ route('businesses.index') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Разгледай изпълнители</a>
+                        <a href="{{ route('businesses.index') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Разгледай бизнеси</a>
                     </div>
                 </div>
                 <form method="GET" action="{{ route('top.businesses') }}" class="grid gap-3 rounded-3xl border border-white/10 bg-slate-950/55 p-4">
@@ -48,12 +48,12 @@
 
         @php
             $sections = [
-                ['id' => 'top-recommended', 'title' => 'Топ препоръчани изпълнители', 'items' => $topRecommended, 'empty' => 'Все още няма активни изпълнители за тази класация.'],
+                ['id' => 'top-recommended', 'title' => 'Топ препоръчани бизнеси', 'items' => $topRecommended, 'empty' => 'Все още няма активни бизнеси за тази класация.'],
                 ['id' => 'most-recommended', 'title' => 'Най-препоръчвани', 'items' => $mostRecommended, 'empty' => 'Все още няма препоръки.'],
                 ['id' => 'highest-rated', 'title' => 'Най-високо оценени', 'items' => $highestRated, 'empty' => 'Все още няма одобрени отзиви.'],
-                ['id' => 'newest-businesses', 'title' => 'Най-нови изпълнители', 'items' => $newestBusinesses, 'empty' => 'Все още няма нови активни изпълнители.'],
-                ['id' => 'verified-businesses', 'title' => 'Потвърдени изпълнители', 'items' => $verifiedBusinesses, 'empty' => 'Все още няма потвърдени изпълнители.'],
-                ['id' => 'premium-businesses', 'title' => 'Premium / Препоръчани изпълнители', 'items' => $premiumBusinesses, 'empty' => 'Все още няма Premium изпълнители.'],
+                ['id' => 'newest-businesses', 'title' => 'Най-нови бизнеси', 'items' => $newestBusinesses, 'empty' => 'Все още няма нови активни бизнеси.'],
+                ['id' => 'verified-businesses', 'title' => 'Потвърдени бизнеси', 'items' => $verifiedBusinesses, 'empty' => 'Все още няма потвърдени бизнеси.'],
+                ['id' => 'premium-businesses', 'title' => 'Premium / Препоръчани бизнеси', 'items' => $premiumBusinesses, 'empty' => 'Все още няма Premium бизнеси.'],
             ];
         @endphp
 
@@ -82,7 +82,7 @@
             @foreach([
                 'Топ в Плевен' => $topPleven,
                 'Топ автосервизи' => $topAuto,
-                'Топ майстори' => $topMakers,
+                'Топ ремонти' => $topMakers,
                 'Топ почистване' => $topCleaning,
                 'Топ услуги за малки бизнеси' => $topBusinessServices,
             ] as $title => $items)
@@ -110,7 +110,7 @@
                         {{ $category['name'] }} · {{ $category['count'] }}
                     </a>
                 @empty
-                    <p class="text-sm text-white/55">Категориите ще се появят, когато има активни изпълнители.</p>
+                    <p class="text-sm text-white/55">Категориите ще се появят, когато има активни бизнеси.</p>
                 @endforelse
             </div>
         </section>

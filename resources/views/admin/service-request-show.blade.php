@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Детайли за заявка #{{ $serviceRequest->id }} | FixNow.bg</title>
+    <title>Детайли за заявка #{{ $serviceRequest->id }} | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -81,13 +81,13 @@
 
             <div class="mt-5 grid gap-6 lg:grid-cols-[1fr_360px]">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Marketplace request</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Заявка към бизнеси</p>
                     <h1 class="mt-3 text-3xl font-black sm:text-5xl">{{ $title }}</h1>
                     <p class="mt-4 max-w-3xl text-sm leading-6 text-white/65">{{ $serviceRequest->description }}</p>
                 </div>
                 <aside class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
-                    <p class="text-sm text-white/50">Избран изпълнител</p>
-                    <p class="mt-2 text-xl font-black">{{ $selectedExecutor?->business_name ?: $selectedExecutor?->name ?: 'Няма избран изпълнител' }}</p>
+                    <p class="text-sm text-white/50">Избран бизнес</p>
+                    <p class="mt-2 text-xl font-black">{{ $selectedExecutor?->business_name ?: $selectedExecutor?->name ?: 'Няма избран бизнес' }}</p>
                     <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
                         <div class="rounded-2xl bg-white/10 p-4">
                             <p class="text-white/45">Оферти</p>
@@ -139,7 +139,7 @@
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <h2 class="text-2xl font-black">Оферти по заявката</h2>
-                            <p class="mt-1 text-sm text-white/55">Следете кой изпълнител е изпратил оферта и дали клиентът е избрал някого.</p>
+                            <p class="mt-1 text-sm text-white/55">Следете кой бизнес е изпратил оферта и дали клиентът е избрал някого.</p>
                         </div>
                         <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $serviceRequest->offers->count() }} оферти</span>
                     </div>
@@ -156,11 +156,11 @@
                                         {{ $isSelected ? 'accepted' : ($offerStatusLabels[$offer->status] ?? $offer->status) }}
                                     </span>
                                     @if($isSelected)
-                                        <span class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-black text-emerald-100">Избран изпълнител</span>
+                                        <span class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-black text-emerald-100">Избран бизнес</span>
                                     @endif
                                     <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/55">{{ $offer->created_at?->format('d.m.Y H:i') }}</span>
                                 </div>
-                                <h3 class="mt-4 text-xl font-black">{{ $executor?->business_name ?: $executor?->name ?: 'Изпълнител' }}</h3>
+                                <h3 class="mt-4 text-xl font-black">{{ $executor?->business_name ?: $executor?->name ?: 'Бизнес' }}</h3>
                                 <div class="mt-3 grid gap-3 sm:grid-cols-2">
                                     <p class="rounded-2xl bg-white/10 p-4 text-sm text-white/60">Цена: <strong class="text-white">{{ $offer->price_estimate ?: 'Не е посочена' }}</strong></p>
                                     <p class="rounded-2xl bg-white/10 p-4 text-sm text-white/60">Срок: <strong class="text-white">{{ $offer->timeframe ?: 'Не е посочен' }}</strong></p>
@@ -172,7 +172,7 @@
                         @empty
                             <div class="rounded-3xl border border-dashed border-white/15 bg-white/5 p-6 text-center">
                                 <h3 class="text-xl font-black">Още няма оферти по тази заявка</h3>
-                                <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/55">Когато изпълнител изпрати оферта, тя ще се появи тук за admin диагностика.</p>
+                                <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/55">Когато бизнес изпрати оферта, тя ще се появи тук за admin диагностика.</p>
                             </div>
                         @endforelse
                     </div>
@@ -225,7 +225,7 @@
                     </div>
                     @if($serviceRequest->selected_offer_id)
                         <p class="mt-4 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-6 text-amber-100">
-                            Reopen не е активиран за заявки с избрана оферта, за да не се наруши marketplace flow-ът.
+                            Reopen не е активиран за заявки с избрана оферта, за да не се наруши текущият процес.
                         </p>
                     @endif
                 </article>

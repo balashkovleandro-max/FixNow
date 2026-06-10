@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
@@ -32,7 +32,7 @@
 
                     <div class="mt-7 flex flex-col gap-3 sm:flex-row">
                         <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-7 py-4 font-black text-white shadow-lg shadow-orange-600/25">Заяви оферта</a>
-                        <a href="{{ route('business.landing') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 font-black text-white hover:bg-white/10">Стани изпълнител</a>
+                        <a href="{{ route('business.landing') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 font-black text-white hover:bg-white/10">Стани бизнес</a>
                     </div>
                 </div>
 
@@ -55,8 +55,8 @@
         <section class="mx-auto max-w-[1500px] px-4 py-7 sm:px-6 lg:px-12">
             <div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                    <h2 class="text-2xl font-black">Намерени изпълнители</h2>
-                    <p class="mt-2 text-sm text-white/55">Показваме само active и trial изпълнители, подредени по Premium, verified, рейтинг, препоръки и активност.</p>
+                    <h2 class="text-2xl font-black">Намерени бизнеси</h2>
+                    <p class="mt-2 text-sm text-white/55">Показваме само active и trial бизнеси, подредени по Premium, verified, рейтинг, препоръки и активност.</p>
                 </div>
                 <span class="rounded-full bg-white/10 px-4 py-2 text-sm font-black text-white/70">{{ $businesses->count() }} резултата</span>
             </div>
@@ -69,11 +69,11 @@
                 </div>
             @else
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-8 text-center shadow-xl shadow-black/20 backdrop-blur-xl">
-                    <p class="text-2xl font-black">Все още няма активни изпълнители тук</p>
-                    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ изпълнител. Ако си бизнес в този град или категория, добави профил и стани видим за първите клиенти.</p>
+                    <p class="text-2xl font-black">Все още няма активни бизнеси тук</p>
+                    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ бизнес. Ако си бизнес в този град или категория, добави профил и стани видим за първите клиенти.</p>
                     <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                         <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Пусни заявка</a>
-                        <a href="{{ route('business.landing') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Стани изпълнител</a>
+                        <a href="{{ route('business.landing') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Стани бизнес</a>
                     </div>
                 </div>
             @endif
@@ -84,7 +84,7 @@
                 <div class="mb-5 flex items-end justify-between gap-4">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Ranking</p>
-                        <h2 class="mt-2 text-2xl font-black">Топ изпълнители в тази страница</h2>
+                        <h2 class="mt-2 text-2xl font-black">Топ бизнеси в тази страница</h2>
                     </div>
                     <a href="{{ route('top.businesses') }}" class="text-sm font-bold text-orange-300 hover:text-orange-100">Всички класации →</a>
                 </div>
@@ -95,7 +95,7 @@
                             <span class="text-xs text-white/50">{{ (int) data_get($business, 'growth_recommendations_count', 0) }} препоръки</span>
                         </a>
                     @empty
-                        <p class="rounded-2xl bg-slate-950/45 px-4 py-3 text-sm text-white/55">Класацията ще се появи, когато има активни изпълнители.</p>
+                        <p class="rounded-2xl bg-slate-950/45 px-4 py-3 text-sm text-white/55">Класацията ще се появи, когато има активни бизнеси.</p>
                     @endforelse
                 </div>
             </div>
@@ -119,9 +119,9 @@
         <section class="mx-auto max-w-[1500px] px-4 py-7 sm:px-6 lg:px-12">
             <div class="grid gap-5 lg:grid-cols-3">
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl lg:col-span-2">
-                    <h2 class="text-2xl font-black">{{ $h1 }} във FixNow.bg</h2>
+                    <h2 class="text-2xl font-black">{{ $h1 }} във BON</h2>
                     <p class="mt-4 text-sm leading-7 text-white/65">
-                        Във FixNow.bg можете да намерите проверени изпълнители и услуги в {{ $city }}. Сравнете профили, отзиви, препоръки и се свържете директно или изпратете заявка за оферта.
+                        Във BON можете да откриете добре представени бизнеси и услуги в {{ $city }}. Вижте профили, отзиви, препоръки и се свържете директно с подходящ бизнес.
                     </p>
                     <div class="mt-5 flex flex-wrap gap-2">
                         @foreach($internalLinks as $link)

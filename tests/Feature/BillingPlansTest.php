@@ -18,8 +18,8 @@ class BillingPlansTest extends TestCase
         $this->withoutVite();
 
         config([
-            'services.stripe.secret' => 'sk_test_fixnow',
-            'services.stripe.webhook_secret' => 'whsec_fixnow',
+            'services.stripe.secret' => 'sk_test_bon',
+            'services.stripe.webhook_secret' => 'whsec_bon',
             'services.stripe.standard_price_id' => 'price_1TYmByRqvGMkwX9rN7HTUunp',
             'services.stripe.premium_price_id' => 'price_1TYmCcRqvGMkwX9rE8ichDo4',
         ]);
@@ -169,8 +169,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'premium',
             'subscription_status' => 'active',
-            'stripe_customer_id' => 'cus_active_fixnow',
-            'stripe_subscription_id' => 'sub_active_fixnow',
+            'stripe_customer_id' => 'cus_active_bon',
+            'stripe_subscription_id' => 'sub_active_bon',
             'subscription_ends_at' => now()->addMonth(),
         ]);
 
@@ -189,8 +189,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'standard',
             'subscription_status' => 'trialing',
-            'stripe_customer_id' => 'cus_trialing_fixnow',
-            'stripe_subscription_id' => 'sub_trialing_fixnow',
+            'stripe_customer_id' => 'cus_trialing_bon',
+            'stripe_subscription_id' => 'sub_trialing_bon',
             'subscription_ends_at' => now()->addWeeks(2),
         ]);
 
@@ -213,8 +213,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'standard',
             'subscription_status' => 'canceled',
-            'stripe_customer_id' => 'cus_cancelled_fixnow',
-            'stripe_subscription_id' => 'sub_cancelled_fixnow',
+            'stripe_customer_id' => 'cus_cancelled_bon',
+            'stripe_subscription_id' => 'sub_cancelled_bon',
             'subscription_ends_at' => now()->subDay(),
             'cancelled_at' => now()->subDay(),
         ]);
@@ -238,8 +238,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'standard',
             'subscription_status' => 'expired',
-            'stripe_customer_id' => 'cus_expired_fixnow',
-            'stripe_subscription_id' => 'sub_expired_fixnow',
+            'stripe_customer_id' => 'cus_expired_bon',
+            'stripe_subscription_id' => 'sub_expired_bon',
             'subscription_ends_at' => now()->subDay(),
         ]);
 
@@ -262,8 +262,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'premium',
             'subscription_status' => 'payment_failed',
-            'stripe_customer_id' => 'cus_payment_failed_fixnow',
-            'stripe_subscription_id' => 'sub_payment_failed_fixnow',
+            'stripe_customer_id' => 'cus_payment_failed_bon',
+            'stripe_subscription_id' => 'sub_payment_failed_bon',
             'subscription_ends_at' => now()->subDay(),
         ]);
 
@@ -282,8 +282,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'premium',
             'subscription_status' => 'past_due',
-            'stripe_customer_id' => 'cus_past_due_checkout_fixnow',
-            'stripe_subscription_id' => 'sub_past_due_checkout_fixnow',
+            'stripe_customer_id' => 'cus_past_due_checkout_bon',
+            'stripe_subscription_id' => 'sub_past_due_checkout_bon',
             'subscription_ends_at' => now()->addMonth(),
         ]);
 
@@ -300,8 +300,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'standard',
             'subscription_status' => 'active',
-            'stripe_customer_id' => 'cus_active_portal_fixnow',
-            'stripe_subscription_id' => 'sub_active_portal_fixnow',
+            'stripe_customer_id' => 'cus_active_portal_bon',
+            'stripe_subscription_id' => 'sub_active_portal_bon',
             'subscription_ends_at' => now()->addMonth(),
         ]);
 
@@ -358,7 +358,7 @@ class BillingPlansTest extends TestCase
         ]);
 
         $business = $this->business([
-            'stripe_customer_id' => 'cus_portal_fixnow',
+            'stripe_customer_id' => 'cus_portal_bon',
         ]);
 
         $this->actingAs($business)
@@ -366,7 +366,7 @@ class BillingPlansTest extends TestCase
             ->assertRedirect('https://billing.stripe.test/session');
 
         Http::assertSent(fn ($request) => $request->url() === 'https://api.stripe.com/v1/billing_portal/sessions'
-            && str_contains($request->body(), 'customer=cus_portal_fixnow')
+            && str_contains($request->body(), 'customer=cus_portal_bon')
             && str_contains($request->body(), 'return_url='));
     }
 
@@ -431,8 +431,8 @@ class BillingPlansTest extends TestCase
 
         $this->assertSame('premium', $business->subscription_plan);
         $this->assertSame('active', $business->subscription_status);
-        $this->assertSame('cus_fixnow', $business->stripe_customer_id);
-        $this->assertSame('sub_fixnow', $business->stripe_subscription_id);
+        $this->assertSame('cus_bon', $business->stripe_customer_id);
+        $this->assertSame('sub_bon', $business->stripe_subscription_id);
         $this->assertNotNull($business->subscription_ends_at);
         $this->assertNull($business->cancelled_at);
     }
@@ -441,8 +441,8 @@ class BillingPlansTest extends TestCase
     {
         $business = $this->business([
             'subscription_plan' => 'standard',
-            'stripe_customer_id' => 'cus_lifecycle_fixnow',
-            'stripe_subscription_id' => 'sub_lifecycle_fixnow',
+            'stripe_customer_id' => 'cus_lifecycle_bon',
+            'stripe_subscription_id' => 'sub_lifecycle_bon',
         ]);
 
         $periodEnd = now()->addMonth()->timestamp;
@@ -475,8 +475,8 @@ class BillingPlansTest extends TestCase
             'active',
             'price_1TYmByRqvGMkwX9rN7HTUunp',
             $periodEnd,
-            'sub_synced_fixnow',
-            'cus_synced_fixnow'
+            'sub_synced_bon',
+            'cus_synced_bon'
         );
 
         $this->postStripeWebhook($payload)
@@ -486,8 +486,8 @@ class BillingPlansTest extends TestCase
 
         $this->assertSame('standard', $business->subscription_plan);
         $this->assertSame('active', $business->subscription_status);
-        $this->assertSame('cus_synced_fixnow', $business->stripe_customer_id);
-        $this->assertSame('sub_synced_fixnow', $business->stripe_subscription_id);
+        $this->assertSame('cus_synced_bon', $business->stripe_customer_id);
+        $this->assertSame('sub_synced_bon', $business->stripe_subscription_id);
         $this->assertNotNull($business->subscription_ends_at);
     }
 
@@ -496,8 +496,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'premium',
             'subscription_status' => 'active',
-            'stripe_customer_id' => 'cus_past_due_fixnow',
-            'stripe_subscription_id' => 'sub_past_due_fixnow',
+            'stripe_customer_id' => 'cus_past_due_bon',
+            'stripe_subscription_id' => 'sub_past_due_bon',
         ]);
 
         $payload = $this->subscriptionUpdatedPayload($business, 'past_due', 'price_1TYmCcRqvGMkwX9rE8ichDo4');
@@ -518,8 +518,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'premium',
             'subscription_status' => 'active',
-            'stripe_customer_id' => 'cus_deleted_fixnow',
-            'stripe_subscription_id' => 'sub_deleted_fixnow',
+            'stripe_customer_id' => 'cus_deleted_bon',
+            'stripe_subscription_id' => 'sub_deleted_bon',
         ]);
 
         $payload = $this->subscriptionDeletedPayload($business);
@@ -540,8 +540,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'premium',
             'subscription_status' => 'active',
-            'stripe_customer_id' => 'cus_failed_fixnow',
-            'stripe_subscription_id' => 'sub_failed_fixnow',
+            'stripe_customer_id' => 'cus_failed_bon',
+            'stripe_subscription_id' => 'sub_failed_bon',
         ]);
 
         $payload = $this->invoicePaymentFailedPayload($business);
@@ -562,8 +562,8 @@ class BillingPlansTest extends TestCase
         $business = $this->business([
             'subscription_plan' => 'standard',
             'subscription_status' => 'active',
-            'stripe_customer_id' => 'cus_failed_upgrade_fixnow',
-            'stripe_subscription_id' => 'sub_failed_upgrade_fixnow',
+            'stripe_customer_id' => 'cus_failed_upgrade_bon',
+            'stripe_subscription_id' => 'sub_failed_upgrade_bon',
         ]);
 
         $payload = $this->invoicePaymentFailedPayload($business);
@@ -654,7 +654,7 @@ class BillingPlansTest extends TestCase
         ]);
 
         $this->actingAs($business)
-            ->get(route('business.billing', ['stripe' => 'success', 'session_id' => 'cs_test_fixnow']))
+            ->get(route('business.billing', ['stripe' => 'success', 'session_id' => 'cs_test_bon']))
             ->assertOk()
             ->assertSee('stripe-return-success', false);
 
@@ -693,14 +693,14 @@ class BillingPlansTest extends TestCase
     ): string
     {
         return json_encode([
-            'id' => 'evt_fixnow',
+            'id' => 'evt_bon',
             'type' => 'checkout.session.completed',
             'data' => [
                 'object' => [
-                    'id' => 'cs_fixnow',
+                    'id' => 'cs_bon',
                     'client_reference_id' => (string) $business->id,
-                    'customer' => 'cus_fixnow',
-                    'subscription' => 'sub_fixnow',
+                    'customer' => 'cus_bon',
+                    'subscription' => 'sub_bon',
                     'payment_status' => $paymentStatus,
                     'metadata' => [
                         'user_id' => (string) $business->id,
@@ -722,7 +722,7 @@ class BillingPlansTest extends TestCase
     ): string
     {
         return json_encode([
-            'id' => 'evt_subscription_updated_fixnow',
+            'id' => 'evt_subscription_updated_bon',
             'type' => 'customer.subscription.updated',
             'data' => [
                 'object' => [
@@ -750,7 +750,7 @@ class BillingPlansTest extends TestCase
     private function subscriptionDeletedPayload(User $business, ?int $periodEnd = null): string
     {
         return json_encode([
-            'id' => 'evt_subscription_deleted_fixnow',
+            'id' => 'evt_subscription_deleted_bon',
             'type' => 'customer.subscription.deleted',
             'data' => [
                 'object' => [
@@ -775,11 +775,11 @@ class BillingPlansTest extends TestCase
     private function invoicePaymentFailedPayload(User $business, ?int $periodEnd = null): string
     {
         return json_encode([
-            'id' => 'evt_invoice_failed_fixnow',
+            'id' => 'evt_invoice_failed_bon',
             'type' => 'invoice.payment_failed',
             'data' => [
                 'object' => [
-                    'id' => 'in_failed_fixnow',
+                    'id' => 'in_failed_bon',
                     'customer' => $business->stripe_customer_id,
                     'subscription' => $business->stripe_subscription_id,
                     'lines' => [
@@ -810,7 +810,7 @@ class BillingPlansTest extends TestCase
     private function stripeSignature(string $payload): string
     {
         $timestamp = time();
-        $signature = hash_hmac('sha256', $timestamp.'.'.$payload, 'whsec_fixnow');
+        $signature = hash_hmac('sha256', $timestamp.'.'.$payload, 'whsec_bon');
 
         return 't='.$timestamp.',v1='.$signature;
     }
@@ -819,7 +819,7 @@ class BillingPlansTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Billing Test',
+            'business_name' => 'BON Billing Test',
             'business_category' => 'Автосервиз',
             'city' => 'София',
             'subscription_status' => 'active',

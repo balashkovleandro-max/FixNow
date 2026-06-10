@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Support;
 
@@ -80,7 +80,7 @@ class ServiceRequestNotificationSender
         try {
             $send();
         } catch (Throwable $exception) {
-            Log::warning("FixNow mail failed: {$context}", array_merge($meta, [
+            Log::warning("BON mail failed: {$context}", array_merge($meta, [
                 'exception' => $exception->getMessage(),
             ]));
         }

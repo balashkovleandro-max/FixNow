@@ -38,7 +38,7 @@ class AuthController extends Controller
             $user->initializeTrialIfMissing();
         }
 
-        return redirect('/dashboard');
+        return redirect()->route('bon.onboarding');
     }
 
     public function showLogin()
@@ -56,7 +56,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('/dashboard');
+            $user = $request->user();
+
+            if ($user && $user->role === 'admin') {
+                return redirect('/dashboard');
+            }
+
+            return redirect()->route('bon.onboarding');
         }
 
         return back()->withErrors([

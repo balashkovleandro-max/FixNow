@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $user->business_name ?: $user->name }} | FixNow.bg</title>
-    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags(($user->short_description ?: $user->description ?: 'Профил на изпълнител във FixNow.bg с услуги, контакти, отзиви и директно запитване.')), 155) }}">
+    <title>{{ $user->business_name ?: $user->name }} | BON</title>
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags(($user->short_description ?: $user->description ?: 'Профил на бизнес във BON с услуги, контакти, отзиви и директно запитване.')), 155) }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -14,11 +14,11 @@
         $businessCategories = $user->serviceCategories();
         $category = !empty($businessCategories)
             ? implode(', ', $businessCategories)
-            : ($user->business_category ?: 'Локален изпълнител');
+            : ($user->business_category ?: 'Локален бизнес');
         $serviceCities = $user->serviceCities();
         $cityLabel = !empty($serviceCities) ? implode(', ', $serviceCities) : ($user->city ?: 'България');
         $shortDescription = data_get($user, 'short_description') ?: data_get($user, 'description')
-            ?: 'Професионален профил на изпълнител във FixNow.bg с бърз контакт, ясна информация и публично представяне за клиенти, които търсят надеждна услуга.';
+            ?: 'Професионален профил на бизнес във BON с бърз контакт, ясна информация и публично представяне за клиенти, които търсят надеждна услуга.';
         $longDescription = data_get($user, 'description') ?: $shortDescription;
         $servedAreas = data_get($user, 'service_areas') ?: data_get($user, 'обслужвани_райони');
         $yearsExperience = data_get($user, 'years_experience') ?: data_get($user, 'години_опит');
@@ -135,13 +135,13 @@
                         <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
                             <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Препоръки</p>
                             <p class="mt-2 font-black">{{ $recommendationsCount }}</p>
-                            <p class="mt-1 text-xs text-amber-200">от клиенти във FixNow</p>
+                            <p class="mt-1 text-xs text-amber-200">от клиенти във BON</p>
                         </div>
                     </div>
 
                     <div class="mt-6 grid gap-3 md:grid-cols-3" data-testid="business-profile-trust-strip">
                         <div class="rounded-3xl border {{ $user->is_verified ? 'border-emerald-300/25 bg-emerald-400/10' : 'border-white/10 bg-slate-950/45' }} p-4">
-                            <p class="text-sm font-black {{ $user->is_verified ? 'text-emerald-100' : 'text-white/70' }}">{{ $user->is_verified ? 'Потвърден изпълнител' : 'Очаква потвърждение' }}</p>
+                            <p class="text-sm font-black {{ $user->is_verified ? 'text-emerald-100' : 'text-white/70' }}">{{ $user->is_verified ? 'Потвърден бизнес' : 'Очаква потвърждение' }}</p>
                             <p class="mt-2 text-xs leading-5 text-white/55">{{ $user->is_verified ? 'Админ е проверил основните данни на профила.' : 'Профилът е видим, но все още няма verified badge.' }}</p>
                         </div>
                         <div class="rounded-3xl border {{ $user->isPremium() ? 'border-orange-300/25 bg-orange-400/10' : 'border-white/10 bg-slate-950/45' }} p-4">
@@ -187,7 +187,7 @@
                                 <div class="px-6 text-center">
                                     <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-950/60 text-2xl font-black text-orange-100">F</p>
                                     <p class="mt-4 font-black">Снимките ще се появят тук</p>
-                                    <p class="mt-2 text-sm text-white/55">Изпълнителят все още не е качил галерия.</p>
+                                    <p class="mt-2 text-sm text-white/55">Бизнесят все още не е качил галерия.</p>
                                 </div>
                             </div>
                         @endif
@@ -215,10 +215,10 @@
                 <section id="send-request" class="rounded-[32px] border border-orange-300/20 bg-gradient-to-br from-orange-500/10 via-amber-400/10 to-orange-600/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Заявка към изпълнителя</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Заявка към бизнеся</p>
                             <h2 class="mt-3 text-3xl font-black">Изпрати заявка</h2>
                             <p class="mt-3 text-sm leading-6 text-white/65">
-                                Опишете накратко от каква услуга имате нужда. Заявката отива директно към {{ $businessName }} и изпълнителят ще може да я управлява от своя панел.
+                                Опишете накратко от каква услуга имате нужда. Заявката отива директно към {{ $businessName }} и бизнесят ще може да я управлява от своя панел.
                             </p>
 
                             @if(session('service_request_success'))
@@ -261,7 +261,7 @@
 
                             <label class="block">
                                 <span class="mb-2 block text-sm font-semibold text-white/75">Описание на проблема</span>
-                                <textarea name="message" rows="5" class="w-full rounded-2xl border {{ $errors->has('message') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Опишете каква услуга търсите, кога ви е удобно и как изпълнителят да ви помогне.">{{ old('message') }}</textarea>
+                                <textarea name="message" rows="5" class="w-full rounded-2xl border {{ $errors->has('message') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Опишете каква услуга търсите, кога ви е удобно и как бизнесят да ви помогне.">{{ old('message') }}</textarea>
                                 @error('message')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                             </label>
 
@@ -280,7 +280,7 @@
                             <h2 class="mt-3 text-3xl font-black">За {{ $businessName }}</h2>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            @foreach(array_filter([$user->is_verified ? 'Потвърден профил' : null, $user->isPremium() ? 'Препоръчан изпълнител' : null, $emergencyServices ? 'Спешни услуги' : null]) as $chip)
+                            @foreach(array_filter([$user->is_verified ? 'Потвърден профил' : null, $user->isPremium() ? 'Препоръчан бизнес' : null, $emergencyServices ? 'Спешни услуги' : null]) as $chip)
                                 <span class="rounded-full border border-white/10 bg-slate-950/45 px-3 py-1 text-xs font-black text-white/75">{{ $chip }}</span>
                             @endforeach
                         </div>
@@ -307,7 +307,7 @@
                     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Галерия</p>
-                            <h2 class="mt-3 text-3xl font-black">Снимки от изпълнителя</h2>
+                            <h2 class="mt-3 text-3xl font-black">Снимки от бизнеся</h2>
                         </div>
                         <p class="text-sm font-bold text-white/50">{{ $businessPhotos->count() }} / {{ $user->photoLimit() }} снимки</p>
                     </div>
@@ -324,7 +324,7 @@
                         <div class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
                             <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
                             <p class="mt-4 text-lg font-black">Все още няма качени снимки</p>
-                            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато изпълнителят добави снимки в своята галерия, те ще се показват тук.</p>
+                            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато бизнесят добави снимки в своята галерия, те ще се показват тук.</p>
                         </div>
                     @endif
                 </section>
@@ -333,7 +333,7 @@
                     <div class="flex items-center justify-between gap-4">
                         <div>
                             <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Услуги</p>
-                            <h2 class="mt-3 text-3xl font-black">Какво предлага изпълнителят</h2>
+                            <h2 class="mt-3 text-3xl font-black">Какво предлага бизнесят</h2>
                         </div>
                         <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="hidden rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-3 text-sm font-black text-orange-100 hover:bg-orange-400/15 sm:inline-flex">Заяви оферта</a>
                     </div>
@@ -356,7 +356,7 @@
                             <div class="md:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center" data-testid="business-profile-services-empty">
                                 <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
                                 <p class="mt-4 text-lg font-black">Все още няма добавени услуги с цени</p>
-                                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Можете да изпратите запитване, за да получите индивидуална оферта от този изпълнител.</p>
+                                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Можете да изпратите запитване, за да получите индивидуална оферта от този бизнес.</p>
                                 <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-3 text-sm font-black text-white">Изпрати запитване</a>
                             </div>
                         @endforelse
@@ -369,13 +369,13 @@
                     <div class="mt-6 grid gap-4 md:grid-cols-2">
                         @if($user->is_verified)
                             <div class="rounded-3xl border border-emerald-300/20 bg-emerald-400/10 p-5">
-                                <p class="text-lg font-black text-emerald-100">Потвърден изпълнител</p>
-                                <p class="mt-3 text-sm leading-6 text-white/70">FixNow показва този badge само за профили, маркирани като проверени от администратор.</p>
+                                <p class="text-lg font-black text-emerald-100">Потвърден бизнес</p>
+                                <p class="mt-3 text-sm leading-6 text-white/70">BON показва този badge само за профили, маркирани като проверени от администратор.</p>
                             </div>
                         @endif
                         @if($user->isPremium())
                             <div class="rounded-3xl border border-orange-300/20 bg-orange-400/10 p-5">
-                                <p class="text-lg font-black text-orange-100">Препоръчан изпълнител</p>
+                                <p class="text-lg font-black text-orange-100">Препоръчан бизнес</p>
                                 <p class="mt-3 text-sm leading-6 text-white/70">Premium профилите получават по-високо показване и по-силно визуално представяне в публичните резултати.</p>
                             </div>
                         @endif
@@ -385,7 +385,7 @@
                         </div>
                         <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
                             <p class="text-lg font-black">Бърз контакт</p>
-                            <p class="mt-3 text-sm leading-6 text-white/60">Бутоните за оферта, телефон и запитване помагат на клиентите да се свържат с изпълнителя по най-бързия начин.</p>
+                            <p class="mt-3 text-sm leading-6 text-white/60">Бутоните за оферта, телефон и запитване помагат на клиентите да се свържат с бизнеся по най-бързия начин.</p>
                         </div>
                     </div>
                 </section>
@@ -466,7 +466,7 @@
 
                                 <div>
                                     <label class="mb-2 block text-sm font-semibold text-white/75">Коментар <span class="text-white/40">(по желание)</span></label>
-                                    <textarea name="comment" rows="4" maxlength="1500" class="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-orange-300/50" placeholder="Разкажете накратко за опита си с този изпълнител.">{{ old('comment') }}</textarea>
+                                    <textarea name="comment" rows="4" maxlength="1500" class="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-orange-300/50" placeholder="Разкажете накратко за опита си с този бизнес.">{{ old('comment') }}</textarea>
                                     @error('comment')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
                                 </div>
 
@@ -484,7 +484,7 @@
                     <div class="flex items-end justify-between gap-4">
                         <div>
                             <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Подобни</p>
-                            <h2 class="mt-3 text-3xl font-black">Подобни изпълнители</h2>
+                            <h2 class="mt-3 text-3xl font-black">Подобни бизнеси</h2>
                         </div>
                         <a href="{{ route('businesses.index') }}" class="hidden text-sm font-black text-orange-300 hover:text-white sm:block">Виж всички</a>
                     </div>
@@ -494,7 +494,7 @@
                             @include('partials.business-card', ['business' => $similarBusiness])
                         @empty
                             <div class="md:col-span-3 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
-                                <p class="font-black">Все още няма подобни активни изпълнители</p>
+                                <p class="font-black">Все още няма подобни активни бизнеси</p>
                                 <p class="mt-2 text-sm text-white/55">Когато има други active или trial профили от тази категория или град, те ще се появят тук.</p>
                             </div>
                         @endforelse
@@ -505,7 +505,7 @@
             <aside id="contact" class="lg:sticky lg:top-24 lg:self-start">
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <h2 class="text-2xl font-black">Контакт</h2>
-                    <p class="mt-2 text-sm leading-6 text-white/60">Изберете удобен начин за връзка с изпълнителя.</p>
+                    <p class="mt-2 text-sm leading-6 text-white/60">Изберете удобен начин за връзка с бизнеся.</p>
 
                     <div class="mt-6 grid gap-3">
                         <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-orange-600/25">Заяви оферта</a>

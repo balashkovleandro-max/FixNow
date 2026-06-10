@@ -31,7 +31,7 @@ class PreLaunchAuditTest extends TestCase
             ->assertOk()
             ->assertJson([
                 'status' => 'ok',
-                'app' => 'FixNow.bg',
+                'app' => 'BON',
             ]);
     }
 
@@ -41,7 +41,7 @@ class PreLaunchAuditTest extends TestCase
             ->assertOk()
             ->assertSee('User-agent: *')
             ->assertSee('Allow: /')
-            ->assertSee('Sitemap: https://fixnow.bg/sitemap.xml');
+            ->assertSee('Sitemap: https://bon.bg/sitemap.xml');
     }
 
     public function test_sitemap_xml_is_accessible(): void
@@ -49,8 +49,8 @@ class PreLaunchAuditTest extends TestCase
         $this->get('/sitemap.xml')
             ->assertOk()
             ->assertSee('<urlset', false)
-            ->assertSee('https://fixnow.bg/zayavi-oferta', false)
-            ->assertSee('https://fixnow.bg/grad/pleven/vik-uslugi', false);
+            ->assertSee('https://bon.bg/zayavi-oferta', false)
+            ->assertSee('https://bon.bg/grad/pleven/vik-uslugi', false);
     }
 
     public function test_public_pages_include_basic_security_headers(): void
@@ -94,14 +94,14 @@ class PreLaunchAuditTest extends TestCase
     public function test_analytics_snippets_render_when_ids_are_configured(): void
     {
         config([
-            'services.analytics.ga_measurement_id' => 'G-FIXNOWTEST',
+            'services.analytics.ga_measurement_id' => 'G-BONTEST',
             'services.analytics.meta_pixel_id' => '123456789',
             'services.analytics.clarity_project_id' => 'claritytest',
         ]);
 
         $this->get('/')
             ->assertOk()
-            ->assertSee('googletagmanager.com/gtag/js?id=G-FIXNOWTEST', false)
+            ->assertSee('googletagmanager.com/gtag/js?id=G-BONTEST', false)
             ->assertSee("fbq('init', '123456789')", false)
             ->assertSee('www.clarity.ms/tag', false)
             ->assertSee('claritytest', false);
@@ -187,18 +187,18 @@ class PreLaunchAuditTest extends TestCase
             ->assertOk()
             ->assertSee('public-businesses-empty-state', false)
             ->assertSee('Пусни заявка')
-            ->assertSee('Стани изпълнител');
+            ->assertSee('Добави бизнес');
 
         $this->get(route('services.index'))
             ->assertOk()
             ->assertSee('public-services-empty-state', false)
             ->assertSee('Пусни заявка')
-            ->assertSee('Стани изпълнител');
+            ->assertSee('Добави бизнес');
 
         $this->get(route('top.businesses'))
             ->assertOk()
-            ->assertSee('Топ изпълнители')
-            ->assertSee('Все още няма активни изпълнители');
+            ->assertSee('Топ бизнеси')
+            ->assertSee('Все още няма активни бизнеси');
     }
 
     private function corePublicUrls(): array
@@ -218,7 +218,7 @@ class PreLaunchAuditTest extends TestCase
             '/privacy',
             '/cookies',
             '/grad/pleven',
-            '/grad/pleven/maistori',
+            '/grad/pleven/remonti',
             '/grad/pleven/vik-uslugi',
             '/grad/pleven/elektrouslugi',
             '/grad/pleven/avtoservizi',

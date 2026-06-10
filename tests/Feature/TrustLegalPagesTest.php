@@ -21,7 +21,7 @@ class TrustLegalPagesTest extends TestCase
         $this->get(route('terms'))
             ->assertOk()
             ->assertSee('Общи условия')
-            ->assertSee('FixNow.bg');
+            ->assertSee('BON');
     }
 
     public function test_privacy_page_loads(): void
@@ -63,8 +63,8 @@ class TrustLegalPagesTest extends TestCase
         $this->get('/how-it-works')
             ->assertOk()
             ->assertSee('Как работи')
-            ->assertSee('За клиенти')
-            ->assertSee('За изпълнители');
+            ->assertSee('Бизнеси')
+            ->assertSee('За бизнеси');
     }
 
     public function test_core_public_pages_still_load(): void
@@ -91,9 +91,9 @@ class TrustLegalPagesTest extends TestCase
         foreach ($pages as $page) {
             $this->get($page)
                 ->assertOk()
-                ->assertSee('Услуги')
-                ->assertSee('За клиенти')
-                ->assertSee('За изпълнители')
+                ->assertSee('Категории')
+                ->assertSee('Бизнеси')
+                ->assertSee('За бизнеси')
                 ->assertSee('Планове')
                 ->assertSee('Пусни заявка');
         }

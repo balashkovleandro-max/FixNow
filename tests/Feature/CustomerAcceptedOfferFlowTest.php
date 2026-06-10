@@ -223,7 +223,7 @@ class CustomerAcceptedOfferFlowTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password',
             'role' => 'customer',
-        ])->assertRedirect('/dashboard');
+        ])->assertRedirect(route('bon.onboarding'));
 
         $this->assertDatabaseHas('users', [
             'email' => 'new-customer@example.test',
@@ -266,7 +266,7 @@ class CustomerAcceptedOfferFlowTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Изпълнител',
+            'business_name' => 'BON Изпълнител',
             'business_category' => 'Ремонти и строителство',
             'service_categories' => ['Ремонти и строителство'],
             'city' => 'Плевен',

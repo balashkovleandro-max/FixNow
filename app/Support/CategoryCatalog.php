@@ -46,12 +46,16 @@ class CategoryCatalog
     public static function homepageGroups(): Collection
     {
         $priority = [
+            'Ресторанти и кафенета',
+            'Хотели',
             'Ремонти и строителство',
-            'Спешни домашни услуги',
-            'Поддръжка на домове и имоти',
-            'Авто услуги',
-            'Ремонт на техника и уреди',
-            'Услуги за малки бизнеси',
+            'ВиК',
+            'Електро услуги',
+            'Автосервизи',
+            'Почистване',
+            'Красота и грижа',
+            'Здраве и уелнес',
+            'Спорт и активности',
         ];
 
         return self::grouped()
@@ -107,25 +111,7 @@ class CategoryCatalog
             return false;
         }
 
-        return collect([
-            'хотел',
-            'хотели',
-            'хотели и настаняване',
-            'ресторант',
-            'ресторанти',
-            'ресторанти/кафенета',
-            'кафене',
-            'кафенета',
-            'hotel',
-            'hotels',
-            'hoteli',
-            'restaurant',
-            'restaurants',
-            'restoranti',
-            'cafe',
-            'cafes',
-            'kafeneta',
-        ])->contains(fn (string $hidden) => $category === $hidden || str_contains($category, $hidden));
+        return false;
     }
 
     public static function businessMatchesRequest(User $business, ?string $category, ?string $city): bool
@@ -165,7 +151,7 @@ class CategoryCatalog
 
     private static function configDefinitions(): Collection
     {
-        return collect(config('fixnow_categories.groups', []))
+        return collect(config('bon_categories.groups', []))
             ->flatMap(function (array $items, string $group) {
                 return collect($items)->map(fn ($item, $index) => [
                     'name' => $item['name'],
@@ -188,18 +174,27 @@ class CategoryCatalog
             'ремонти' => 'ремонти и строителство',
             'remonti' => 'ремонти и строителство',
             'repairs' => 'ремонти и строителство',
-            'майстор' => 'ремонти и строителство',
-            'майстори' => 'ремонти и строителство',
-            'електро услуги' => 'електроуслуги',
-            'electric' => 'електроуслуги',
-            'електротехник' => 'електроуслуги',
-            'вик' => 'вик услуги',
-            'vik' => 'вик услуги',
-            'plumbing' => 'вик услуги',
+            'repair specialist' => 'ремонти и строителство',
+            'електро услуги' => 'електро услуги',
+            'електроуслуги' => 'електро услуги',
+            'electric' => 'електро услуги',
+            'електротехник' => 'електро услуги',
+            'вик' => 'вик',
+            'вик услуги' => 'вик',
+            'vik' => 'вик',
+            'plumbing' => 'вик',
             'автосервиз' => 'автосервизи',
             'auto service' => 'автосервизи',
             'autoservice' => 'автосервизи',
             'cleaning' => 'почистване',
+            'красота и лични услуги' => 'красота и грижа',
+            'салони за красота' => 'красота и грижа',
+            'ресторант' => 'ресторанти и кафенета',
+            'ресторанти' => 'ресторанти и кафенета',
+            'кафене' => 'ресторанти и кафенета',
+            'кафенета' => 'ресторанти и кафенета',
+            'хотел' => 'хотели',
+            'hotel' => 'хотели',
         ];
 
         return $aliases[$value] ?? $value;

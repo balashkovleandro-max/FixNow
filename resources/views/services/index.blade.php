@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Услуги | FixNow.bg</title>
-    <meta name="description" content="Намерете услуги от активни изпълнители във FixNow.bg. Търсете по категория, град, рейтинг, Premium и потвърдени локални професионалисти.">
+    <title>Услуги | BON</title>
+    <meta name="description" content="Намерете услуги от активни бизнеси във BON. Търсете по категория, град, рейтинг, Premium и потвърдени локални професионалисти.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
 <body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
     @php
         $services = $services ?? collect();
-        $categories = ['Ремонти и строителство', 'ВиК услуги', 'Електроуслуги', 'Автосервизи', 'Почистване', 'Ремонт на техника', 'Услуги за малки бизнеси', 'Красота и лични услуги'];
+        $categories = ['Ресторанти и кафенета', 'Хотели', 'Ремонти и строителство', 'ВиК', 'Електро услуги', 'Автосервизи', 'Почистване', 'Красота и грижа', 'Здраве и уелнес', 'Спорт и активности'];
         $trustFilters = [
             ['name' => 'premium', 'label' => 'Premium', 'value' => '1'],
-            ['name' => 'verified', 'label' => 'Потвърден изпълнител', 'value' => '1'],
+            ['name' => 'verified', 'label' => 'Потвърден бизнес', 'value' => '1'],
             ['name' => 'emergency', 'label' => 'Спешни услуги', 'value' => '1'],
             ['name' => 'works_24_7', 'label' => '24/7', 'value' => '1'],
             ['name' => 'rating', 'label' => '4+ рейтинг', 'value' => '4plus'],
@@ -31,8 +31,8 @@
             <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Услуги и оферти</p>
-                    <h1 class="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl">Намерете услуга от активен изпълнител във FixNow</h1>
-                    <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Филтрирайте по категория, град и trust сигнали. Резултатите идват само от публично видими active или trial профили на изпълнители.</p>
+                    <h1 class="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl">Намерете услуга от активен бизнес във BON</h1>
+                    <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Филтрирайте по категория, град и trust сигнали. Резултатите идват само от публично видими active или trial профили на бизнеси.</p>
                 </div>
                 <a href="{{ route('request.service') }}" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-6 py-4 text-center font-black text-orange-100 hover:bg-orange-400/15">Заяви оферта</a>
             </div>
@@ -129,7 +129,7 @@
                                 </div>
                                 <h3 class="text-xl font-black">{{ $service->title }}</h3>
                                 <a href="{{ $business ? route('businesses.show', $business) : '#' }}" class="mt-1 inline-flex text-sm font-semibold text-orange-300 hover:text-white">
-                                    {{ $business?->business_name ?: $business?->name ?: 'Профил на изпълнител' }}
+                                    {{ $business?->business_name ?: $business?->name ?: 'Профил на бизнес' }}
                                 </a>
                                 <p class="mt-3 line-clamp-3 text-sm leading-6 text-white/60">{{ $service->description }}</p>
                                 <div class="mt-5 grid gap-4 sm:flex sm:items-end sm:justify-between">
@@ -159,11 +159,11 @@
             @else
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-10 text-center shadow-xl shadow-black/20 backdrop-blur-xl" data-testid="public-services-empty-state">
                     <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-2xl font-black">F</p>
-                    <h2 class="mt-5 text-2xl font-black">Все още няма активни изпълнители тук</h2>
-                    <p class="mx-auto mt-3 max-w-md text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ изпълнител. Ако предлагаш такава услуга, добави профил на изпълнител и започни да събираш видимост.</p>
+                    <h2 class="mt-5 text-2xl font-black">Все още няма активни бизнеси тук</h2>
+                    <p class="mx-auto mt-3 max-w-md text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ бизнес. Ако предлагаш такава услуга, добави профил на бизнес и започни да събираш видимост.</p>
                     <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                         <a href="{{ route('request.service') }}" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Пусни заявка</a>
-                        <a href="{{ route('business.landing') }}" class="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Стани изпълнител</a>
+                        <a href="{{ route('business.landing') }}" class="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Стани бизнес</a>
                     </div>
                 </div>
             @endif

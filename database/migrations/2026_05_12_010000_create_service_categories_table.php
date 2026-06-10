@@ -28,7 +28,7 @@ return new class extends Migration
             $sortOrder = 0;
             $rows = [];
 
-            foreach (config('fixnow_categories.groups', []) as $group => $items) {
+            foreach (config('bon_categories.groups', []) as $group => $items) {
                 foreach ($items as $item) {
                     $rows[] = [
                         'name' => $item['name'],

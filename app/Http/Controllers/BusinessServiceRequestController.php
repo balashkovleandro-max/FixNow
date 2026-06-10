@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -49,7 +49,7 @@ class BusinessServiceRequestController extends Controller
             'email' => $validated['customer_email'] ?? null,
             'city' => $validated['city'],
             'category' => $user->business_category ?: collect($user->serviceCategories())->first(),
-            'service' => 'Заявка от профил на изпълнител',
+            'service' => 'Заявка от профил на бизнес',
             'description' => $validated['message'],
             'urgency' => ServiceRequest::URGENCY_NORMAL,
             'budget' => null,
@@ -79,7 +79,7 @@ class BusinessServiceRequestController extends Controller
 
         return redirect()
             ->route('businesses.show', $user)
-            ->with('service_request_success', 'Заявката е изпратена успешно. Изпълнителят ще се свърже с вас възможно най-скоро.');
+            ->with('service_request_success', 'Заявката е изпратена успешно. Бизнесят ще се свърже с вас възможно най-скоро.');
     }
 
     public function index(): View
@@ -249,7 +249,7 @@ class BusinessServiceRequestController extends Controller
                 Mail::to($serviceRequest->email)->send(new CustomerServiceRequestConfirmationMail($serviceRequest));
             }
         } catch (Throwable $exception) {
-            Log::warning('FixNow business profile service request email failed.', [
+            Log::warning('BON business profile service request email failed.', [
                 'service_request_id' => $serviceRequest->id,
                 'business_id' => $business->id,
                 'exception' => $exception->getMessage(),

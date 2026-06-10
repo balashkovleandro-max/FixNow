@@ -11,35 +11,56 @@
 }
 
 @layer components {
-    .fn-premium-page {
+    .fn-premium-page,
+    .bon-public-page,
+    body[class*="bg-[#020812]"] {
         background:
-            radial-gradient(circle at 18% 0%, rgba(249, 115, 22, 0.16), transparent 30%),
-            radial-gradient(circle at 82% 10%, rgba(251, 191, 36, 0.10), transparent 28%),
-            linear-gradient(180deg, #020617 0%, #07111f 46%, #020617 100%);
+            radial-gradient(circle at 14% 6%, rgba(37, 99, 235, 0.16), transparent 32%),
+            radial-gradient(circle at 86% 12%, rgba(236, 72, 153, 0.13), transparent 32%),
+            radial-gradient(circle at 50% 40%, rgba(124, 58, 237, 0.10), transparent 38%),
+            linear-gradient(180deg, #f8faff 0%, #f5f7ff 50%, #fff7fb 100%);
+        color: #070b1f;
+    }
+
+    .fn-premium-page::before,
+    .bon-public-page::before,
+    body[class*="bg-[#020812]"]::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -20;
+        pointer-events: none;
+        opacity: 0.26;
+        background-image:
+            linear-gradient(to right, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+        background-size: 72px 72px;
     }
 
     .fn-glass-card {
-        border: 1px solid rgba(255, 255, 255, 0.10);
-        background: rgba(2, 6, 23, 0.58);
-        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        background: rgba(255, 255, 255, 0.76);
+        box-shadow: 0 24px 70px rgba(30, 64, 175, 0.08);
         backdrop-filter: blur(22px);
     }
 
     .fn-glass-soft {
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid rgba(255, 255, 255, 0.70);
+        background: rgba(255, 255, 255, 0.66);
         backdrop-filter: blur(18px);
     }
 
-    .fn-amber-cta {
-        background: linear-gradient(135deg, #f97316 0%, #f59e0b 52%, #fbbf24 100%);
-        box-shadow: 0 18px 44px rgba(249, 115, 22, 0.28);
+    .fn-amber-cta,
+    .bon-gradient-cta {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%);
+        box-shadow: 0 18px 44px rgba(79, 70, 229, 0.24);
         color: #fff;
         transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
     }
 
-    .fn-amber-cta:hover {
-        box-shadow: 0 22px 58px rgba(249, 115, 22, 0.36);
+    .fn-amber-cta:hover,
+    .bon-gradient-cta:hover {
+        box-shadow: 0 22px 58px rgba(124, 58, 237, 0.32);
         filter: saturate(1.08);
         transform: translateY(-1px);
     }
@@ -48,29 +69,133 @@
         background-image:
             linear-gradient(90deg, rgba(2, 6, 23, 0.94), rgba(2, 6, 23, 0.72) 48%, rgba(2, 6, 23, 0.52)),
             linear-gradient(180deg, rgba(2, 6, 23, 0.14), rgba(2, 6, 23, 0.92)),
-            url('/images/fixnow-hero-city.svg');
+            url('/images/bon-hero-city.svg');
         background-position: center;
         background-size: cover;
     }
 
     .fn-premium-input {
         min-height: 3.25rem;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(2, 6, 23, 0.50);
-        color: #fff;
+        border: 1px solid rgba(203, 213, 225, 0.78);
+        background: rgba(255, 255, 255, 0.72);
+        color: #070b1f;
         outline: none;
         transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
     }
 
     .fn-premium-input:focus,
     .fn-premium-input:focus-within {
-        border-color: rgba(251, 146, 60, 0.48);
-        background: rgba(2, 6, 23, 0.68);
-        box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.10);
+        border-color: rgba(99, 102, 241, 0.50);
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.10);
     }
 
     .fn-mobile-request-cta {
-        box-shadow: 0 -18px 48px rgba(2, 6, 23, 0.74);
+        box-shadow: 0 -18px 48px rgba(30, 64, 175, 0.14);
+    }
+
+    .fn-premium-page [class*="bg-slate-950"],
+    .bon-public-page [class*="bg-slate-950"],
+    body[class*="bg-[#020812]"] [class*="bg-slate-950"],
+    .fn-premium-page [class*="bg-white/10"],
+    .bon-public-page [class*="bg-white/10"],
+    body[class*="bg-[#020812]"] [class*="bg-white/10"],
+    .fn-premium-page [class*="bg-white/5"],
+    .bon-public-page [class*="bg-white/5"],
+    body[class*="bg-[#020812]"] [class*="bg-white/5"] {
+        background: rgba(255, 255, 255, 0.72);
+    }
+
+    .fn-premium-page [class*="border-white/10"],
+    .bon-public-page [class*="border-white/10"],
+    body[class*="bg-[#020812]"] [class*="border-white/10"],
+    .fn-premium-page [class*="border-white/15"],
+    .bon-public-page [class*="border-white/15"],
+    body[class*="bg-[#020812]"] [class*="border-white/15"] {
+        border-color: rgba(226, 232, 240, 0.86);
+    }
+
+    .fn-premium-page [class*="shadow-black"],
+    .bon-public-page [class*="shadow-black"],
+    body[class*="bg-[#020812]"] [class*="shadow-black"] {
+        box-shadow: 0 24px 70px rgba(30, 64, 175, 0.08);
+    }
+
+    .fn-premium-page [class*="text-white"],
+    .bon-public-page [class*="text-white"],
+    body[class*="bg-[#020812]"] [class*="text-white"] {
+        color: #475569;
+    }
+
+    .fn-premium-page [class*="text-orange"],
+    .bon-public-page [class*="text-orange"],
+    body[class*="bg-[#020812]"] [class*="text-orange"],
+    .fn-premium-page [class*="text-amber"],
+    .bon-public-page [class*="text-amber"],
+    body[class*="bg-[#020812]"] [class*="text-amber"] {
+        color: #2563eb;
+    }
+
+    .fn-premium-page [class*="bg-orange"],
+    .bon-public-page [class*="bg-orange"],
+    body[class*="bg-[#020812]"] [class*="bg-orange"],
+    .fn-premium-page [class*="bg-amber"],
+    .bon-public-page [class*="bg-amber"],
+    body[class*="bg-[#020812]"] [class*="bg-amber"] {
+        background-color: rgba(239, 246, 255, 0.86);
+    }
+
+    .fn-premium-page [class*="from-orange"],
+    .bon-public-page [class*="from-orange"],
+    body[class*="bg-[#020812]"] [class*="from-orange"],
+    .fn-premium-page [class*="from-amber"],
+    .bon-public-page [class*="from-amber"],
+    body[class*="bg-[#020812]"] [class*="from-amber"] {
+        --tw-gradient-from: #2563eb var(--tw-gradient-from-position);
+        --tw-gradient-to: rgb(124 58 237 / 0) var(--tw-gradient-to-position);
+        --tw-gradient-stops: var(--tw-gradient-from), #7c3aed, #ec4899 var(--tw-gradient-to-position);
+    }
+
+    .fn-premium-page a[class*="from-"],
+    .bon-public-page a[class*="from-"],
+    body[class*="bg-[#020812]"] a[class*="from-"],
+    .fn-premium-page button[class*="from-"],
+    .bon-public-page button[class*="from-"],
+    body[class*="bg-[#020812]"] button[class*="from-"],
+    .fn-premium-page .fn-amber-cta,
+    .bon-public-page .fn-amber-cta,
+    body[class*="bg-[#020812]"] .fn-amber-cta {
+        color: #fff;
+    }
+
+    .fn-premium-page [class*="bg-gradient"][class*="text-white"],
+    .fn-premium-page [class*="bg-gradient"] [class*="text-white"],
+    .bon-public-page [class*="bg-gradient"][class*="text-white"],
+    .bon-public-page [class*="bg-gradient"] [class*="text-white"],
+    body[class*="bg-[#020812]"] [class*="bg-gradient"][class*="text-white"],
+    body[class*="bg-[#020812]"] [class*="bg-gradient"] [class*="text-white"] {
+        color: #fff;
+    }
+
+    .fn-premium-page input,
+    .fn-premium-page select,
+    .fn-premium-page textarea,
+    .bon-public-page input,
+    .bon-public-page select,
+    .bon-public-page textarea,
+    body[class*="bg-[#020812]"] input,
+    body[class*="bg-[#020812]"] select,
+    body[class*="bg-[#020812]"] textarea {
+        color: #070b1f;
+    }
+
+    .fn-premium-page input::placeholder,
+    .fn-premium-page textarea::placeholder,
+    .bon-public-page input::placeholder,
+    .bon-public-page textarea::placeholder,
+    body[class*="bg-[#020812]"] input::placeholder,
+    body[class*="bg-[#020812]"] textarea::placeholder {
+        color: #94a3b8;
     }
 }
 

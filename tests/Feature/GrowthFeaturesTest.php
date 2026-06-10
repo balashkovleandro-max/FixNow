@@ -24,7 +24,7 @@ class GrowthFeaturesTest extends TestCase
     {
         $this->get(route('top.businesses'))
             ->assertOk()
-            ->assertSee('Топ изпълнители');
+            ->assertSee('Топ бизнеси');
 
         $this->get('/top-businesses')
             ->assertRedirect('/top-biznesi');
@@ -201,7 +201,7 @@ class GrowthFeaturesTest extends TestCase
             ->assertOk()
             ->assertSee('Сподели профила си')
             ->assertSee('business-share-section', false)
-            ->assertSee('Ние сме във FixNow.bg');
+            ->assertSee('Ние сме във BON');
     }
 
     public function test_recommend_button_route_creates_recommendation(): void
@@ -242,21 +242,21 @@ class GrowthFeaturesTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee('Пуснете заявка веднъж')
-            ->assertSee('Получете оферти')
-            ->assertSee('Избран изпълнител')
-            ->assertSee('Добави профил')
-            ->assertSee('Услуги')
-            ->assertSee('За клиенти')
-            ->assertSee('За изпълнители')
+            ->assertSee('Открий бизнес, услуга или място')
+            ->assertSee('Популярни категории')
+            ->assertSee('Препоръчани бизнеси')
+            ->assertSee('Добави бизнес')
+            ->assertSee('Категории')
+            ->assertSee('Бизнеси')
+            ->assertSee('За бизнеси')
             ->assertSee('Планове')
             ->assertSee('Пусни заявка')
-            ->assertSee('Топ изпълнители')
-            ->assertSee('Най-препоръчвани')
-            ->assertSee('Проверени изпълнители')
-            ->assertSee('Най-нови изпълнители')
-            ->assertSee('Последни отзиви')
-            ->assertSee('Първите 50 изпълнители получават стартово предимство');
+            ->assertSee('Платформа за бизнеси, услуги и места')
+            ->assertSee('Ресторанти и кафенета')
+            ->assertSee('Проверени профили')
+            ->assertSee('Хотели')
+            ->assertSee('Разгледай бизнеси')
+            ->assertSee('Виж препоръчани бизнеси');
     }
 
     public function test_business_filters_do_not_break_public_business_index(): void
@@ -283,7 +283,7 @@ class GrowthFeaturesTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Growth Test Business',
+            'business_name' => 'BON Growth Test Business',
             'business_category' => 'Автосервиз',
             'city' => 'София',
             'subscription_status' => 'active',

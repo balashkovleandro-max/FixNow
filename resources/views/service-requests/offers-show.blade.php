@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оферти по заявка | FixNow.bg</title>
+    <title>Оферти по заявка | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -75,7 +75,7 @@
                     </span>
                     @if($selectedOffer)
                         <span class="rounded-full border border-emerald-300/25 bg-emerald-400/10 px-3 py-1 text-xs font-black text-emerald-100">
-                            Избран изпълнител
+                            Избран бизнес
                         </span>
                     @endif
                 </div>
@@ -139,7 +139,7 @@
             <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <h2 class="text-2xl font-black sm:text-3xl">Получени оферти</h2>
-                    <p class="mt-2 text-sm text-white/60">Сравнете предложенията и изберете изпълнител, когато сте готови.</p>
+                    <p class="mt-2 text-sm text-white/60">Прегледайте предложенията и изберете бизнес, когато сте готови.</p>
                 </div>
                 <span class="rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-sm font-black text-white/80">{{ $offers->count() }} оферти</span>
             </div>
@@ -149,12 +149,12 @@
                     @php
                         $executor = $offer->business;
                         $isSelected = $selectedOffer && (int) $selectedOffer->id === (int) $offer->id;
-                        $executorName = $executor?->business_name ?: $executor?->name ?: 'Изпълнител във FixNow';
+                        $executorName = $executor?->business_name ?: $executor?->name ?: 'Бизнес във BON';
                     @endphp
                     <article class="rounded-[28px] border {{ $isSelected ? 'border-emerald-300/30 bg-emerald-400/10' : 'border-white/10 bg-white/10' }} p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                         <div class="flex flex-wrap items-center gap-2">
                             @if($isSelected)
-                                <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Избран изпълнител</span>
+                                <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Избран бизнес</span>
                             @else
                                 <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70">{{ $offerStatusLabels[$offer->status] ?? $offer->status }}</span>
                             @endif
@@ -191,17 +191,17 @@
                         <div class="mt-5">
                             @if($isSelected)
                                 <div class="rounded-2xl border border-emerald-300/20 bg-emerald-400/10 px-5 py-4 text-sm font-bold text-emerald-100">
-                                    Тази оферта е приета. Можете да се свържете директно с изпълнителя.
+                                    Тази оферта е приета. Можете да се свържете директно с бизнеся.
                                 </div>
                             @elseif($selectedOffer)
                                 <div class="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm font-bold text-white/60">
-                                    Вече е избран друг изпълнител.
+                                    Вече е избран друг бизнес.
                                 </div>
                             @elseif(in_array($offer->status, ['sent', 'viewed'], true))
                                 <form action="{{ route('service-requests.offers.accept', ['serviceRequest' => $serviceRequest->public_token, 'offer' => $offer]) }}" method="POST">
                                     @csrf
                                     <button data-track="offer_accept" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-3 font-black text-white shadow-lg shadow-orange-950/30">
-                                        Избери изпълнител
+                                        Избери бизнес
                                     </button>
                                 </form>
                             @else
@@ -216,7 +216,7 @@
                         <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-500 via-amber-400 to-orange-600 text-2xl font-black">F</p>
                         <h3 class="mt-5 text-2xl font-black">Все още няма получени оферти</h3>
                         <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">
-                            Ще ви уведомим, когато изпълнители изпратят предложения. Запазете този линк, за да проверявате офертите по заявката.
+                            Ще ви уведомим, когато бизнеси изпратят предложения. Запазете този линк, за да проверявате офертите по заявката.
                         </p>
                     </div>
                 @endforelse

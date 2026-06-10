@@ -1,6 +1,6 @@
-## FixNow.bg local setup
+## BON local setup
 
-FixNow.bg е Laravel marketplace за локални услуги и бизнес профили с mobile-first публичен UX, Standard/Premium планове, Stripe Checkout foundation, business dashboard, admin dashboard, reviews, analytics и lead заявки.
+BON е Laravel платформа за откриване на проверени бизнеси, услуги и места, с mobile-first публичен UX, Standard/Premium планове, Stripe Checkout foundation, business dashboard, admin dashboard, reviews, analytics и заявки.
 
 ### Стартиране локално
 
@@ -22,10 +22,10 @@ php artisan serve
 Минимални `.env` настройки за локална проверка:
 
 ```env
-APP_URL=http://fixnow.test
+APP_URL=http://bon.test
 MAIL_MAILER=log
-MAIL_FROM_ADDRESS=hello@fixnow.bg
-MAIL_FROM_NAME="FixNow.bg"
+MAIL_FROM_ADDRESS=hello@bon.bg
+MAIL_FROM_NAME="BON"
 ```
 
 ### Demo съдържание

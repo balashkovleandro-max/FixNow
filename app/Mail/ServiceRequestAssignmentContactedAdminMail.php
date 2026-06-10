@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Mail;
 
@@ -29,7 +29,7 @@ class ServiceRequestAssignmentContactedAdminMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Бизнес се свърза с клиент във FixNow.bg')
+            ->subject('Бизнес се свърза с клиент във BON')
             ->view('emails.service-requests.assignment-contacted-admin');
     }
 }

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Предлагай услуги | FixNow.bg</title>
+    <title>Предлагай услуги | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -15,9 +15,9 @@
     <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <section class="grid gap-8 rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10 lg:grid-cols-[1fr_420px]">
             <div>
-                <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">За изпълнители</p>
+                <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">За бизнеси</p>
                 <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">Покажи услугите си пред клиенти, които вече търсят.</h1>
-                <p class="mt-5 max-w-2xl text-lg leading-8 text-white/70">FixNow.bg помага на майстори, сервизи, салони и локални професионалисти да изглеждат професионално онлайн.</p>
+                <p class="mt-5 max-w-2xl text-lg leading-8 text-white/70">BON помага на профили, сервизи, салони и локални професионалисти да изглеждат професионално онлайн.</p>
             </div>
             <div class="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
                 <div class="grid gap-3 text-sm text-white/70">
@@ -28,7 +28,7 @@
                 @auth
                     <a href="{{ route('services.create') }}" class="mt-5 block rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 text-center font-black text-white">Добави услуга</a>
                 @else
-                    <a href="{{ route('register') }}" class="mt-5 block rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 text-center font-black text-white">Стани изпълнител</a>
+                    <a href="{{ route('register') }}" class="mt-5 block rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 text-center font-black text-white">Стани бизнес</a>
                 @endauth
             </div>
         </section>

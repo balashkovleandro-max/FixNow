@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Изпълнители | FixNow.bg</title>
-    <meta name="description" content="Разгледайте активни изпълнители във FixNow.bg. Филтрирайте по град, категория, Premium, потвърдени профили, рейтинг и локални услуги.">
+    <title>Бизнеси | BON</title>
+    <meta name="description" content="Разгледайте активни бизнеси, услуги и места в BON. Филтрирайте по град, категория, Premium, проверени профили, рейтинг и локални услуги.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -18,7 +18,7 @@
             ['name' => 'works_24_7', 'label' => '24/7', 'value' => '1'],
             ['name' => 'rating', 'label' => '4+ рейтинг', 'value' => '4plus'],
         ];
-        $categories = ['Ремонти и строителство', 'ВиК услуги', 'Електроуслуги', 'Автосервизи', 'Почистване', 'Ремонт на техника', 'Услуги за малки бизнеси', 'Красота и лични услуги'];
+        $categories = ['Ресторанти и кафенета', 'Хотели', 'Ремонти и строителство', 'ВиК', 'Електро услуги', 'Автосервизи', 'Почистване', 'Красота и грижа', 'Здраве и уелнес', 'Спорт и активности'];
     @endphp
 
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
@@ -30,13 +30,13 @@
         <section class="overflow-hidden rounded-[34px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
             <div class="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">FixNow marketplace</p>
-                    <h1 class="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl">Открийте активни изпълнители, проверени профили и препоръчани услуги</h1>
-                    <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Публичните резултати показват само active и trial изпълнители. Premium и потвърдените профили получават предимство в подреждането.</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">BON бизнеси</p>
+                    <h1 class="mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl">Открийте проверени бизнеси, услуги и места около вас</h1>
+                    <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Публичните резултати показват само активни или trial профили. Premium и проверените бизнеси получават предимство в подреждането.</p>
                 </div>
                 <div class="rounded-3xl border border-orange-300/20 bg-orange-300/10 p-5">
                     <p class="text-3xl font-black">{{ $businesses->count() }}</p>
-                    <p class="mt-2 text-sm leading-6 text-white/70">публично видими профила на изпълнители според текущите филтри</p>
+                    <p class="mt-2 text-sm leading-6 text-white/70">публично видими бизнес профила според текущите филтри</p>
                 </div>
             </div>
 
@@ -108,11 +108,11 @@
             @if($businesses->isEmpty())
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-10 text-center shadow-xl shadow-black/20 backdrop-blur-xl" data-testid="public-businesses-empty-state">
                     <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-2xl font-black">F</p>
-                    <h2 class="mt-5 text-2xl font-black">Все още няма активни изпълнители тук</h2>
-                    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ изпълнител. Ако предлагаш услуги в тази категория, добави профил и стани видим за първите клиенти.</p>
+                    <h2 class="mt-5 text-2xl font-black">Все още няма активни бизнеси тук</h2>
+                    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Ако предлагаш услуги или управляваш място в тази категория, добави профил и започни да изграждаш видимост, доверие и професионално онлайн присъствие.</p>
                     <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                        <a href="{{ route('request.service') }}" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-6 py-4 font-black text-orange-100 hover:bg-orange-400/15">Пусни заявка</a>
-                        <a href="{{ route('business.landing') }}" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Стани изпълнител</a>
+                        <a href="{{ route('categories') }}" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-6 py-4 font-black text-orange-100 hover:bg-orange-400/15">Виж категории</a>
+                        <a href="{{ route('business.landing') }}" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Добави бизнес</a>
                     </div>
                 </div>
             @else

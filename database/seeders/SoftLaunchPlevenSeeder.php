@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace Database\Seeders;
 
@@ -15,7 +15,7 @@ class SoftLaunchPlevenSeeder extends Seeder
     {
         $executors = collect([
             [
-                'email' => 'pleven.remonti@fixnow.test',
+                'email' => 'pleven.remonti@bon.test',
                 'name' => 'Иван Петров',
                 'business_name' => 'Плевен Ремонт Про',
                 'business_category' => 'Ремонти и строителство',
@@ -43,7 +43,7 @@ class SoftLaunchPlevenSeeder extends Seeder
                 ],
             ],
             [
-                'email' => 'pleven.vik@fixnow.test',
+                'email' => 'pleven.vik@bon.test',
                 'name' => 'Георги Николов',
                 'business_name' => 'ВиК Плевен Експрес',
                 'business_category' => 'ВиК услуги',
@@ -71,9 +71,9 @@ class SoftLaunchPlevenSeeder extends Seeder
                 ],
             ],
             [
-                'email' => 'pleven.elektro@fixnow.test',
+                'email' => 'pleven.elektro@bon.test',
                 'name' => 'Димитър Илиев',
-                'business_name' => 'Електро Майстор Плевен',
+                'business_name' => 'Електро Профил Плевен',
                 'business_category' => 'Електроуслуги',
                 'phone' => '+359 88 000 2103',
                 'address' => 'Плевен, ж.к. Дружба',
@@ -99,7 +99,7 @@ class SoftLaunchPlevenSeeder extends Seeder
                 ],
             ],
             [
-                'email' => 'pleven.clean@fixnow.test',
+                'email' => 'pleven.clean@bon.test',
                 'name' => 'Мария Стоянова',
                 'business_name' => 'Чист Дом Плевен',
                 'business_category' => 'Почистване',
@@ -107,7 +107,7 @@ class SoftLaunchPlevenSeeder extends Seeder
                 'address' => 'Плевен, район Дружба',
                 'working_hours' => 'Понеделник - събота, 08:00 - 17:00',
                 'short_description' => 'Почистване на домове, офиси, входове и след ремонт.',
-                'description' => 'Soft-launch профил за почистване в Плевен с ясно описание, телефон и снимка. Използва се за реалистичен публичен listing.',
+                'description' => 'Soft-launch профил за почистване в Плевен с ясно описание, телефон и снимка. Използва се за реалистичен публичен профил.',
                 'service_areas' => 'Плевен, Кайлъка, Сторгозия',
                 'service_cities' => ['Плевен'],
                 'service_categories' => ['Почистване', 'Почистване след ремонт'],
@@ -127,7 +127,7 @@ class SoftLaunchPlevenSeeder extends Seeder
                 ],
             ],
             [
-                'email' => 'pleven.auto@fixnow.test',
+                'email' => 'pleven.auto@bon.test',
                 'name' => 'Николай Георгиев',
                 'business_name' => 'Авто Сервиз Север',
                 'business_category' => 'Автосервизи',
@@ -135,7 +135,7 @@ class SoftLaunchPlevenSeeder extends Seeder
                 'address' => 'Плевен, Северна индустриална зона',
                 'working_hours' => 'Понеделник - събота, 08:30 - 19:00',
                 'short_description' => 'Диагностика, масла, ходова част, гуми и поддръжка на автомобили.',
-                'description' => 'Контролиран профил за автоуслуги в Плевен. Използва се за проверка на directory-based категории, публични карти и Premium/Verified badges.',
+                'description' => 'Контролиран профил за автоуслуги в Плевен. Използва се за проверка на профили с директен контакт, публични карти и Premium/Verified badges.',
                 'service_areas' => 'Плевен, Долни Дъбник, Гривица',
                 'service_cities' => ['Плевен', 'Долни Дъбник'],
                 'service_categories' => ['Автосервизи'],
@@ -155,7 +155,7 @@ class SoftLaunchPlevenSeeder extends Seeder
                 ],
             ],
             [
-                'email' => 'pleven.clima@fixnow.test',
+                'email' => 'pleven.clima@bon.test',
                 'name' => 'Петър Димов',
                 'business_name' => 'Клима Сервиз Плевен',
                 'business_category' => 'Климатици и отопление',

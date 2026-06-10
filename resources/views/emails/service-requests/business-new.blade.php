@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
-    <title>Нова заявка във FixNow.bg</title>
+    <title>Нова заявка във BON</title>
 </head>
 <body style="margin:0;background:#f6f8fb;color:#0f172a;font-family:Arial,sans-serif;">
     <div style="max-width:680px;margin:0 auto;padding:28px 18px;">
         <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;padding:26px;">
-            <p style="margin:0 0 8px;color:#2563eb;font-size:13px;font-weight:700;text-transform:uppercase;">FixNow.bg</p>
+            <p style="margin:0 0 8px;color:#2563eb;font-size:13px;font-weight:700;text-transform:uppercase;">BON</p>
             <h1 style="margin:0 0 16px;font-size:26px;line-height:1.2;">Нова заявка за вашия бизнес</h1>
 
             <p style="margin:0 0 18px;color:#475569;line-height:1.6;">Заявката е изпратена към {{ $business->business_name ?: $business->name }}. Свържете се с клиента и маркирайте статуса в таблото.</p>

@@ -8,6 +8,7 @@ use App\Http\Controllers\BusinessProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessAnalyticsController;
+use App\Http\Controllers\BusinessInsightsController;
 use App\Http\Controllers\BusinessPhotoController;
 use App\Http\Controllers\BusinessServiceRequestController;
 use App\Http\Controllers\AdminBusinessController;
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Schema;
 
 Route::get('/health', fn () => response()->json([
     'status' => 'ok',
-    'app' => 'FixNow.bg',
+    'app' => 'BON',
 ]))->name('health');
 
 Route::get('/robots.txt', fn () => response(file_get_contents(public_path('robots.txt')), 200, [
@@ -44,94 +45,36 @@ Route::get('/sitemap.xml', fn () => response(file_get_contents(public_path('site
     'Content-Type' => 'application/xml; charset=UTF-8',
 ]))->name('sitemap');
 
-Route::get('/', function () {
-    $featuredBusinesses = collect();
-    $topBusinesses = collect();
-    $mostRecommendedBusinesses = collect();
-    $verifiedBusinesses = collect();
-    $newestBusinesses = collect();
-    $popularCategories = collect();
-    $latestReviews = collect();
-    $heroStats = [
-        'requests_this_month' => 0,
-        'active_categories' => CategoryCatalog::all()->count(),
-        'businesses' => 0,
-        'premium_businesses' => 0,
-    ];
+Route::view('/bon', 'bon.index')->name('bon.index');
+Route::view('/', 'bon.index')->name('home');
+Route::view('/onboarding', 'bon.onboarding')->middleware('auth')->name('bon.onboarding');
+Route::view('/tools', 'bon.tools')->name('bon.tools');
+Route::redirect('/instrumenti', '/tools');
+Route::view('/za-potrebiteli', 'bon.consumers')->name('bon.consumers');
+Route::view('/freelancers', 'bon.freelancers')->name('bon.freelancers');
+Route::redirect('/za-freelanceri', '/freelancers');
+Route::view('/talent-network', 'bon.talent-network')->name('bon.talent-network');
+Route::view('/bon/command-center', 'bon.command-center')->name('bon.command-center');
+Route::view('/bon/business-problem', 'bon.business-problem')->name('bon.business-problem');
+Route::view('/bon/profile', 'bon.profile')->name('bon.profile');
+Route::view('/bon/demo-business-profile', 'bon.profile')->name('bon.demo-profile');
+Route::redirect('/bon/business-profile', '/bon/profile');
+Route::redirect('/business/command-center', '/bon/command-center');
 
-    if (
-        Schema::hasTable('users')
-        && Schema::hasColumn('users', 'role')
-        && Schema::hasColumn('users', 'subscription_status')
-        && Schema::hasColumn('users', 'trial_ends_at')
-        && Schema::hasColumn('users', 'subscription_ends_at')
-    ) {
-        $publicBusinesses = BusinessGrowthMetrics::publicBusinesses();
-        $featuredBusinesses = $publicBusinesses->take(5);
-        $topBusinesses = $publicBusinesses->take(6);
-        $heroStats['businesses'] = $publicBusinesses->count();
-        $heroStats['premium_businesses'] = $publicBusinesses
-            ->filter(fn ($business) => $business->isPremium())
-            ->count();
-        $mostRecommendedBusinesses = $publicBusinesses
-            ->filter(fn ($business) => (int) ($business->growth_recommendations_count ?? 0) > 0)
-            ->sortByDesc(fn ($business) => (int) ($business->growth_recommendations_count ?? 0))
-            ->take(6)
-            ->values();
-        $verifiedBusinesses = $publicBusinesses
-            ->filter(fn ($business) => (bool) $business->is_verified)
-            ->take(6)
-            ->values();
-        $newestBusinesses = $publicBusinesses
-            ->sortByDesc(fn ($business) => $business->created_at?->timestamp ?? 0)
-            ->take(6)
-            ->values();
-        $popularCategories = BusinessGrowthMetrics::popularCategories($publicBusinesses);
-
-        if (Schema::hasTable('reviews')) {
-            $latestReviews = Review::query()
-                ->approved()
-                ->with('business')
-                ->whereHas('business', fn ($query) => $query->publiclyVisible())
-                ->latest('approved_at')
-                ->take(4)
-                ->get();
-        }
-    }
-
-    if (Schema::hasTable('service_requests')) {
-        $heroStats['requests_this_month'] = ServiceRequest::query()
-            ->where('created_at', '>=', now()->startOfMonth())
-            ->count();
-    }
-
-    return view('welcome', compact(
-        'featuredBusinesses',
-        'topBusinesses',
-        'mostRecommendedBusinesses',
-        'verifiedBusinesses',
-        'newestBusinesses',
-        'popularCategories',
-        'latestReviews',
-        'heroStats'
-    ));
-});
+Route::redirect('/legacy-home', '/');
 
 Route::get('/categories', function () {
     $categoryDefinitions = [
-        ['name' => 'Ремонти и строителство', 'desc' => 'Майстори, довършителни работи, бани, покриви и монтажи'],
-        ['name' => 'Спешни домашни услуги', 'desc' => 'ВиК, електро, ключари, течове и спешна помощ за дома'],
-        ['name' => 'Поддръжка на домове и имоти', 'desc' => 'Почистване, хамали, климатици, градини и абонаментна поддръжка'],
-        ['name' => 'ВиК услуги', 'desc' => 'Аварии, течове, бойлери и инсталации'],
-        ['name' => 'Електроуслуги', 'desc' => 'Табла, контакти, осветление и диагностика'],
-        ['name' => 'Автосервизи', 'desc' => 'Ремонт, гуми, диагностика и поддръжка'],
-        ['name' => 'Ремонт на техника', 'desc' => 'Сервиз на уреди, диагностика и домашна техника'],
-        ['name' => 'Услуги за малки бизнеси', 'desc' => 'Счетоводители, адвокати, маркетинг, принт и охрана'],
-        ['name' => 'Красота и лични услуги', 'desc' => 'Фризьори, маникюр, козметика, фитнес и лични услуги'],
-        ['name' => 'Образование и курсове', 'desc' => 'Частни уроци, автошколи и практически обучения'],
-        ['name' => 'Събития и празници', 'desc' => 'DJ, водещи, кетъринг, торти, фотографи и видеографи'],
-        ['name' => 'Локални магазини и търговци', 'desc' => 'Магазини, авточасти, строителни материали и специализирани стоки'],
-        ['name' => 'Почистване', 'desc' => 'Домове, офиси, абонамент и след ремонт'],
+        ['name' => 'Ресторанти и кафенета', 'desc' => 'Места за храна, кафе, срещи, събития и локални преживявания'],
+        ['name' => 'Хотели', 'desc' => 'Хотели, къщи за гости, апартаменти и места за настаняване'],
+        ['name' => 'Ремонти и строителство', 'desc' => 'Ремонти, довършителни работи, бани, покриви и монтажи'],
+        ['name' => 'ВиК', 'desc' => 'Аварии, течове, бойлери, канали и водопроводни услуги'],
+        ['name' => 'Електро услуги', 'desc' => 'Табла, контакти, осветление, инсталации и електро поддръжка'],
+        ['name' => 'Автосервизи', 'desc' => 'Сервизи, гуми, диагностика, автомивки и авто поддръжка'],
+        ['name' => 'Почистване', 'desc' => 'Домове, офиси, абонамент, входове и почистване след ремонт'],
+        ['name' => 'Красота и грижа', 'desc' => 'Салони, фризьори, маникюр, козметика и лична грижа'],
+        ['name' => 'Здраве и уелнес', 'desc' => 'Стоматолози, физиотерапия, масажи, психолози и уелнес услуги'],
+        ['name' => 'Спорт и активности', 'desc' => 'Фитнес, танци, йога, детски активности и спортни места'],
     ];
 
     $publicBusinesses = collect();
@@ -154,10 +97,10 @@ Route::get('/categories', function () {
         });
 
     return view('categories', compact('categories'));
-});
+})->name('categories');
 Route::get('/plans', [BillingController::class, 'plans'])->name('plans');
 Route::redirect('/pricing', '/plans');
-Route::view('/za-biznesi', 'za-biznesi')->name('business.landing');
+Route::view('/za-biznesi', 'bon.businesses')->name('business.landing');
 Route::redirect('/za-biznesa', '/za-biznesi');
 Route::redirect('/add-business', '/za-biznesi');
 Route::get('/top-biznesi', [TopBusinessesController::class, 'index'])->name('top.businesses');
@@ -537,6 +480,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/business/service-requests/{serviceRequest}/completed', [BusinessServiceRequestController::class, 'completed'])->name('business.service-requests.completed');
     Route::patch('/business/service-requests/{serviceRequest}/cancelled', [BusinessServiceRequestController::class, 'cancelled'])->name('business.service-requests.cancelled');
     Route::post('/business/service-requests/{serviceRequest}/offers', [ServiceRequestOfferController::class, 'store'])->middleware('throttle:10,1')->name('business.service-requests.offers.store');
+    Route::get('/business/insights', [BusinessInsightsController::class, 'index'])->name('business.insights.index');
+    Route::post('/business/insights', [BusinessInsightsController::class, 'store'])->middleware('throttle:10,1')->name('business.insights.store');
     Route::get('/business/billing', [BillingController::class, 'show'])->name('business.billing');
     Route::post('/business/billing/checkout', [BillingController::class, 'checkout'])->middleware('throttle:10,1')->name('business.billing.checkout');
     Route::post('/business/billing/portal', [BillingController::class, 'portal'])->middleware('throttle:10,1')->name('business.billing.portal');

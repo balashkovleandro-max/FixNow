@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пусни заявка за оферта | FixNow.bg</title>
+    <title>Пусни заявка за оферта | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -30,13 +30,13 @@
                 Опишете задачата и получете подходящи оферти.
             </h1>
             <p class="mt-6 max-w-xl text-lg leading-8 text-white/70">
-                За ремонти, ВиК, електро, почистване, хамали, техника и други request-based услуги. Избирате категория, град и срок, а подходящи изпълнители могат да ви изпратят оферта.
+                За ремонти, ВиК, електро, почистване, хамали, техника и други request-based услуги. Избирате категория, град и срок, а подходящи бизнеси могат да ви изпратят оферта.
             </p>
 
             <div class="mt-8 grid gap-4 sm:grid-cols-3">
                 @foreach([
                     ['value' => '1', 'label' => 'Попълвате заявка'],
-                    ['value' => '2', 'label' => 'Изпълнителите виждат релевантни заявки'],
+                    ['value' => '2', 'label' => 'Бизнесите виждат релевантни заявки'],
                     ['value' => '3', 'label' => 'Получавате оферти'],
                 ] as $step)
                     <div class="rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur-xl">
@@ -47,7 +47,7 @@
             </div>
 
             <div class="mt-6 rounded-3xl border border-orange-300/15 bg-orange-400/10 p-5 text-sm leading-6 text-white/65">
-                <strong class="text-white">Важно:</strong> заявките са само за категории, в които офертите имат смисъл. За автосервизи, фризьори, адвокати, магазини и други directory категории използвайте “Намери изпълнител”.
+                <strong class="text-white">Важно:</strong> заявките са само за категории, в които индивидуалното предложение има смисъл. За автосервизи, салони, места и други профили с директен контакт използвайте “Намери бизнес”.
             </div>
         </section>
 

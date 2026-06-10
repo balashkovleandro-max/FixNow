@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Mail;
 
@@ -29,7 +29,7 @@ class AcceptedOfferExecutorMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Клиент избра вашата оферта във FixNow.bg')
+            ->subject('Клиент избра вашата оферта във BON')
             ->view('emails.service-requests.offer-accepted-executor');
     }
 }

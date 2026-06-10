@@ -206,7 +206,7 @@ class AdminServiceRequestMarketplaceTest extends TestCase
         return User::factory()->create(array_merge([
             'role' => 'business',
             'name' => 'Executor User',
-            'business_name' => 'FixNow Executor',
+            'business_name' => 'BON Executor',
             'business_category' => 'Repairs',
             'service_categories' => ['Repairs'],
             'city' => 'Pleven',

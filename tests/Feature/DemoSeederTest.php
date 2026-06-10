@@ -41,7 +41,7 @@ class DemoSeederTest extends TestCase
 
     public function test_demo_standard_business_does_not_get_premium_benefits(): void
     {
-        $standard = User::query()->where('email', 'demo.vik@fixnow.test')->firstOrFail();
+        $standard = User::query()->where('email', 'demo.vik@bon.test')->firstOrFail();
 
         $this->assertTrue($standard->isStandard());
         $this->assertFalse($standard->isPremium());
@@ -97,8 +97,8 @@ class DemoSeederTest extends TestCase
 
     public function test_demo_expired_and_cancelled_businesses_are_hidden_publicly(): void
     {
-        $expired = User::query()->where('email', 'demo.expired@fixnow.test')->firstOrFail();
-        $cancelled = User::query()->where('email', 'demo.cancelled@fixnow.test')->firstOrFail();
+        $expired = User::query()->where('email', 'demo.expired@bon.test')->firstOrFail();
+        $cancelled = User::query()->where('email', 'demo.cancelled@bon.test')->firstOrFail();
 
         $this->assertFalse($expired->isPubliclyVisible());
         $this->assertFalse($cancelled->isPubliclyVisible());

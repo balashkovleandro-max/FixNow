@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Панел на изпълнител | FixNow.bg</title>
+    <title>Панел на бизнес | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -88,14 +88,15 @@
                 <a href="{{ url('/') }}" class="flex min-w-0 items-center gap-3">
                     <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
                     <div class="min-w-0">
-                        <p class="truncate text-lg font-black">Панел на изпълнител</p>
+                        <p class="truncate text-lg font-black">Панел на бизнес</p>
                         <p class="truncate text-xs text-white/50">{{ $business->business_name ?: $business->name }}</p>
                     </div>
                 </a>
                 <a href="{{ route('business.billing') }}" class="inline-flex min-h-11 items-center rounded-2xl bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">План</a>
             </div>
-            <div class="mt-4 grid grid-cols-2 gap-2">
+            <div class="mt-4 grid grid-cols-3 gap-2">
                 <a href="{{ route('business.profile.edit') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-center text-sm font-black text-white">Редакция</a>
+                <a href="{{ route('business.insights.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-center text-sm font-black text-white">Финанси</a>
                 <a href="{{ route('businesses.show', $business) }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-center text-sm font-black text-white">Профил</a>
             </div>
         </header>
@@ -104,18 +105,19 @@
             <a href="{{ url('/') }}" class="flex items-center gap-3">
                 <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
                 <div>
-                    <p class="text-xl font-black">FixNow.bg</p>
-                    <p class="text-xs text-white/50">Панел на изпълнител</p>
+                    <p class="text-xl font-black">BON</p>
+                    <p class="text-xs text-white/50">Панел на бизнес</p>
                 </div>
             </a>
 
             <nav class="mt-8 grid gap-2 text-sm font-bold">
                 <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-3 text-orange-100">Обзор</a>
+                <a href="{{ route('business.insights.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Финансов анализ</a>
                 <a href="{{ route('business.profile.edit') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Редакция на профил</a>
                 <a href="{{ route('services.create') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Добави услуга</a>
                 <a href="{{ route('business.service-requests.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Заявки</a>
                 <a href="{{ route('businesses.show', $business) }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Виж публичния профил</a>
-                <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Публични изпълнители</a>
+                <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Публични бизнеси</a>
                 <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Услуги</a>
                 <a href="{{ url('/categories') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Категории</a>
                 <a href="{{ url('/') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Начало</a>
@@ -135,7 +137,7 @@
                         <h1 class="mt-3 text-3xl font-black sm:text-5xl">
                             Управлявайте <span class="bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent">{{ $business->business_name ?: $business->name }}</span>
                         </h1>
-                        <p class="mt-3 max-w-3xl text-white/60">Попълвайте профила си, следете активността и управлявайте видимостта си във FixNow без нужда от админ намеса.</p>
+                        <p class="mt-3 max-w-3xl text-white/60">Попълвайте профила си, следете активността и управлявайте видимостта си във BON без нужда от админ намеса.</p>
                     </div>
                     <div class="flex flex-col gap-3 sm:flex-row">
                         <a href="{{ route('business.profile.edit') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-4 text-center font-black text-white shadow-lg shadow-orange-600/25">Редактирай профила</a>
@@ -176,11 +178,11 @@
                 <div class="rounded-[28px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <p class="text-sm font-bold text-white/55">Изпратени оферти</p>
                     <p class="mt-2 text-4xl font-black">{{ $offerStats['sent_offers'] }}</p>
-                    <p class="mt-2 text-sm text-white/60">Оферти, изпратени от вашия профил на изпълнител.</p>
+                    <p class="mt-2 text-sm text-white/60">Оферти, изпратени от вашия профил на бизнес.</p>
                 </div>
                 <div class="rounded-[28px] border {{ $offerStats['has_request_based_categories'] ? 'border-orange-300/20 bg-orange-400/10' : 'border-white/10 bg-white/10' }} p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <p class="text-sm font-bold text-white/55">Режим на профила</p>
-                    <p class="mt-2 text-2xl font-black">{{ $offerStats['has_request_based_categories'] ? 'Заявки + директория' : 'Директория' }}</p>
+                    <p class="mt-2 text-2xl font-black">{{ $offerStats['has_request_based_categories'] ? 'Профил + заявки' : 'Профил' }}</p>
                     <a href="{{ route('business.service-requests.index') }}" class="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-2xl bg-white/10 px-4 py-3 text-sm font-black text-white hover:bg-white/15">Управлявай заявки</a>
                 </div>
             </section>
@@ -385,7 +387,7 @@
                 <div class="mt-6 rounded-3xl border border-orange-300/20 bg-gradient-to-br from-orange-400/10 via-orange-500/10 to-orange-500/10 p-5">
                     <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.2em] text-orange-200/80">Стойност от FixNow</p>
+                            <p class="text-sm font-black uppercase tracking-[0.2em] text-orange-200/80">Стойност от BON</p>
                             <p class="mt-2 text-lg font-black leading-7">
                                 Вашият профил е видян <span data-testid="value-profile-views">{{ $analyticsStats['profile_views'] }}</span> пъти и е получил <span data-testid="value-client-actions">{{ $analyticsStats['total_clicks'] + $serviceRequestStats['total'] }}</span> клиентски действия.
                             </p>
@@ -559,11 +561,11 @@
 
             @php
                 $profileUrl = route('businesses.show', $business);
-                $shareText = 'Вече можете да ни намерите във FixNow.bg. Разгледайте профила ни, оставете отзив или се свържете директно с нас.';
+                $shareText = 'Вече можете да ни намерите във BON. Разгледайте профила ни, оставете отзив или се свържете директно с нас.';
                 $shareMessage = $shareText . ' ' . $profileUrl;
                 $encodedProfileUrl = urlencode($profileUrl);
                 $encodedShareMessage = urlencode($shareMessage);
-                $badgeCode = '<a href="' . e($profileUrl) . '" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:14px;background:#061426;color:#fff;text-decoration:none;font-weight:800;">Ние сме във FixNow.bg</a>';
+                $badgeCode = '<a href="' . e($profileUrl) . '" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:14px;background:#061426;color:#fff;text-decoration:none;font-weight:800;">Ние сме във BON</a>';
             @endphp
 
             <section data-testid="business-share-section" class="rounded-[32px] border border-orange-300/20 bg-gradient-to-br from-orange-400/12 via-orange-500/10 to-orange-600/15 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
@@ -595,18 +597,18 @@
                         <p class="text-sm font-black text-white/70">Badge cards</p>
                         <div class="mt-4 grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
                             <div class="rounded-2xl border border-white/10 bg-white/10 p-4">
-                                <p class="font-black">Ние сме във FixNow.bg</p>
+                                <p class="font-black">Ние сме във BON</p>
                                 <p class="mt-1 text-xs text-white/50">Готово за социални мрежи и сайт.</p>
                             </div>
                             @if($business->is_verified)
                                 <div class="rounded-2xl border border-emerald-300/20 bg-emerald-400/10 p-4">
-                                    <p class="font-black text-emerald-100">Потвърден изпълнител във FixNow</p>
+                                    <p class="font-black text-emerald-100">Потвърден бизнес във BON</p>
                                     <p class="mt-1 text-xs text-white/55">Показва доверие към профила.</p>
                                 </div>
                             @endif
                             @if($business->isPremium())
                                 <div class="rounded-2xl border border-orange-300/20 bg-orange-400/10 p-4">
-                                    <p class="font-black text-orange-100">Препоръчан изпълнител във FixNow</p>
+                                    <p class="font-black text-orange-100">Препоръчан бизнес във BON</p>
                                     <p class="mt-1 text-xs text-white/55">Premium профил с предимство.</p>
                                 </div>
                             @endif

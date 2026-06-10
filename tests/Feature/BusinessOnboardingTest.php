@@ -135,7 +135,7 @@ class BusinessOnboardingTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Onboarding Test Business',
+            'business_name' => 'BON Onboarding Test Business',
             'business_category' => 'Автосервиз',
             'city' => 'София',
             'phone' => '0888123456',

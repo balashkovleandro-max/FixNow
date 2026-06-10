@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -77,7 +77,7 @@ class CustomerOfferController extends Controller
 
             $this->sendNotSelectedOfferEmails($serviceRequest, $offer);
         } catch (Throwable $exception) {
-            Log::warning('FixNow accepted offer email failed.', [
+            Log::warning('BON accepted offer email failed.', [
                 'offer_id' => $offer->id,
                 'service_request_id' => $serviceRequest->id,
                 'exception' => $exception->getMessage(),
@@ -86,7 +86,7 @@ class CustomerOfferController extends Controller
 
         return redirect()
             ->route('dashboard')
-            ->with('success', 'Офертата е приета успешно. Избраният изпълнител ще бъде уведомен.');
+            ->with('success', 'Офертата е приета успешно. Избраният бизнес ще бъде уведомен.');
     }
 
     private function sendNotSelectedOfferEmails(ServiceRequest $serviceRequest, ServiceRequestOffer $acceptedOffer): void

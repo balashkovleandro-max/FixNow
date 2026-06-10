@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Редакция на профил на изпълнител | FixNow.bg</title>
+    <title>Редакция на профил на бизнес | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -11,7 +11,7 @@
 
     @php
         $baseCities = ['Плевен','София','Пловдив','Варна','Бургас','Русе','Стара Загора','Велико Търново','Благоевград','Добрич','Шумен','Сливен','Хасково','Пазарджик'];
-        $baseCategories = ['Ремонти','ВиК услуги','Електроуслуги','Автосервиз','Почистване','Ремонт на техника','Услуги за малки бизнеси','Салон за красота','Строителство','Климатици','Градински услуги','Друго'];
+        $baseCategories = ['Ресторанти и кафенета','Хотели','Ремонти и строителство','ВиК','Електро услуги','Автосервизи','Почистване','Красота и грижа','Здраве и уелнес','Спорт и активности'];
         $selectedServiceCities = old('service_cities', $user->serviceCities());
         $selectedServiceCities = is_array($selectedServiceCities) ? $selectedServiceCities : [];
         $availableServiceCities = array_values(array_unique(array_merge($baseCities, $selectedServiceCities)));
@@ -53,7 +53,7 @@
         <section class="grid gap-6 lg:grid-cols-[1fr_390px]">
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-xl sm:p-8">
                 <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Business profile editor</p>
-                <h1 class="mt-3 text-3xl font-black sm:text-5xl">Редакция на профил на изпълнител</h1>
+                <h1 class="mt-3 text-3xl font-black sm:text-5xl">Редакция на профил на бизнес</h1>
                 <p class="mt-3 max-w-3xl text-white/60">Попълнете информацията, която клиентите виждат в публичния профил. Лимитите се прилагат според текущия план.</p>
 
                 @if(session('success'))
@@ -315,7 +315,7 @@
                             <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                                 <div>
                                     <h2 class="text-xl font-black">Галерия / Снимки</h2>
-                                    <p class="mt-3 max-w-2xl text-sm leading-6 text-white/60">Качвайте снимки директно към профила на изпълнител. Това е отделна галерия и не е свързана с “Предлагай услуга”.</p>
+                                    <p class="mt-3 max-w-2xl text-sm leading-6 text-white/60">Качвайте снимки директно към профила на бизнес. Това е отделна галерия и не е свързана с “Предлагай услуга”.</p>
                                     <p class="mt-2 text-sm font-bold text-orange-200">Използвани: {{ $photoCount }} / {{ $photoLimit }} снимки</p>
                                 </div>
 
@@ -351,7 +351,7 @@
                         <div class="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
                             <h2 class="text-xl font-black">Verified статус</h2>
                             @if($user->is_verified)
-                                <p class="mt-3 text-sm leading-6 text-emerald-100">Изпълнителят е потвърден и има отделен Verified badge.</p>
+                                <p class="mt-3 text-sm leading-6 text-emerald-100">Бизнесят е потвърден и има отделен Verified badge.</p>
                             @else
                                 <p class="mt-3 text-sm leading-6 text-white/60">Потвърждаването се управлява от админ, за да остане badge-ът реален trust signal.</p>
                             @endif
@@ -359,7 +359,7 @@
                     </section>
 
                     <div class="sticky bottom-4 z-20 flex flex-col gap-3 rounded-3xl border border-white/10 bg-slate-950/90 p-4 shadow-2xl shadow-black/30 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
-                        <p class="text-sm text-white/60">Промените се записват в текущия профил на изпълнител.</p>
+                        <p class="text-sm text-white/60">Промените се записват в текущия профил на бизнес.</p>
                         <button type="submit" class="rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">Запази промените</button>
                     </div>
                 </form>

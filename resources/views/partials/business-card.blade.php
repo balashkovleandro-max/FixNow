@@ -2,7 +2,7 @@
     $businessName = $business->business_name ?: $business->name;
     $serviceCategories = array_values(array_filter($business->serviceCategories()));
     $serviceCities = array_values(array_filter($business->serviceCities()));
-    $primaryCategory = $serviceCategories[0] ?? ($business->business_category ?: 'Локален изпълнител');
+    $primaryCategory = $serviceCategories[0] ?? ($business->business_category ?: 'Локален бизнес');
     $primaryCity = $serviceCities[0] ?? ($business->city ?: 'България');
     $averageRating = data_get($business, 'growth_average_rating') ?: $business->averageRating();
     $reviewsCount = (int) (data_get($business, 'growth_reviews_count') ?? $business->approvedReviewsCount());
@@ -94,7 +94,7 @@
         </div>
 
         <p class="mt-4 line-clamp-2 min-h-[3rem] text-sm leading-6 text-white/64">
-            {{ $business->short_description ?: $business->description ?: 'Професионален профил във FixNow.bg с директен контакт, ясна информация и локални услуги за клиенти.' }}
+            {{ $business->short_description ?: $business->description ?: 'Професионален BON профил с директен контакт, ясна информация и локални услуги за клиенти.' }}
         </p>
 
         <div class="mt-4 flex flex-wrap gap-2">

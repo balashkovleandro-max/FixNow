@@ -71,7 +71,7 @@ class BusinessAnalyticsTest extends TestCase
         $business = $this->business([
             'phone' => '0888123456',
             'website' => 'example.com',
-            'facebook' => 'https://facebook.com/fixnow-test',
+            'facebook' => 'https://facebook.com/bon-test',
         ]);
 
         $this->get(route('businesses.track.phone', $business))
@@ -93,7 +93,7 @@ class BusinessAnalyticsTest extends TestCase
             ->assertRedirect('https://example.com');
 
         $this->get(route('businesses.track.social', [$business, 'facebook']))
-            ->assertRedirect('https://facebook.com/fixnow-test');
+            ->assertRedirect('https://facebook.com/bon-test');
 
         foreach ([
             BusinessAnalyticsEvent::PHONE_CLICK,
@@ -284,7 +284,7 @@ class BusinessAnalyticsTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Analytics Test Business',
+            'business_name' => 'BON Analytics Test Business',
             'business_category' => 'Автосервиз',
             'city' => 'София',
             'subscription_status' => 'active',

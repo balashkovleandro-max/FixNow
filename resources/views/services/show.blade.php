@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $service->title }} | FixNow.bg</title>
+    <title>{{ $service->title }} | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -25,7 +25,7 @@
                     <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}" class="h-[360px] w-full object-cover">
                 @else
                     <div class="flex h-[360px] items-center justify-center bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-orange-600/20 text-white/50">
-                        Галерията ще бъде добавена от изпълнителя
+                        Галерията ще бъде добавена от бизнеся
                     </div>
                 @endif
                 <div class="p-6 sm:p-8">
@@ -72,7 +72,7 @@
 
                     <div class="mt-6 rounded-2xl border border-white/10 bg-slate-950/50 p-4">
                         <p class="text-sm text-white/50">Публикувана от</p>
-                        <p class="mt-1 text-lg font-black">{{ $business->business_name ?? $business->name ?? 'Профил на изпълнител' }}</p>
+                        <p class="mt-1 text-lg font-black">{{ $business->business_name ?? $business->name ?? 'Профил на бизнес' }}</p>
                         <p class="mt-1 text-sm text-white/60">{{ $service->phone }}</p>
                     </div>
 

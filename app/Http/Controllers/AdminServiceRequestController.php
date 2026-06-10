@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -166,7 +166,7 @@ class AdminServiceRequestController extends Controller
                 'date' => $serviceRequest->created_at,
                 'note' => $serviceRequest->source === ServiceRequest::SOURCE_OFFER_FORM
                     ? 'Пусната през формата за оферта.'
-                    : 'Изпратена директно към профил на изпълнител.',
+                    : 'Изпратена директно към профил на бизнес.',
             ],
         ]);
 
@@ -174,7 +174,7 @@ class AdminServiceRequestController extends Controller
             $events->push([
                 'label' => 'Оферта е изпратена',
                 'date' => $offer->created_at,
-                'note' => ($offer->business?->business_name ?: $offer->business?->name ?: 'Изпълнител').' · '.$offer->price_estimate,
+                'note' => ($offer->business?->business_name ?: $offer->business?->name ?: 'Бизнес').' · '.$offer->price_estimate,
             ]);
         });
 
@@ -182,7 +182,7 @@ class AdminServiceRequestController extends Controller
             $events->push([
                 'label' => 'Оферта е избрана',
                 'date' => $serviceRequest->accepted_offer_at ?: $serviceRequest->selectedOffer->updated_at,
-                'note' => $serviceRequest->selectedOffer->business?->business_name ?: $serviceRequest->selectedOffer->business?->name ?: 'Избран изпълнител',
+                'note' => $serviceRequest->selectedOffer->business?->business_name ?: $serviceRequest->selectedOffer->business?->name ?: 'Избран бизнес',
             ]);
         }
 

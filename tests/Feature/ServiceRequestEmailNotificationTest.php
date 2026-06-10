@@ -167,7 +167,7 @@ class ServiceRequestEmailNotificationTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Email Test Business',
+            'business_name' => 'BON Email Test Business',
             'business_category' => 'Cleaning',
             'service_categories' => ['Cleaning'],
             'city' => 'Pleven',

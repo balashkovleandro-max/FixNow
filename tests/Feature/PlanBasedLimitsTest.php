@@ -223,7 +223,7 @@ class PlanBasedLimitsTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Plan Test Business',
+            'business_name' => 'BON Plan Test Business',
             'business_category' => 'Автосервиз',
             'city' => 'София',
             'subscription_status' => 'active',

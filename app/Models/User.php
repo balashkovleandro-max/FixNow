@@ -119,6 +119,11 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\ServiceRequestOffer::class, 'business_id');
     }
 
+    public function financialReports()
+    {
+        return $this->hasMany(\App\Models\BusinessFinancialReport::class, 'business_id');
+    }
+
     public function customerServiceRequests()
     {
         return $this->hasMany(\App\Models\ServiceRequest::class, 'customer_id');

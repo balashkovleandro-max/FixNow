@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Models\User;
 use Illuminate\Foundation\Inspiring;
@@ -9,7 +9,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Artisan::command('fixnow:create-admin {--name=} {--email=} {--password=}', function () {
+Artisan::command('bon:create-admin {--name=} {--email=} {--password=}', function () {
     $name = $this->option('name') ?: $this->ask('Admin name');
     $email = $this->option('email') ?: $this->ask('Admin email');
     $password = $this->option('password') ?: $this->secret('Admin password');
@@ -33,4 +33,4 @@ Artisan::command('fixnow:create-admin {--name=} {--email=} {--password=}', funct
     $this->info("Admin user is ready: {$email}");
 
     return 0;
-})->purpose('Create or promote a FixNow admin user for soft launch');
+})->purpose('Create or promote a BON admin user for soft launch');

@@ -298,7 +298,7 @@ class ServiceRequestDistributionTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Assignment Test Business',
+            'business_name' => 'BON Assignment Test Business',
             'business_category' => 'ВиК услуги',
             'service_categories' => ['ВиК услуги'],
             'city' => 'Плевен',

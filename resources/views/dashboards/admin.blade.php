@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin табло | FixNow.bg</title>
+    <title>Admin табло | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -89,7 +89,7 @@
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
                     <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
                     <div>
-                        <p class="text-xl font-black">FixNow.bg</p>
+                        <p class="text-xl font-black">BON</p>
                         <p class="text-xs text-white/50">Admin control</p>
                     </div>
                 </a>
@@ -98,7 +98,7 @@
                     <a href="{{ url('/') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Начало</a>
                     <a href="{{ url('/categories') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Категории</a>
                     <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Услуги</a>
-                    <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Публични изпълнители</a>
+                    <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Публични бизнеси</a>
                     <a href="{{ route('admin.service-requests.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Заявки</a>
                     <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-orange-100">Admin</a>
                 </nav>
@@ -118,7 +118,7 @@
             <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Admin Control MVP</p>
             <div class="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                    <h1 class="text-3xl font-black sm:text-5xl">Управление на изпълнители и статуси</h1>
+                    <h1 class="text-3xl font-black sm:text-5xl">Управление на бизнеси и статуси</h1>
                     <p class="mt-3 max-w-3xl text-white/60">Контрол върху trial, active, expired, cancelled и verified статуси. Всички показатели са реални query counts.</p>
                 </div>
                 <div class="rounded-3xl border border-orange-300/20 bg-orange-300/10 px-5 py-4">
@@ -132,7 +132,7 @@
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <p class="text-sm font-black uppercase tracking-[0.25em] text-amber-100/80">Business approval</p>
-                    <h2 class="mt-2 text-2xl font-black sm:text-3xl">Изпълнители, чакащи проверка</h2>
+                    <h2 class="mt-2 text-2xl font-black sm:text-3xl">Бизнеси, чакащи проверка</h2>
                     <p class="mt-2 text-sm leading-6 text-white/65">Проверете профила, основните данни и плана, преди да дадете badge “Потвърден”.</p>
                 </div>
                 <a href="{{ route('dashboard', ['status' => 'unverified']) }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/15">
@@ -176,8 +176,8 @@
                     </article>
                 @empty
                     <div class="xl:col-span-2 rounded-3xl border border-white/10 bg-slate-950/50 p-8 text-center" data-testid="admin-pending-businesses-empty">
-                        <p class="font-black">Няма изпълнители, чакащи проверка</p>
-                        <p class="mt-2 text-sm text-white/55">Когато нов изпълнител попълни профила си, той ще се появи тук за преглед и одобрение.</p>
+                        <p class="font-black">Няма бизнеси, чакащи проверка</p>
+                        <p class="mt-2 text-sm text-white/55">Когато нов бизнес попълни профила си, той ще се появи тук за преглед и одобрение.</p>
                     </div>
                 @endforelse
             </div>
@@ -187,8 +187,8 @@
             <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
                 <div>
                     <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Platform analytics</p>
-                    <h2 class="mt-3 text-2xl font-black sm:text-3xl">Обща активност във FixNow</h2>
-                    <p class="mt-2 text-sm text-white/60">Преглеждания и кликове от публичните профили на изпълнители.</p>
+                    <h2 class="mt-3 text-2xl font-black sm:text-3xl">Обща активност във BON</h2>
+                    <p class="mt-2 text-sm text-white/60">Преглеждания и кликове от публичните профили на бизнеси.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3 text-center md:grid-cols-4">
                     <div class="rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-3">
@@ -220,7 +220,7 @@
                     <div class="mt-4 grid gap-3">
                         @forelse($platformAnalytics['top_by_views'] as $row)
                             <div class="flex items-center justify-between gap-3 rounded-2xl bg-white/5 px-4 py-3">
-                                <span class="font-bold">{{ $row->business?->business_name ?: $row->business?->name ?: 'Изтрит изпълнител' }}</span>
+                                <span class="font-bold">{{ $row->business?->business_name ?: $row->business?->name ?: 'Изтрит бизнес' }}</span>
                                 <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $row->aggregate }}</span>
                             </div>
                         @empty
@@ -234,7 +234,7 @@
                     <div class="mt-4 grid gap-3">
                         @forelse($platformAnalytics['top_by_clicks'] as $row)
                             <div class="flex items-center justify-between gap-3 rounded-2xl bg-white/5 px-4 py-3">
-                                <span class="font-bold">{{ $row->business?->business_name ?: $row->business?->name ?: 'Изтрит изпълнител' }}</span>
+                                <span class="font-bold">{{ $row->business?->business_name ?: $row->business?->name ?: 'Изтрит бизнес' }}</span>
                                 <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">{{ $row->aggregate }}</span>
                             </div>
                         @empty
@@ -248,17 +248,17 @@
         <section class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             @foreach([
                 ['label' => 'Общо потребители', 'value' => $adminStats['total_users'], 'note' => 'всички роли'],
-                ['label' => 'Общо изпълнители', 'value' => $adminStats['total_businesses'], 'note' => 'role business'],
-                ['label' => 'Active изпълнители', 'value' => $adminStats['active_businesses'], 'note' => 'видими с active план'],
-                ['label' => 'Trial изпълнители', 'value' => $adminStats['trial_businesses'], 'note' => 'в пробен период'],
-                ['label' => 'Expired изпълнители', 'value' => $adminStats['expired_businesses'], 'note' => 'скрити публично'],
-                ['label' => 'Cancelled изпълнители', 'value' => $adminStats['cancelled_businesses'], 'note' => 'отменени'],
-                ['label' => 'Verified изпълнители', 'value' => $adminStats['verified_businesses'], 'note' => 'проверени'],
-                ['label' => 'Unverified изпълнители', 'value' => $adminStats['unverified_businesses'], 'note' => 'чакат проверка'],
-                ['label' => 'Нови изпълнители', 'value' => $adminStats['new_businesses_last_7_days'], 'note' => 'последните 7 дни'],
+                ['label' => 'Общо бизнеси', 'value' => $adminStats['total_businesses'], 'note' => 'role business'],
+                ['label' => 'Active бизнеси', 'value' => $adminStats['active_businesses'], 'note' => 'видими с active план'],
+                ['label' => 'Trial бизнеси', 'value' => $adminStats['trial_businesses'], 'note' => 'в пробен период'],
+                ['label' => 'Expired бизнеси', 'value' => $adminStats['expired_businesses'], 'note' => 'скрити публично'],
+                ['label' => 'Cancelled бизнеси', 'value' => $adminStats['cancelled_businesses'], 'note' => 'отменени'],
+                ['label' => 'Verified бизнеси', 'value' => $adminStats['verified_businesses'], 'note' => 'проверени'],
+                ['label' => 'Unverified бизнеси', 'value' => $adminStats['unverified_businesses'], 'note' => 'чакат проверка'],
+                ['label' => 'Нови бизнеси', 'value' => $adminStats['new_businesses_last_7_days'], 'note' => 'последните 7 дни'],
                 ['label' => 'Standard планове', 'value' => $adminStats['standard_businesses'], 'note' => '18,99 € · до 2 града'],
                 ['label' => 'Premium планове', 'value' => $adminStats['premium_businesses'], 'note' => '24,99 € · до 5 града'],
-                ['label' => 'Точки за оферти', 'value' => '30/90', 'note' => 'Standard/Premium месечни точки'],
+                ['label' => 'Месечна активност', 'value' => '30/90', 'note' => 'Standard/Premium лимити'],
                 ['label' => 'Trial pipeline', 'value' => number_format($adminStats['trial_pipeline'], 2, ',', ' ') . ' €', 'note' => 'trial планове'],
                 ['label' => 'Estimated conversion', 'value' => number_format($adminStats['estimated_conversion'], 2, ',', ' ') . ' €', 'note' => 'trial pipeline x 25%'],
             ] as $stat)
@@ -273,7 +273,7 @@
         <section class="mt-6 rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Lead generation</p>
+                    <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Клиентски интерес</p>
                     <h2 class="mt-2 text-2xl font-black">Заявки за оферта</h2>
                     <p class="mt-2 text-sm text-white/60">Реални заявки от публичната форма. Admin може да маркира заявките като contacted или closed.</p>
                 </div>
@@ -326,11 +326,11 @@
                             <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Изпратено към</p>
                             @forelse($assignments as $assignment)
                                 <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                                    <p class="font-bold">{{ $assignment->business?->business_name ?: $assignment->business?->name ?: 'Изтрит изпълнител' }}</p>
+                                    <p class="font-bold">{{ $assignment->business?->business_name ?: $assignment->business?->name ?: 'Изтрит бизнес' }}</p>
                                     <p class="mt-1 text-xs text-white/50">{{ $assignment->status }}{{ $assignment->contacted_at ? ' · '.$assignment->contacted_at->format('d.m.Y H:i') : '' }}</p>
                                 </div>
                             @empty
-                                <p class="rounded-2xl bg-amber-400/10 px-4 py-3 text-sm font-bold text-amber-100">Няма автоматично назначени изпълнители</p>
+                                <p class="rounded-2xl bg-amber-400/10 px-4 py-3 text-sm font-bold text-amber-100">Няма автоматично назначени бизнеси</p>
                             @endforelse
                         </div>
 
@@ -407,7 +407,7 @@
                                     <div class="grid gap-2">
                                         @forelse($assignments as $assignment)
                                             <div class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                                                <p class="font-bold">{{ $assignment->business?->business_name ?: $assignment->business?->name ?: 'Изтрит изпълнител' }}</p>
+                                                <p class="font-bold">{{ $assignment->business?->business_name ?: $assignment->business?->name ?: 'Изтрит бизнес' }}</p>
                                                 <div class="mt-1 flex flex-wrap gap-2 text-xs text-white/50">
                                                     <span class="rounded-full bg-white/10 px-2 py-1">{{ $assignment->status }}</span>
                                                     @if($assignment->contacted_at)
@@ -424,7 +424,7 @@
                                                     <p class="mt-1 text-xs text-white/50">legacy assigned_business_id</p>
                                                 </div>
                                             @else
-                                                <span class="rounded-full bg-amber-400/10 px-3 py-1 text-xs font-black text-amber-100">Няма автоматично назначени изпълнители</span>
+                                                <span class="rounded-full bg-amber-400/10 px-3 py-1 text-xs font-black text-amber-100">Няма автоматично назначени бизнеси</span>
                                             @endif
                                         @endforelse
                                     </div>
@@ -479,7 +479,7 @@
                         <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                             <div>
                                 <p class="font-black">{{ $review->reviewer_name }} <span class="text-amber-200">{{ str_repeat('★', $review->rating) }}</span></p>
-                                <p class="mt-1 text-sm text-orange-200">{{ $review->business?->business_name ?: $review->business?->name ?: 'Изтрит изпълнител' }}</p>
+                                <p class="mt-1 text-sm text-orange-200">{{ $review->business?->business_name ?: $review->business?->name ?: 'Изтрит бизнес' }}</p>
                                 <p class="mt-3 text-sm leading-6 text-white/70">{{ $review->comment }}</p>
                                 <p class="mt-3 text-xs text-white/40">{{ $review->created_at?->format('d.m.Y H:i') }}</p>
                             </div>
@@ -509,7 +509,7 @@
         <section class="mt-6 rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <div>
-                    <h2 class="text-2xl font-black">Изпълнители</h2>
+                    <h2 class="text-2xl font-black">Бизнеси</h2>
                     <p class="mt-2 text-sm text-white/60">Филтрирай и управлявай основните premium статуси.</p>
                 </div>
                 <div class="flex max-w-full gap-2 overflow-x-auto pb-1 xl:flex-wrap xl:overflow-visible">
@@ -591,7 +591,7 @@
                     </article>
                 @empty
                     <div class="rounded-3xl border border-white/10 bg-slate-950/50 px-4 py-10 text-center text-white/60">
-                        Няма изпълнители за избрания филтър.
+                        Няма бизнеси за избрания филтър.
                     </div>
                 @endforelse
             </div>
@@ -600,7 +600,7 @@
                 <table class="min-w-[1620px] w-full border-separate border-spacing-y-3 text-left text-sm">
                     <thead class="text-xs uppercase tracking-[0.18em] text-white/45">
                         <tr>
-                            <th class="px-4 py-2">Изпълнител</th>
+                            <th class="px-4 py-2">Бизнес</th>
                             <th class="px-4 py-2">Собственик</th>
                             <th class="px-4 py-2">Град</th>
                             <th class="px-4 py-2">Категория</th>
@@ -722,7 +722,7 @@
                         @empty
                             <tr>
                                 <td colspan="15" class="rounded-3xl border border-white/10 bg-slate-950/50 px-4 py-10 text-center text-white/60">
-                                    Няма изпълнители за избрания филтър.
+                                    Няма бизнеси за избрания филтър.
                                 </td>
                             </tr>
                         @endforelse

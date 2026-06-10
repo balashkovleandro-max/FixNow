@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -115,7 +115,7 @@ class ServiceRequestController extends Controller
         try {
             $notifications->newServiceRequest($serviceRequest);
         } catch (Throwable $exception) {
-            Log::warning('FixNow service request notification sender failed.', [
+            Log::warning('BON service request notification sender failed.', [
                 'service_request_id' => $serviceRequest->id,
                 'exception' => $exception->getMessage(),
             ]);
@@ -123,7 +123,7 @@ class ServiceRequestController extends Controller
 
         return redirect()
             ->route('request.service')
-            ->with('success', 'Заявката ви е изпратена успешно. Подходящи изпълнители ще могат да ви изпратят оферта.')
+            ->with('success', 'Заявката ви е изпратена успешно. Подходящи бизнеси ще могат да ви изпратят оферта.')
             ->with('offers_url', $serviceRequest->public_token ? route('service-requests.offers.show', ['serviceRequest' => $serviceRequest->public_token]) : null);
     }
 }

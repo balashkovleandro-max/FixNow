@@ -319,9 +319,9 @@ class BusinessProfileServiceRequestTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'name' => 'FixNow Business Owner',
+            'name' => 'BON Business Owner',
             'email' => fake()->unique()->safeEmail(),
-            'business_name' => 'FixNow тест бизнес',
+            'business_name' => 'BON тест бизнес',
             'business_category' => 'Ремонти',
             'service_categories' => ['Ремонти'],
             'city' => 'Плевен',

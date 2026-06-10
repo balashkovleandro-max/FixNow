@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Публикувай услуга | FixNow.bg</title>
+    <title>Публикувай услуга | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -28,7 +28,7 @@
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-xl sm:p-8">
                 <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Нова услуга</p>
                 <h1 class="mt-3 text-3xl font-black sm:text-5xl">Публикувай услуга</h1>
-                <p class="mt-3 text-white/60">Добави услуга към профила си на изпълнител. Полетата остават съвместими със съществуващата Laravel логика.</p>
+                <p class="mt-3 text-white/60">Добави услуга към профила си на бизнес. Полетата остават съвместими със съществуващата Laravel логика.</p>
 
                 <div class="mt-6 grid gap-3 md:grid-cols-3">
                     <div class="rounded-2xl border border-white/10 bg-slate-950/45 p-4">
@@ -75,7 +75,7 @@
                             <label class="mb-2 block text-sm font-semibold text-white/75">Категория</label>
                             <select name="category" class="min-h-12 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-4 text-white outline-none focus:border-orange-300/50">
                                 <option value="">Избери категория</option>
-                                @foreach(['Строителство','Автосервиз','Красота','Почистване','Електроуслуги','ВиК','Климатизация','Градински услуги','Обучение','Други'] as $category)
+                                @foreach(['Ресторанти и кафенета','Хотели','Ремонти и строителство','ВиК','Електро услуги','Автосервизи','Почистване','Красота и грижа','Здраве и уелнес','Спорт и активности'] as $category)
                                     <option value="{{ $category }}" {{ old('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
                                 @endforeach
                             </select>

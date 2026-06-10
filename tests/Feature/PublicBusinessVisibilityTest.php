@@ -262,7 +262,7 @@ class PublicBusinessVisibilityTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Test Business',
+            'business_name' => 'BON Test Business',
             'business_category' => 'Автосервиз',
             'city' => 'София',
             'subscription_status' => 'active',

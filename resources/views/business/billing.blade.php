@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billing и план | FixNow.bg</title>
+    <title>Billing и план | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -47,7 +47,7 @@
         <nav class="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ url('/') }}" class="flex items-center gap-3">
                 <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 text-xl font-black">F</span>
-                <span class="text-xl font-black">FixNow.bg</span>
+                <span class="text-xl font-black">BON</span>
             </a>
             <div class="flex items-center gap-2">
                 <a href="{{ route('plans') }}" class="hidden min-h-11 items-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white/80 hover:bg-white/10 sm:inline-flex">Виж планове</a>
@@ -116,7 +116,7 @@
                     Управление на плана за {{ $business->business_name ?: $business->name }}
                 </h1>
                     <p class="mt-5 max-w-3xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
-                    Тук виждате текущия план, статус, лимити и действия за управление на абонамента. Планът се активира само след успешно потвърдено плащане през Stripe или админ действие.
+                    Тук виждате текущия план, статус, активирани инструменти и действия за управление на абонамента. Планът се активира само след успешно потвърдено плащане през Stripe или админ действие.
                 </p>
 
                 <div class="mt-8 grid gap-4 sm:grid-cols-3">
@@ -125,7 +125,7 @@
                         <p class="mt-2 text-3xl font-black">{{ number_format($business->planMonthlyAmount(), 2, ',', ' ') }} €</p>
                     </div>
                     <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
-                        <p class="text-sm text-white/60">Точки за оферти</p>
+                        <p class="text-sm text-white/60">Месечна активност</p>
                         <p class="mt-2 text-3xl font-black">{{ $usage['offer_points'] ?? 0 }}</p>
                         <p class="mt-1 text-xs text-white/50">Още {{ $usage['remaining_offers'] ?? 0 }} оферти</p>
                     </div>
@@ -150,7 +150,7 @@
                         @foreach($plans['premium']['features'] as $feature)
                             <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-orange-300"></span><span>{{ $feature }}</span></li>
                         @endforeach
-                        <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-orange-300"></span><span>Приоритет при matching на заявки</span></li>
+                        <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-orange-300"></span><span>Premium препоръки за растеж</span></li>
                     </ul>
                     @if($canStartCheckout)
                         <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
@@ -168,7 +168,7 @@
                 @else
                     <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200">Upgrade</p>
                     <h2 class="mt-4 text-3xl font-black">Ъпгрейд към Premium</h2>
-                    <p class="mt-3 text-sm leading-6 text-white/70">Premium отключва до 5 града, 5 категории/услуги, 15 снимки, препоръчан badge и приоритет при matching на заявки.</p>
+                    <p class="mt-3 text-sm leading-6 text-white/70">Premium отключва разширен финансов анализ, по-подробен Business Health Score, калкулатори за клиенти и ценообразуване, месечен бизнес доклад, Premium препоръки за растеж и приоритетна поддръжка.</p>
                     @if($canStartCheckout)
                         <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
                             @csrf

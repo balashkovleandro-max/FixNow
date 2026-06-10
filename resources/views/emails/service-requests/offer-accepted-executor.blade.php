@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
@@ -11,10 +11,10 @@
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#ffffff;border-radius:20px;overflow:hidden;border:1px solid #e2e8f0;">
                     <tr>
                         <td style="padding:28px 28px 12px;">
-                            <p style="margin:0 0 8px;color:#2563eb;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:12px;">FixNow.bg</p>
+                            <p style="margin:0 0 8px;color:#2563eb;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:12px;">BON</p>
                             <h1 style="margin:0;font-size:26px;line-height:1.25;color:#0f172a;">Клиент прие вашата оферта</h1>
                             <p style="margin:14px 0 0;color:#475569;line-height:1.6;">
-                                Клиент прие вашата оферта за заявка: <strong>{{ $serviceRequest->service ?: $serviceRequest->category ?: 'Заявка във FixNow' }}</strong>.
+                                Клиент прие вашата оферта за заявка: <strong>{{ $serviceRequest->service ?: $serviceRequest->category ?: 'Заявка във BON' }}</strong>.
                                 Свържете се с него, за да уточните детайлите.
                             </p>
                         </td>
@@ -43,7 +43,7 @@
                     </tr>
                     <tr>
                         <td style="padding:18px 28px 30px;">
-                            <a href="{{ $dashboardUrl }}" style="display:inline-block;background:#2563eb;color:#fff;text-decoration:none;border-radius:14px;padding:14px 18px;font-weight:700;">Отвори панела на изпълнител</a>
+                            <a href="{{ $dashboardUrl }}" style="display:inline-block;background:#2563eb;color:#fff;text-decoration:none;border-radius:14px;padding:14px 18px;font-weight:700;">Отвори панела на бизнес</a>
                             <p style="margin:18px 0 0;color:#64748b;font-size:13px;line-height:1.6;">Ако бутонът не работи, отворете: {{ $dashboardUrl }}</p>
                         </td>
                     </tr>

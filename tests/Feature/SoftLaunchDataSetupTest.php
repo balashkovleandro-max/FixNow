@@ -15,7 +15,7 @@ class SoftLaunchDataSetupTest extends TestCase
 
     public function test_create_admin_command_creates_admin_user(): void
     {
-        $this->artisan('fixnow:create-admin', [
+        $this->artisan('bon:create-admin', [
             '--name' => 'Launch Admin',
             '--email' => 'launch-admin@example.com',
             '--password' => 'secret-password',
@@ -41,7 +41,7 @@ class SoftLaunchDataSetupTest extends TestCase
             'password' => Hash::make('old-password'),
         ]);
 
-        $this->artisan('fixnow:create-admin', [
+        $this->artisan('bon:create-admin', [
             '--name' => 'Existing Admin',
             '--email' => 'existing@example.com',
             '--password' => 'new-password',

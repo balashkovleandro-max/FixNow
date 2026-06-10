@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заявки и оферти | FixNow.bg</title>
+    <title>Заявки и оферти | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -62,7 +62,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-3">
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</span>
-                <span class="text-xl font-black">FixNow.bg</span>
+                <span class="text-xl font-black">BON</span>
             </a>
             <div class="flex items-center gap-2">
                 <a href="{{ route('businesses.show', $business) }}" class="rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-sm font-black text-white hover:bg-white/15">Публичен профил</a>
@@ -90,7 +90,7 @@
         @endif
 
         <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-8">
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Панел на изпълнител</p>
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Панел на бизнес</p>
             <div class="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <h1 class="text-3xl font-black sm:text-5xl">Управлявайте заявки и оферти</h1>
@@ -131,7 +131,7 @@
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h2 class="text-xl font-black">Допълнителни точки</h2>
-                    <p class="mt-2 text-sm leading-6 text-white/60">Допълнителните пакети точки ще се активират поетапно. Ако имате нужда от повече оферти преди това, свържете се с екипа на FixNow.</p>
+                    <p class="mt-2 text-sm leading-6 text-white/60">Допълнителните пакети точки ще се активират поетапно. Ако имате нужда от повече оферти преди това, свържете се с екипа на BON.</p>
                 </div>
                 <div class="grid gap-2 sm:grid-cols-3">
                     <button disabled class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-black text-white/45">30 точки - 4.99 €</button>
@@ -211,7 +211,7 @@
             </section>
         @else
             <section class="mt-8 rounded-[28px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
-                <h2 class="text-2xl font-black">Вашият профил е в directory режим</h2>
+                <h2 class="text-2xl font-black">Вашият профил е в режим на директно откриване</h2>
                 <p class="mt-2 max-w-3xl text-sm leading-6 text-white/60">Категориите ви са основно за директно откриване и контакт. Попълнете request-based категории и градове в профила си, ако искате да получавате подходящи заявки за оферти.</p>
             </section>
         @endif
@@ -222,7 +222,7 @@
                 @forelse($acceptedOffers as $offer)
                     <article class="rounded-[28px] border border-emerald-300/20 bg-emerald-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                         <div class="flex flex-wrap items-center gap-2">
-                            <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Избран изпълнител</span>
+                            <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Избран бизнес</span>
                             <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Активна поръчка</span>
                             <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-black text-orange-100">Вашата оферта беше приета</span>
                             <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/60">{{ $offer->updated_at?->format('d.m.Y H:i') }}</span>
@@ -249,7 +249,7 @@
             <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <h2 class="text-2xl font-black">Директни запитвания към профила</h2>
-                    <p class="mt-2 text-sm text-white/60">Това са заявки, изпратени директно от публичния ви профил на изпълнител или назначени от admin.</p>
+                    <p class="mt-2 text-sm text-white/60">Това са заявки, изпратени директно от публичния ви профил на бизнес или назначени от admin.</p>
                 </div>
                 <span class="rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-sm font-black text-white/80">{{ $serviceRequests->total() }} запитвания</span>
             </div>
@@ -268,7 +268,7 @@
                                     </span>
                                     @if($serviceRequest->source)
                                         <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-100">
-                                            {{ $serviceRequest->source === 'business_profile' ? 'От профил на изпълнител' : 'Заяви оферта' }}
+                                            {{ $serviceRequest->source === 'business_profile' ? 'От профил на бизнес' : 'Заяви оферта' }}
                                         </span>
                                     @endif
                                 </div>
@@ -334,11 +334,11 @@
                         <p class="mt-3 line-clamp-3 text-sm leading-6 text-white/65">{{ $offer->message }}</p>
                         @if($offer->status === 'not_selected')
                             <p class="mt-4 rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm font-bold text-amber-100">
-                                Заявката е затворена. Клиентът избра друг изпълнител.
+                                Заявката е затворена. Клиентът избра друг бизнес.
                             </p>
                         @elseif($offer->status === 'accepted')
                             <p class="mt-4 rounded-2xl border border-emerald-300/20 bg-emerald-400/10 px-4 py-3 text-sm font-bold text-emerald-100">
-                                Избран изпълнител: вашата оферта е приета.
+                                Избран бизнес: вашата оферта е приета.
                             </p>
                         @endif
                     </article>

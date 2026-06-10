@@ -1,4 +1,4 @@
-# FixNow.bg Laravel Cloud Deploy Checklist
+# BON Laravel Cloud Deploy Checklist
 
 Този документ е production checklist за Laravel Cloud deploy и Stripe live плащания. Не записвайте реални secret стойности в Git. Всички production стойности трябва да се задават през Laravel Cloud environment variables.
 
@@ -7,11 +7,11 @@
 Задайте тези променливи в Laravel Cloud dashboard:
 
 ```env
-APP_NAME="FixNow.bg"
+APP_NAME="BON"
 APP_ENV=production
 APP_KEY=<generated-by-laravel-cloud-or-artisan-key-generate>
 APP_DEBUG=false
-APP_URL=https://fixnow.bg
+APP_URL=https://bon.bg
 
 APP_LOCALE=bg
 APP_FALLBACK_LOCALE=en
@@ -38,9 +38,9 @@ MAIL_PORT=587
 MAIL_USERNAME=<mail-provider-user>
 MAIL_PASSWORD=<mail-provider-password>
 MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=hello@fixnow.bg
+MAIL_FROM_ADDRESS=hello@bon.bg
 MAIL_FROM_NAME="${APP_NAME}"
-FIXNOW_ADMIN_EMAIL=admin@fixnow.bg
+BON_ADMIN_EMAIL=admin@bon.bg
 
 STRIPE_KEY=pk_live_...
 STRIPE_SECRET=sk_live_...
@@ -136,7 +136,7 @@ php artisan cache:clear
 4. Създайте webhook endpoint:
 
 ```text
-https://fixnow.bg/stripe/webhook
+https://bon.bg/stripe/webhook
 ```
 
 5. Добавете поне тези events:
@@ -158,7 +158,7 @@ https://fixnow.bg/stripe/webhook
 
 ## 5. Mail / Queue
 
-FixNow изпраща email уведомления синхронно чрез `Mail::to(...)->send(...)`, така че работи и с `QUEUE_CONNECTION=sync`, и с `QUEUE_CONNECTION=database`.
+BON изпраща email уведомления синхронно чрез `Mail::to(...)->send(...)`, така че работи и с `QUEUE_CONNECTION=sync`, и с `QUEUE_CONNECTION=database`.
 
 В проекта има queue migrations за:
 
@@ -195,7 +195,7 @@ php artisan storage:link
 - service request photos;
 - public business profile without photos;
 - fallback UI при липсваща снимка;
-- `public/images/fixnow-hero-city.svg` е commit-нат и наличен.
+- `public/images/bon-hero-city.svg` е commit-нат и наличен.
 
 Ако Laravel Cloud използва persistent storage/add-on за uploads, уверете се, че `storage/app/public` е persistent между deploy-и.
 
@@ -251,8 +251,8 @@ php artisan storage:link
 
 В Laravel Cloud:
 
-1. Добавете custom domain `fixnow.bg`.
-2. Добавете `www.fixnow.bg`, ако ще се използва.
+1. Добавете custom domain `bon.bg`.
+2. Добавете `www.bon.bg`, ако ще се използва.
 3. Следвайте DNS инструкциите на Laravel Cloud.
 4. Изчакайте SSL provisioning.
 5. Настройте canonical redirect според избрания домейн, ако Laravel Cloud не го прави автоматично.
@@ -270,7 +270,7 @@ php artisan storage:link
 - [ ] Stripe webhook подписът е настроен.
 - [ ] Customer Portal е enabled.
 - [ ] Admin user е създаден.
-- [ ] Поне 3-5 реални изпълнители са добавени.
+- [ ] Поне 3-5 реални бизнеси са добавени.
 - [ ] Upload/fallback images работят.
 - [ ] Mobile smoke check е минал.
 - [ ] Legal pages са прегледани.

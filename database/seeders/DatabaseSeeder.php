@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace Database\Seeders;
 
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         $password = Hash::make('password');
 
         $admin = $this->user('admin@example.com', [
-            'name' => 'FixNow Admin',
+            'name' => 'BON Admin',
             'role' => 'admin',
             'password' => $password,
             'email_verified_at' => now(),
@@ -54,8 +54,8 @@ class DatabaseSeeder extends Seeder
                 'address' => 'бул. България 120, София',
                 'phone' => '+359 88 800 1001',
                 'website' => 'https://example.com/auto-premium',
-                'facebook' => 'https://facebook.com/fixnow-demo-auto',
-                'instagram' => 'https://instagram.com/fixnow_demo_auto',
+                'facebook' => 'https://facebook.com/bon-demo-auto',
+                'instagram' => 'https://instagram.com/bon_demo_auto',
                 'whatsapp' => '+359888001001',
                 'viber' => '+359888001001',
                 'working_hours' => 'Понеделник - Събота, 08:30 - 19:00',
@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now()->subDay(),
             ]),
 
-            $this->business('demo.vik@fixnow.test', [
+            $this->business('demo.vik@bon.test', [
                 'name' => 'Георги Петров',
                 'business_name' => 'VIK Express Pleven',
                 'business_category' => 'ВиК услуги',
@@ -138,7 +138,7 @@ class DatabaseSeeder extends Seeder
                 ['title' => 'Монтаж на бойлер', 'category' => 'ВиК услуги', 'city' => 'Плевен', 'price' => 55, 'image' => null],
             ]),
 
-            $this->business('demo.electric@fixnow.test', [
+            $this->business('demo.electric@bon.test', [
                 'name' => 'Иван Димитров',
                 'business_name' => 'Electric Pro Solutions',
                 'business_category' => 'Електро услуги',
@@ -172,7 +172,7 @@ class DatabaseSeeder extends Seeder
                 ['title' => 'Спешно отстраняване на късо', 'category' => 'Спешни услуги', 'city' => 'Пазарджик', 'price' => 60, 'image' => null],
             ]),
 
-            $this->business('demo.catering@fixnow.test', [
+            $this->business('demo.catering@bon.test', [
                 'name' => 'Николай Стоянов',
                 'business_name' => 'EventPro Кетъринг',
                 'business_category' => 'Събития и празници',
@@ -180,7 +180,7 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Морска градина, Варна',
                 'phone' => '+359 88 800 1004',
                 'website' => 'https://example.com/eventpro',
-                'instagram' => 'https://instagram.com/fixnow_demo_eventpro',
+                'instagram' => 'https://instagram.com/bon_demo_eventpro',
                 'working_hours' => 'Понеделник - събота, 09:00 - 19:00',
                 'short_description' => 'Кетъринг, организация и обслужване на събития във Варна и региона.',
                 'description' => 'EventPro Кетъринг е demo профил за събитийна услуга с ясен пакет, снимки и директен контакт.',
@@ -203,7 +203,7 @@ class DatabaseSeeder extends Seeder
                 ['title' => 'Кетъринг за събитие', 'category' => 'Кетъринг', 'city' => 'Варна', 'price' => 45, 'image' => 'demo/catering.svg'],
             ]),
 
-            $this->business('demo.photo@fixnow.test', [
+            $this->business('demo.photo@bon.test', [
                 'name' => 'Елена Николова',
                 'business_name' => 'Studio Focus Burgas',
                 'business_category' => 'Събития и празници',
@@ -211,7 +211,7 @@ class DatabaseSeeder extends Seeder
                 'address' => 'ул. Крайморска 8, Бургас',
                 'phone' => '+359 88 800 1005',
                 'website' => 'https://example.com/studio-focus',
-                'facebook' => 'https://facebook.com/fixnow-demo-photo',
+                'facebook' => 'https://facebook.com/bon-demo-photo',
                 'working_hours' => 'Сряда - неделя, 10:00 - 20:00',
                 'short_description' => 'Фото и видео заснемане за семейни, бизнес и локални събития.',
                 'description' => 'Studio Focus Burgas е premium demo профил с повече градове, снимки, услуги и препоръчано позициониране.',
@@ -237,7 +237,7 @@ class DatabaseSeeder extends Seeder
                 ['title' => 'Видео пакет за събитие', 'category' => 'Видеографи', 'city' => 'Поморие', 'price' => 260, 'image' => null],
             ]),
 
-            $this->business('demo.cleaning@fixnow.test', [
+            $this->business('demo.cleaning@bon.test', [
                 'name' => 'Силвия Маринова',
                 'business_name' => 'Clean Home Pro',
                 'business_category' => 'Почистване',
@@ -265,17 +265,17 @@ class DatabaseSeeder extends Seeder
                 ['title' => 'Почистване на апартамент', 'category' => 'Почистване', 'city' => 'София', 'price' => 40, 'image' => 'demo/cleaning.svg'],
             ]),
 
-            $this->business('demo.beauty@fixnow.test', [
+            $this->business('demo.beauty@bon.test', [
                 'name' => 'Анна Георгиева',
                 'business_name' => 'Beauty Studio Elite',
                 'business_category' => 'Красота и услуги',
                 'city' => 'Плевен',
                 'address' => 'ул. Дойран 12, Плевен',
                 'phone' => '+359 88 800 1007',
-                'instagram' => 'https://instagram.com/fixnow_demo_beauty',
+                'instagram' => 'https://instagram.com/bon_demo_beauty',
                 'working_hours' => 'Вторник - Събота, 10:00 - 19:00',
                 'short_description' => 'Фризьор, маникюр и козметични услуги в центъра на Плевен.',
-                'description' => 'Beauty Studio Elite показва как малък локален бизнес може да изглежда професионално във FixNow.',
+                'description' => 'Beauty Studio Elite показва как малък локален бизнес може да изглежда професионално във BON.',
                 'payment_methods' => 'Карта, в брой',
                 'years_experience' => '9 години',
                 'emergency_services' => false,
@@ -296,7 +296,7 @@ class DatabaseSeeder extends Seeder
                 ['title' => 'Маникюр с гел лак', 'category' => 'Красота и услуги', 'city' => 'Плевен', 'price' => 25, 'image' => null],
             ]),
 
-            $this->business('demo.repairs@fixnow.test', [
+            $this->business('demo.repairs@bon.test', [
                 'name' => 'Петър Христов',
                 'business_name' => 'FixMaster Ремонти',
                 'business_category' => 'Ремонти',
@@ -305,7 +305,7 @@ class DatabaseSeeder extends Seeder
                 'phone' => '+359 88 800 1008',
                 'website' => 'https://example.com/fixmaster',
                 'working_hours' => 'Понеделник - Неделя, 08:00 - 20:00',
-                'short_description' => 'Майстори за дребни ремонти, монтажи, боядисване и довършителни работи.',
+                'short_description' => 'Специалисти за дребни ремонти, монтажи, боядисване и довършителни работи.',
                 'description' => 'FixMaster Ремонти е стандартен demo профил за ремонтни услуги в Пловдив.',
                 'payment_methods' => 'В брой, фактура',
                 'years_experience' => '11 години',
@@ -325,7 +325,7 @@ class DatabaseSeeder extends Seeder
                 ['title' => 'Дребни ремонти у дома', 'category' => 'Ремонти', 'city' => 'Пловдив', 'price' => 35, 'image' => 'demo/repair-tools.svg'],
             ]),
 
-            $this->business('demo.expired@fixnow.test', [
+            $this->business('demo.expired@bon.test', [
                 'name' => 'Expired Demo Owner',
                 'business_name' => 'Скрит Expired Demo Бизнес',
                 'business_category' => 'Ремонти',
@@ -343,7 +343,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now()->subDays(60),
             ]),
 
-            $this->business('demo.cancelled@fixnow.test', [
+            $this->business('demo.cancelled@bon.test', [
                 'name' => 'Cancelled Demo Owner',
                 'business_name' => 'Скрит Cancelled Demo Бизнес',
                 'business_category' => 'Почистване',
@@ -402,7 +402,7 @@ class DatabaseSeeder extends Seeder
                 [
                     'category' => $service['category'],
                     'city' => $service['city'],
-                    'description' => $service['description'] ?? 'Demo услуга във FixNow.bg с примерна цена, град и директен контакт.',
+                    'description' => $service['description'] ?? 'Demo услуга във BON с примерна цена, град и директен контакт.',
                     'price' => $service['price'] ?? null,
                     'phone' => $business->phone ?: '+359 88 800 0000',
                     'image' => $service['image'] ?? null,
@@ -431,12 +431,12 @@ class DatabaseSeeder extends Seeder
     {
         if (Schema::hasTable('reviews')) {
             $reviews = [
-                ['email' => 'premium@example.com', 'name' => 'Даниела П.', 'rating' => 5, 'comment' => 'Много бърза диагностика и ясна комуникация. Профилът във FixNow беше полезен за сравнение.'],
-                ['email' => 'demo.vik@fixnow.test', 'name' => 'Ивайло М.', 'rating' => 5, 'comment' => 'Реагираха в същия ден при теч. Хареса ми, че телефонът и услугите са видими веднага.'],
-                ['email' => 'demo.electric@fixnow.test', 'name' => 'Станислава Р.', 'rating' => 4, 'comment' => 'Добра комуникация и професионално отношение при смяна на осветление.'],
-                ['email' => 'demo.catering@fixnow.test', 'name' => 'Мартин К.', 'rating' => 5, 'comment' => 'Добра организация за събитие и лесен контакт през профила.'],
-                ['email' => 'demo.photo@fixnow.test', 'name' => 'Елица Н.', 'rating' => 5, 'comment' => 'Чист профил, ясни снимки и удобна информация за услугите.'],
-                ['email' => 'demo.cleaning@fixnow.test', 'name' => 'Габриела В.', 'rating' => 4, 'comment' => 'Поръчахме почистване след ремонт. Всичко беше описано ясно.'],
+                ['email' => 'premium@example.com', 'name' => 'Даниела П.', 'rating' => 5, 'comment' => 'Много ясна информация и бърза комуникация. Профилът във BON вдъхна доверие.'],
+                ['email' => 'demo.vik@bon.test', 'name' => 'Ивайло М.', 'rating' => 5, 'comment' => 'Реагираха в същия ден при теч. Хареса ми, че телефонът и услугите са видими веднага.'],
+                ['email' => 'demo.electric@bon.test', 'name' => 'Станислава Р.', 'rating' => 4, 'comment' => 'Добра комуникация и професионално отношение при смяна на осветление.'],
+                ['email' => 'demo.catering@bon.test', 'name' => 'Мартин К.', 'rating' => 5, 'comment' => 'Добра организация за събитие и лесен контакт през профила.'],
+                ['email' => 'demo.photo@bon.test', 'name' => 'Елица Н.', 'rating' => 5, 'comment' => 'Чист профил, ясни снимки и удобна информация за услугите.'],
+                ['email' => 'demo.cleaning@bon.test', 'name' => 'Габриела В.', 'rating' => 4, 'comment' => 'Поръчахме почистване след ремонт. Всичко беше описано ясно.'],
             ];
 
             foreach ($reviews as $review) {
@@ -487,7 +487,7 @@ class DatabaseSeeder extends Seeder
                             'actor_id' => null,
                             'event_type' => $eventType,
                             'ip_address' => null,
-                            'user_agent' => 'FixNow demo seeder',
+                            'user_agent' => 'BON demo seeder',
                             'metadata' => ['source' => 'demo-seeder'],
                         ];
 
@@ -520,7 +520,7 @@ class DatabaseSeeder extends Seeder
                 'urgency' => ServiceRequest::URGENCY_URGENT,
                 'budget' => 'до 120 лв.',
                 'status' => ServiceRequest::STATUS_NEW,
-                'business_email' => 'demo.vik@fixnow.test',
+                'business_email' => 'demo.vik@bon.test',
             ],
             [
                 'name' => 'Demo Event Client',
@@ -533,7 +533,7 @@ class DatabaseSeeder extends Seeder
                 'urgency' => ServiceRequest::URGENCY_NORMAL,
                 'budget' => 'до 500 лв.',
                 'status' => ServiceRequest::STATUS_CONTACTED,
-                'business_email' => 'demo.catering@fixnow.test',
+                'business_email' => 'demo.catering@bon.test',
             ],
             [
                 'name' => 'Demo Home Owner',
@@ -546,7 +546,7 @@ class DatabaseSeeder extends Seeder
                 'urgency' => ServiceRequest::URGENCY_NORMAL,
                 'budget' => 'по оферта',
                 'status' => ServiceRequest::STATUS_NEW,
-                'business_email' => 'demo.electric@fixnow.test',
+                'business_email' => 'demo.electric@bon.test',
             ],
         ];
 

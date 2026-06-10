@@ -163,7 +163,7 @@ class ServiceRequestMvpTest extends TestCase
 
         $this->get(route('business.landing'))
             ->assertOk()
-            ->assertSee('FixNow събира реални заявки');
+            ->assertSee('BON събира реални заявки');
 
         $this->get(route('businesses.show', $business))
             ->assertOk()
@@ -187,7 +187,7 @@ class ServiceRequestMvpTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Lead Test Business',
+            'business_name' => 'BON Lead Test Business',
             'business_category' => 'Auto service',
             'city' => 'Sofia',
             'subscription_status' => 'active',

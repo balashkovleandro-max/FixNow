@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -20,7 +20,7 @@ class ServiceRequestAssignmentController extends Controller
         try {
             $notifications->assignmentContacted($assignment);
         } catch (Throwable $exception) {
-            Log::warning('FixNow assignment contacted notification sender failed.', [
+            Log::warning('BON assignment contacted notification sender failed.', [
                 'assignment_id' => $assignment->id,
                 'exception' => $exception->getMessage(),
             ]);

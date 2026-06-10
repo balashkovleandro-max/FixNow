@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Mail;
 
@@ -29,7 +29,7 @@ class NewServiceRequestBusinessMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Нова заявка във FixNow.bg')
+            ->subject('Нова заявка във BON')
             ->view('emails.service-requests.business-new');
     }
 }

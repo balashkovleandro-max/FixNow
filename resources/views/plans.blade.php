@@ -1,189 +1,286 @@
+@php
+    $navItems = [
+        ['label' => 'Начало', 'href' => route('home')],
+        ['label' => 'За бизнеси', 'href' => route('business.landing')],
+        ['label' => 'Инструменти', 'href' => route('bon.tools')],
+        ['label' => 'Планове', 'href' => route('plans')],
+    ];
+
+    $pricingPlans = [
+        [
+            'key' => 'standard',
+            'name' => 'Standard',
+            'audience' => 'Базови BON инструменти',
+            'price' => '18.99 € / месец',
+            'description' => 'За бизнеси, които искат професионално онлайн присъствие и базови инструменти за видимост.',
+            'features' => [
+                'Професионален BON профил',
+                'Visibility Score за онлайн присъствието',
+                'Основен финансов анализ',
+                'Business Health Score',
+                'Базови статистики за профила',
+                'Отзиви и репутация',
+                'Месечен mini report',
+                'Основни препоръки за подобрение',
+                'Достъп до базовите BON инструменти',
+            ],
+            'button' => 'Избери Standard',
+            'accent' => 'blue',
+            'recommended' => false,
+        ],
+        [
+            'key' => 'premium',
+            'name' => 'Premium',
+            'audience' => 'Препоръчан план',
+            'price' => '24.99 € / месец',
+            'description' => 'За бизнеси, които искат повече анализ, по-добра видимост и конкретни препоръки за растеж.',
+            'features' => [
+                'Всичко от Standard',
+                'Разширен финансов анализ',
+                'По-подробен Business Health Score',
+                'Калкулатор “Колко клиенти ми трябват?”',
+                'Калкулатор за ценообразуване',
+                'Разширени статистики',
+                'Месечен бизнес доклад',
+                'Premium препоръки за растеж',
+                'Premium / Препоръчан badge',
+                'По-добра видимост в BON',
+                'Приоритетна поддръжка',
+                'Подготвена логика за бъдещи AI/business advisor препоръки',
+            ],
+            'button' => 'Избери Premium',
+            'accent' => 'purple',
+            'recommended' => true,
+        ],
+    ];
+
+    $faqs = [
+        [
+            'question' => 'За какво плаща бизнесът?',
+            'answer' => 'За професионален BON профил, инструменти за видимост, финансов анализ, бизнес здраве, репутация, месечни доклади и препоръки според избрания план.',
+        ],
+        [
+            'question' => 'Какво получава бизнесът?',
+            'answer' => 'Бизнесът получава по-ясна картина за онлайн присъствието, финансите, репутацията и следващите действия за растеж.',
+        ],
+        [
+            'question' => 'Кога Premium възможностите са активни?',
+            'answer' => 'Само когато абонаментът е активен или trialing. Неплатени, expired, cancelled или failed профили не получават Premium предимства.',
+        ],
+        [
+            'question' => 'Мога ли да сменя плана?',
+            'answer' => 'Да. Ако вече имате активен Stripe абонамент, управлението на промени минава през Customer Portal, за да няма паралелни абонаменти.',
+        ],
+    ];
+@endphp
+
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Планове и цени | FixNow.bg</title>
-    <meta name="description" content="Планове за изпълнители във FixNow.bg: Standard 18.99 €/месец и Premium 24.99 €/месец с профил, ревюта, заявки, точки за оферти и Premium видимост.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Планове | BON Business Operating Network</title>
+    <meta name="description" content="Абонаментни планове BON Standard и Premium за бизнес видимост, финансов анализ, бизнес здраве, репутация, месечни доклади и препоръки за растеж.">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
+
+    <style>
+        .bon-grid {
+            background-image:
+                linear-gradient(to right, rgba(37, 99, 235, .075) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(37, 99, 235, .075) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: radial-gradient(circle at 50% 22%, black 0%, transparent 78%);
+        }
+
+        .bon-dot-field {
+            background-image: radial-gradient(rgba(37, 99, 235, .34) 1.4px, transparent 1.4px);
+            background-size: 16px 16px;
+        }
+
+        .bon-card {
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+        }
+
+        .bon-card:hover {
+            transform: translateY(-6px);
+        }
+    </style>
 </head>
-<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(251,146,60,0.16),transparent_32%),radial-gradient(circle_at_82%_12%,rgba(245,158,11,0.16),transparent_30%),linear-gradient(180deg,#020812,#061426_48%,#020812)]"></div>
 
+<body class="antialiased">
+    <main class="relative min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.78)_42%,rgba(248,250,255,1)_100%)]"></div>
+        <div class="bon-grid pointer-events-none absolute inset-0 opacity-[.38]"></div>
+        <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[35rem] w-[35rem] rounded-full bg-blue-400/22 blur-3xl"></div>
+        <div class="pointer-events-none absolute -top-40 right-[-10rem] h-[35rem] w-[35rem] rounded-full bg-fuchsia-400/22 blur-3xl"></div>
+        <div class="pointer-events-none absolute left-1/2 top-[18rem] h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-violet-400/18 blur-3xl"></div>
+        <div class="pointer-events-none absolute bottom-[-18rem] left-1/3 h-[30rem] w-[30rem] rounded-full bg-cyan-300/20 blur-3xl"></div>
+        <div class="bon-dot-field pointer-events-none absolute left-6 top-56 hidden h-40 w-36 opacity-30 lg:block"></div>
+        <div class="bon-dot-field pointer-events-none absolute bottom-10 right-6 hidden h-40 w-36 opacity-25 lg:block" style="background-image: radial-gradient(rgba(236,72,153,.36) 1.4px, transparent 1.4px);"></div>
 
-    @include('partials.public-header')
+        <div class="relative z-10 px-4 pb-16 sm:px-6 lg:px-8">
+            <header class="mx-auto mt-3 max-w-[1440px]">
+                <div class="flex min-h-[74px] items-center justify-between rounded-[1.75rem] border border-white/70 bg-white/75 px-4 py-3 shadow-[0_24px_80px_rgba(30,41,100,.09)] backdrop-blur-2xl sm:px-6">
+                    <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3 sm:gap-4">
+                        <div class="relative flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-2xl font-black text-white shadow-xl shadow-violet-500/25">
+                            <span class="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.42),transparent_38%)]"></span>
+                            <span class="relative z-10">B</span>
+                        </div>
+                        <div class="min-w-0 leading-tight">
+                            <div class="text-[23px] font-black tracking-tight text-[#070B1F]">BON</div>
+                            <div class="hidden truncate text-sm font-medium text-slate-500 sm:block">Business Operating Network</div>
+                        </div>
+                    </a>
 
-<main class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:px-8">
-        @if($errors->has('stripe'))
-            <div class="mb-6 rounded-3xl border border-rose-300/25 bg-rose-400/10 p-5 text-rose-50">
-                {{ $errors->first('stripe') }}
-            </div>
-        @endif
-
-        <section class="grid gap-8 py-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-14">
-            <div>
-                <p class="text-sm font-black uppercase tracking-[0.28em] text-orange-200/80">Абонаменти за изпълнители</p>
-                <h1 class="mt-5 max-w-4xl text-3xl font-black leading-tight sm:text-6xl">
-                    Ясни планове за видимост, заявки и оферти във FixNow.bg
-                </h1>
-                <p class="mt-5 max-w-2xl text-lg leading-8 text-white/70">
-                    Започнете с 30-дневен trial, изградете професионален профил и използвайте точки, за да изпращате оферти към подходящи клиентски заявки.
-                </p>
-                <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 text-center font-black text-white shadow-xl shadow-orange-600/25">Стартирай безплатно</a>
-                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Виж ползите</a>
-                </div>
-            </div>
-
-            <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl">
-                <div class="rounded-[28px] border border-orange-300/20 bg-slate-950/55 p-6">
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-300">Trial старт</p>
-                    <div class="mt-6 grid gap-4 sm:grid-cols-3">
-                        <div class="rounded-3xl border border-white/10 bg-white/10 p-5">
-                            <p class="text-3xl font-black">30</p>
-                            <p class="mt-2 text-sm text-white/60">дни пробен период</p>
-                        </div>
-                        <div class="rounded-3xl border border-white/10 bg-white/10 p-5">
-                            <p class="text-3xl font-black">45</p>
-                            <p class="mt-2 text-sm text-white/60">точки за оферти</p>
-                        </div>
-                        <div class="rounded-3xl border border-white/10 bg-white/10 p-5">
-                            <p class="text-3xl font-black">3</p>
-                            <p class="mt-2 text-sm text-white/60">точки за оферта</p>
-                        </div>
-                    </div>
-                    <p class="mt-6 text-sm leading-6 text-white/60">Premium получава по-високо позициониране и повече точки. Standard остава стабилен стартов план за публичен профил, ревюта и директен контакт.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="grid gap-5 lg:grid-cols-2">
-            @foreach(['standard', 'premium'] as $planKey)
-                @php
-                    $plan = $plans[$planKey];
-                    $points = $planKey === 'premium' ? 90 : 30;
-                @endphp
-                <article class="relative overflow-hidden rounded-[32px] border {{ $planKey === 'premium' ? 'border-orange-300/40 bg-orange-400/12 shadow-orange-950/35 ring-1 ring-orange-300/20' : 'border-orange-300/20 bg-white/10 shadow-black/20' }} p-5 shadow-2xl backdrop-blur-xl sm:p-8">
-                    @if($planKey === 'premium')
-                        <div class="absolute right-5 top-5 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-xs font-black shadow-lg shadow-orange-600/20">Препоръчан</div>
-                    @endif
-                    <p class="text-sm font-black uppercase tracking-[0.25em] {{ $planKey === 'premium' ? 'text-amber-200' : 'text-orange-300' }}">{{ $plan['label'] }}</p>
-                    <div class="mt-5 flex flex-wrap items-end gap-2">
-                        <span class="text-[2.75rem] font-black leading-none sm:text-5xl">{{ number_format($plan['price'], 2, ',', ' ') }} €</span>
-                        <span class="pb-2 text-white/60">/месец</span>
-                    </div>
-                    <p class="mt-2 text-sm font-bold {{ $planKey === 'premium' ? 'text-orange-100' : 'text-orange-100' }}">
-                        {{ $planKey === 'premium' ? 'Premium видимост, badge и приоритет при matching' : 'Публичен профил и стабилно присъствие в търсене' }}
-                    </p>
-                    <div class="mt-6 grid gap-3 sm:grid-cols-4">
-                        <div class="rounded-2xl border border-white/10 bg-slate-950/45 p-4">
-                            <p class="text-2xl font-black">{{ $plan['city_limit'] }}</p>
-                            <p class="text-sm text-white/60">града</p>
-                        </div>
-                        <div class="rounded-2xl border border-white/10 bg-slate-950/45 p-4">
-                            <p class="text-2xl font-black">{{ $plan['category_limit'] }}</p>
-                            <p class="text-sm text-white/60">категории</p>
-                        </div>
-                        <div class="rounded-2xl border border-white/10 bg-slate-950/45 p-4">
-                            <p class="text-2xl font-black">{{ $plan['photo_limit'] }}</p>
-                            <p class="text-sm text-white/60">снимки</p>
-                        </div>
-                        <div class="rounded-2xl border border-white/10 bg-slate-950/45 p-4">
-                            <p class="text-2xl font-black">{{ $points }}</p>
-                            <p class="text-sm text-white/60">точки/месец</p>
-                        </div>
-                    </div>
-                    <ul class="mt-6 grid gap-3 text-sm leading-6 text-white/70">
-                        @foreach($plan['features'] as $feature)
-                            <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-orange-400"></span><span>{{ $feature }}</span></li>
-                        @endforeach
-                    </ul>
-                    <div class="mt-8">
-                        @auth
-                            @if(auth()->user()->role === 'business')
-                                <form action="{{ route('business.billing.checkout') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="plan" value="{{ $planKey }}">
-                                    <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
-                                        {{ $planKey === 'premium' ? 'Вземи Premium' : 'Избери Standard' }}
-                                    </button>
-                                </form>
-                            @else
-                                <a href="{{ route('dashboard') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
-                                    Към таблото
-                                </a>
-                            @endif
-                        @else
-                            <a href="{{ route('register') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl {{ $planKey === 'premium' ? 'bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600' : 'border border-white/10 bg-white/10 hover:bg-white/20' }} px-5 py-4 text-center font-black text-white">
-                                {{ $planKey === 'premium' ? 'Вземи Premium' : 'Стартирай безплатно' }}
+                    <nav class="hidden items-center gap-9 xl:gap-10 lg:flex">
+                        @foreach ($navItems as $item)
+                            <a href="{{ $item['href'] }}" class="text-[15px] font-semibold text-[#11183B] transition hover:-translate-y-0.5 hover:text-blue-600">
+                                {{ $item['label'] }}
                             </a>
-                        @endauth
-                    </div>
-                </article>
-            @endforeach
-        </section>
+                        @endforeach
+                    </nav>
 
-        <section class="mt-10 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-            <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 backdrop-blur-xl sm:p-8">
-                <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Сравнение</p>
-                <h2 class="mt-3 text-3xl font-black">Standard срещу Premium</h2>
-                <p class="mt-3 text-white/60">Premium не е неограничен план. Той дава по-големи лимити, по-добро подреждане и повече точки за оферти, без да променя основната абонаментна цена.</p>
-            </div>
-            <div class="overflow-hidden rounded-[32px] border border-white/10 bg-white/10 backdrop-blur-xl">
-                <div class="grid grid-cols-3 border-b border-white/10 bg-slate-950/45 text-sm font-black">
-                    <div class="p-4">Функция</div>
-                    <div class="p-4 text-orange-100">Standard</div>
-                    <div class="p-4 text-orange-100">Premium</div>
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <a href="{{ route('login') }}" class="hidden rounded-2xl border border-slate-200/80 bg-white/70 px-5 py-3 text-sm font-bold text-[#070B1F] shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:inline-flex">
+                            Вход
+                        </a>
+                        <a href="{{ route('register') }}" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-4 py-3 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:px-6">
+                            Регистрация
+                        </a>
+                    </div>
                 </div>
-                @foreach([
-                    ['Градове', 'до 2', 'до 5'],
-                    ['Категории/услуги', 'до 2', 'до 5'],
-                    ['Снимки', 'до 5', 'до 15'],
-                    ['Точки за оферти', '30/месец', '90/месец'],
-                    ['Подреждане', 'нормално', 'по-високо'],
-                    ['Заявки', 'ако системата match-не', 'приоритет при matching'],
-                    ['Badge', '-', 'Premium/Препоръчан'],
-                ] as $row)
-                    <div class="grid grid-cols-3 border-b border-white/10 text-sm text-white/70 last:border-b-0">
-                        <div class="p-4 font-bold text-white">{{ $row[0] }}</div>
-                        <div class="p-4">{{ $row[1] }}</div>
-                        <div class="p-4">{{ $row[2] }}</div>
-                    </div>
-                @endforeach
-            </div>
-        </section>
+            </header>
 
-        <section class="mt-10 grid gap-5 lg:grid-cols-2">
-            <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 backdrop-blur-xl sm:p-8">
-                <h2 class="text-3xl font-black">Често задавани въпроси</h2>
-                <div class="mt-6 grid gap-4">
-                    @foreach([
-                        ['Има ли trial?', 'Да. Всеки изпълнител започва с 30-дневен пробен период и 45 точки за оферти.'],
-                        ['Premium активира ли се автоматично?', 'Не при натискане на бутона. Планът се активира след успешно потвърдено плащане през Stripe.'],
-                        ['Колко точки струва една оферта?', 'Една изпратена оферта струва 3 точки. Standard включва 30 точки месечно, Premium - 90 точки месечно.'],
-                        ['Има ли доплащане за градове?', 'Не на този етап. Градовете служат за лимити, филтър, релевантност и насочване на заявки.'],
-                    ] as $faq)
-                        <details class="rounded-3xl border border-white/10 bg-slate-950/45 p-5 open:border-orange-300/25">
-                            <summary class="cursor-pointer list-none font-black">{{ $faq[0] }}</summary>
-                            <p class="mt-3 text-sm leading-6 text-white/60">{{ $faq[1] }}</p>
-                        </details>
+            <section class="mx-auto max-w-[1440px] pt-10 sm:pt-12 lg:pt-14">
+                @if($errors->has('stripe'))
+                    <div class="mx-auto mb-8 max-w-3xl rounded-[2rem] border border-rose-200/70 bg-white/80 p-5 text-sm font-semibold text-rose-600 shadow-2xl shadow-rose-900/5 backdrop-blur-2xl">
+                        {{ $errors->first('stripe') }}
+                    </div>
+                @endif
+
+                <div class="mx-auto max-w-4xl text-center">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm shadow-blue-900/5 backdrop-blur-xl">
+                        <span class="text-violet-600">✦</span>
+                        Планове
+                    </div>
+
+                    <h1 class="mt-5 text-[38px] font-black leading-[1.04] tracking-[-0.055em] text-[#070B1F] sm:text-[56px] lg:text-[70px]">
+                        Избери какви инструменти отключваш в <span class="bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">BON</span>.
+                    </h1>
+
+                    <p class="mx-auto mt-5 max-w-3xl text-[17px] leading-8 text-slate-600 sm:text-[19px]">
+                        Standard и Premium са създадени за бизнеси, които искат анализ, ключови показатели,
+                        по-добро онлайн присъствие, повече доверие и конкретни препоръки за растеж.
+                    </p>
+                </div>
+
+                <section class="mx-auto mt-10 grid max-w-5xl items-stretch gap-5 lg:grid-cols-2">
+                    @foreach ($pricingPlans as $plan)
+                        @php
+                            $isBlue = $plan['accent'] === 'blue';
+                            $isPink = $plan['accent'] === 'pink';
+                            $accentText = $isBlue ? 'text-blue-600' : ($isPink ? 'text-pink-500' : 'text-violet-600');
+                            $buttonClass = $isBlue
+                                ? 'from-blue-600 to-violet-600 shadow-blue-600/25 hover:shadow-blue-600/35'
+                                : ($isPink
+                                    ? 'from-fuchsia-500 to-pink-500 shadow-pink-500/25 hover:shadow-pink-500/35'
+                                    : 'from-violet-600 to-fuchsia-500 shadow-violet-600/25 hover:shadow-violet-600/35');
+                            $iconClass = $isBlue
+                                ? 'from-blue-600 to-violet-600 shadow-blue-600/20'
+                                : ($isPink
+                                    ? 'from-fuchsia-500 to-pink-500 shadow-pink-500/20'
+                                    : 'from-violet-600 to-fuchsia-500 shadow-violet-600/20');
+                        @endphp
+
+                        <article class="bon-card relative flex min-h-[560px] flex-col overflow-hidden rounded-[2rem] border {{ $plan['recommended'] ? 'border-blue-200/80 bg-white/85 shadow-[0_34px_90px_rgba(37,99,235,.16)] ring-1 ring-blue-200/60' : 'border-white/70 bg-white/75 shadow-[0_30px_80px_rgba(30,41,100,.10)]' }} p-6 backdrop-blur-2xl sm:p-7">
+                            <div class="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent {{ $isPink ? 'via-pink-400/70' : ($isBlue ? 'via-blue-400/70' : 'via-violet-400/70') }} to-transparent"></div>
+
+                            @if($plan['recommended'])
+                                <div class="absolute right-5 top-5 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-4 py-2 text-xs font-black text-white shadow-lg shadow-blue-600/20">
+                                    Препоръчан
+                                </div>
+                            @endif
+
+                            <div class="flex h-[52px] w-[52px] items-center justify-center rounded-2xl bg-gradient-to-br {{ $iconClass }} text-2xl font-black text-white shadow-xl">
+                                {{ $isPink ? '♙' : ($isBlue ? '▥' : '✦') }}
+                            </div>
+
+                            <div class="mt-6 text-xs font-black uppercase tracking-[0.22em] {{ $accentText }}">
+                                {{ $plan['audience'] }}
+                            </div>
+
+                            <h2 class="mt-3 text-3xl font-black tracking-tight text-[#070B1F]">
+                                {{ $plan['name'] }}
+                            </h2>
+
+                            <div class="mt-5 text-[34px] font-black tracking-tight text-[#070B1F]">
+                                {{ $plan['price'] }}
+                            </div>
+
+                            <p class="mt-4 text-base leading-7 text-slate-600">
+                                {{ $plan['description'] }}
+                            </p>
+
+                            <ul class="mt-6 grid gap-3 text-sm leading-6 text-slate-600">
+                                @foreach ($plan['features'] as $feature)
+                                    <li class="flex gap-3">
+                                        <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br {{ $isPink ? 'from-pink-500 to-rose-500' : ($isBlue ? 'from-blue-600 to-violet-600' : 'from-violet-600 to-fuchsia-500') }}"></span>
+                                        <span>{{ $feature }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                            <div class="mt-auto pt-7">
+                                @auth
+                                    @if(auth()->user()->role === 'business')
+                                        <form action="{{ route('business.billing.checkout') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="plan" value="{{ $plan['key'] }}">
+                                            <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r {{ $buttonClass }} px-5 text-center text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5">
+                                                {{ $plan['button'] }} <span>→</span>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('business.landing') }}" class="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r {{ $buttonClass }} px-5 text-center text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5">
+                                            Добави бизнес профил <span>→</span>
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r {{ $buttonClass }} px-5 text-center text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5">
+                                        {{ $plan['button'] }} <span>→</span>
+                                    </a>
+                                @endauth
+                            </div>
+                        </article>
                     @endforeach
-                </div>
-            </div>
+                </section>
 
-            <div class="rounded-[32px] border border-orange-300/20 bg-gradient-to-br from-orange-500/12 via-amber-400/10 to-orange-600/12 p-6 backdrop-blur-xl sm:p-8">
-                <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-100">Следваща стъпка</p>
-                <h2 class="mt-4 text-3xl font-black sm:text-4xl">Създайте профил и вижте първите релевантни заявки.</h2>
-                <p class="mt-4 text-white/70">FixNow показва лимити, статус, точки и управление на плана в панела на изпълнител. Premium се активира само след успешно потвърдено плащане през Stripe.</p>
-                <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 py-4 text-center font-black text-slate-950">Стани изпълнител</a>
-                    <a href="{{ route('request.service') }}" data-track="cta_request" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-center font-black text-white hover:bg-white/20">Пусни заявка</a>
-                </div>
-            </div>
-        </section>
+                <section class="mx-auto mt-12 max-w-5xl rounded-[2rem] border border-white/70 bg-white/75 p-5 shadow-[0_28px_80px_rgba(30,41,100,.10)] backdrop-blur-2xl sm:p-7 lg:mt-14">
+                    <div class="text-center">
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">FAQ</p>
+                        <h2 class="mt-3 text-3xl font-black tracking-tight text-[#070B1F] sm:text-4xl">
+                            Често задавани въпроси
+                        </h2>
+                    </div>
+
+                    <div class="mt-7 grid gap-4 md:grid-cols-2">
+                        @foreach ($faqs as $faq)
+                            <details class="group rounded-3xl border border-slate-200/70 bg-white/70 p-5 shadow-sm shadow-blue-900/5 open:border-violet-200 open:bg-white/90">
+                                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-black text-[#070B1F] [&::-webkit-details-marker]:hidden">
+                                    {{ $faq['question'] }}
+                                    <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-500 transition group-open:rotate-45 group-open:bg-violet-50 group-open:text-violet-600">+</span>
+                                </summary>
+                                <p class="mt-4 text-sm leading-6 text-slate-600">
+                                    {{ $faq['answer'] }}
+                                </p>
+                            </details>
+                        @endforeach
+                    </div>
+                </section>
+            </section>
+        </div>
     </main>
-    @include('partials.public-footer')
-    @include('partials.mobile-bottom-nav')
 </body>
 </html>

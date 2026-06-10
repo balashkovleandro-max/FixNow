@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -100,7 +100,7 @@ class ServiceRequestOfferController extends Controller
         try {
             Mail::to($recipient)->send(new NewServiceRequestOfferCustomerMail($offer->fresh(['serviceRequest.customer', 'business'])));
         } catch (Throwable $exception) {
-            Log::warning('FixNow new offer customer email failed.', [
+            Log::warning('BON new offer customer email failed.', [
                 'offer_id' => $offer->id,
                 'service_request_id' => $serviceRequest->id,
                 'exception' => $exception->getMessage(),

@@ -1,129 +1,90 @@
-# FixNow.bg Deployment Guide
+# BON Deployment Guide
 
-Този документ описва минималните стъпки за качване на FixNow.bg на test/staging или production сървър. Не съхранявайте реални secret стойности в Git.
+Този документ описва минималните стъпки за deploy на BON в staging или production среда. Не съхранявайте реални secret стойности в Git. Всички production стойности трябва да идват от environment variables.
 
 ## Изисквания
 
-- PHP 8.3 или по-нова версия, според `composer.json`.
+- PHP 8.3 или по-нова версия според `composer.json`.
 - Composer 2.x.
 - Node.js и npm, съвместими с текущия `package-lock.json`.
-- Web server с document root към `public/`.
-- Database: SQLite за малък test deployment или MySQL/PostgreSQL за production.
-- HTTPS сертификат преди реално приемане на потребители и плащания.
+- Database: PostgreSQL или MySQL за production.
+- HTTPS домейн преди реални потребители и Stripe live плащания.
 
-## Подготовка на кода
+## Build
 
 ```bash
-git clone <repo-url> fixnow
-cd fixnow
 composer install --no-dev --optimize-autoloader
 npm ci
 npm run build
 ```
 
-За staging, където ще се пускат тестове, може да използвате:
-
-```bash
-composer install
-npm ci
-npm run build
-php artisan test
-```
-
-## Scalingo + Vite build
-
-FixNow uses Laravel Vite through `@vite(...)` in Blade views. In production this requires
-`public/build/manifest.json`. The repository includes a `.buildpacks` file so Scalingo runs
-the Node.js buildpack before the PHP buildpack:
+`npm run build` трябва да генерира:
 
 ```text
-https://github.com/Scalingo/nodejs-buildpack
-https://github.com/Scalingo/php-buildpack
+public/build/manifest.json
 ```
 
-The `package.json` build script must stay present:
+Ако production страницата изглежда без стилове, проверете дали `public/hot` не присъства и дали Blade view-овете използват `@vite(['resources/css/app.css', 'resources/js/app.js'])`.
 
-```json
-"build": "vite build"
-```
+## Environment
 
-Recommended Scalingo environment setting when using the dedicated Node.js buildpack:
-
-```bash
-scalingo --app <app-name> env-set PHP_BUILDPACK_NO_NODE=true
-```
-
-Deploy:
-
-```bash
-git add .buildpacks package.json package-lock.json
-git commit -m "Configure Scalingo Vite build"
-git push scalingo main
-```
-
-Verify after deploy:
-
-```bash
-scalingo --app <app-name> run 'ls -la public/build/manifest.json'
-scalingo --app <app-name> run 'test ! -f public/hot'
-```
-
-If the file is missing, inspect the deploy logs for the Node.js buildpack step and confirm
-that `npm ci` and `npm run build` ran before the PHP/Laravel app started.
-
-If the page renders as unstyled HTML while `public/build/manifest.json` exists, check that
-`public/hot` is not present in production. A stale `public/hot` makes Laravel `@vite` point to
-the local Vite dev server instead of the built `/build/assets/...` files.
-
-## `.env` настройка
-
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-Задължителни production стойности:
+Примерни production стойности:
 
 ```env
-APP_NAME="FixNow.bg"
+APP_NAME="BON"
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://fixnow.bg
-```
+APP_URL=https://bon.bg
 
-Настройте database секцията според сървъра. За production не използвайте локални demo credentials.
+DB_CONNECTION=pgsql
+DB_HOST=
+DB_PORT=5432
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
 
-Mail настройките трябва да сочат към реален SMTP/mail provider:
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+FILESYSTEM_DISK=public
 
-```env
 MAIL_MAILER=smtp
 MAIL_HOST=
 MAIL_PORT=587
 MAIL_USERNAME=
 MAIL_PASSWORD=
 MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=hello@fixnow.bg
+MAIL_FROM_ADDRESS=hello@bon.bg
 MAIL_FROM_NAME="${APP_NAME}"
-FIXNOW_ADMIN_EMAIL=admin@fixnow.bg
-```
+BON_ADMIN_EMAIL=admin@bon.bg
 
-Stripe настройките трябва да са от правилния test или live режим:
-
-```env
 STRIPE_KEY=
 STRIPE_SECRET=
 STRIPE_WEBHOOK_SECRET=
 STRIPE_STANDARD_PRICE_ID=
 STRIPE_PREMIUM_PRICE_ID=
+
+GA_MEASUREMENT_ID=
+META_PIXEL_ID=
+CLARITY_PROJECT_ID=
 ```
 
-Webhook endpoint в Stripe:
+Важно:
+
+- `APP_DEBUG=false` за production.
+- `APP_URL` трябва да е реалният HTTPS домейн.
+- Stripe keys, webhook secret и Price IDs трябва да са от един и същ Stripe режим.
+- Не използвайте SQLite за production.
+
+## Stripe
+
+Webhook endpoint:
 
 ```text
-https://fixnow.bg/stripe/webhook
+https://bon.bg/stripe/webhook
 ```
 
-Stripe Customer Portal трябва да е enabled в Stripe Dashboard.
+Stripe Customer Portal трябва да е enabled в Stripe Dashboard. Платен план се активира само чрез Stripe webhook, не чрез success URL.
 
 ## Database и storage
 
@@ -132,92 +93,40 @@ php artisan migrate --force
 php artisan storage:link
 ```
 
-Не пускайте `php artisan migrate:fresh --seed` на production. Тази команда е само за local/demo среда, защото изтрива всички данни.
+Не изпълнявайте `php artisan migrate:fresh --seed` в production, защото изтрива реални данни.
 
-За local/staging demo preview:
+## Admin и soft launch данни
 
-```bash
-php artisan migrate:fresh --seed
-```
-
-## Soft launch data setup
-
-Създайте admin акаунт без да записвате парола в Git или в публична документация:
+Създаване на admin:
 
 ```bash
-php artisan fixnow:create-admin --name="FixNow Admin" --email="admin@fixnow.bg"
+php artisan bon:create-admin --name="BON Admin" --email="admin@bon.bg"
 ```
 
-Ако не подадете `--password`, command-ът ще я поиска интерактивно и няма да я показва в output. За non-interactive staging setup може да подадете:
+За non-interactive staging setup:
 
 ```bash
-php artisan fixnow:create-admin --name="FixNow Admin" --email="admin@fixnow.bg" --password="temporary-secure-password"
+php artisan bon:create-admin --name="BON Admin" --email="admin@bon.bg" --password="temporary-secure-password"
 ```
 
-По желание за test/soft launch в Плевен може да заредите контролирани примерни изпълнители:
+Контролиран soft-launch dataset за Плевен:
 
 ```bash
 php artisan db:seed --class=SoftLaunchPlevenSeeder
 ```
 
-Този seeder създава 5+ профила за Плевен в категории ремонти, ВиК, електроуслуги, почистване и автосервизи. Използва placeholder телефони и `@fixnow.test` email-и, за да не изглежда като реални фирмени данни. Не seed-ва fake reviews или fake analytics, за да започнат тези метрики от реална активност.
-
-Default `DatabaseSeeder` е само за local/demo preview и е защитен да не се изпълнява в `APP_ENV=production`. Не пускайте `migrate:fresh --seed` на production, защото изтрива реални данни.
-
-След soft-launch seed проверете:
-
-- Login като admin работи.
-- `/businesses?city=Плевен` показва seeded изпълнители.
-- `/grad/pleven` и `/grad/pleven/vik-uslugi` зареждат.
-- Поне един Premium и един verified профил се виждат публично.
-- Expired/cancelled профили не се показват публично.
-
-## Permissions
-
-Linux пример:
-
-```bash
-chown -R www-data:www-data storage bootstrap/cache
-chmod -R ug+rw storage bootstrap/cache
-```
-
-Потребителят на web server-а трябва да може да пише в `storage/` и `bootstrap/cache/`.
-
-## Queue и cron
-
-Проектът използва database queue driver в `.env.example`. Ако production използва queue за mail/job обработка, стартирайте worker чрез Supervisor/systemd:
-
-```bash
-php artisan queue:work --tries=3 --timeout=90
-```
-
-Laravel scheduler cron, ако добавите scheduled tasks:
-
-```cron
-* * * * * cd /path/to/fixnow && php artisan schedule:run >> /dev/null 2>&1
-```
+Seeder-ът създава контролирани бизнес профили за проверка на публични cards, категории, Premium/Verified badges и visibility logic. Не го използвайте за production, освен ако това е умишлен staging тест.
 
 ## Cache при deploy
 
-Преди финално включване:
-
 ```bash
+php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 ```
 
-Ако `route:cache` върне грешка за Closure routes, пропуснете само тази команда и планирайте отделна задача за преместване на closure routes към controllers.
-
-При проблем след deploy:
-
-```bash
-php artisan optimize:clear
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
-php artisan cache:clear
-```
+Ако `route:cache` върне грешка за Closure routes, пропуснете само `route:cache` за този deploy и оставете останалите cache команди.
 
 ## Проверки преди deploy
 
@@ -227,18 +136,17 @@ npm run build
 php artisan route:list
 ```
 
-Проверете ръчно:
+Ръчни проверки:
 
-- `/health` връща `{"status":"ok","app":"FixNow.bg"}`.
-- `/robots.txt` и `/sitemap.xml` се зареждат.
-- `/`, `/businesses`, `/services`, `/plans`, `/zayavi-oferta`.
-- `/business/billing` като изпълнител.
-- `/admin/service-requests` като admin.
-- Stripe checkout в test mode.
-- Stripe webhook activation.
-- Email уведомления за заявки и оферти.
+- `/health` връща `{"status":"ok","app":"BON"}`.
+- `/`, `/categories`, `/businesses`, `/services`, `/plans`, `/za-biznesi`.
+- `/login` и `/register` показват BON.
+- `/business/billing` зарежда и не активира план без Stripe webhook.
+- `/stripe/webhook` валидира Stripe signature чрез `STRIPE_WEBHOOK_SECRET`.
+- `/admin/service-requests` е достъпен само за admin.
+- Emails използват `APP_URL`/route URL-и и BON copy.
 
-## Rollback чрез Git
+## Rollback
 
 1. Намерете последния стабилен commit:
 
@@ -258,4 +166,4 @@ php artisan config:cache
 php artisan view:cache
 ```
 
-3. Ако rollback-ът изисква database промени, не изпълнявайте destructive команди без backup. Възстановете database backup, ако миграциите са променили структурата необратимо.
+Не изпълнявайте destructive database команди без backup.

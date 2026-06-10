@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Категории | FixNow.bg</title>
+    <title>Категории | BON</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -16,11 +16,11 @@
 <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <section class="mb-8 rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-10">
             <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Категории</p>
-            <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-5xl">Открий точните услуги и изпълнители по категория</h1>
-            <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Разгледайте профили за ремонти, спешни домашни услуги, авто услуги, почистване, техника, услуги за малки бизнеси, красота и още локални услуги.</p>
+            <h1 class="mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-5xl">Открий бизнеси, услуги и места по категория</h1>
+            <p class="mt-4 max-w-2xl text-base leading-8 text-white/70">Разгледайте профили за ресторанти, хотели, ремонти, авто услуги, красота, здраве, спорт, почистване и други локални услуги.</p>
             <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                <a href="{{ route('request.service') }}" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">Заяви оферта</a>
-                <a href="{{ route('businesses.index') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Разгледай изпълнители</a>
+                <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white shadow-lg shadow-orange-600/25">Добави бизнес</a>
+                <a href="{{ route('businesses.index') }}" class="inline-flex justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Разгледай бизнеси</a>
             </div>
         </section>
 
@@ -31,17 +31,17 @@
                     <h2 class="text-xl font-black">{{ $category['name'] }}</h2>
                     <p class="mt-2 text-sm leading-6 text-white/60">{{ $category['desc'] }}</p>
                     <p class="mt-5 text-sm font-bold text-orange-300">
-                        {{ $category['count'] > 0 ? $category['count'] . ' ' . ($category['count'] === 1 ? 'изпълнител' : 'изпълнители') : 'Очаква първи изпълнител' }}
+                        {{ $category['count'] > 0 ? $category['count'] . ' ' . ($category['count'] === 1 ? 'бизнес' : 'бизнеса') : 'Очаква първи бизнес' }}
                     </p>
                 </a>
             @empty
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-10 text-center shadow-xl shadow-black/20 backdrop-blur-xl sm:col-span-2 lg:col-span-4">
                     <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-2xl font-black">F</p>
                     <h2 class="mt-5 text-2xl font-black">Все още няма активни категории</h2>
-                    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Пусни заявка и ще ти помогнем да намериш подходящ изпълнител, или добави профил, ако предлагаш локални услуги.</p>
+                    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Добавете бизнес профил и изберете категории, за да започнете да изграждате видимост и доверие.</p>
                     <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                        <a href="{{ route('request.service') }}" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Пусни заявка</a>
-                        <a href="{{ route('business.landing') }}" class="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Стани изпълнител</a>
+                        <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-6 py-4 font-black text-white">Добави бизнес</a>
+                        <a href="{{ route('business.landing') }}" class="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Добави бизнес</a>
                     </div>
                 </div>
             @endforelse

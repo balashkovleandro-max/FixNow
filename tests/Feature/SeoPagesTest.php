@@ -152,7 +152,7 @@ class SeoPagesTest extends TestCase
     {
         $this->get('/grad/pleven/avtoservizi')
             ->assertOk()
-            ->assertSee('Все още няма активни изпълнители тук');
+            ->assertSee('Все още няма активни бизнеси тук');
     }
 
     public function test_homepage_has_popular_seo_links(): void
@@ -162,7 +162,7 @@ class SeoPagesTest extends TestCase
             ->assertSee('Популярни градове и услуги')
             ->assertSee('Автосервизи в Плевен')
             ->assertSee('/grad/pleven/avtoservizi', false)
-            ->assertSee('/grad/pleven/maistori', false)
+            ->assertSee('/grad/pleven/remonti', false)
             ->assertSee('/grad/pleven', false);
     }
 
@@ -170,7 +170,7 @@ class SeoPagesTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow SEO Test Business',
+            'business_name' => 'BON SEO Test Business',
             'business_category' => 'Автосервиз',
             'service_categories' => ['Автосервиз'],
             'city' => 'Плевен',

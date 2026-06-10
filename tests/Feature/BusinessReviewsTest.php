@@ -197,7 +197,7 @@ class BusinessReviewsTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Review Test Business',
+            'business_name' => 'BON Review Test Business',
             'business_category' => 'Автосервиз',
             'city' => 'София',
             'subscription_status' => 'active',

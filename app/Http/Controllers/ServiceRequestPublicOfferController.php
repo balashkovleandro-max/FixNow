@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -49,7 +49,7 @@ class ServiceRequestPublicOfferController extends Controller
             return redirect()
                 ->route('service-requests.offers.show', $routeParameters)
                 ->withErrors([
-                    'offer' => 'Към тази заявка вече има избран изпълнител или заявката е приключена.',
+                    'offer' => 'Към тази заявка вече има избран бизнес или заявката е приключена.',
                 ]);
         }
 
@@ -89,7 +89,7 @@ class ServiceRequestPublicOfferController extends Controller
 
         return redirect()
             ->route('service-requests.offers.show', $routeParameters)
-            ->with('success', 'Изпълнителят е избран успешно. Можете да се свържете директно с него.');
+            ->with('success', 'Бизнесят е избран успешно. Можете да се свържете директно с него.');
     }
 
     private function sendAcceptedOfferEmails(ServiceRequest $serviceRequest, ServiceRequestOffer $acceptedOffer): void
@@ -128,7 +128,7 @@ class ServiceRequestPublicOfferController extends Controller
         try {
             $send();
         } catch (Throwable $exception) {
-            Log::warning("FixNow mail failed: {$context}", array_merge($meta, [
+            Log::warning("BON mail failed: {$context}", array_merge($meta, [
                 'exception' => $exception->getMessage(),
             ]));
         }

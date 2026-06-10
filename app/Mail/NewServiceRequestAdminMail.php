@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Mail;
 
@@ -25,7 +25,7 @@ class NewServiceRequestAdminMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Нова заявка за оферта във FixNow.bg')
+            ->subject('Нова заявка за оферта във BON')
             ->view('emails.service-requests.admin-new');
     }
 }

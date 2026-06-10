@@ -186,7 +186,7 @@ class RequestOffersAndPointsTest extends TestCase
     {
         return User::factory()->create(array_merge([
             'role' => 'business',
-            'business_name' => 'FixNow Offers Business',
+            'business_name' => 'BON Offers Business',
             'business_category' => 'Ремонти и строителство',
             'service_categories' => ['Ремонти и строителство'],
             'city' => 'Плевен',

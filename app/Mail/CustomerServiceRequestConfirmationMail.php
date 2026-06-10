@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Mail;
 
@@ -28,7 +28,7 @@ class CustomerServiceRequestConfirmationMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Получихме заявката ви във FixNow.bg')
+            ->subject('Получихме заявката ви във BON')
             ->view('emails.service-requests.customer-confirmation');
     }
 }

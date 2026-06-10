@@ -1,57 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://fixnow.bg/</loc>
+        <loc>https://bon.bg/</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/services</loc>
+        <loc>https://bon.bg/services</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/businesses</loc>
+        <loc>https://bon.bg/businesses</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/top-biznesi</loc>
+        <loc>https://bon.bg/top-biznesi</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/plans</loc>
+        <loc>https://bon.bg/plans</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/za-biznesi</loc>
+        <loc>https://bon.bg/za-biznesi</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/zayavi-oferta</loc>
+        <loc>https://bon.bg/za-potrebiteli</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/how-it-works</loc>
+        <loc>https://bon.bg/talent-network</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/contact</loc>
+        <loc>https://bon.bg/zayavi-oferta</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/terms</loc>
+        <loc>https://bon.bg/how-it-works</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/privacy</loc>
+        <loc>https://bon.bg/contact</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/cookies</loc>
+        <loc>https://bon.bg/terms</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/grad/pleven</loc>
+        <loc>https://bon.bg/privacy</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/grad/pleven/maistori</loc>
+        <loc>https://bon.bg/cookies</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/grad/pleven/vik-uslugi</loc>
+        <loc>https://bon.bg/grad/pleven</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/grad/pleven/elektrouslugi</loc>
+        <loc>https://bon.bg/grad/pleven/remonti</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/grad/pleven/avtoservizi</loc>
+        <loc>https://bon.bg/grad/pleven/vik-uslugi</loc>
     </url>
     <url>
-        <loc>https://fixnow.bg/grad/pleven/pochistvane</loc>
+        <loc>https://bon.bg/grad/pleven/elektrouslugi</loc>
+    </url>
+    <url>
+        <loc>https://bon.bg/grad/pleven/avtoservizi</loc>
+    </url>
+    <url>
+        <loc>https://bon.bg/grad/pleven/pochistvane</loc>
     </url>
 </urlset>

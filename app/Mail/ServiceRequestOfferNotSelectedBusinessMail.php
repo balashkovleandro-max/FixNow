@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Mail;
 
@@ -29,7 +29,7 @@ class ServiceRequestOfferNotSelectedBusinessMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Заявката беше затворена във FixNow.bg')
+            ->subject('Заявката беше затворена във BON')
             ->view('emails.service-requests.offer-not-selected-business');
     }
 }

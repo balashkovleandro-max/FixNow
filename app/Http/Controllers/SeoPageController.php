@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -144,7 +144,7 @@ class SeoPageController extends Controller
     {
         return [
             ['label' => 'Автосервизи', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'avtoservizi'])],
-            ['label' => 'Майстори', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'maistori'])],
+            ['label' => 'Ремонти', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'remonti'])],
             ['label' => 'Почистване', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'pochistvane'])],
             ['label' => 'Електроуслуги', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'elektrouslugi'])],
             ['label' => 'ВиК услуги', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'vik-uslugi'])],
@@ -154,10 +154,10 @@ class SeoPageController extends Controller
     private function internalLinks(): array
     {
         return [
-            ['label' => 'Топ изпълнители', 'url' => route('top.businesses')],
+            ['label' => 'Топ бизнеси', 'url' => route('top.businesses')],
             ['label' => 'Заяви оферта', 'url' => route('request.service')],
-            ['label' => 'За изпълнители', 'url' => route('business.landing')],
-            ['label' => 'Всички изпълнители', 'url' => route('businesses.index')],
+            ['label' => 'За бизнеси', 'url' => route('business.landing')],
+            ['label' => 'Всички бизнеси', 'url' => route('businesses.index')],
         ];
     }
 
@@ -178,16 +178,16 @@ class SeoPageController extends Controller
     private function seoTitle(string $city, ?array $category): string
     {
         if (!$category) {
-            return "Изпълнители и услуги в {$city} | FixNow.bg";
+            return "Бизнеси и услуги в {$city} | BON";
         }
 
-        return "{$category['label']} в {$city} | Проверени изпълнители във FixNow.bg";
+        return "{$category['label']} в {$city} | Проверени бизнеси във BON";
     }
 
     private function h1(string $city, ?array $category): string
     {
         if (!$category) {
-            return "Изпълнители и услуги в {$city}";
+            return "Бизнеси и услуги в {$city}";
         }
 
         return "{$category['label']} в {$city}";
@@ -196,7 +196,7 @@ class SeoPageController extends Controller
     private function intro(string $city, ?array $category): string
     {
         if (!$category) {
-            return "Намерете проверени изпълнители, услуги и локални професионалисти в {$city}. Сравнете профили, отзиви, препоръки и изпратете заявка за оферта.";
+            return "Открийте проверени бизнеси, услуги и локални професионалисти в {$city}. Вижте профили, отзиви, препоръки и директни контакти.";
         }
 
         return "Разгледайте {$category['label']} в {$city} с реални профили, рейтинги, препоръки и директни CTA бутони за контакт или заявка за оферта.";
@@ -246,8 +246,7 @@ class SeoPageController extends Controller
     {
         return [
             'avtoservizi' => ['slug' => 'avtoservizi', 'label' => 'Автосервизи', 'terms' => ['автосервиз', 'авто сервиз', 'автомобил']],
-            'maistori' => ['slug' => 'maistori', 'label' => 'Майстори', 'terms' => ['майстор', 'ремонт', 'строителство']],
-            'remonti' => ['slug' => 'remonti', 'label' => 'Ремонти', 'terms' => ['ремонт', 'майстор', 'строителство']],
+            'remonti' => ['slug' => 'remonti', 'label' => 'Ремонти', 'terms' => ['ремонт', 'строителство']],
             'vik-uslugi' => ['slug' => 'vik-uslugi', 'label' => 'ВиК услуги', 'terms' => ['вик', 'водопровод']],
             'elektrouslugi' => ['slug' => 'elektrouslugi', 'label' => 'Електроуслуги', 'terms' => ['електро', 'електротехник']],
             'saloni' => ['slug' => 'saloni', 'label' => 'Салони за красота', 'terms' => ['салон', 'красота', 'фризьор', 'маникюр']],

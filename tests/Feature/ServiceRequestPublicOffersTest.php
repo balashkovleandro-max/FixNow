@@ -31,13 +31,13 @@ class ServiceRequestPublicOffersTest extends TestCase
     {
         $serviceRequest = $this->serviceRequest();
         $offer = $this->offer($serviceRequest, $this->business([
-            'business_name' => 'FixNow Executor',
+            'business_name' => 'BON Executor',
         ]));
 
         $this->get(route('service-requests.offers.show', ['serviceRequest' => $serviceRequest->public_token]))
             ->assertOk()
             ->assertSee('Получени оферти')
-            ->assertSee('FixNow Executor')
+            ->assertSee('BON Executor')
             ->assertSee($offer->price_estimate)
             ->assertSee('Избери изпълнител')
             ->assertSee('data-track="offer_accept"', false);
@@ -337,7 +337,7 @@ class ServiceRequestPublicOffersTest extends TestCase
         return User::factory()->create(array_merge([
             'role' => 'business',
             'name' => 'Executor User',
-            'business_name' => 'FixNow Executor',
+            'business_name' => 'BON Executor',
             'business_category' => $this->requestCategory,
             'service_categories' => [$this->requestCategory],
             'city' => 'Pleven',
