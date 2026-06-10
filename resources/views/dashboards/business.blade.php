@@ -13,7 +13,7 @@
         $business = auth()->user();
         $subscriptionStatus = $business->effectiveSubscriptionStatus();
         $trialDaysRemaining = $business->trialDaysRemaining();
-        $profile = $business->profileCompleteness();
+        $profile = \App\Support\ProfileCompletion::summary($business);
         $serviceCount = $business->services->count();
         $photoCount = $business->photoCount();
         $cityCount = $business->serviceCityCount();
@@ -86,7 +86,7 @@
         <header class="rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl lg:hidden">
             <div class="flex items-center justify-between gap-3">
                 <a href="{{ url('/') }}" class="flex min-w-0 items-center gap-3">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 font-black">B</div>
                     <div class="min-w-0">
                         <p class="truncate text-lg font-black">Панел на бизнес</p>
                         <p class="truncate text-xs text-white/50">{{ $business->business_name ?: $business->name }}</p>
@@ -94,16 +94,17 @@
                 </a>
                 <a href="{{ route('business.billing') }}" class="inline-flex min-h-11 items-center rounded-2xl bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">План</a>
             </div>
-            <div class="mt-4 grid grid-cols-3 gap-2">
+            <div class="mt-4 grid grid-cols-2 gap-2">
                 <a href="{{ route('business.profile.edit') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-center text-sm font-black text-white">Редакция</a>
                 <a href="{{ route('business.insights.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-center text-sm font-black text-white">Финанси</a>
+                <a href="{{ route('business.jobs.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-center text-sm font-black text-white">Обяви</a>
                 <a href="{{ route('businesses.show', $business) }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-center text-sm font-black text-white">Профил</a>
             </div>
         </header>
 
         <aside class="hidden overflow-y-auto rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl lg:sticky lg:top-6 lg:block lg:h-[calc(100vh-48px)]">
             <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
+                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 font-black">B</div>
                 <div>
                     <p class="text-xl font-black">BON</p>
                     <p class="text-xs text-white/50">Панел на бизнес</p>
@@ -113,6 +114,7 @@
             <nav class="mt-8 grid gap-2 text-sm font-bold">
                 <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-3 text-orange-100">Обзор</a>
                 <a href="{{ route('business.insights.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Финансов анализ</a>
+                <a href="{{ route('business.jobs.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Обяви към фрийлансъри</a>
                 <a href="{{ route('business.profile.edit') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Редакция на профил</a>
                 <a href="{{ route('services.create') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Добави услуга</a>
                 <a href="{{ route('business.service-requests.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Заявки</a>
@@ -184,6 +186,123 @@
                     <p class="text-sm font-bold text-white/55">Режим на профила</p>
                     <p class="mt-2 text-2xl font-black">{{ $offerStats['has_request_based_categories'] ? 'Профил + заявки' : 'Профил' }}</p>
                     <a href="{{ route('business.service-requests.index') }}" class="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-2xl bg-white/10 px-4 py-3 text-sm font-black text-white hover:bg-white/15">Управлявай заявки</a>
+                </div>
+            </section>
+
+            @php
+                $freelancerJobStats = array_merge([
+                    'published' => 0,
+                    'open' => 0,
+                    'applications' => 0,
+                    'selected' => 0,
+                ], $freelancerJobStats ?? []);
+                $latestFreelancerJobs = $latestFreelancerJobs ?? collect();
+                $recentFreelancerApplications = $recentFreelancerApplications ?? collect();
+            @endphp
+
+            <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8" data-testid="business-freelancer-jobs-overview">
+                <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">BON Talent Network</p>
+                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Обяви, кандидатури и избрани специалисти</h2>
+                        <p class="mt-2 max-w-3xl text-sm leading-6 text-white/60">Публикувайте проект към фрийлансъри, сравнявайте кандидатури и избирайте подходящ специалист от business dashboard-а.</p>
+                    </div>
+                    <div class="flex flex-col gap-3 sm:flex-row">
+                        <a href="{{ route('business.jobs.create') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-orange-600/20">Публикувай заявка</a>
+                        <a href="{{ route('business.jobs.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white hover:bg-white/10">Виж кандидатури</a>
+                    </div>
+                </div>
+
+                <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    @foreach([
+                        ['label' => 'Публикувани обяви', 'value' => $freelancerJobStats['published']],
+                        ['label' => 'Активни обяви', 'value' => $freelancerJobStats['open']],
+                        ['label' => 'Получени кандидатури', 'value' => $freelancerJobStats['applications']],
+                        ['label' => 'Избрани специалисти', 'value' => $freelancerJobStats['selected']],
+                    ] as $stat)
+                        <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
+                            <p class="text-sm text-white/55">{{ $stat['label'] }}</p>
+                            <p class="mt-2 text-3xl font-black">{{ $stat['value'] }}</p>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="mt-6 grid gap-4 xl:grid-cols-2">
+                    <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
+                        <h3 class="text-lg font-black">Последни обяви</h3>
+                        <div class="mt-4 grid gap-3">
+                            @forelse($latestFreelancerJobs as $job)
+                                <div class="rounded-2xl bg-white/5 px-4 py-3">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div>
+                                            <p class="font-black">{{ $job->title }}</p>
+                                            <p class="mt-1 text-sm text-white/50">{{ $job->category ?: 'Проект' }} · {{ $job->applications_count }} кандидатури</p>
+                                        </div>
+                                        <span class="rounded-full {{ $job->status === 'open' ? 'bg-emerald-400/10 text-emerald-100' : 'bg-white/10 text-white/55' }} px-3 py-1 text-xs font-black">{{ $job->status === 'open' ? 'Отворена' : 'Затворена' }}</span>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="rounded-2xl bg-white/5 px-4 py-4 text-sm text-white/55">Все още няма публикувани freelancer обяви.</p>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
+                        <h3 class="text-lg font-black">Последни кандидатури</h3>
+                        <div class="mt-4 grid gap-3">
+                            @forelse($recentFreelancerApplications as $application)
+                                <div class="rounded-2xl bg-white/5 px-4 py-3">
+                                    <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                                        <div>
+                                            <p class="font-black">{{ $application->freelancer?->name ?: 'Фрийлансър' }}</p>
+                                            <p class="mt-1 text-sm text-white/50">{{ $application->job?->title ?: 'Обява' }}</p>
+                                        </div>
+                                        <span class="rounded-full {{ $application->status === 'accepted' ? 'bg-emerald-400/10 text-emerald-100' : ($application->status === 'not_selected' ? 'bg-white/10 text-white/55' : 'bg-orange-400/10 text-orange-100') }} px-3 py-1 text-xs font-black">{{ $application->status }}</span>
+                                    </div>
+                                    <div class="mt-3 grid gap-2 text-sm text-white/60 sm:grid-cols-2">
+                                        <p>Цена: <strong class="text-white">{{ $application->proposed_price ?: 'Не е посочена' }}</strong></p>
+                                        <p>Срок: <strong class="text-white">{{ $application->proposed_timeframe ?: 'Не е посочен' }}</strong></p>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="rounded-2xl bg-white/5 px-4 py-4 text-sm text-white/55">Все още няма кандидатури от freelancer профили.</p>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            @php
+                $recentBusinessDiagnostics = $recentBusinessDiagnostics ?? collect();
+            @endphp
+
+            <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8" data-testid="business-diagnostics-overview">
+                <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">BON диагностика</p>
+                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Бизнес анализи и следващи действия</h2>
+                        <p class="mt-2 max-w-3xl text-sm leading-6 text-white/60">Запазените диагностики помагат да следите повтарящите се проблеми, препоръките и подходящите специалисти.</p>
+                    </div>
+                    <a href="{{ route('bon.business-problem') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-violet-600/20">Нова диагностика</a>
+                </div>
+
+                <div class="mt-6 grid gap-3">
+                    @forelse($recentBusinessDiagnostics as $diagnostic)
+                        <a href="{{ route('bon.business-problem.result', $diagnostic) }}" class="block rounded-3xl border border-white/10 bg-slate-950/45 p-5 transition hover:-translate-y-0.5 hover:bg-slate-950/60">
+                            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                                <div>
+                                    <p class="font-black">{{ $diagnostic->problem_type }}</p>
+                                    <p class="mt-1 text-sm text-white/50">{{ $diagnostic->business_name ?: $business->business_name ?: $business->name }} · {{ $diagnostic->created_at?->format('d.m.Y H:i') }}</p>
+                                </div>
+                                <span class="rounded-full bg-blue-400/10 px-3 py-1 text-xs font-black text-blue-100">Виж резултат</span>
+                            </div>
+                            <p class="mt-3 line-clamp-2 text-sm leading-6 text-white/60">{{ $diagnostic->likely_reason }}</p>
+                        </a>
+                    @empty
+                        <div class="rounded-3xl border border-dashed border-white/15 bg-slate-950/35 p-6 text-sm leading-6 text-white/55">
+                            Все още няма запазени BON диагностики. Пуснете първи анализ, за да получите структурирани насоки за следваща стъпка.
+                        </div>
+                    @endforelse
                 </div>
             </section>
 

@@ -1,12 +1,12 @@
 <header class="sticky top-0 z-50 border-b border-white/50 bg-[#F8FAFF]/85 backdrop-blur-2xl">
-    <div class="mx-auto flex h-20 max-w-[1480px] items-center justify-between px-4 sm:px-6 lg:px-10">
+    <div class="mx-auto flex h-16 max-w-[1480px] items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-10">
         <a href="{{ url('/') }}" class="group flex items-center gap-3">
-            <span class="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-lg font-black text-white shadow-xl shadow-violet-500/25 transition group-hover:-translate-y-0.5">
+            <span class="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-base font-black text-white shadow-xl shadow-violet-500/25 transition group-hover:-translate-y-0.5 sm:h-11 sm:w-11 sm:text-lg">
                 B
                 <span class="absolute inset-0 rounded-2xl bg-white/15"></span>
             </span>
             <span class="leading-tight">
-                <span class="block text-xl font-black tracking-tight text-[#070B1F]">BON</span>
+                <span class="block text-lg font-black tracking-tight text-[#070B1F] sm:text-xl">BON</span>
                 <span class="hidden text-xs font-semibold text-slate-500 sm:block">Business Operating Network</span>
             </span>
         </a>
@@ -43,7 +43,7 @@
         </div>
 
         <details class="group relative md:hidden">
-            <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/70 bg-white/75 text-slate-700 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition hover:text-blue-600" aria-label="Меню">
+            <summary class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/70 bg-white/75 text-slate-700 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition hover:text-blue-600 sm:h-11 sm:w-11" aria-label="Меню">
                 <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                     <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
                 </svg>
@@ -52,7 +52,7 @@
                 </svg>
             </summary>
 
-            <div class="absolute right-0 top-14 w-[min(20rem,calc(100vw-2rem))] rounded-[1.75rem] border border-white/70 bg-white/90 p-3 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl">
+            <div class="absolute right-0 top-12 w-[min(21rem,calc(100vw-2rem))] rounded-[1.75rem] border border-white/70 bg-white/90 p-3 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:top-14">
                 <div class="grid gap-1">
                     <a href="{{ url('/') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-slate-600 hover:bg-blue-50 hover:text-blue-700">Начало</a>
                     <a href="{{ route('business.landing') }}" class="rounded-2xl px-4 py-3 text-sm font-black text-slate-600 hover:bg-blue-50 hover:text-blue-700">За бизнеси</a>

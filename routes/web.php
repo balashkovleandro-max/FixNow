@@ -12,10 +12,18 @@ use App\Http\Controllers\BusinessInsightsController;
 use App\Http\Controllers\BusinessPhotoController;
 use App\Http\Controllers\BusinessServiceRequestController;
 use App\Http\Controllers\AdminBusinessController;
+use App\Http\Controllers\AdminFreelancerCreditController;
 use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\AdminServiceRequestController;
+use App\Http\Controllers\BonHomeController;
+use App\Http\Controllers\BusinessDiagnosticController;
 use App\Http\Controllers\BusinessRecommendationController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CustomerOfferController;
+use App\Http\Controllers\FreelancerCreditController;
+use App\Http\Controllers\FreelancerJobController;
+use App\Http\Controllers\FreelancerPortfolioController;
+use App\Http\Controllers\FreelancerProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SeoPageController;
 use App\Http\Controllers\ServiceRequestAssignmentController;
@@ -24,12 +32,17 @@ use App\Http\Controllers\ServiceRequestOfferController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\TopBusinessesController;
 use App\Models\BusinessAnalyticsEvent;
+use App\Models\BusinessDiagnostic;
+use App\Models\FreelancerJob;
 use App\Models\Review;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestAssignment;
 use App\Models\User;
 use App\Support\BusinessGrowthMetrics;
 use App\Support\CategoryCatalog;
+use App\Support\FreelancerCredits;
+use App\Support\ProfileCompletion;
+use App\Support\ProfileTrust;
 use Illuminate\Support\Facades\Schema;
 
 Route::get('/health', fn () => response()->json([
@@ -45,17 +58,20 @@ Route::get('/sitemap.xml', fn () => response(file_get_contents(public_path('site
     'Content-Type' => 'application/xml; charset=UTF-8',
 ]))->name('sitemap');
 
-Route::view('/bon', 'bon.index')->name('bon.index');
-Route::view('/', 'bon.index')->name('home');
+Route::get('/bon', [BonHomeController::class, 'index'])->name('bon.index');
+Route::get('/', [BonHomeController::class, 'index'])->name('home');
 Route::view('/onboarding', 'bon.onboarding')->middleware('auth')->name('bon.onboarding');
 Route::view('/tools', 'bon.tools')->name('bon.tools');
 Route::redirect('/instrumenti', '/tools');
 Route::view('/za-potrebiteli', 'bon.consumers')->name('bon.consumers');
 Route::view('/freelancers', 'bon.freelancers')->name('bon.freelancers');
 Route::redirect('/za-freelanceri', '/freelancers');
+Route::get('/freelancers/{user}', [FreelancerProfileController::class, 'show'])->name('freelancers.show');
 Route::view('/talent-network', 'bon.talent-network')->name('bon.talent-network');
 Route::view('/bon/command-center', 'bon.command-center')->name('bon.command-center');
-Route::view('/bon/business-problem', 'bon.business-problem')->name('bon.business-problem');
+Route::get('/bon/business-problem', [BusinessDiagnosticController::class, 'create'])->name('bon.business-problem');
+Route::post('/bon/business-problem', [BusinessDiagnosticController::class, 'store'])->middleware('throttle:10,1')->name('bon.business-problem.store');
+Route::get('/bon/business-problem/{diagnostic}/result', [BusinessDiagnosticController::class, 'result'])->name('bon.business-problem.result');
 Route::view('/bon/profile', 'bon.profile')->name('bon.profile');
 Route::view('/bon/demo-business-profile', 'bon.profile')->name('bon.demo-profile');
 Route::redirect('/bon/business-profile', '/bon/profile');
@@ -264,6 +280,20 @@ if ($user->role === 'admin') {
         ];
     }
 
+    $adminStats['total_freelancers'] = User::query()->where('role', 'freelancer')->count();
+    $adminStats['freelancer_jobs'] = Schema::hasTable('freelancer_jobs')
+        ? FreelancerJob::query()->count()
+        : 0;
+    $adminStats['freelancer_applications'] = Schema::hasTable('freelancer_job_applications')
+        ? \App\Models\FreelancerJobApplication::query()->count()
+        : 0;
+    $adminStats['credit_transactions'] = Schema::hasTable('freelancer_credit_transactions')
+        ? \App\Models\FreelancerCreditTransaction::query()->count()
+        : 0;
+    $adminStats['business_diagnostics'] = Schema::hasTable('business_diagnostics')
+        ? BusinessDiagnostic::query()->count()
+        : 0;
+
     return view('dashboards.admin', compact('adminStats', 'businesses', 'businessFilter', 'pendingBusinesses', 'pendingReviews', 'platformAnalytics', 'serviceRequests', 'leadStats'));
 }
 
@@ -389,10 +419,85 @@ if ($user->role === 'business') {
             ->count();
     }
 
-    return view('dashboards.business', compact('analyticsStats', 'analyticsTotals', 'businessReviews', 'reviewStats', 'assignedServiceRequests', 'serviceRequestStats', 'offerStats'));
+    $freelancerJobStats = [
+        'published' => 0,
+        'open' => 0,
+        'applications' => 0,
+        'selected' => 0,
+    ];
+    $latestFreelancerJobs = collect();
+    $recentFreelancerApplications = collect();
+    $recentBusinessDiagnostics = collect();
+
+    if (Schema::hasTable('freelancer_jobs')) {
+        $freelancerJobsQuery = FreelancerJob::query()->where('business_id', $user->id);
+
+        $freelancerJobStats['published'] = (clone $freelancerJobsQuery)->count();
+        $freelancerJobStats['open'] = (clone $freelancerJobsQuery)->where('status', FreelancerJob::STATUS_OPEN)->count();
+
+        $latestFreelancerJobs = (clone $freelancerJobsQuery)
+            ->withCount('applications')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        if (Schema::hasTable('freelancer_job_applications')) {
+            $applicationQuery = \App\Models\FreelancerJobApplication::query()
+                ->whereHas('job', fn ($query) => $query->where('business_id', $user->id));
+
+            $freelancerJobStats['applications'] = (clone $applicationQuery)->count();
+            $freelancerJobStats['selected'] = (clone $applicationQuery)
+                ->where('status', \App\Models\FreelancerJobApplication::STATUS_ACCEPTED)
+                ->count();
+
+            $recentFreelancerApplications = (clone $applicationQuery)
+                ->with(['freelancer', 'job'])
+                ->latest()
+                ->take(6)
+                ->get();
+        }
+    }
+
+    if (Schema::hasTable('business_diagnostics')) {
+        $recentBusinessDiagnostics = BusinessDiagnostic::query()
+            ->where('user_id', $user->id)
+            ->latest()
+            ->take(5)
+            ->get();
+    }
+
+    return view('dashboards.business', compact('analyticsStats', 'analyticsTotals', 'businessReviews', 'reviewStats', 'assignedServiceRequests', 'serviceRequestStats', 'offerStats', 'freelancerJobStats', 'latestFreelancerJobs', 'recentFreelancerApplications', 'recentBusinessDiagnostics'));
+}
+
+if ($user->isFreelancer()) {
+    FreelancerCredits::ensureMonthlyCredits($user);
+    $user->loadMissing('freelancerPortfolioItems');
+
+    $creditStats = FreelancerCredits::stats($user);
+    $profile = ProfileCompletion::summary($user);
+    $recentApplications = Schema::hasTable('freelancer_job_applications')
+        ? $user->freelancerJobApplications()
+            ->with('job.business')
+            ->latest()
+            ->take(8)
+            ->get()
+        : collect();
+
+    $openJobs = Schema::hasTable('freelancer_jobs')
+        ? FreelancerJob::query()
+            ->open()
+            ->with('business')
+            ->withCount('applications')
+            ->latest()
+            ->take(6)
+            ->get()
+        : collect();
+
+    return view('dashboards.freelancer', compact('creditStats', 'recentApplications', 'openJobs', 'profile'));
 }
 
 $customerServiceRequests = collect();
+$favoriteProfiles = collect();
 $customerRequestStats = [
     'total' => 0,
     'open' => 0,
@@ -449,7 +554,18 @@ if (Schema::hasTable('service_requests')) {
     ];
 }
 
-return view('dashboards.client', compact('customerServiceRequests', 'customerRequestStats'));
+if (Schema::hasTable('user_favorites')) {
+    $favoriteProfiles = $user->favorites()
+        ->with('favoriteUser')
+        ->latest()
+        ->take(24)
+        ->get()
+        ->pluck('favoriteUser')
+        ->filter()
+        ->values();
+}
+
+return view('dashboards.client', compact('customerServiceRequests', 'customerRequestStats', 'favoriteProfiles'));
 })->name('dashboard');
 Route::view('/offer-services', 'offer-services')->name('offer-services');
 Route::view('/contact', 'contact')->name('contact');
@@ -468,6 +584,9 @@ Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('/favorites/{profile}', [FavoriteController::class, 'store'])->middleware('throttle:30,1')->name('favorites.store');
+    Route::delete('/favorites/{profile}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+
     Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
     Route::post('/services', [ServiceController::class, 'store'])->middleware('throttle:10,1')->name('services.store');
 
@@ -482,10 +601,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/business/service-requests/{serviceRequest}/offers', [ServiceRequestOfferController::class, 'store'])->middleware('throttle:10,1')->name('business.service-requests.offers.store');
     Route::get('/business/insights', [BusinessInsightsController::class, 'index'])->name('business.insights.index');
     Route::post('/business/insights', [BusinessInsightsController::class, 'store'])->middleware('throttle:10,1')->name('business.insights.store');
+    Route::get('/business/jobs', [FreelancerJobController::class, 'businessIndex'])->name('business.jobs.index');
+    Route::get('/business/jobs/create', [FreelancerJobController::class, 'create'])->name('business.jobs.create');
+    Route::post('/business/jobs', [FreelancerJobController::class, 'store'])->middleware('throttle:10,1')->name('business.jobs.store');
+    Route::patch('/business/jobs/applications/{application}/select', [FreelancerJobController::class, 'selectApplication'])->middleware('throttle:20,1')->name('business.jobs.applications.select');
     Route::get('/business/billing', [BillingController::class, 'show'])->name('business.billing');
     Route::post('/business/billing/checkout', [BillingController::class, 'checkout'])->middleware('throttle:10,1')->name('business.billing.checkout');
     Route::post('/business/billing/portal', [BillingController::class, 'portal'])->middleware('throttle:10,1')->name('business.billing.portal');
     Route::post('/business/billing/upgrade-premium', [BillingController::class, 'upgradePremium'])->middleware('throttle:10,1')->name('business.billing.upgrade-premium');
+
+    Route::get('/freelancer/credits', [FreelancerCreditController::class, 'index'])->name('freelancer.credits.index');
+    Route::post('/freelancer/credits/purchase', [FreelancerCreditController::class, 'purchase'])->middleware('throttle:10,1')->name('freelancer.credits.purchase');
+    Route::get('/freelancer/jobs', [FreelancerJobController::class, 'index'])->name('freelancer.jobs.index');
+    Route::get('/freelancer/jobs/{freelancerJob}', [FreelancerJobController::class, 'show'])->name('freelancer.jobs.show');
+    Route::post('/freelancer/jobs/{freelancerJob}/apply', [FreelancerJobController::class, 'apply'])->middleware('throttle:10,1')->name('freelancer.jobs.apply');
+    Route::post('/freelancer/portfolio', [FreelancerPortfolioController::class, 'store'])->middleware('throttle:10,1')->name('freelancer.portfolio.store');
+    Route::delete('/freelancer/portfolio/{portfolioItem}', [FreelancerPortfolioController::class, 'destroy'])->name('freelancer.portfolio.destroy');
 
     Route::patch('/admin/businesses/{user}/activate-30-days', [AdminBusinessController::class, 'activate'])->name('admin.businesses.activate');
     Route::patch('/admin/businesses/{user}/extend-trial', [AdminBusinessController::class, 'extendTrial'])->name('admin.businesses.extend-trial');
@@ -501,6 +632,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/admin/service-requests/{serviceRequest}/closed', [AdminServiceRequestController::class, 'markClosed'])->name('admin.service-requests.closed');
     Route::patch('/admin/service-requests/{serviceRequest}/completed', [AdminServiceRequestController::class, 'markCompleted'])->name('admin.service-requests.completed');
     Route::patch('/admin/service-requests/{serviceRequest}/cancelled', [AdminServiceRequestController::class, 'markCancelled'])->name('admin.service-requests.cancelled');
+    Route::get('/admin/freelancer-credits', [AdminFreelancerCreditController::class, 'index'])->name('admin.freelancer-credits.index');
+    Route::post('/admin/freelancer-credits/{user}/adjust', [AdminFreelancerCreditController::class, 'adjust'])->middleware('throttle:20,1')->name('admin.freelancer-credits.adjust');
     Route::patch('/service-request-assignments/{assignment}/contacted', [ServiceRequestAssignmentController::class, 'contacted'])->name('service-request-assignments.contacted');
     Route::patch('/service-request-assignments/{assignment}/declined', [ServiceRequestAssignmentController::class, 'declined'])->name('service-request-assignments.declined');
     Route::patch('/service-request-assignments/{assignment}/closed', [ServiceRequestAssignmentController::class, 'closed'])->name('service-request-assignments.closed');

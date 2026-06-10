@@ -30,7 +30,7 @@
             'title' => 'Искам да съм специалист',
             'description' => 'Кандидатствай за BON Talent Network и получавай възможности от бизнеси с реални проблеми за решаване.',
             'button' => 'Кандидатствай като специалист',
-            'href' => route('bon.talent-network'),
+            'href' => auth()->user()?->isFreelancer() ? route('freelancer.credits.index') : route('bon.freelancers'),
             'accent' => 'from-violet-600 via-blue-600 to-fuchsia-500',
             'glow' => 'shadow-violet-600/20',
             'icon' => '✦',

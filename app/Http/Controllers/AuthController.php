@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Support\FreelancerCredits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 class AuthController extends Controller
 {
@@ -20,7 +22,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'string', 'min:8', 'max:255'],
-            'role' => ['required', 'in:customer,client,business'],
+            'role' => ['required', 'in:customer,client,business,freelancer'],
         ]);
 
         $role = $validated['role'] === 'client' ? 'customer' : $validated['role'];
@@ -34,8 +36,16 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        if (Schema::hasColumn('users', 'last_active_at')) {
+            $user->forceFill(['last_active_at' => now()])->save();
+        }
+
         if ($user->isBusiness()) {
             $user->initializeTrialIfMissing();
+        }
+
+        if ($user->isFreelancer()) {
+            FreelancerCredits::ensureMonthlyCredits($user);
         }
 
         return redirect()->route('bon.onboarding');
@@ -58,8 +68,16 @@ class AuthController extends Controller
 
             $user = $request->user();
 
+            if ($user && Schema::hasColumn('users', 'last_active_at')) {
+                $user->forceFill(['last_active_at' => now()])->save();
+            }
+
             if ($user && $user->role === 'admin') {
                 return redirect('/dashboard');
+            }
+
+            if ($user && $user->isFreelancer()) {
+                FreelancerCredits::ensureMonthlyCredits($user);
             }
 
             return redirect()->route('bon.onboarding');

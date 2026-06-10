@@ -60,23 +60,23 @@
         <div class="relative z-10">
             @include('partials.public-header')
 
-            <section class="mx-auto grid max-w-[1440px] gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:px-8 lg:py-24">
+            <section class="mx-auto grid max-w-[1440px] gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:px-8 lg:py-24">
                 <div>
-                    <div class="inline-flex rounded-full border border-violet-200/70 bg-white/80 px-4 py-2 text-sm font-bold text-violet-700 shadow-sm backdrop-blur-xl">
+                    <div class="inline-flex rounded-full border border-violet-200/70 bg-white/80 px-3.5 py-2 text-xs font-bold text-violet-700 shadow-sm backdrop-blur-xl sm:px-4 sm:text-sm">
                         BON Freelancers
                     </div>
-                    <h1 class="mt-6 max-w-4xl text-4xl font-black leading-tight tracking-tight sm:text-6xl">
+                    <h1 class="mt-5 max-w-4xl text-3xl font-black leading-tight tracking-tight sm:mt-6 sm:text-6xl">
                         Покажи услугите си пред <span class="bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">правилните клиенти</span>.
                     </h1>
-                    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+                    <p class="mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:mt-6 sm:text-lg sm:leading-8">
                         BON помага на фрилансъри и независими специалисти да изградят професионален профил,
                         да бъдат откривани по-лесно и да получават повече запитвания от реални клиенти.
                     </p>
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <a href="{{ route('register') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5">
+                        <a href="{{ route('register') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 sm:w-auto">
                             Започни като фрилансър
                         </a>
-                        <a href="{{ route('plans') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600">
+                        <a href="{{ route('plans') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
                             Виж плановете
                         </a>
                     </div>
@@ -84,7 +84,7 @@
 
                 <div class="relative">
                     <div class="absolute -inset-8 rounded-full bg-gradient-to-br from-blue-400/18 via-violet-400/18 to-fuchsia-400/18 blur-3xl"></div>
-                    <div class="relative rounded-[2rem] border border-white/70 bg-white/78 p-6 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-8">
+                    <div class="relative rounded-[1.65rem] border border-white/70 bg-white/78 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                         <div class="flex items-center justify-between gap-4">
                             <div>
                                 <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Профил</p>
@@ -110,10 +110,10 @@
                 </div>
             </section>
 
-            <section class="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
-                <div class="rounded-[2rem] border border-white/70 bg-white/76 p-6 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:p-8">
+            <section class="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+                <div class="rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Как работи</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">От професионално представяне към повече доверие.</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">От професионално представяне към повече доверие.</h2>
                     <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                         @foreach ($steps as $step)
                             <article class="rounded-3xl border border-slate-100 bg-white/75 p-5 shadow-lg shadow-blue-900/5">
@@ -126,10 +126,10 @@
                 </div>
             </section>
 
-            <section class="mx-auto grid max-w-[1440px] gap-6 px-4 py-8 sm:px-6 lg:grid-cols-2 lg:px-8">
-                <div class="rounded-[2rem] border border-white/70 bg-white/76 p-6 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:p-8">
+            <section class="mx-auto grid max-w-[1440px] gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-2 lg:px-8">
+                <div class="rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-600">Предимства</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight">За специалисти, които искат да изглеждат сериозно онлайн.</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-3xl">За специалисти, които искат да изглеждат сериозно онлайн.</h2>
                     <div class="mt-7 grid gap-3">
                         @foreach ($benefits as $benefit)
                             <div class="flex gap-3 rounded-2xl bg-white/80 p-4 text-sm font-bold text-slate-700 shadow-sm">
@@ -140,9 +140,9 @@
                     </div>
                 </div>
 
-                <div class="rounded-[2rem] border border-white/70 bg-white/76 p-6 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:p-8">
+                <div class="rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Категории специалисти</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight">Покажи експертизата си ясно.</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Покажи експертизата си ясно.</h2>
                     <div class="mt-7 flex flex-wrap gap-3">
                         @foreach ($categories as $category)
                             <span class="rounded-full border border-white/80 bg-white/80 px-4 py-2 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-gradient-to-r hover:from-blue-600 hover:to-fuchsia-500 hover:text-white">
@@ -158,10 +158,10 @@
                 </div>
             </section>
 
-            <section class="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
-                <div class="rounded-[2rem] border border-white/70 bg-white/76 p-6 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:p-8">
+            <section class="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+                <div class="rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">FAQ</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight">Често задавани въпроси</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Често задавани въпроси</h2>
                     <div class="mt-7 grid gap-4 md:grid-cols-2">
                         @foreach ($faqs as $faq)
                             <article class="rounded-3xl border border-slate-100 bg-white/78 p-5 shadow-sm">
@@ -173,14 +173,14 @@
                 </div>
             </section>
 
-            <section class="mx-auto max-w-[1440px] px-4 pb-16 pt-8 sm:px-6 lg:px-8">
-                <div class="rounded-[2rem] border border-white/70 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-6 text-white shadow-2xl shadow-violet-500/20 sm:p-8">
+            <section class="mx-auto max-w-[1440px] px-4 pb-12 pt-6 sm:px-6 sm:pb-16 sm:pt-8 lg:px-8">
+                <div class="rounded-[1.65rem] border border-white/70 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-5 text-white shadow-2xl shadow-violet-500/20 sm:rounded-[2rem] sm:p-8">
                     <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
                         <div>
                             <p class="text-sm font-black uppercase tracking-[0.22em] text-white/70">Започни с BON</p>
-                            <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Създай профил, който работи за доверието ти.</h2>
+                            <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Създай профил, който работи за доверието ти.</h2>
                         </div>
-                        <a href="{{ route('register') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl">
+                        <a href="{{ route('register') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl sm:w-auto">
                             Създай профил
                         </a>
                     </div>

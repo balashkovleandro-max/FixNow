@@ -7,6 +7,7 @@ use App\Models\Review;
 use App\Models\User;
 use App\Support\BusinessGrowthMetrics;
 use App\Support\CategoryCatalog;
+use App\Support\ProfileTrust;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
@@ -128,7 +129,9 @@ class BusinessController extends Controller
             ->values();
 
         $recommendationsCount = $user->recommendationsCount();
+        $trustSummary = ProfileTrust::summary($user);
+        $similarBusinesses = ProfileTrust::ranked(ProfileTrust::attach($similarBusinesses));
 
-        return view('businesses.show', compact('user', 'similarBusinesses', 'approvedReviews', 'reviewsCount', 'averageRating', 'recommendationsCount'));
+        return view('businesses.show', compact('user', 'similarBusinesses', 'approvedReviews', 'reviewsCount', 'averageRating', 'recommendationsCount', 'trustSummary'));
     }
 }

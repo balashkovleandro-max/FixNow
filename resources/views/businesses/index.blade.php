@@ -107,7 +107,7 @@
         <section class="mt-8">
             @if($businesses->isEmpty())
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-10 text-center shadow-xl shadow-black/20 backdrop-blur-xl" data-testid="public-businesses-empty-state">
-                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-2xl font-black">F</p>
+                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-2xl font-black">B</p>
                     <h2 class="mt-5 text-2xl font-black">Все още няма активни бизнеси тук</h2>
                     <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">Ако предлагаш услуги или управляваш място в тази категория, добави профил и започни да изграждаш видимост, доверие и професионално онлайн присъствие.</p>
                     <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">

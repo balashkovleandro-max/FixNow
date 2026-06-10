@@ -41,7 +41,7 @@
     <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-3">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</span>
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 font-black">B</span>
                 <span class="text-xl font-black">BON Admin</span>
             </a>
             <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">Admin табло</a>
@@ -173,7 +173,7 @@
                 </article>
             @empty
                 <div class="rounded-[28px] border border-white/10 bg-white/10 p-8 text-center shadow-xl shadow-black/20 backdrop-blur-xl">
-                    <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 text-xl font-black">F</p>
+                    <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                     <h2 class="mt-4 text-2xl font-black">Няма заявки по този филтър</h2>
                     <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">Променете филтрите или вижте всички заявки, за да проследите статуса и назначените бизнеси.</p>
                     <a href="{{ route('admin.service-requests.index') }}" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/15">Виж всички заявки</a>

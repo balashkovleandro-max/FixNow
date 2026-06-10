@@ -6,6 +6,7 @@ use App\Mail\ServiceRequestOfferAcceptedBusinessMail;
 use App\Mail\ServiceRequestOfferNotSelectedBusinessMail;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestOffer;
+use App\Support\ProfileTrust;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -27,7 +28,25 @@ class ServiceRequestPublicOfferController extends Controller
             'selectedOffer.business',
         ]);
 
-        return view('service-requests.offers-show', compact('serviceRequest'));
+        $offerComparisons = $serviceRequest->offers
+            ->map(function (ServiceRequestOffer $offer) {
+                $business = $offer->business;
+                $trust = $business ? ProfileTrust::summary($business) : null;
+
+                return [
+                    'offer' => $offer,
+                    'business' => $business,
+                    'name' => $business?->business_name ?: $business?->name ?: 'Бизнес във BON',
+                    'price' => $offer->price_estimate,
+                    'timeframe' => $offer->timeframe,
+                    'rating' => $trust['average_rating'] ?? null,
+                    'trust_score' => $trust['trust_score'] ?? 0,
+                    'completed_projects' => $trust['completed_projects_count'] ?? 0,
+                    'badges' => $trust['badges'] ?? [],
+                ];
+            });
+
+        return view('service-requests.offers-show', compact('serviceRequest', 'offerComparisons'));
     }
 
     public function accept(ServiceRequest $serviceRequest, ServiceRequestOffer $offer): RedirectResponse

@@ -46,7 +46,7 @@
     <header class="border-b border-white/10 bg-slate-950/55 backdrop-blur-xl">
         <nav class="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 text-xl font-black">F</span>
+                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 text-xl font-black">B</span>
                 <span class="text-xl font-black">BON</span>
             </a>
             <div class="flex items-center gap-2">

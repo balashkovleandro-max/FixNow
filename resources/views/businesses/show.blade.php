@@ -56,6 +56,9 @@
         $reviewsCount = (int) ($reviewsCount ?? $approvedReviews->count());
         $recommendationsCount = (int) ($recommendationsCount ?? $user->recommendationsCount());
         $publicBadges = $user->publicBadges();
+        $trustSummary = $trustSummary ?? $user->trustSummary();
+        $trustBadges = collect($trustSummary['badges'] ?? []);
+        $trustReasons = $trustSummary['reasons'] ?? [];
         $averageRating = $averageRating ? round((float) $averageRating, 1) : null;
         $ratingStars = function ($rating) {
             $filled = max(0, min(5, (int) round((float) $rating)));
@@ -97,6 +100,9 @@
                                 <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/80 ring-1 ring-white/10">{{ $badge }}</span>
                             @endunless
                         @endforeach
+                        @foreach($trustBadges->reject(fn ($badge) => in_array($badge, ['Premium', 'Верифициран'], true))->take(3) as $badge)
+                            <span class="rounded-full bg-blue-400/15 px-3 py-1 text-xs font-black text-blue-100 ring-1 ring-blue-300/20">{{ $badge }}</span>
+                        @endforeach
                     </div>
 
                     <div class="mt-8 flex flex-col gap-6 sm:flex-row sm:items-end">
@@ -110,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
                         <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
                             <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Локация</p>
                             <p class="mt-2 font-black">{{ $cityLabel }}</p>
@@ -136,6 +142,11 @@
                             <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Препоръки</p>
                             <p class="mt-2 font-black">{{ $recommendationsCount }}</p>
                             <p class="mt-1 text-xs text-amber-200">от клиенти във BON</p>
+                        </div>
+                        <div class="rounded-3xl border border-blue-300/20 bg-blue-400/10 p-4">
+                            <p class="text-xs font-black uppercase tracking-[0.18em] text-blue-100/70">Trust Score</p>
+                            <p class="mt-2 font-black text-blue-100">{{ $trustSummary['trust_score'] }}/100</p>
+                            <p class="mt-1 text-xs text-blue-100/70">{{ $trustSummary['response_label'] ? 'Отговаря за ' . $trustSummary['response_label'] : 'Репутация' }}</p>
                         </div>
                     </div>
 
@@ -173,7 +184,7 @@
                                 </button>
                             </form>
                         @endif
-                        <a href="{{ auth()->check() ? route('dashboard') : route('login') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Запази</a>
+                        @include('partials.favorite-button', ['profile' => $user, 'variant' => 'dark'])
                         <button type="button" onclick="if (navigator.share) { navigator.share({ title: '{{ addslashes($businessName) }}', url: window.location.href }); } else if (navigator.clipboard) { navigator.clipboard.writeText(window.location.href); }" class="min-h-12 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 font-black text-white hover:bg-white/10">Сподели</button>
                     </div>
                 </div>
@@ -185,7 +196,7 @@
                         @else
                             <div class="flex h-full min-h-[280px] items-center justify-center bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-orange-600/25">
                                 <div class="px-6 text-center">
-                                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-950/60 text-2xl font-black text-orange-100">F</p>
+                                    <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-950/60 text-2xl font-black text-blue-100">B</p>
                                     <p class="mt-4 font-black">Снимките ще се появят тук</p>
                                     <p class="mt-2 text-sm text-white/55">Бизнесят все още не е качил галерия.</p>
                                 </div>
@@ -322,7 +333,7 @@
                         </div>
                     @else
                         <div class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
-                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
+                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                             <p class="mt-4 text-lg font-black">Все още няма качени снимки</p>
                             <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато бизнесят добави снимки в своята галерия, те ще се показват тук.</p>
                         </div>
@@ -354,7 +365,7 @@
                             </a>
                         @empty
                             <div class="md:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center" data-testid="business-profile-services-empty">
-                                <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
+                                <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                                 <p class="mt-4 text-lg font-black">Все още няма добавени услуги с цени</p>
                                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Можете да изпратите запитване, за да получите индивидуална оферта от този бизнес.</p>
                                 <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-3 text-sm font-black text-white">Изпрати запитване</a>
@@ -365,7 +376,28 @@
 
                 <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Доверие</p>
-                    <h2 class="mt-3 text-3xl font-black">Защо този профил вдъхва доверие</h2>
+                    <h2 class="mt-3 text-3xl font-black">Защо клиентите избират този специалист</h2>
+                    <div class="mt-6 grid gap-3 md:grid-cols-3">
+                        <div class="rounded-3xl border border-blue-300/20 bg-blue-400/10 p-5">
+                            <p class="text-sm font-black uppercase tracking-[0.18em] text-blue-100/70">Trust Score</p>
+                            <p class="mt-2 text-4xl font-black text-blue-100">{{ $trustSummary['trust_score'] }}/100</p>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
+                            <p class="text-sm font-black uppercase tracking-[0.18em] text-white/40">Завършени проекти</p>
+                            <p class="mt-2 text-4xl font-black">{{ $trustSummary['completed_projects_count'] }}</p>
+                        </div>
+                        <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
+                            <p class="text-sm font-black uppercase tracking-[0.18em] text-white/40">Успешно завършени</p>
+                            <p class="mt-2 text-4xl font-black">{{ $trustSummary['success_rate'] }}%</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 grid gap-3">
+                        @foreach($trustReasons as $reason)
+                            <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-4 text-sm leading-6 text-white/70">
+                                {{ $reason }}
+                            </div>
+                        @endforeach
+                    </div>
                     <div class="mt-6 grid gap-4 md:grid-cols-2">
                         @if($user->is_verified)
                             <div class="rounded-3xl border border-emerald-300/20 bg-emerald-400/10 p-5">

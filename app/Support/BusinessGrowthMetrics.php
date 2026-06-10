@@ -77,7 +77,7 @@ class BusinessGrowthMetrics
                 ->pluck('clicks_count', 'business_id');
         }
 
-        return $businesses->map(function (User $business) use ($reviewStats, $recommendationCounts, $profileViewCounts, $clickCounts) {
+        return ProfileTrust::attach($businesses)->map(function (User $business) use ($reviewStats, $recommendationCounts, $profileViewCounts, $clickCounts) {
             $reviews = $reviewStats->get($business->id);
 
             $business->setAttribute('growth_average_rating', $reviews ? round((float) $reviews->average_rating, 1) : null);
@@ -85,6 +85,11 @@ class BusinessGrowthMetrics
             $business->setAttribute('growth_recommendations_count', (int) ($recommendationCounts[$business->id] ?? 0));
             $business->setAttribute('growth_profile_views_count', (int) ($profileViewCounts[$business->id] ?? 0));
             $business->setAttribute('growth_clicks_count', (int) ($clickCounts[$business->id] ?? 0));
+            $trustSummary = $business->trust_summary ?? ProfileTrust::summary($business);
+
+            $business->setAttribute('trust_summary', $trustSummary);
+            $business->setAttribute('trust_score', $trustSummary['trust_score'] ?? 0);
+            $business->setAttribute('trust_badges', $trustSummary['badges'] ?? []);
             $business->setAttribute('growth_score', self::score($business));
 
             return $business;
@@ -108,15 +113,17 @@ class BusinessGrowthMetrics
 
     public static function score(User $business): float
     {
-        return ($business->isPremium() ? 10000 : 0)
-            + ($business->is_verified ? 5000 : 0)
-            + ((float) ($business->growth_average_rating ?? 0) * 1000)
-            + ((int) ($business->growth_reviews_count ?? 0) * 60)
+        $trustSummary = $business->trust_summary ?? ProfileTrust::summary($business);
+        $lastActivityScore = (int) floor(($trustSummary['last_active_at']?->timestamp ?? 0) / 86400);
+
+        return ($business->isPremium() ? 100000000 : 0)
+            + ((int) ($trustSummary['trust_score'] ?? 0) * 100000)
+            + ((float) ($trustSummary['average_rating'] ?? $business->growth_average_rating ?? 0) * 10000)
+            + ((int) ($trustSummary['completed_projects_count'] ?? 0) * 500)
+            + $lastActivityScore
             + ((int) ($business->growth_recommendations_count ?? 0) * 85)
             + ((int) ($business->growth_clicks_count ?? 0) * 8)
-            + ((int) ($business->growth_profile_views_count ?? 0) * 3)
-            + ((int) ($business->profileCompleteness()['percent'] ?? 0) * 2)
-            + ($business->isSubscriptionActive() ? 100 : 0);
+            + ((int) ($business->growth_profile_views_count ?? 0) * 3);
     }
 
     public static function filterByCity(Collection $businesses, ?string $city): Collection

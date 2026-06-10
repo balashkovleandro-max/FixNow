@@ -36,6 +36,7 @@
         ];
 
         $offers = $serviceRequest->offers ?? collect();
+        $offerComparisons = $offerComparisons ?? collect();
         $selectedOffer = $serviceRequest->selectedOffer ?: $offers->firstWhere('status', 'accepted');
         $photos = $serviceRequest->photos ?? collect();
         $mainPhoto = $photos->first()?->path ?: $serviceRequest->image;
@@ -114,7 +115,7 @@
                 @else
                     <div class="flex h-56 w-full items-center justify-center rounded-3xl border border-white/10 bg-slate-950/45 text-center">
                         <div>
-                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black">F</p>
+                            <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                             <p class="mt-3 text-sm font-bold text-white/65">Няма качени снимки към заявката</p>
                         </div>
                     </div>
@@ -134,6 +135,119 @@
                 </div>
             </aside>
         </section>
+
+        @if($offerComparisons->isNotEmpty())
+            <section class="mt-8 rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:p-6">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-300/70">Сравнение на оферти</p>
+                        <h2 class="mt-2 text-2xl font-black sm:text-3xl">Изберете по цена, срок и доверие</h2>
+                        <p class="mt-2 max-w-2xl text-sm leading-6 text-white/60">BON подрежда ключовите сигнали в един преглед, за да вземете спокойно решение.</p>
+                    </div>
+                    <span class="rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-sm font-black text-white/75">{{ $offerComparisons->count() }} предложения</span>
+                </div>
+
+                <div class="mt-6 hidden overflow-hidden rounded-3xl border border-white/10 lg:block">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-950/55 text-xs uppercase tracking-[0.18em] text-white/45">
+                            <tr>
+                                <th class="px-5 py-4">Изпълнител</th>
+                                <th class="px-5 py-4">Цена</th>
+                                <th class="px-5 py-4">Срок</th>
+                                <th class="px-5 py-4">Рейтинг</th>
+                                <th class="px-5 py-4">Trust</th>
+                                <th class="px-5 py-4">Проекти</th>
+                                <th class="px-5 py-4 text-right">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/10 bg-white/[0.03]">
+                            @foreach($offerComparisons as $comparison)
+                                @php
+                                    $comparisonOffer = $comparison['offer'];
+                                    $comparisonBusiness = $comparison['business'];
+                                    $comparisonSelected = $selectedOffer && (int) $selectedOffer->id === (int) $comparisonOffer->id;
+                                    $canSelectComparison = !$selectedOffer && in_array($comparisonOffer->status, ['sent', 'viewed'], true);
+                                @endphp
+                                <tr class="{{ $comparisonSelected ? 'bg-emerald-400/10' : '' }}">
+                                    <td class="px-5 py-4">
+                                        <div class="font-black text-white">{{ $comparison['name'] }}</div>
+                                        <div class="mt-1 flex flex-wrap gap-1">
+                                            @foreach(array_slice($comparison['badges'] ?? [], 0, 2) as $badge)
+                                                <span class="rounded-full bg-orange-400/10 px-2 py-0.5 text-[11px] font-black text-orange-100">{{ $badge }}</span>
+                                            @endforeach
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4 text-white/75">{{ $comparison['price'] ?: 'Не е посочена' }}</td>
+                                    <td class="px-5 py-4 text-white/75">{{ $comparison['timeframe'] ?: 'Не е посочен' }}</td>
+                                    <td class="px-5 py-4 text-white/75">{{ $comparison['rating'] ? number_format($comparison['rating'], 1) : '—' }}</td>
+                                    <td class="px-5 py-4">
+                                        <span class="rounded-full bg-blue-400/10 px-3 py-1 text-xs font-black text-blue-100">{{ $comparison['trust_score'] }}/100</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-white/75">{{ $comparison['completed_projects'] }}</td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center justify-end gap-2">
+                                            @if($comparisonBusiness)
+                                                <a href="{{ route('businesses.show', $comparisonBusiness) }}" class="rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-xs font-black text-white hover:bg-white/15">Виж профил</a>
+                                            @endif
+
+                                            @if($comparisonSelected)
+                                                <span class="rounded-2xl border border-emerald-300/25 bg-emerald-400/10 px-4 py-2 text-xs font-black text-emerald-100">Избран</span>
+                                            @elseif($canSelectComparison)
+                                                <form action="{{ route('service-requests.offers.accept', ['serviceRequest' => $serviceRequest->public_token, 'offer' => $comparisonOffer]) }}" method="POST">
+                                                    @csrf
+                                                    <button class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-4 py-2 text-xs font-black text-white shadow-lg shadow-orange-950/30">Избери</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-6 grid gap-4 lg:hidden">
+                    @foreach($offerComparisons as $comparison)
+                        @php
+                            $comparisonOffer = $comparison['offer'];
+                            $comparisonBusiness = $comparison['business'];
+                            $comparisonSelected = $selectedOffer && (int) $selectedOffer->id === (int) $comparisonOffer->id;
+                            $canSelectComparison = !$selectedOffer && in_array($comparisonOffer->status, ['sent', 'viewed'], true);
+                        @endphp
+                        <article class="rounded-3xl border {{ $comparisonSelected ? 'border-emerald-300/25 bg-emerald-400/10' : 'border-white/10 bg-slate-950/45' }} p-4">
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <h3 class="text-lg font-black">{{ $comparison['name'] }}</h3>
+                                    <p class="mt-1 text-xs font-bold text-white/45">Trust Score {{ $comparison['trust_score'] }}/100</p>
+                                </div>
+                                @if($comparisonSelected)
+                                    <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-black text-emerald-100">Избран</span>
+                                @endif
+                            </div>
+
+                            <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
+                                <p class="rounded-2xl bg-white/5 p-3"><span class="block text-xs text-white/40">Цена</span><strong>{{ $comparison['price'] ?: '—' }}</strong></p>
+                                <p class="rounded-2xl bg-white/5 p-3"><span class="block text-xs text-white/40">Срок</span><strong>{{ $comparison['timeframe'] ?: '—' }}</strong></p>
+                                <p class="rounded-2xl bg-white/5 p-3"><span class="block text-xs text-white/40">Рейтинг</span><strong>{{ $comparison['rating'] ? number_format($comparison['rating'], 1) : '—' }}</strong></p>
+                                <p class="rounded-2xl bg-white/5 p-3"><span class="block text-xs text-white/40">Проекти</span><strong>{{ $comparison['completed_projects'] }}</strong></p>
+                            </div>
+
+                            <div class="mt-4 grid gap-2 sm:grid-cols-2">
+                                @if($comparisonBusiness)
+                                    <a href="{{ route('businesses.show', $comparisonBusiness) }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 text-sm font-black text-white">Виж профил</a>
+                                @endif
+                                @if($canSelectComparison)
+                                    <form action="{{ route('service-requests.offers.accept', ['serviceRequest' => $serviceRequest->public_token, 'offer' => $comparisonOffer]) }}" method="POST">
+                                        @csrf
+                                        <button class="min-h-11 w-full rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-4 text-sm font-black text-white">Избери</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+        @endif
 
         <section class="mt-8">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -213,7 +327,7 @@
                     </article>
                 @empty
                     <div class="rounded-[32px] border border-white/10 bg-white/10 p-8 text-center shadow-xl shadow-black/20 backdrop-blur-xl lg:col-span-2">
-                        <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-500 via-amber-400 to-orange-600 text-2xl font-black">F</p>
+                        <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 text-2xl font-black">B</p>
                         <h3 class="mt-5 text-2xl font-black">Все още няма получени оферти</h3>
                         <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/60">
                             Ще ви уведомим, когато бизнеси изпратят предложения. Запазете този линк, за да проверявате офертите по заявката.

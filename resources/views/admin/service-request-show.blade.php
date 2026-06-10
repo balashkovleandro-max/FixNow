@@ -49,7 +49,7 @@
     <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
         <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('admin.service-requests.index') }}" class="inline-flex items-center gap-3">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</span>
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 font-black">B</span>
                 <span class="text-lg font-black sm:text-xl">Admin заявки</span>
             </a>
             <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-sm font-black text-orange-100">Admin табло</a>

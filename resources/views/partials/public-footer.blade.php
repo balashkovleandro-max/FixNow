@@ -1,5 +1,5 @@
 <footer data-testid="public-footer" class="border-t border-white/70 bg-white/82 shadow-[0_-18px_60px_rgba(30,64,175,0.08)] backdrop-blur-2xl">
-    <div class="mx-auto grid max-w-[1500px] gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-12">
+    <div class="mx-auto grid max-w-[1500px] gap-6 px-4 py-8 sm:grid-cols-2 sm:gap-8 sm:px-6 sm:py-10 md:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-12">
         <div>
             <a href="{{ url('/') }}" class="inline-flex items-center gap-3">
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 font-black text-white shadow-lg shadow-violet-500/25">B</span>
@@ -11,7 +11,7 @@
             <p class="mt-4 text-sm text-slate-500">Въпроси: <a href="mailto:hello@bon.bg" class="font-bold text-blue-600 hover:text-violet-600">hello@bon.bg</a></p>
         </div>
 
-        <nav class="grid gap-3 text-sm text-slate-600" aria-label="Основна навигация">
+        <nav class="grid gap-2.5 text-sm text-slate-600 sm:gap-3" aria-label="Основна навигация">
             <p class="font-black text-[#070B1F]">Платформа</p>
             <a href="{{ url('/') }}" class="hover:text-blue-600">Начало</a>
             <a href="{{ route('business.landing') }}" class="hover:text-blue-600">За бизнеси</a>
@@ -21,7 +21,7 @@
             <a href="{{ route('contact') }}" class="hover:text-blue-600">Контакт</a>
         </nav>
 
-        <nav class="grid gap-3 text-sm text-slate-600" aria-label="За бизнеси">
+        <nav class="grid gap-2.5 text-sm text-slate-600 sm:gap-3" aria-label="За бизнеси">
             <p class="font-black text-[#070B1F]">За бизнеси</p>
             <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="hover:text-blue-600">Добави бизнес</a>
             <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="hover:text-blue-600">Бизнес присъствие</a>
@@ -31,7 +31,7 @@
             <a href="{{ route('bon.tools') }}" class="hover:text-blue-600">Premium видимост</a>
         </nav>
 
-        <nav class="grid gap-3 text-sm text-slate-600" aria-label="Правна информация">
+        <nav class="grid gap-2.5 text-sm text-slate-600 sm:gap-3" aria-label="Правна информация">
             <p class="font-black text-[#070B1F]">Доверие</p>
             <a href="{{ route('terms') }}" data-testid="footer-terms-link" class="hover:text-blue-600">Общи условия</a>
             <a href="{{ route('privacy') }}" data-testid="footer-privacy-link" class="hover:text-blue-600">Политика за поверителност</a>
@@ -46,7 +46,7 @@
         </nav>
     </div>
 
-    <div class="border-t border-slate-200/70 px-4 pb-24 pt-5 text-center text-xs text-slate-500 md:pb-6">
+    <div class="border-t border-slate-200/70 px-4 pb-10 pt-5 text-center text-xs text-slate-500 md:pb-6">
         © {{ date('Y') }} BON. Всички права запазени.
     </div>
 </footer>

@@ -26,6 +26,11 @@
             'potential_mrr' => 0,
             'trial_pipeline' => 0,
             'estimated_conversion' => 0,
+            'total_freelancers' => 0,
+            'freelancer_jobs' => 0,
+            'freelancer_applications' => 0,
+            'credit_transactions' => 0,
+            'business_diagnostics' => 0,
         ], $adminStats ?? []);
 
         $businesses = $businesses ?? collect();
@@ -87,7 +92,7 @@
         <header class="mb-6 rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
+                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 font-black">B</div>
                     <div>
                         <p class="text-xl font-black">BON</p>
                         <p class="text-xs text-white/50">Admin control</p>
@@ -100,6 +105,7 @@
                     <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Услуги</a>
                     <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Публични бизнеси</a>
                     <a href="{{ route('admin.service-requests.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Заявки</a>
+                    <a href="{{ route('admin.freelancer-credits.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Кредити</a>
                     <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-orange-100">Admin</a>
                 </nav>
 
@@ -258,6 +264,11 @@
                 ['label' => 'Нови бизнеси', 'value' => $adminStats['new_businesses_last_7_days'], 'note' => 'последните 7 дни'],
                 ['label' => 'Standard планове', 'value' => $adminStats['standard_businesses'], 'note' => '18,99 € · до 2 града'],
                 ['label' => 'Premium планове', 'value' => $adminStats['premium_businesses'], 'note' => '24,99 € · до 5 града'],
+                ['label' => 'Фрийлансъри', 'value' => $adminStats['total_freelancers'], 'note' => 'freelancer роли'],
+                ['label' => 'Обяви към фрийлансъри', 'value' => $adminStats['freelancer_jobs'], 'note' => 'публикувани проекти'],
+                ['label' => 'Кандидатури', 'value' => $adminStats['freelancer_applications'], 'note' => 'freelancer applications'],
+                ['label' => 'Кредитни транзакции', 'value' => $adminStats['credit_transactions'], 'note' => 'грантове, покупки, разходи'],
+                ['label' => 'BON диагностики', 'value' => $adminStats['business_diagnostics'], 'note' => 'запазени анализи'],
                 ['label' => 'Месечна активност', 'value' => '30/90', 'note' => 'Standard/Premium лимити'],
                 ['label' => 'Trial pipeline', 'value' => number_format($adminStats['trial_pipeline'], 2, ',', ' ') . ' €', 'note' => 'trial планове'],
                 ['label' => 'Estimated conversion', 'value' => number_format($adminStats['estimated_conversion'], 2, ',', ' ') . ' €', 'note' => 'trial pipeline x 25%'],

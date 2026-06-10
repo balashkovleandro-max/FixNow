@@ -42,6 +42,8 @@
         'rejected' => 'Отказана',
         'not_selected' => 'Не е избрана',
     ];
+
+    $favoriteProfiles = $favoriteProfiles ?? collect();
 @endphp
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
@@ -50,7 +52,7 @@
         <header class="mb-6 rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
-                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-300 via-orange-500 to-orange-600 font-black">F</div>
+                    <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 font-black">B</div>
                     <div>
                         <p class="text-xl font-black">BON</p>
                         <p class="text-xs text-white/50">Клиентски панел</p>
@@ -197,6 +199,9 @@
                                     @else
                                         <div class="mt-4 grid gap-3">
                                             @foreach($offers as $offer)
+                                                @php
+                                                    $offerTrust = $offer->business?->trustSummary();
+                                                @endphp
                                                 <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
                                                     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                                         <div>
@@ -212,6 +217,16 @@
                                                         <p><span class="text-white/40">Срок:</span> {{ $offer->timeframe }}</p>
                                                         <p><span class="text-white/40">Телефон:</span> {{ $offer->phone ?: 'Не е посочен' }}</p>
                                                     </div>
+                                                    @if($offer->business)
+                                                        <div class="mt-3 grid gap-2 text-sm text-white/65 sm:grid-cols-3">
+                                                            <p><span class="text-white/40">Trust Score:</span> {{ $offerTrust['trust_score'] ?? 0 }}/100</p>
+                                                            <p><span class="text-white/40">Рейтинг:</span> {{ ($offerTrust['average_rating'] ?? null) ? number_format($offerTrust['average_rating'], 1, '.', '') . '/5' : 'Няма още' }}</p>
+                                                            <p><span class="text-white/40">Проекти:</span> {{ $offerTrust['completed_projects_count'] ?? 0 }}</p>
+                                                        </div>
+                                                        <a href="{{ route('businesses.show', $offer->business) }}" class="mt-3 inline-flex min-h-10 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-xs font-black text-white hover:bg-white/15">
+                                                            Виж профил
+                                                        </a>
+                                                    @endif
                                                     @if(!$selectedOffer && in_array($offer->status, ['sent', 'viewed'], true))
                                                         <form action="{{ route('customer.offers.accept', $offer) }}" method="POST" class="mt-4">
                                                             @csrf
@@ -237,6 +252,53 @@
             </div>
 
             <aside class="space-y-6">
+                <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-xs font-black uppercase tracking-[0.22em] text-orange-200/70">Любими</p>
+                            <h2 class="mt-2 text-xl font-black">Запазени специалисти</h2>
+                        </div>
+                        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/65">{{ $favoriteProfiles->count() }}</span>
+                    </div>
+
+                    <div class="mt-5 space-y-3">
+                        @forelse($favoriteProfiles as $favoriteProfile)
+                            @php
+                                $profileName = $favoriteProfile->business_name ?: $favoriteProfile->name;
+                                $profileType = $favoriteProfile->role === 'freelancer' ? 'Фрийлансър' : 'Бизнес';
+                                $profileUrl = $favoriteProfile->role === 'freelancer'
+                                    ? route('freelancers.show', $favoriteProfile)
+                                    : route('businesses.show', $favoriteProfile);
+                            @endphp
+
+                            <article class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-orange-400 via-orange-500 to-amber-300 text-sm font-black text-white">
+                                        {{ \Illuminate\Support\Str::of($profileName ?: 'B')->substr(0, 1) }}
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <p class="truncate font-black">{{ $profileName }}</p>
+                                            <span class="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-black text-white/55">{{ $profileType }}</span>
+                                        </div>
+                                        <p class="mt-1 text-xs font-bold text-white/45">
+                                            {{ $favoriteProfile->business_category ?: $favoriteProfile->city ?: 'BON профил' }}
+                                        </p>
+                                        <div class="mt-3 flex flex-wrap gap-2">
+                                            <a href="{{ $profileUrl }}" class="rounded-2xl bg-white/10 px-3 py-2 text-xs font-black text-white hover:bg-white/15">Виж профил</a>
+                                            @include('partials.favorite-button', ['profile' => $favoriteProfile, 'variant' => 'dark', 'compact' => true])
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        @empty
+                            <div class="rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-5 text-sm leading-6 text-white/55">
+                                Все още няма запазени профили. Използвайте сърцето в картите и публичните профили, за да създадете кратък списък с доверени специалисти.
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <h2 class="text-xl font-black">Основни настройки</h2>
                     <div class="mt-5 space-y-3 text-sm text-white/65">

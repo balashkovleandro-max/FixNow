@@ -8,6 +8,11 @@
     $reviewsCount = (int) (data_get($business, 'growth_reviews_count') ?? $business->approvedReviewsCount());
     $recommendationsCount = (int) (data_get($business, 'growth_recommendations_count') ?? $business->recommendationsCount());
     $profileViews = (int) data_get($business, 'growth_profile_views_count', 0);
+    $trustSummary = data_get($business, 'trust_summary') ?: $business->trustSummary();
+    $trustBadges = collect($trustSummary['badges'] ?? []);
+    $trustScore = (int) ($trustSummary['trust_score'] ?? 0);
+    $completedProjects = (int) ($trustSummary['completed_projects_count'] ?? 0);
+    $responseLabel = $trustSummary['response_label'] ?? null;
     $badges = $business->publicBadges();
     $hasPremiumBenefits = method_exists($business, 'hasPremiumBenefits') ? $business->hasPremiumBenefits() : $business->isPremium();
     $hasRequestBasedCategory = method_exists($business, 'hasRequestBasedCategories') && $business->hasRequestBasedCategories();
@@ -35,6 +40,10 @@
 @endphp
 
 <article data-testid="executor-card" class="group relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/55 shadow-xl shadow-black/25 backdrop-blur-2xl transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:border-orange-300/35 hover:bg-white/[0.075] hover:shadow-2xl hover:shadow-orange-950/20">
+    <div class="absolute right-3 top-3 z-20">
+        @include('partials.favorite-button', ['profile' => $business, 'variant' => 'dark', 'compact' => true])
+    </div>
+
     <div class="relative h-28 overflow-hidden">
         @if($coverImage)
             <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $businessName }}" loading="lazy" data-testid="executor-card-cover-image" class="h-full w-full object-cover opacity-90 transition duration-300 group-hover:scale-[1.02]">
@@ -79,6 +88,9 @@
                 @if($business->is_verified)
                     <span class="rounded-full bg-emerald-400/12 px-3 py-1 text-xs font-black text-emerald-100 ring-1 ring-emerald-300/20">Потвърден</span>
                 @endif
+                @foreach($trustBadges->reject(fn ($badge) => in_array($badge, ['Premium', 'Верифициран'], true))->take(2) as $badge)
+                    <span class="rounded-full bg-blue-400/12 px-3 py-1 text-xs font-black text-blue-100 ring-1 ring-blue-300/20">{{ $badge }}</span>
+                @endforeach
             </div>
         </div>
 
@@ -122,14 +134,18 @@
                 @endif
             </div>
             <div class="rounded-2xl border border-white/10 bg-slate-950/42 p-3">
-                <span class="sr-only">{{ $recommendationsCount }} препоръки</span>
-                <p class="font-black text-orange-100">{{ $recommendationsCount }}</p>
-                <p class="mt-1 text-[11px] font-bold text-white/45">препоръки</p>
+                <span class="sr-only">Trust Score {{ $trustScore }}</span>
+                <p class="font-black text-blue-100">{{ $trustScore }}</p>
+                <p class="mt-1 text-[11px] font-bold text-white/45">Trust Score</p>
             </div>
             <div class="rounded-2xl border border-white/10 bg-slate-950/42 p-3">
-                <p class="font-black text-orange-100">{{ $profileViews }}</p>
-                <p class="mt-1 text-[11px] font-bold text-white/45">прегледа</p>
+                <p class="font-black text-orange-100">{{ $completedProjects }}</p>
+                <p class="mt-1 text-[11px] font-bold text-white/45">проекта</p>
             </div>
+        </div>
+
+        <div class="mt-3 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-xs font-bold text-white/60">
+            {{ $responseLabel ? 'Отговаря средно за ' . $responseLabel : 'Репутацията се базира на оценки, активност и завършени проекти.' }}
         </div>
 
         <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">

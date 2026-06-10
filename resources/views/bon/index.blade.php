@@ -87,6 +87,20 @@
             'highlight' => true,
         ],
     ];
+
+    $recommendedSpecialists = $recommendedSpecialists ?? collect();
+    $smartJobs = $smartJobs ?? collect();
+    $smartCategory = $smartCategory ?? request('category');
+    $smartCategories = $smartCategories ?? [
+        'Web Design',
+        'Development',
+        'Marketing',
+        'Ремонти',
+        'Почистване',
+        'Красота',
+        'Ресторанти',
+        'Хотели',
+    ];
 @endphp
 
 <!DOCTYPE html>
@@ -405,6 +419,56 @@
             }
         }
 
+        @media (max-width: 640px) {
+            .bon-grid {
+                background-size: 46px 46px;
+                opacity: .24;
+            }
+
+            .bon-globe-stage {
+                height: 235px;
+                min-height: 235px;
+                margin-inline: auto;
+                max-width: 100%;
+            }
+
+            .bon-globe-glow,
+            .bon-globe-ring-outer {
+                height: 210px;
+                width: 210px;
+            }
+
+            .bon-globe-shell {
+                height: 198px;
+                width: 198px;
+            }
+
+            .bon-globe-ring-inner {
+                height: 158px;
+                width: 158px;
+            }
+
+            .bon-globe-core {
+                height: 138px;
+                width: 138px;
+            }
+
+            .bon-globe-letter {
+                font-size: 3.45rem;
+            }
+
+            .bon-globe-halo {
+                bottom: 20px;
+                width: 170px;
+            }
+
+            .bon-globe-halo-ring {
+                bottom: 35px;
+                height: 32px;
+                width: 190px;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .bon-float,
             .bon-pulse,
@@ -430,16 +494,16 @@
         <div class="bon-dot-field pointer-events-none absolute left-6 top-56 hidden h-40 w-36 opacity-30 lg:block"></div>
         <div class="bon-dot-field pointer-events-none absolute bottom-10 right-6 hidden h-40 w-36 opacity-25 lg:block" style="background-image: radial-gradient(rgba(236,72,153,.36) 1.4px, transparent 1.4px);"></div>
 
-        <div class="relative z-10 px-4 pb-16 sm:px-6 lg:px-8">
+        <div class="relative z-10 px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
             <header class="mx-auto mt-4 max-w-[1440px]">
-                <div class="flex min-h-[76px] items-center justify-between rounded-[1.75rem] border border-white/70 bg-white/75 px-4 py-3 shadow-[0_24px_80px_rgba(30,41,100,.09)] backdrop-blur-2xl sm:px-6">
+                <div class="flex min-h-[68px] items-center justify-between rounded-[1.5rem] border border-white/70 bg-white/75 px-3 py-3 shadow-[0_24px_80px_rgba(30,41,100,.09)] backdrop-blur-2xl sm:min-h-[76px] sm:rounded-[1.75rem] sm:px-6">
                     <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3 sm:gap-4">
-                        <span class="relative flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-2xl font-black text-white shadow-xl shadow-violet-500/25">
+                        <span class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-xl font-black text-white shadow-xl shadow-violet-500/25 sm:h-[52px] sm:w-[52px] sm:text-2xl">
                             <span class="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.42),transparent_38%)]"></span>
                             <span class="relative z-10">B</span>
                         </span>
                         <span class="min-w-0 leading-tight">
-                            <span class="block text-[23px] font-black tracking-tight text-[#070B1F]">BON</span>
+                            <span class="block text-xl font-black tracking-tight text-[#070B1F] sm:text-[23px]">BON</span>
                             <span class="hidden truncate text-sm font-medium text-slate-500 sm:block">Business Operating Network</span>
                         </span>
                     </a>
@@ -456,34 +520,34 @@
                         <a href="{{ route('login') }}" class="hidden rounded-2xl border border-slate-200/80 bg-white/70 px-5 py-3 text-sm font-bold text-[#070B1F] shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:inline-flex">
                             Вход
                         </a>
-                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-4 py-3 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:px-6">
+                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-3.5 py-2.5 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:px-6 sm:py-3">
                             Регистрация
                         </a>
                     </div>
                 </div>
             </header>
 
-            <section class="mx-auto max-w-[1440px] pt-12 lg:pt-16">
+            <section class="mx-auto max-w-[1440px] pt-9 sm:pt-12 lg:pt-16">
                 <div class="mx-auto max-w-5xl text-center">
-                    <div class="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm shadow-blue-900/5 backdrop-blur-xl">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-white/80 px-3.5 py-2 text-xs font-semibold text-blue-700 shadow-sm shadow-blue-900/5 backdrop-blur-xl sm:px-4 sm:text-sm">
                         <span class="text-violet-600">✦</span>
                         BON Business OS
                     </div>
 
-                    <h1 class="mx-auto mt-6 max-w-5xl text-[40px] font-black leading-[1.05] tracking-[-0.055em] text-[#070B1F] sm:text-[60px] lg:text-[76px]">
+                    <h1 class="mx-auto mt-5 max-w-5xl text-[34px] font-black leading-[1.08] tracking-[-0.035em] text-[#070B1F] sm:mt-6 sm:text-[60px] sm:tracking-[-0.055em] lg:text-[76px]">
                         Управлявай <span class="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">видимостта</span>, финансите и <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-transparent">растежа</span> на бизнеса си от едно място.
                     </h1>
 
-                    <p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl">
+                    <p class="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8">
                         BON помага на локалните бизнеси да изградят по-силно онлайн присъствие, да следят ключови показатели,
                         да подобряват репутацията си и да взимат по-добри решения за растеж.
                     </p>
 
                     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                        <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5">
+                        <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 sm:w-auto">
                             Добави своя бизнес
                         </a>
-                        <a href="{{ route('plans') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600">
+                        <a href="{{ route('plans') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
                             Виж плановете
                         </a>
                     </div>
@@ -493,7 +557,7 @@
                     </a>
                 </div>
 
-                <div class="relative mx-auto mt-10 max-w-5xl sm:mt-12">
+                <div class="relative mx-auto mt-6 max-w-full overflow-hidden sm:mt-12 sm:max-w-5xl">
                     <div class="bon-connection-line bon-connection-line-left hidden lg:block"></div>
                     <div class="bon-connection-line bon-connection-line-right hidden lg:block"></div>
                     <div class="bon-connection-dot left-[calc(50%_-_176px)] hidden bg-blue-400 shadow-lg shadow-blue-400/40 lg:block"></div>
@@ -592,10 +656,10 @@
                 </div>
             </section>
 
-            <section id="bon-tools" class="mx-auto mt-16 max-w-[1440px]">
+            <section id="bon-tools" class="mx-auto mt-12 max-w-[1440px] sm:mt-16">
                 <div class="max-w-3xl">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">BON Tools</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Инструменти в BON за анализ, видимост, доверие и растеж.</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Инструменти в BON за анализ, видимост, доверие и растеж.</h2>
                     <p class="mt-4 max-w-3xl text-base leading-8 text-slate-600">
                         Практични бизнес инструменти, които помагат да виждаш числата, профила, репутацията и следващите действия по-ясно.
                     </p>
@@ -603,8 +667,10 @@
 
                 <div class="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                     @foreach ($businessTools as $tool)
-                        @php($modalId = 'bon-tool-modal-' . $loop->index)
-                        <button type="button" data-tool-open="{{ $modalId }}" class="group rounded-[2rem] border border-white/70 bg-white/75 p-6 text-left shadow-2xl shadow-blue-900/5 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-200/80 hover:shadow-blue-900/10">
+                        @php
+                            $modalId = 'bon-tool-modal-' . $loop->index;
+                        @endphp
+                        <button type="button" data-tool-open="{{ $modalId }}" class="group w-full rounded-[1.65rem] border border-white/70 bg-white/75 p-5 text-left shadow-2xl shadow-blue-900/5 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-200/80 hover:shadow-blue-900/10 sm:rounded-[2rem] sm:p-6">
                             <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br {{ $tool['color'] }} text-xl font-black text-white shadow-lg shadow-violet-500/20">
                                 {{ $tool['icon'] }}
                             </div>
@@ -619,12 +685,14 @@
                 </div>
 
                 @foreach ($businessTools as $tool)
-                    @php($modalId = 'bon-tool-modal-' . $loop->index)
-                    <div id="{{ $modalId }}" data-tool-modal class="fixed inset-0 z-[100] hidden px-4 py-5 sm:px-6" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="{{ $modalId }}-title">
+                    @php
+                        $modalId = 'bon-tool-modal-' . $loop->index;
+                    @endphp
+                    <div id="{{ $modalId }}" data-tool-modal class="fixed inset-0 z-[100] hidden px-3 py-3 sm:px-6 sm:py-5" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="{{ $modalId }}-title">
                         <button type="button" data-tool-overlay class="absolute inset-0 bg-slate-950/45 opacity-0 backdrop-blur-md transition-opacity duration-300" aria-label="Затвори"></button>
 
                         <div class="relative z-10 mx-auto flex min-h-full max-w-3xl items-center justify-center">
-                            <div data-tool-panel class="max-h-[min(calc(100vh-2rem),48rem)] w-full translate-y-4 scale-95 overflow-y-auto rounded-[2rem] border border-white/70 bg-white/[0.94] p-5 opacity-0 shadow-2xl shadow-blue-950/20 backdrop-blur-2xl transition duration-300 sm:p-7">
+                            <div data-tool-panel class="max-h-[min(calc(100vh-1.5rem),48rem)] w-full translate-y-4 scale-95 overflow-y-auto rounded-[1.5rem] border border-white/70 bg-white/[0.94] p-4 opacity-0 shadow-2xl shadow-blue-950/20 backdrop-blur-2xl transition duration-300 sm:rounded-[2rem] sm:p-7">
                                 <div class="flex items-start justify-between gap-4">
                                     <div>
                                         <div class="flex h-16 w-16 items-center justify-center rounded-[1.35rem] bg-gradient-to-br {{ $tool['color'] }} text-3xl font-black text-white shadow-xl shadow-violet-500/20">
@@ -700,7 +768,7 @@
 
                                 <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                     <p class="text-sm leading-6 text-slate-500">Това е визуален пример на инструмента. Пълната логика се отваря в бизнес профила.</p>
-                                    <button type="button" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r {{ $tool['color'] }} px-6 text-sm font-black text-white shadow-xl shadow-violet-500/20 transition hover:-translate-y-0.5">
+                                    <button type="button" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r {{ $tool['color'] }} px-6 text-sm font-black text-white shadow-xl shadow-violet-500/20 transition hover:-translate-y-0.5 sm:w-auto">
                                         {{ in_array($loop->index, [0, 1, 3], true) ? 'Изчисли' : ($loop->index === 4 ? 'Запази' : 'Виж резултат') }}
                                     </button>
                                 </div>
@@ -710,21 +778,158 @@
                 @endforeach
             </section>
 
-            <section class="mx-auto mt-14 grid max-w-[1440px] gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <section id="recommended-specialists" class="mx-auto mt-12 max-w-[1440px] sm:mt-16">
+                <div class="rounded-[2rem] border border-white/70 bg-white/75 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-7 lg:p-8">
+                    <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Smart BON Home</p>
+                            <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-4xl">Препоръчани специалисти според нуждата.</h2>
+                            <p class="mt-4 max-w-3xl text-base leading-8 text-slate-600">
+                                Избери категория и виж доверени бизнеси, фрийлансъри и активни обяви в същия контекст.
+                                Подреждането дава предимство на Premium профили, Trust Score, рейтинг, завършени проекти и активност.
+                            </p>
+                        </div>
+
+                        <form action="{{ route('home') }}#recommended-specialists" method="GET" class="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-xl shadow-blue-900/5">
+                            <label class="text-sm font-black text-slate-700" for="bon-smart-category">Категория</label>
+                            <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto]">
+                                <select id="bon-smart-category" name="category" class="min-h-12 rounded-2xl border border-slate-200 bg-white/90 px-4 text-sm font-bold text-slate-700 outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                                    <option value="">Всички категории</option>
+                                    @foreach($smartCategories as $category)
+                                        <option value="{{ $category }}" @selected($smartCategory === $category)>{{ $category }}</option>
+                                    @endforeach
+                                </select>
+                                <button class="min-h-12 rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-5 text-sm font-black text-white shadow-xl shadow-violet-500/20 transition hover:-translate-y-0.5">
+                                    Покажи
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                        @forelse($recommendedSpecialists as $recommendedProfile)
+                            @php
+                                $profileName = $recommendedProfile->business_name ?: $recommendedProfile->name;
+                                $profileType = ($recommendedProfile->specialist_type ?? $recommendedProfile->role) === 'freelancer' ? 'Фрийлансър' : 'Бизнес';
+                                $profileUrl = ($recommendedProfile->specialist_type ?? $recommendedProfile->role) === 'freelancer'
+                                    ? route('freelancers.show', $recommendedProfile)
+                                    : route('businesses.show', $recommendedProfile);
+                                $trustSummary = $recommendedProfile->trust_summary ?? [];
+                                $trustScore = $trustSummary['trust_score'] ?? $recommendedProfile->trust_score ?? 0;
+                                $rating = $trustSummary['average_rating'] ?? null;
+                                $completed = $trustSummary['completed_projects_count'] ?? $recommendedProfile->trust_completed_projects_count ?? 0;
+                                $completeness = $trustSummary['profile_completeness'] ?? null;
+                                $profileInitial = \Illuminate\Support\Str::of($profileName ?: 'B')->substr(0, 1);
+                            @endphp
+
+                            <article class="group relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl transition hover:-translate-y-1 hover:shadow-blue-900/10">
+                                <div class="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent"></div>
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-lg font-black text-white shadow-lg shadow-violet-500/20">
+                                        {{ $profileInitial }}
+                                    </div>
+                                    @include('partials.favorite-button', ['profile' => $recommendedProfile, 'variant' => 'light', 'compact' => true])
+                                </div>
+
+                                <div class="mt-5 flex flex-wrap items-center gap-2">
+                                    <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">{{ $profileType }}</span>
+                                    @if(method_exists($recommendedProfile, 'isPremium') && $recommendedProfile->isPremium())
+                                        <span class="rounded-full bg-fuchsia-50 px-3 py-1 text-xs font-black text-fuchsia-700">Premium</span>
+                                    @endif
+                                </div>
+
+                                <h3 class="mt-4 line-clamp-2 text-xl font-black tracking-tight">{{ $profileName }}</h3>
+                                <p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-500">
+                                    {{ $recommendedProfile->business_category ?: $recommendedProfile->short_description ?: $recommendedProfile->description ?: 'Профил в BON с фокус върху доверие, видимост и реални резултати.' }}
+                                </p>
+
+                                <div class="mt-5 grid grid-cols-2 gap-2 text-xs font-bold text-slate-600">
+                                    <div class="rounded-2xl bg-slate-50 p-3">
+                                        <span class="block text-slate-400">Trust Score</span>
+                                        <strong class="text-base text-[#070B1F]">{{ $trustScore }}/100</strong>
+                                    </div>
+                                    <div class="rounded-2xl bg-slate-50 p-3">
+                                        <span class="block text-slate-400">Рейтинг</span>
+                                        <strong class="text-base text-[#070B1F]">{{ $rating ? number_format($rating, 1) : '—' }}</strong>
+                                    </div>
+                                    <div class="rounded-2xl bg-slate-50 p-3">
+                                        <span class="block text-slate-400">Проекти</span>
+                                        <strong class="text-base text-[#070B1F]">{{ $completed }}</strong>
+                                    </div>
+                                    <div class="rounded-2xl bg-slate-50 p-3">
+                                        <span class="block text-slate-400">Профил</span>
+                                        <strong class="text-base text-[#070B1F]">{{ $completeness !== null ? $completeness . '%' : '—' }}</strong>
+                                    </div>
+                                </div>
+
+                                <a href="{{ $profileUrl }}" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-2xl bg-slate-950 px-4 text-sm font-black text-white transition group-hover:-translate-y-0.5">
+                                    Виж профил
+                                </a>
+                            </article>
+                        @empty
+                            <div class="rounded-[1.75rem] border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm leading-6 text-slate-500 md:col-span-2 xl:col-span-4">
+                                Все още няма достатъчно профили за тази категория. След миграции и първи регистрации тук ще се появят препоръчани бизнеси и фрийлансъри.
+                            </div>
+                        @endforelse
+                    </div>
+
+                    <div class="mt-7 grid gap-4 lg:grid-cols-[1fr_0.9fr]">
+                        <div class="rounded-[1.75rem] border border-white/80 bg-white/75 p-5 shadow-xl shadow-blue-900/5">
+                            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <h3 class="text-xl font-black">Последни обяви{{ $smartCategory ? ' в ' . $smartCategory : '' }}</h3>
+                                    <p class="mt-1 text-sm text-slate-500">Проекти, по които специалистите могат да кандидатстват с кредити.</p>
+                                </div>
+                                <a href="{{ route('freelancer.jobs.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 px-4 text-sm font-black text-slate-700">Виж обяви</a>
+                            </div>
+
+                            <div class="mt-5 grid gap-3">
+                                @forelse($smartJobs as $job)
+                                    <article class="rounded-3xl border border-slate-100 bg-white/85 p-4">
+                                        <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                                            <div>
+                                                <h4 class="font-black">{{ $job->title }}</h4>
+                                                <p class="mt-1 text-sm text-slate-500">{{ $job->business?->business_name ?: $job->business?->name ?: 'BON бизнес' }} · {{ $job->category ?: 'Без категория' }}</p>
+                                            </div>
+                                            <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">3 кредита</span>
+                                        </div>
+                                        <p class="mt-3 line-clamp-2 text-sm leading-6 text-slate-600">{{ $job->description }}</p>
+                                    </article>
+                                @empty
+                                    <p class="rounded-3xl border border-dashed border-slate-200 bg-white/70 p-5 text-sm leading-6 text-slate-500">Няма активни обяви за избраната категория.</p>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        <div class="rounded-[1.75rem] border border-white/80 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-6 text-white shadow-2xl shadow-violet-500/20">
+                            <p class="text-sm font-black uppercase tracking-[0.22em] text-white/65">Публикувай нужда</p>
+                            <h3 class="mt-3 text-2xl font-black">Искаш предложения от подходящи профили?</h3>
+                            <p class="mt-3 text-sm leading-7 text-white/75">
+                                Опиши проекта или нуждата си и BON ще помогне профилите в правилната категория да видят контекста.
+                            </p>
+                            <a href="{{ route('request.service', array_filter(['category' => $smartCategory])) }}" class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-5 text-sm font-black text-violet-700 shadow-xl shadow-violet-950/10 sm:w-auto">
+                                Публикувай заявка
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mx-auto mt-10 grid max-w-[1440px] gap-6 sm:mt-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
                 <div>
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Финансов анализ</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Виж реалната печалба, не само оборота.</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Виж реалната печалба, не само оборота.</h2>
                     <p class="mt-5 text-base leading-8 text-slate-600">
                         Въвеждаш месечен оборот, разходи, персонал, доставки, наем, маркетинг и софтуер.
                         BON изчислява нетна печалба, марж, разходи като процент от оборота и къде има риск.
                     </p>
                     @auth
-                        <a href="{{ auth()->user()->isBusiness() ? route('business.insights.index') : route('bon.onboarding') }}" class="mt-7 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25">
+                        <a href="{{ auth()->user()->isBusiness() ? route('business.insights.index') : route('bon.onboarding') }}" class="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25 sm:w-auto">
                             Отвори финансов анализ
                         </a>
                     @endauth
                     @guest
-                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="mt-7 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25">
+                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25 sm:w-auto">
                             Създай бизнес профил
                         </a>
                     @endguest
@@ -751,10 +956,10 @@
                 </div>
             </section>
 
-            <section class="mx-auto mt-14 grid max-w-[1440px] gap-6 lg:grid-cols-2">
-                <article class="rounded-[2rem] border border-white/70 bg-white/76 p-6 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:p-8">
+            <section class="mx-auto mt-10 grid max-w-[1440px] gap-6 sm:mt-14 lg:grid-cols-2">
+                <article class="rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Business Health Score</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight">Оценка от 0 до 100 за финансовото здраве.</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Оценка от 0 до 100 за финансовото здраве.</h2>
                     <p class="mt-4 text-base leading-7 text-slate-600">
                         Score-ът комбинира печалба, марж, персонал като процент от оборота, фиксирани разходи и break-even риск.
                     </p>
@@ -766,9 +971,9 @@
                     </div>
                 </article>
 
-                <article class="rounded-[2rem] border border-white/70 bg-white/76 p-6 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:p-8">
+                <article class="rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-600">Visibility Score</p>
-                    <h2 class="mt-3 text-3xl font-black tracking-tight">Колко силно е представен бизнесът онлайн?</h2>
+                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Колко силно е представен бизнесът онлайн?</h2>
                     <p class="mt-4 text-base leading-7 text-slate-600">
                         BON оценява снимки, описание, категории, градове, активност, отзиви, badges и Premium видимост.
                     </p>
@@ -788,11 +993,11 @@
                 </article>
             </section>
 
-            <section class="mx-auto mt-14 max-w-[1440px] rounded-[2rem] border border-white/70 bg-white/76 p-6 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:p-8">
+            <section class="mx-auto mt-10 max-w-[1440px] rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:mt-14 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Репутация и отзиви</p>
-                        <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Доверието трябва да се вижда още преди първия контакт.</h2>
+                        <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Доверието трябва да се вижда още преди първия контакт.</h2>
                     </div>
                     <div class="grid gap-4 md:grid-cols-3">
                         @foreach ([
@@ -809,18 +1014,18 @@
                 </div>
             </section>
 
-            <section class="mx-auto mt-14 max-w-[1440px]">
+            <section class="mx-auto mt-10 max-w-[1440px] sm:mt-14">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Планове</p>
-                        <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Започни с базови инструменти. Надгради с Premium анализ.</h2>
+                        <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Започни с базови инструменти. Надгради с Premium анализ.</h2>
                     </div>
-                    <a href="{{ route('plans') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600">Виж всички детайли</a>
+                    <a href="{{ route('plans') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">Виж всички детайли</a>
                 </div>
 
                 <div class="mt-7 grid gap-5 lg:grid-cols-2">
                     @foreach ($plans as $plan)
-                        <article class="relative rounded-[2rem] border {{ $plan['highlight'] ? 'border-violet-200 bg-white/85 shadow-violet-900/12' : 'border-white/70 bg-white/76 shadow-blue-900/5' }} p-6 shadow-2xl backdrop-blur-2xl sm:p-7">
+                        <article class="relative rounded-[1.65rem] border {{ $plan['highlight'] ? 'border-violet-200 bg-white/85 shadow-violet-900/12' : 'border-white/70 bg-white/76 shadow-blue-900/5' }} p-5 shadow-2xl backdrop-blur-2xl sm:rounded-[2rem] sm:p-7">
                             @if ($plan['highlight'])
                                 <span class="absolute right-6 top-6 rounded-full bg-gradient-to-r from-blue-600 to-fuchsia-500 px-3 py-1 text-xs font-black text-white">Препоръчан</span>
                             @endif
@@ -837,13 +1042,13 @@
                 </div>
             </section>
 
-            <section class="mx-auto mt-14 max-w-[1440px] rounded-[2rem] border border-white/70 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-6 text-white shadow-2xl shadow-violet-500/20 sm:p-8">
+            <section class="mx-auto mt-10 max-w-[1440px] rounded-[1.65rem] border border-white/70 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-5 text-white shadow-2xl shadow-violet-500/20 sm:mt-14 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-white/70">Започни с BON</p>
-                        <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Дай на бизнеса си по-професионално присъствие и по-ясна картина за растеж.</h2>
+                        <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Дай на бизнеса си по-професионално присъствие и по-ясна картина за растеж.</h2>
                     </div>
-                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl">
+                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl sm:w-auto">
                         Добави своя бизнес
                     </a>
                 </div>

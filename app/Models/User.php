@@ -25,6 +25,8 @@ class User extends Authenticatable
         'website',
         'working_hours',
         'phone',
+        'phone_verified_at',
+        'last_active_at',
         'short_description',
         'description',
         'facebook',
@@ -53,6 +55,8 @@ class User extends Authenticatable
         'extra_city_addon_count',
         'offer_points_balance',
         'offer_points_initialized_at',
+        'freelancer_credits_balance',
+        'freelancer_monthly_credits_granted_at',
     ];
 
     protected $hidden = [
@@ -64,6 +68,8 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'phone_verified_at' => 'datetime',
+            'last_active_at' => 'datetime',
             'password' => 'hashed',
             'trial_started_at' => 'datetime',
             'trial_ends_at' => 'datetime',
@@ -77,6 +83,8 @@ class User extends Authenticatable
             'extra_city_addon_count' => 'integer',
             'offer_points_balance' => 'integer',
             'offer_points_initialized_at' => 'datetime',
+            'freelancer_credits_balance' => 'integer',
+            'freelancer_monthly_credits_granted_at' => 'datetime',
             'emergency_services' => 'boolean',
             'works_24_7' => 'boolean',
         ];
@@ -122,6 +130,59 @@ class User extends Authenticatable
     public function financialReports()
     {
         return $this->hasMany(\App\Models\BusinessFinancialReport::class, 'business_id');
+    }
+
+    public function freelancerJobs()
+    {
+        return $this->hasMany(\App\Models\FreelancerJob::class, 'business_id');
+    }
+
+    public function freelancerJobApplications()
+    {
+        return $this->hasMany(\App\Models\FreelancerJobApplication::class, 'freelancer_id');
+    }
+
+    public function freelancerPortfolioItems()
+    {
+        return $this->hasMany(\App\Models\FreelancerPortfolioItem::class, 'freelancer_id')
+            ->orderBy('sort_order')
+            ->orderByDesc('id');
+    }
+
+    public function freelancerCreditTransactions()
+    {
+        return $this->hasMany(\App\Models\FreelancerCreditTransaction::class);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(\App\Models\UserFavorite::class);
+    }
+
+    public function favoriteProfiles()
+    {
+        return $this->belongsToMany(
+            self::class,
+            'user_favorites',
+            'user_id',
+            'favorite_user_id'
+        )->withPivot('favorite_type')->withTimestamps();
+    }
+
+    public function isFavorite(User $profile): bool
+    {
+        if (!Schema::hasTable('user_favorites')) {
+            return false;
+        }
+
+        return $this->favorites()
+            ->where('favorite_user_id', $profile->id)
+            ->exists();
+    }
+
+    public function favoritesCount(): int
+    {
+        return Schema::hasTable('user_favorites') ? $this->favorites()->count() : 0;
     }
 
     public function customerServiceRequests()
@@ -210,6 +271,31 @@ class User extends Authenticatable
     public function isCustomer(): bool
     {
         return in_array($this->role, ['customer', 'client'], true);
+    }
+
+    public function isFreelancer(): bool
+    {
+        return $this->role === 'freelancer';
+    }
+
+    public function freelancerCreditsBalance(): int
+    {
+        return max(0, (int) ($this->freelancer_credits_balance ?? 0));
+    }
+
+    public function trustSummary(): array
+    {
+        return \App\Support\ProfileTrust::summary($this);
+    }
+
+    public function trustScore(): int
+    {
+        return (int) ($this->trust_summary['trust_score'] ?? $this->trustSummary()['trust_score']);
+    }
+
+    public function trustBadges(): array
+    {
+        return $this->trust_summary['badges'] ?? $this->trustSummary()['badges'];
     }
 
     public function planKey(): string
