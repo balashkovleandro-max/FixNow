@@ -10,6 +10,38 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+@layer base {
+    html {
+        height: auto;
+        min-height: 100%;
+        overflow-x: clip;
+        overflow-y: auto;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior-y: auto;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    img,
+    svg,
+    video,
+    canvas {
+        max-width: 100%;
+    }
+
+    html.bon-modal-open,
+    body.bon-modal-open {
+        overflow: hidden;
+        touch-action: none;
+    }
+}
+
 @layer components {
     .fn-premium-page,
     .bon-public-page,
@@ -210,5 +242,111 @@
     .fn-public-cta:hover,
     .fn-public-hover:hover {
         transform: none !important;
+    }
+}
+
+.bon-pwa-install {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left));
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 70;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 24px 70px rgba(30, 64, 175, 0.16);
+    color: #070b1f;
+    backdrop-filter: blur(22px);
+    animation: bon-pwa-enter 260ms ease-out;
+}
+
+.bon-pwa-install__mark {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%);
+    box-shadow: 0 16px 34px rgba(79, 70, 229, 0.24);
+    color: white;
+    font-weight: 900;
+}
+
+.bon-pwa-install__copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.1rem;
+}
+
+.bon-pwa-install__copy strong {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.bon-pwa-install__copy span {
+    color: #64748b;
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+.bon-pwa-install__button,
+.bon-pwa-install__close {
+    min-height: 2.5rem;
+    border: 0;
+    border-radius: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.bon-pwa-install__button {
+    padding: 0 0.9rem;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 52%, #ec4899 100%);
+    box-shadow: 0 16px 34px rgba(79, 70, 229, 0.22);
+    color: white;
+}
+
+.bon-pwa-install__close {
+    width: 2.5rem;
+    background: rgba(241, 245, 249, 0.86);
+    color: #64748b;
+    font-size: 1.25rem;
+}
+
+@keyframes bon-pwa-enter {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .bon-pwa-install {
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .bon-pwa-install__button {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .bon-pwa-install {
+        left: max(0.65rem, env(safe-area-inset-left));
+        right: max(0.65rem, env(safe-area-inset-right));
+        bottom: max(5.75rem, calc(4.75rem + env(safe-area-inset-bottom)));
+        max-width: calc(100vw - 1.3rem);
+        border-radius: 1.25rem;
     }
 }

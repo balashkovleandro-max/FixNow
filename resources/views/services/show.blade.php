@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $service->title }} | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -30,7 +31,7 @@
                 @endif
                 <div class="p-6 sm:p-8">
                     <div class="mb-4 flex flex-wrap gap-2">
-                        <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-300">{{ $service->category }}</span>
+                        <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-300">{{ \App\Support\CategoryCatalog::displayName($service->category) }}</span>
                         <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/70">{{ $service->city }}</span>
                         @if($business?->is_verified)
                             <span class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-200">Потвърден</span>
@@ -78,7 +79,7 @@
 
                     <div class="mt-5 grid gap-3">
                         <a href="{{ route('request.service') }}" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-orange-600/25">Изпрати запитване</a>
-                        <a href="tel:{{ $service->phone }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center font-black text-white hover:bg-white/10">Обади се</a>
+                        <a href="tel:{{ $service->phone }}" onclick="window.trackBonEvent('phone_click', { source: 'service_page' })" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center font-black text-white hover:bg-white/10">Обади се</a>
                         <a href="{{ route('request.service', ['service' => $service->title]) }}" class="rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-4 text-center font-black text-orange-100">Заяви оферта</a>
                     </div>
                 </div>

@@ -123,7 +123,10 @@ class FreelancerCredits
         FreelancerJob $job,
         ?string $coverMessage = null,
         ?string $proposedPrice = null,
-        ?string $proposedTimeframe = null
+        ?string $proposedTimeframe = null,
+        ?string $contactPhone = null,
+        ?string $contactEmail = null,
+        ?string $portfolioUrl = null
     ): FreelancerJobApplication
     {
         self::ensureMonthlyCredits($freelancer);
@@ -134,7 +137,7 @@ class FreelancerCredits
             ]);
         }
 
-        return DB::transaction(function () use ($freelancer, $job, $coverMessage, $proposedPrice, $proposedTimeframe) {
+        return DB::transaction(function () use ($freelancer, $job, $coverMessage, $proposedPrice, $proposedTimeframe, $contactPhone, $contactEmail, $portfolioUrl) {
             $lockedUser = User::query()->whereKey($freelancer->id)->lockForUpdate()->firstOrFail();
 
             if (!$lockedUser->isFreelancer()) {
@@ -176,6 +179,18 @@ class FreelancerCredits
 
             if (Schema::hasColumn('freelancer_job_applications', 'proposed_timeframe')) {
                 $applicationPayload['proposed_timeframe'] = $proposedTimeframe;
+            }
+
+            if (Schema::hasColumn('freelancer_job_applications', 'contact_phone')) {
+                $applicationPayload['contact_phone'] = $contactPhone;
+            }
+
+            if (Schema::hasColumn('freelancer_job_applications', 'contact_email')) {
+                $applicationPayload['contact_email'] = $contactEmail;
+            }
+
+            if (Schema::hasColumn('freelancer_job_applications', 'portfolio_url')) {
+                $applicationPayload['portfolio_url'] = $portfolioUrl;
             }
 
             $application = FreelancerJobApplication::create($applicationPayload);

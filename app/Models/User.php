@@ -18,6 +18,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'account_type',
+        'profile_type',
+        'is_suspended',
         'business_name',
         'business_category',
         'city',
@@ -25,6 +28,7 @@ class User extends Authenticatable
         'website',
         'working_hours',
         'phone',
+        'avatar',
         'phone_verified_at',
         'last_active_at',
         'short_description',
@@ -35,8 +39,18 @@ class User extends Authenticatable
         'viber',
         'payment_methods',
         'years_experience',
+        'hourly_rate',
+        'project_rate',
+        'availability',
+        'work_mode',
+        'languages',
+        'preferred_categories',
+        'linkedin',
+        'github',
+        'behance',
         'emergency_services',
         'works_24_7',
+        'booking_enabled',
         'response_time_label',
         'service_areas',
         'service_categories',
@@ -71,6 +85,7 @@ class User extends Authenticatable
             'phone_verified_at' => 'datetime',
             'last_active_at' => 'datetime',
             'password' => 'hashed',
+            'is_suspended' => 'boolean',
             'trial_started_at' => 'datetime',
             'trial_ends_at' => 'datetime',
             'subscription_started_at' => 'datetime',
@@ -85,8 +100,11 @@ class User extends Authenticatable
             'offer_points_initialized_at' => 'datetime',
             'freelancer_credits_balance' => 'integer',
             'freelancer_monthly_credits_granted_at' => 'datetime',
+            'languages' => 'array',
+            'preferred_categories' => 'array',
             'emergency_services' => 'boolean',
             'works_24_7' => 'boolean',
+            'booking_enabled' => 'boolean',
         ];
     }
 
@@ -199,9 +217,15 @@ class User extends Authenticatable
 
     public function scopePubliclyVisible($query)
     {
-        return $query
-            ->where('role', 'business')
-            ->where(function ($query) {
+        $query->where('role', 'business');
+
+        if (Schema::hasColumn('users', 'is_suspended')) {
+            $query->where(function ($query) {
+                $query->where('is_suspended', false)->orWhereNull('is_suspended');
+            });
+        }
+
+        return $query->where(function ($query) {
                 $query
                     ->where(function ($query) {
                         $query
@@ -265,17 +289,32 @@ class User extends Authenticatable
 
     public function isBusiness(): bool
     {
-        return $this->role === 'business';
+        return $this->role === 'business'
+            || $this->account_type === 'business'
+            || $this->profile_type === 'business';
     }
 
     public function isCustomer(): bool
     {
-        return in_array($this->role, ['customer', 'client'], true);
+        return in_array($this->role, ['customer', 'client'], true)
+            || in_array($this->account_type, ['customer', 'client'], true);
     }
 
     public function isFreelancer(): bool
     {
-        return $this->role === 'freelancer';
+        return $this->role === 'freelancer'
+            || $this->account_type === 'freelancer'
+            || $this->profile_type === 'freelancer';
+    }
+
+    public function accountType(): string
+    {
+        return $this->account_type ?: ($this->role === 'customer' ? 'client' : $this->role);
+    }
+
+    public function profileType(): ?string
+    {
+        return $this->profile_type ?: (in_array($this->role, ['business', 'freelancer'], true) ? $this->role : null);
     }
 
     public function freelancerCreditsBalance(): int
@@ -771,6 +810,10 @@ class User extends Authenticatable
 
     public function isPubliclyVisible(): bool
     {
+        if (Schema::hasColumn('users', 'is_suspended') && $this->is_suspended) {
+            return false;
+        }
+
         return $this->isBusiness()
             && ($this->isTrialActive() || $this->isSubscriptionActive());
     }

@@ -83,6 +83,7 @@
     <title>Планове | BON Business Operating Network</title>
     <meta name="description" content="Абонаментни планове BON Standard и Premium за бизнес видимост, финансов анализ, бизнес здраве, репутация, месечни доклади и препоръки за растеж.">
 
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 
@@ -111,7 +112,7 @@
 </head>
 
 <body class="antialiased">
-    <main class="relative min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.78)_42%,rgba(248,250,255,1)_100%)]"></div>
         <div class="bon-grid pointer-events-none absolute inset-0 opacity-[.38]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[35rem] w-[35rem] rounded-full bg-blue-400/22 blur-3xl"></div>
@@ -144,17 +145,40 @@
                     </nav>
 
                     <div class="flex items-center gap-2 sm:gap-3">
-                        <a href="{{ route('login') }}" class="hidden rounded-2xl border border-slate-200/80 bg-white/70 px-5 py-3 text-sm font-bold text-[#070B1F] shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:inline-flex">
+                        <a href="{{ route('login') }}" onclick="window.trackBonEvent('login_start', { source: 'pricing_header' })" class="hidden rounded-2xl border border-slate-200/80 bg-white/70 px-5 py-3 text-sm font-bold text-[#070B1F] shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:inline-flex">
                             Вход
                         </a>
-                        <a href="{{ route('register') }}" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-3.5 py-2.5 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:px-6 sm:py-3">
+                        <a href="{{ route('register') }}" onclick="window.trackBonEvent('sign_up_start', { source: 'pricing_header' })" class="hidden rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-3.5 py-2.5 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:inline-flex sm:px-6 sm:py-3">
                             Регистрация
                         </a>
+                        <details class="group relative lg:hidden">
+                            <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-slate-700 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition hover:text-blue-600" aria-label="Меню">
+                                <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+                                </svg>
+                                <svg class="hidden h-6 w-6 group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+                                </svg>
+                            </summary>
+
+                            <div class="absolute right-0 top-12 max-h-[calc(100dvh-5rem)] w-[min(21rem,calc(100vw-2rem))] overflow-y-auto rounded-[1.75rem] border border-white/70 bg-white/92 p-3 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:top-14">
+                                <div class="grid gap-1">
+                                    @foreach ($navItems as $item)
+                                        <a href="{{ $item['href'] }}" class="rounded-2xl px-4 py-3 text-sm font-black text-slate-600 hover:bg-blue-50 hover:text-blue-700">
+                                            {{ $item['label'] }}
+                                        </a>
+                                    @endforeach
+                                    <div class="my-1 h-px bg-slate-200/70"></div>
+                                    <a href="{{ route('login') }}" onclick="window.trackBonEvent('login_start', { source: 'pricing_mobile_header' })" class="rounded-2xl px-4 py-3 text-sm font-black text-slate-600 hover:bg-blue-50 hover:text-blue-700">Вход</a>
+                                    <a href="{{ route('register') }}" onclick="window.trackBonEvent('sign_up_start', { source: 'pricing_mobile_header' })" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-4 py-3 text-center text-sm font-black text-white shadow-lg shadow-violet-500/20">Регистрация</a>
+                                </div>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </header>
 
-            <section class="mx-auto max-w-[1440px] pt-9 sm:pt-12 lg:pt-14">
+            <section class="mx-auto max-w-[1440px] pt-7 sm:pt-12 lg:pt-14">
                 @if($errors->has('stripe'))
                     <div class="mx-auto mb-8 max-w-3xl rounded-[2rem] border border-rose-200/70 bg-white/80 p-5 text-sm font-semibold text-rose-600 shadow-2xl shadow-rose-900/5 backdrop-blur-2xl">
                         {{ $errors->first('stripe') }}
@@ -167,17 +191,17 @@
                         Планове
                     </div>
 
-                    <h1 class="mt-5 text-[34px] font-black leading-[1.08] tracking-[-0.035em] text-[#070B1F] sm:text-[56px] sm:tracking-[-0.055em] lg:text-[70px]">
+                    <h1 class="mt-4 text-[31px] font-black leading-[1.08] tracking-[-0.035em] text-[#070B1F] sm:mt-5 sm:text-[56px] sm:tracking-[-0.055em] lg:text-[70px]">
                         Избери какви инструменти отключваш в <span class="bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">BON</span>.
                     </h1>
 
-                    <p class="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:text-[19px] sm:leading-8">
+                    <p class="mx-auto mt-4 max-w-3xl text-[15px] leading-7 text-slate-600 sm:mt-5 sm:text-[19px] sm:leading-8">
                         Standard и Premium са създадени за бизнеси, които искат анализ, ключови показатели,
                         по-добро онлайн присъствие, повече доверие и конкретни препоръки за растеж.
                     </p>
                 </div>
 
-                <section class="mx-auto mt-9 grid max-w-5xl items-stretch gap-5 sm:mt-10 lg:grid-cols-2">
+                <section class="mx-auto mt-7 grid max-w-5xl items-stretch gap-4 sm:mt-10 sm:gap-5 lg:grid-cols-2">
                     @foreach ($pricingPlans as $plan)
                         @php
                             $isBlue = $plan['accent'] === 'blue';
@@ -195,7 +219,7 @@
                                     : 'from-violet-600 to-fuchsia-500 shadow-violet-600/20');
                         @endphp
 
-                        <article class="bon-card relative flex min-h-0 flex-col overflow-hidden rounded-[1.65rem] border {{ $plan['recommended'] ? 'border-blue-200/80 bg-white/85 shadow-[0_34px_90px_rgba(37,99,235,.16)] ring-1 ring-blue-200/60' : 'border-white/70 bg-white/75 shadow-[0_30px_80px_rgba(30,41,100,.10)]' }} p-5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-7 lg:min-h-[560px]">
+                        <article class="bon-card relative flex min-h-0 flex-col overflow-hidden rounded-[1.45rem] border {{ $plan['recommended'] ? 'border-blue-200/80 bg-white/85 shadow-[0_34px_90px_rgba(37,99,235,.16)] ring-1 ring-blue-200/60' : 'border-white/70 bg-white/75 shadow-[0_30px_80px_rgba(30,41,100,.10)]' }} p-4 backdrop-blur-2xl sm:rounded-[2rem] sm:p-7 lg:min-h-[560px]">
                             <div class="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent {{ $isPink ? 'via-pink-400/70' : ($isBlue ? 'via-blue-400/70' : 'via-violet-400/70') }} to-transparent"></div>
 
                             @if($plan['recommended'])
@@ -216,15 +240,15 @@
                                 {{ $plan['name'] }}
                             </h2>
 
-                            <div class="mt-5 text-[30px] font-black tracking-tight text-[#070B1F] sm:text-[34px]">
+                            <div class="mt-4 text-[27px] font-black tracking-tight text-[#070B1F] sm:mt-5 sm:text-[34px]">
                                 {{ $plan['price'] }}
                             </div>
 
-                            <p class="mt-4 text-base leading-7 text-slate-600">
+                            <p class="mt-3 text-sm leading-7 text-slate-600 sm:mt-4 sm:text-base">
                                 {{ $plan['description'] }}
                             </p>
 
-                            <ul class="mt-6 grid gap-3 text-sm leading-6 text-slate-600">
+                            <ul class="mt-5 grid gap-2.5 text-sm leading-6 text-slate-600 sm:mt-6 sm:gap-3">
                                 @foreach ($plan['features'] as $feature)
                                     <li class="flex gap-3">
                                         <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br {{ $isPink ? 'from-pink-500 to-rose-500' : ($isBlue ? 'from-blue-600 to-violet-600' : 'from-violet-600 to-fuchsia-500') }}"></span>
@@ -233,10 +257,10 @@
                                 @endforeach
                             </ul>
 
-                            <div class="mt-auto pt-7">
+                            <div class="mt-auto pt-6 sm:pt-7">
                                 @auth
                                     @if(auth()->user()->role === 'business')
-                                        <form action="{{ route('business.billing.checkout') }}" method="POST">
+                                        <form action="{{ route('business.billing.checkout') }}" method="POST" onsubmit="window.trackBonEvent('subscription_checkout_start', { plan: '{{ $plan['key'] }}', source: 'pricing_page' })">
                                             @csrf
                                             <input type="hidden" name="plan" value="{{ $plan['key'] }}">
                                             <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r {{ $buttonClass }} px-5 text-center text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5">
@@ -249,7 +273,7 @@
                                         </a>
                                     @endif
                                 @else
-                                    <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r {{ $buttonClass }} px-5 text-center text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5">
+                                    <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('sign_up_start', { source: 'pricing_page', plan: '{{ $plan['key'] }}' })" class="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r {{ $buttonClass }} px-5 text-center text-sm font-black text-white shadow-xl transition hover:-translate-y-0.5">
                                         {{ $plan['button'] }} <span>→</span>
                                     </a>
                                 @endauth
@@ -258,17 +282,21 @@
                     @endforeach
                 </section>
 
-                <section class="mx-auto mt-10 max-w-5xl rounded-[1.65rem] border border-white/70 bg-white/75 p-5 shadow-[0_28px_80px_rgba(30,41,100,.10)] backdrop-blur-2xl sm:rounded-[2rem] sm:p-7 lg:mt-14">
+                <section class="mx-auto mt-8 max-w-5xl sm:mt-10 lg:mt-14">
+                    @include('partials.bon-paid-services', ['profile' => auth()->user(), 'variant' => 'light', 'context' => 'plans'])
+                </section>
+
+                <section class="mx-auto mt-8 max-w-5xl rounded-[1.45rem] border border-white/70 bg-white/75 p-4 shadow-[0_28px_80px_rgba(30,41,100,.10)] backdrop-blur-2xl sm:mt-10 sm:rounded-[2rem] sm:p-7 lg:mt-14">
                     <div class="text-center">
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">FAQ</p>
-                        <h2 class="mt-3 text-3xl font-black tracking-tight text-[#070B1F] sm:text-4xl">
+                        <h2 class="mt-3 text-2xl font-black tracking-tight text-[#070B1F] sm:text-4xl">
                             Често задавани въпроси
                         </h2>
                     </div>
 
-                    <div class="mt-7 grid gap-4 md:grid-cols-2">
+                    <div class="mt-6 grid gap-3 sm:mt-7 sm:gap-4 md:grid-cols-2">
                         @foreach ($faqs as $faq)
-                            <details class="group rounded-3xl border border-slate-200/70 bg-white/70 p-5 shadow-sm shadow-blue-900/5 open:border-violet-200 open:bg-white/90">
+                            <details class="group rounded-2xl border border-slate-200/70 bg-white/70 p-4 shadow-sm shadow-blue-900/5 open:border-violet-200 open:bg-white/90 sm:rounded-3xl sm:p-5">
                                 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-black text-[#070B1F] [&::-webkit-details-marker]:hidden">
                                     {{ $faq['question'] }}
                                     <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-500 transition group-open:rotate-45 group-open:bg-violet-50 group-open:text-violet-600">+</span>

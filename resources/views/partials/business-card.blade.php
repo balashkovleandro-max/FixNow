@@ -1,8 +1,14 @@
 @php
     $businessName = $business->business_name ?: $business->name;
-    $serviceCategories = array_values(array_filter($business->serviceCategories()));
+    $serviceCategories = collect($business->serviceCategories())
+        ->map(fn ($category) => \App\Support\CategoryCatalog::displayName($category))
+        ->filter()
+        ->unique()
+        ->values()
+        ->all();
     $serviceCities = array_values(array_filter($business->serviceCities()));
-    $primaryCategory = $serviceCategories[0] ?? ($business->business_category ?: 'Локален бизнес');
+    $businessCategory = $business->business_category ? \App\Support\CategoryCatalog::displayName($business->business_category) : null;
+    $primaryCategory = $serviceCategories[0] ?? ($businessCategory ?: 'Локален бизнес');
     $primaryCity = $serviceCities[0] ?? ($business->city ?: 'България');
     $averageRating = data_get($business, 'growth_average_rating') ?: $business->averageRating();
     $reviewsCount = (int) (data_get($business, 'growth_reviews_count') ?? $business->approvedReviewsCount());
@@ -16,6 +22,7 @@
     $badges = $business->publicBadges();
     $hasPremiumBenefits = method_exists($business, 'hasPremiumBenefits') ? $business->hasPremiumBenefits() : $business->isPremium();
     $hasRequestBasedCategory = method_exists($business, 'hasRequestBasedCategories') && $business->hasRequestBasedCategories();
+    $bookingEnabled = (bool) data_get($business, 'booking_enabled', false);
     $coverImage = data_get($business, 'cover_image');
     $galleryPreview = collect();
 
@@ -88,6 +95,9 @@
                 @if($business->is_verified)
                     <span class="rounded-full bg-emerald-400/12 px-3 py-1 text-xs font-black text-emerald-100 ring-1 ring-emerald-300/20">Потвърден</span>
                 @endif
+                @if($bookingEnabled)
+                    <span class="rounded-full bg-blue-400/12 px-3 py-1 text-xs font-black text-blue-100 ring-1 ring-blue-300/20">Онлайн записване</span>
+                @endif
                 @foreach($trustBadges->reject(fn ($badge) => in_array($badge, ['Premium', 'Верифициран'], true))->take(2) as $badge)
                     <span class="rounded-full bg-blue-400/12 px-3 py-1 text-xs font-black text-blue-100 ring-1 ring-blue-300/20">{{ $badge }}</span>
                 @endforeach
@@ -149,7 +159,7 @@
         </div>
 
         <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
-            <a href="{{ route('businesses.track.inquiry', ['user' => $business, 'source' => 'business_card']) }}" data-track="cta_send_inquiry" class="fn-amber-cta flex min-h-12 items-center justify-center rounded-2xl px-4 py-3 text-center font-black active:scale-[0.99]">
+            <a href="{{ route('businesses.track.inquiry', ['user' => $business, 'source' => 'business_card']) }}" data-track="cta_send_inquiry" onclick="window.trackBonEvent('contact_click', { source: 'business_card', profile_id: '{{ $business->id }}', profile_type: 'business' })" class="fn-amber-cta flex min-h-12 items-center justify-center rounded-2xl px-4 py-3 text-center font-black active:scale-[0.99]">
                 Изпрати запитване
             </a>
             <a href="{{ route('businesses.show', $business) }}" data-track="cta_view_business" class="flex min-h-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.08] px-4 py-3 text-center font-black text-white transition hover:border-orange-300/30 hover:bg-orange-400/10 active:scale-[0.99]">
@@ -157,8 +167,14 @@
             </a>
         </div>
 
+        @if($bookingEnabled)
+            <a href="{{ route('businesses.show', $business) }}#booking" class="mt-3 flex min-h-11 items-center justify-center rounded-2xl border border-blue-300/20 bg-blue-400/10 px-4 py-3 text-center text-sm font-black text-blue-100 transition hover:bg-blue-400/20 active:scale-[0.99]">
+                Запази час
+            </a>
+        @endif
+
         @if($hasRequestBasedCategory)
-            <a href="{{ route('request.service', ['category' => $serviceCategories[0] ?? $business->business_category, 'city' => $serviceCities[0] ?? $business->city]) }}" data-track="cta_request" class="mt-3 flex min-h-11 items-center justify-center rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-center text-sm font-black text-amber-100 transition hover:bg-amber-400/20 active:scale-[0.99]">
+            <a href="{{ route('request.service', ['category' => $serviceCategories[0] ?? $business->business_category, 'city' => $serviceCities[0] ?? $business->city]) }}" data-track="cta_request" onclick="window.trackBonEvent('service_request_start', { source: 'business_card', profile_id: '{{ $business->id }}' })" class="mt-3 flex min-h-11 items-center justify-center rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-center text-sm font-black text-amber-100 transition hover:bg-amber-400/20 active:scale-[0.99]">
                 Пусни заявка в тази категория
             </a>
         @endif

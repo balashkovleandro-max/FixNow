@@ -1,18 +1,9 @@
+@include('partials.google-analytics')
+
 @php
-    $gaMeasurementId = config('services.analytics.ga_measurement_id');
     $metaPixelId = config('services.analytics.meta_pixel_id');
     $clarityProjectId = config('services.analytics.clarity_project_id');
 @endphp
-
-@if($gaMeasurementId)
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaMeasurementId }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '{{ $gaMeasurementId }}');
-    </script>
-@endif
 
 @if($metaPixelId)
     <script>
@@ -32,7 +23,7 @@
 @if($clarityProjectId)
     <script>
         (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            c[a]=c[a]||function(){c[a].q=c[a].q||[];c[a].q.push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "{{ $clarityProjectId }}");

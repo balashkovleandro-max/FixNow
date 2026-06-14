@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Свържете се с BON за въпроси за бизнес профили, видимост, доверие, партньорства и поддръжка.">
     <title>Контакт | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>

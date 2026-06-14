@@ -44,15 +44,14 @@ class TopBusinessesController extends Controller
             ->values();
 
         $topPleven = BusinessGrowthMetrics::filterByCity($allBusinesses, 'Плевен')->take(6);
-        $topAuto = BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Автосервиз')->take(6);
-        $topMakers = BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Ремонти')
-            ->merge(BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Строителство'))
+        $topAuto = BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Автосервизи')->take(6);
+        $topMakers = BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Ремонти и строителство')
             ->unique('id')
             ->take(6)
             ->values();
         $topCleaning = BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Почистване')->take(6);
-        $topBusinessServices = BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Услуги за малки бизнеси')
-            ->merge(BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Счетоводители'))
+        $topBusinessServices = BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Бизнес консултации')
+            ->merge(BusinessGrowthMetrics::filterByCategory($allBusinesses, 'Счетоводство и финанси'))
             ->unique('id')
             ->take(6)
             ->values();

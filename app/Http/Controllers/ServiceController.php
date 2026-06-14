@@ -33,13 +33,13 @@ class ServiceController extends Controller
 
             $services = $services
                 ->filter(function (Service $service) use ($category) {
-                    if (BusinessGrowthMetrics::matchesCategory((string) $service->category, $category)) {
+                    if (CategoryCatalog::matches((string) $service->category, $category)) {
                         return true;
                     }
 
                     return $service->user
                         && collect($service->user->serviceCategories())
-                            ->contains(fn ($businessCategory) => BusinessGrowthMetrics::matchesCategory((string) $businessCategory, $category));
+                            ->contains(fn ($businessCategory) => CategoryCatalog::matches((string) $businessCategory, $category));
                 })
                 ->values();
         }

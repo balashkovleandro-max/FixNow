@@ -37,11 +37,12 @@
     <title>За бизнеси | BON Business Operating Network</title>
     <meta name="description" content="BON помага на бизнесите да изградят професионален публичен профил, повече видимост, доверие, отзиви, статистики и Premium позициониране.">
 
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
 <body class="antialiased">
-    <main class="relative min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.82)_42%,rgba(248,250,255,1)_100%)]"></div>
         <div class="pointer-events-none absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -right-40 top-20 h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/18 blur-3xl"></div>
@@ -64,7 +65,7 @@
                     @endforeach
                 </nav>
 
-                <a href="{{ route('register') }}" data-track="cta_business_signup" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-xl shadow-violet-500/25">Добави бизнес</a>
+                <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'business_landing_header' })" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-xl shadow-violet-500/25">Добави бизнес</a>
             </header>
 
             <section class="mx-auto grid max-w-[1320px] gap-10 pt-14 lg:grid-cols-[1fr_0.86fr] lg:items-center lg:pt-20">
@@ -78,7 +79,7 @@
                     </p>
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                         @guest
-                            <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25">Създай BON профил</a>
+                            <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'business_landing_hero' })" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25">Създай BON профил</a>
                         @endguest
                         @auth
                             <a href="{{ route('dashboard') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25">Към таблото</a>
@@ -164,7 +165,7 @@
                         <p class="mt-4 max-w-2xl text-sm leading-6 text-white/75">Силен профил, ясни категории, доверие, снимки и Premium възможности за повече видимост.</p>
                     </div>
                     @guest
-                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl">Добави бизнес</a>
+                        <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'business_landing_final_cta' })" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl">Добави бизнес</a>
                     @endguest
                     @auth
                         <a href="{{ route('dashboard') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl">Към таблото</a>

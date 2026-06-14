@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminActivityLog;
 use App\Models\FreelancerCreditTransaction;
 use App\Models\FreelancerJobApplication;
 use App\Models\User;
 use App\Support\FreelancerCredits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\ValidationException;
 
 class AdminFreelancerCreditController extends Controller
@@ -57,13 +59,31 @@ class AdminFreelancerCreditController extends Controller
         ]);
 
         try {
-            FreelancerCredits::addCredits(
+            $transaction = FreelancerCredits::addCredits(
                 $user,
                 (int) $validated['amount'],
                 FreelancerCreditTransaction::TYPE_ADMIN_ADJUSTMENT,
                 $validated['description'] ?: 'Admin credit adjustment',
                 $admin
             );
+
+            if (Schema::hasTable('admin_activity_logs')) {
+                AdminActivityLog::query()->create([
+                    'admin_user_id' => $admin->id,
+                    'action' => 'freelancer.credits.adjusted',
+                    'subject_type' => User::class,
+                    'subject_id' => $user->id,
+                    'old_values' => null,
+                    'new_values' => [
+                        'amount' => (int) $validated['amount'],
+                        'balance_after' => $transaction->balance_after,
+                        'transaction_id' => $transaction->id,
+                    ],
+                    'metadata' => [
+                        'description' => $validated['description'] ?: 'Admin credit adjustment',
+                    ],
+                ]);
+            }
         } catch (ValidationException $exception) {
             return back()->withErrors($exception->errors())->withInput();
         }

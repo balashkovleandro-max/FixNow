@@ -6,7 +6,7 @@
         ['label' => 'Планове', 'href' => route('plans')],
     ];
 
-    $roles = ['Marketing', 'Web Design', 'Development', 'Copywriting', 'Sales', 'Video Editing', 'Photography', 'Consulting'];
+    $roles = ['Маркетинг и реклама', 'Уеб сайтове и софтуер', 'Дизайн и брандинг', 'Събития и фотография', 'Бизнес консултации', 'Фрийланс услуги'];
 
     $flow = [
         ['title' => 'Бизнесът има проблем', 'text' => 'Продажби, реклама, сайт, съдържание, процеси или растеж.'],
@@ -23,10 +23,11 @@
     <title>BON Talent Network | BON Business Operating Network</title>
     <meta name="description" content="BON Talent Network е мрежа от специалисти, които помагат на бизнесите да изпълнят правилните решения.">
 
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased">
-    <main class="relative min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.82)_42%,rgba(248,250,255,1)_100%)]"></div>
         <div class="pointer-events-none absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -right-40 top-20 h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>

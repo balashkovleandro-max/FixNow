@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пусни заявка за оферта | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -30,7 +31,7 @@
                 Опишете задачата и получете подходящи оферти.
             </h1>
             <p class="mt-6 max-w-xl text-lg leading-8 text-white/70">
-                За ремонти, ВиК, електро, почистване, хамали, техника и други request-based услуги. Избирате категория, град и срок, а подходящи бизнеси могат да ви изпратят оферта.
+                За локални, професионални и фрийланс услуги. Избирате категория, град и срок, а подходящи бизнеси или специалисти могат да ви изпратят оферта.
             </p>
 
             <div class="mt-8 grid gap-4 sm:grid-cols-3">
@@ -79,12 +80,12 @@
 
                 <div>
                     <label for="category" class="mb-2 block text-sm font-semibold text-white/75">Категория/услуга</label>
-                    <select id="category" name="category" class="min-h-12 w-full rounded-2xl border {{ $errors->has('category') ? 'border-red-300/60' : 'border-white/10' }} bg-slate-950 px-4 py-4 text-white outline-none focus:border-orange-300/50">
-                        <option value="">Изберете категория за оферти</option>
+                    <input id="category" name="category" list="request-category-options" value="{{ old('category', request('category')) }}" placeholder="Изберете или напишете категория" class="min-h-12 w-full rounded-2xl border {{ $errors->has('category') ? 'border-red-300/60' : 'border-white/10' }} bg-slate-950 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-orange-300/50">
+                    <datalist id="request-category-options">
                         @foreach($requestCategories as $category)
-                            <option value="{{ $category['name'] }}" {{ old('category', request('category')) === $category['name'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
+                            <option value="{{ $category['name'] }}"></option>
                         @endforeach
-                    </select>
+                    </datalist>
                     @error('category')
                         <p class="mt-2 text-sm text-red-200">{{ $message }}</p>
                     @enderror
@@ -178,7 +179,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" data-track="cta_request" class="fn-amber-cta min-h-12 rounded-2xl px-6 py-4 font-black">
+                <button type="submit" data-track="cta_request" onclick="window.trackBonEvent('service_request_start', { source: 'request_form' })" class="fn-amber-cta min-h-12 rounded-2xl px-6 py-4 font-black">
                     Изпрати заявка
                 </button>
             </form>

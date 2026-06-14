@@ -6,10 +6,11 @@
     <title>BON | Бизнеси, услуги и места</title>
     <meta name="description" content="BON помага на хората да откриват проверени бизнеси, услуги и места, а на бизнесите - повече видимост, доверие и клиенти.">
 
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased">
-    <main class="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F8FAFF] px-4 py-12 text-[#070B1F]">
+    <main class="relative flex min-h-screen items-center justify-center overflow-x-clip bg-[#F8FAFF] px-4 py-12 text-[#070B1F]">
         <div class="pointer-events-none absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -right-40 top-10 h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute inset-0 opacity-[.26]" style="background-image: linear-gradient(to right, rgba(37,99,235,.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(37,99,235,.08) 1px, transparent 1px); background-size: 72px 72px;"></div>

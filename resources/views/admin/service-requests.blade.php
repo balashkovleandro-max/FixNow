@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin заявки | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -89,7 +90,7 @@
                 </label>
                 <label class="block lg:col-span-1">
                     <span class="text-xs font-black uppercase tracking-[0.16em] text-white/45">Категория</span>
-                    <input name="category" list="admin-request-categories" value="{{ $filters['category'] ?? '' }}" class="mt-2 min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 text-white" placeholder="ВиК услуги">
+                    <input name="category" list="admin-request-categories" value="{{ $filters['category'] ?? '' }}" class="mt-2 min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 text-white" placeholder="Избери категория">
                     <datalist id="admin-request-categories">
                         @foreach($categories as $category)
                             <option value="{{ $category }}"></option>

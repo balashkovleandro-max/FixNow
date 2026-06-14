@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientProfileController;
 use App\Http\Controllers\BillingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BusinessProfileController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessAnalyticsController;
 use App\Http\Controllers\BusinessInsightsController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BusinessPhotoController;
 use App\Http\Controllers\BusinessServiceRequestController;
 use App\Http\Controllers\AdminBusinessController;
@@ -21,9 +23,11 @@ use App\Http\Controllers\BusinessRecommendationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CustomerOfferController;
 use App\Http\Controllers\FreelancerCreditController;
+use App\Http\Controllers\FreelancerDirectoryController;
 use App\Http\Controllers\FreelancerJobController;
 use App\Http\Controllers\FreelancerPortfolioController;
 use App\Http\Controllers\FreelancerProfileController;
+use App\Http\Controllers\PublicSearchController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SeoPageController;
 use App\Http\Controllers\ServiceRequestAssignmentController;
@@ -64,7 +68,7 @@ Route::view('/onboarding', 'bon.onboarding')->middleware('auth')->name('bon.onbo
 Route::view('/tools', 'bon.tools')->name('bon.tools');
 Route::redirect('/instrumenti', '/tools');
 Route::view('/za-potrebiteli', 'bon.consumers')->name('bon.consumers');
-Route::view('/freelancers', 'bon.freelancers')->name('bon.freelancers');
+Route::get('/freelancers', [FreelancerDirectoryController::class, 'index'])->name('bon.freelancers');
 Route::redirect('/za-freelanceri', '/freelancers');
 Route::get('/freelancers/{user}', [FreelancerProfileController::class, 'show'])->name('freelancers.show');
 Route::view('/talent-network', 'bon.talent-network')->name('bon.talent-network');
@@ -80,18 +84,37 @@ Route::redirect('/business/command-center', '/bon/command-center');
 Route::redirect('/legacy-home', '/');
 
 Route::get('/categories', function () {
-    $categoryDefinitions = [
-        ['name' => 'Ресторанти и кафенета', 'desc' => 'Места за храна, кафе, срещи, събития и локални преживявания'],
-        ['name' => 'Хотели', 'desc' => 'Хотели, къщи за гости, апартаменти и места за настаняване'],
-        ['name' => 'Ремонти и строителство', 'desc' => 'Ремонти, довършителни работи, бани, покриви и монтажи'],
-        ['name' => 'ВиК', 'desc' => 'Аварии, течове, бойлери, канали и водопроводни услуги'],
-        ['name' => 'Електро услуги', 'desc' => 'Табла, контакти, осветление, инсталации и електро поддръжка'],
-        ['name' => 'Автосервизи', 'desc' => 'Сервизи, гуми, диагностика, автомивки и авто поддръжка'],
-        ['name' => 'Почистване', 'desc' => 'Домове, офиси, абонамент, входове и почистване след ремонт'],
-        ['name' => 'Красота и грижа', 'desc' => 'Салони, фризьори, маникюр, козметика и лична грижа'],
-        ['name' => 'Здраве и уелнес', 'desc' => 'Стоматолози, физиотерапия, масажи, психолози и уелнес услуги'],
-        ['name' => 'Спорт и активности', 'desc' => 'Фитнес, танци, йога, детски активности и спортни места'],
+    $categoryDescriptions = [
+        'Ресторанти и кафенета' => 'Места за храна, кафе, срещи, събития и локални преживявания.',
+        'Хотели и настаняване' => 'Хотели, къщи за гости, апартаменти и други места за престой.',
+        'Красота и козметика' => 'Салони, фризьори, маникюр, козметика и лична грижа.',
+        'Фитнес и спорт' => 'Фитнес, спортни клубове, треньори, танци, йога и активности.',
+        'Здраве и уелнес' => 'Здравни, уелнес, терапевтични и възстановителни услуги.',
+        'Автосервизи' => 'Сервизи, диагностика, гуми, автомивки и авто поддръжка.',
+        'Ремонти и строителство' => 'Ремонти, довършителни работи, строителни услуги и монтажи.',
+        'Домашни услуги' => 'Помощ за дома, поддръжка, аварии, монтажи и локални услуги.',
+        'Почистване' => 'Почистване за домове, офиси, обекти и абонаментна поддръжка.',
+        'Образование и курсове' => 'Курсове, уроци, обучения, школи и професионално развитие.',
+        'Маркетинг и реклама' => 'Маркетинг, реклама, social media, copywriting и кампании.',
+        'Уеб сайтове и софтуер' => 'Сайтове, софтуер, автоматизации, интеграции и дигитални продукти.',
+        'Дизайн и брандинг' => 'Визуална идентичност, UI/UX, графичен дизайн и бранд материали.',
+        'Счетоводство и финанси' => 'Счетоводство, финансови услуги, анализи и бизнес отчетност.',
+        'Правни услуги' => 'Правна помощ, договори, консултации и корпоративни услуги.',
+        'Недвижими имоти' => 'Имоти, брокери, управление, оценки и консултации.',
+        'Събития и фотография' => 'Фотография, видео, събития, монтаж и творчески услуги.',
+        'Туризъм и развлечения' => 'Преживявания, развлечения, турове и локални активности.',
+        'Магазини и търговия' => 'Магазини, търговци, продукти, шоуруми и локални брандове.',
+        'Бизнес консултации' => 'Консултации, стратегия, операции, растеж и подобрение на процеси.',
+        'Фрийланс услуги' => 'Независими специалисти, проектна работа и професионални услуги.',
+        'Друго' => 'Други бизнеси, услуги и специализирани профили.',
     ];
+
+    $categoryDefinitions = CategoryCatalog::all()
+        ->map(fn ($category) => [
+            'name' => $category['name'],
+            'desc' => $categoryDescriptions[$category['name']] ?? 'Профили, услуги и бизнеси в тази категория.',
+        ])
+        ->all();
 
     $publicBusinesses = collect();
 
@@ -119,8 +142,22 @@ Route::redirect('/pricing', '/plans');
 Route::view('/za-biznesi', 'bon.businesses')->name('business.landing');
 Route::redirect('/za-biznesa', '/za-biznesi');
 Route::redirect('/add-business', '/za-biznesi');
+Route::get('/projects', [FreelancerJobController::class, 'publicIndex'])->name('freelancer.projects.index');
+Route::get('/projects/create', function () {
+    if (!auth()->check()) {
+        return redirect()->route('register', ['role' => 'client']);
+    }
+
+    if (auth()->user()->isFreelancer()) {
+        return redirect()->route('freelancer.jobs.index');
+    }
+
+    return redirect()->route('business.jobs.create');
+})->name('freelancer.projects.create');
+Route::get('/projects/{freelancerJob}', [FreelancerJobController::class, 'publicShow'])->name('freelancer.projects.show');
 Route::get('/top-biznesi', [TopBusinessesController::class, 'index'])->name('top.businesses');
 Route::redirect('/top-businesses', '/top-biznesi');
+Route::get('/search', [PublicSearchController::class, 'index'])->name('search');
 Route::get('/grad/{city}', [SeoPageController::class, 'city'])->name('seo.city');
 Route::get('/grad/{city}/{category}', [SeoPageController::class, 'cityCategory'])->name('seo.city.category');
 Route::get('/uslugi/{category}/{city}', [SeoPageController::class, 'categoryCity'])->name('seo.service.city');
@@ -132,6 +169,32 @@ Route::post('/register', [AuthController::class, 'register'])->middleware('throt
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::view('/how-it-works', 'how-it-works');
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::redirect('/dashboard', '/admin');
+    Route::get('/businesses', [AdminController::class, 'businesses'])->name('businesses.index');
+    Route::get('/businesses/{user}/edit', [AdminController::class, 'editBusiness'])->name('businesses.edit');
+    Route::put('/businesses/{user}/profile', [AdminController::class, 'saveBusinessProfile'])->name('businesses.profile.update');
+    Route::patch('/businesses/{user}', [AdminController::class, 'updateBusiness'])->name('businesses.update');
+    Route::delete('/businesses/{user}', [AdminController::class, 'destroyBusiness'])->name('businesses.destroy');
+    Route::get('/users', [AdminController::class, 'users'])->name('users.index');
+    Route::patch('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
+    Route::get('/requests', [AdminController::class, 'requests'])->name('requests.index');
+    Route::redirect('/consultations', '/admin/requests')->name('consultations.index');
+    Route::patch('/requests/{serviceRequest}', [AdminController::class, 'updateRequest'])->name('requests.update');
+    Route::delete('/requests/{serviceRequest}', [AdminController::class, 'destroyRequest'])->name('requests.destroy');
+    Route::get('/offers', [AdminController::class, 'offers'])->name('offers.index');
+    Route::get('/subscriptions', [AdminController::class, 'subscriptions'])->name('subscriptions.index');
+    Route::get('/payments', [AdminController::class, 'subscriptions'])->name('payments');
+    Route::get('/reviews', [AdminController::class, 'reviews'])->name('reviews.index');
+    Route::get('/categories', [AdminController::class, 'categories'])->name('categories.index');
+    Route::get('/cities', [AdminController::class, 'cities'])->name('cities.index');
+    Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
+    Route::get('/activity', [AdminController::class, 'activity'])->name('activity.index');
+});
+
 Route::get('/dashboard', function () {
     $user = auth()->user();
 
@@ -139,7 +202,11 @@ Route::get('/dashboard', function () {
         return redirect('/login');
     }
 
-if ($user->role === 'admin') {
+    if ($user->role === 'admin' || $user->accountType() === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+
+if (false && $user->role === 'admin') {
     $allBusinesses = User::query()
         ->where('role', 'business')
         ->latest()
@@ -297,7 +364,7 @@ if ($user->role === 'admin') {
     return view('dashboards.admin', compact('adminStats', 'businesses', 'businessFilter', 'pendingBusinesses', 'pendingReviews', 'platformAnalytics', 'serviceRequests', 'leadStats'));
 }
 
-if ($user->role === 'business') {
+if ($user->isBusiness()) {
     $user->initializeTrialIfMissing();
     $user->ensureOfferPointsInitialized();
     $businessRelations = ['services'];
@@ -498,6 +565,7 @@ if ($user->isFreelancer()) {
 
 $customerServiceRequests = collect();
 $favoriteProfiles = collect();
+$customerFreelancerJobs = collect();
 $customerRequestStats = [
     'total' => 0,
     'open' => 0,
@@ -565,7 +633,16 @@ if (Schema::hasTable('user_favorites')) {
         ->values();
 }
 
-return view('dashboards.client', compact('customerServiceRequests', 'customerRequestStats', 'favoriteProfiles'));
+if (Schema::hasTable('freelancer_jobs')) {
+    $customerFreelancerJobs = $user->freelancerJobs()
+        ->with(['applications.freelancer'])
+        ->withCount('applications')
+        ->latest()
+        ->take(20)
+        ->get();
+}
+
+return view('dashboards.client', compact('customerServiceRequests', 'customerRequestStats', 'favoriteProfiles', 'customerFreelancerJobs'));
 })->name('dashboard');
 Route::view('/offer-services', 'offer-services')->name('offer-services');
 Route::view('/contact', 'contact')->name('contact');
@@ -590,6 +667,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
     Route::post('/services', [ServiceController::class, 'store'])->middleware('throttle:10,1')->name('services.store');
 
+    Route::redirect('/dashboard/business/profile', '/business/profile/edit')->name('dashboard.business.profile.edit');
     Route::get('/business/profile/edit', [BusinessProfileController::class, 'edit'])->name('business.profile.edit');
     Route::put('/business/profile/update', [BusinessProfileController::class, 'update'])->middleware('throttle:20,1')->name('business.profile.update');
     Route::post('/business/profile/photos', [BusinessPhotoController::class, 'store'])->middleware('throttle:20,1')->name('business.profile.photos.store');
@@ -615,8 +693,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/freelancer/jobs', [FreelancerJobController::class, 'index'])->name('freelancer.jobs.index');
     Route::get('/freelancer/jobs/{freelancerJob}', [FreelancerJobController::class, 'show'])->name('freelancer.jobs.show');
     Route::post('/freelancer/jobs/{freelancerJob}/apply', [FreelancerJobController::class, 'apply'])->middleware('throttle:10,1')->name('freelancer.jobs.apply');
+    Route::redirect('/dashboard/freelancer/profile', '/freelancer/profile/edit')->name('dashboard.freelancer.profile.edit');
+    Route::get('/freelancer/profile/edit', [FreelancerProfileController::class, 'edit'])->name('freelancer.profile.edit');
+    Route::put('/freelancer/profile', [FreelancerProfileController::class, 'update'])->middleware('throttle:20,1')->name('freelancer.profile.update');
     Route::post('/freelancer/portfolio', [FreelancerPortfolioController::class, 'store'])->middleware('throttle:10,1')->name('freelancer.portfolio.store');
     Route::delete('/freelancer/portfolio/{portfolioItem}', [FreelancerPortfolioController::class, 'destroy'])->name('freelancer.portfolio.destroy');
+
+    Route::get('/dashboard/client/profile', [ClientProfileController::class, 'edit'])->name('dashboard.client.profile.edit');
+    Route::put('/dashboard/client/profile', [ClientProfileController::class, 'update'])->middleware('throttle:20,1')->name('dashboard.client.profile.update');
 
     Route::patch('/admin/businesses/{user}/activate-30-days', [AdminBusinessController::class, 'activate'])->name('admin.businesses.activate');
     Route::patch('/admin/businesses/{user}/extend-trial', [AdminBusinessController::class, 'extendTrial'])->name('admin.businesses.extend-trial');

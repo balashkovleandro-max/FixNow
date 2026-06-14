@@ -30,10 +30,11 @@
     <title>За потребители | BON Business Operating Network</title>
     <meta name="description" content="BON помага на хората да намерят правилното решение без излишно търсене.">
 
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased">
-    <main class="relative min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.82)_42%,rgba(248,250,255,1)_100%)]"></div>
         <div class="pointer-events-none absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-pink-300/18 blur-3xl"></div>
         <div class="pointer-events-none absolute -right-40 top-20 h-[34rem] w-[34rem] rounded-full bg-violet-400/18 blur-3xl"></div>
@@ -55,7 +56,7 @@
                     @endforeach
                 </nav>
 
-                <a href="{{ route('register') }}" class="rounded-2xl bg-gradient-to-r from-fuchsia-500 to-pink-500 px-5 py-3 text-sm font-black text-white shadow-xl shadow-pink-500/25">Регистрация</a>
+                <a href="{{ route('register') }}" onclick="window.trackBonEvent('sign_up_start', { source: 'consumers_landing_header' })" class="rounded-2xl bg-gradient-to-r from-fuchsia-500 to-pink-500 px-5 py-3 text-sm font-black text-white shadow-xl shadow-pink-500/25">Регистрация</a>
             </header>
 
             <section class="mx-auto grid max-w-[1320px] gap-8 pt-14 lg:grid-cols-[1fr_0.8fr] lg:items-center lg:pt-20">

@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Клиентски панел | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
@@ -44,6 +45,8 @@
     ];
 
     $favoriteProfiles = $favoriteProfiles ?? collect();
+    $customerFreelancerJobs = $customerFreelancerJobs ?? collect();
+    $clientProfile = \App\Support\ProfileCompletion::summary(auth()->user());
 @endphp
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
@@ -60,12 +63,14 @@
                 </a>
 
                 <nav class="flex flex-wrap items-center gap-2 text-sm font-bold text-white/70">
-                    <a href="{{ url('/') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Начало</a>
-                    <a href="{{ url('/categories') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Категории</a>
-                    <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Услуги</a>
-                        <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Бизнеси</a>
-                    <a href="{{ route('request.service') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Пусни заявка</a>
-                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-orange-100">Моето табло</a>
+                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-orange-100">Обзор</a>
+                    <a href="{{ route('request.service') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Публикувай заявка</a>
+                    <a href="#requests" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Моите заявки</a>
+                    <a href="#offers" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Получени оферти</a>
+                    <a href="#selected" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Избрани изпълнители</a>
+                    <a href="#favorites" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Любими</a>
+                    <a href="#history" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">История</a>
+                    <a href="{{ route('dashboard.client.profile.edit') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Профил</a>
                 </nav>
 
                 <form action="{{ route('logout') }}" method="POST">
@@ -84,9 +89,17 @@
                         Следете изпратените заявки, получените оферти и избрания бизнес от едно леко клиентско табло. Клиентският акаунт е безплатен и няма абонаментни функции.
                     </p>
                 </div>
-                <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3 text-center font-black text-white shadow-lg shadow-orange-950/40">
-                    Пусни нова заявка
-                </a>
+                <div class="grid gap-3 sm:grid-cols-3 lg:min-w-[520px]">
+                    <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-center font-black text-white shadow-lg shadow-orange-950/40">
+                        Публикувай заявка
+                    </a>
+                    <a href="{{ route('businesses.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-center text-sm font-black text-white hover:bg-white/10">
+                        Намери бизнес
+                    </a>
+                    <a href="{{ route('bon.freelancers') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-center text-sm font-black text-white hover:bg-white/10">
+                        Намери фрилансър
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -105,7 +118,134 @@
             @endforeach
         </section>
 
-        <section class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <section id="profile-completion" class="mt-6 rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6">
+            <div class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+                <div>
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-200/80">Профилна завършеност</p>
+                    <h2 class="mt-3 text-2xl font-black">Клиентският профил е завършен на {{ $clientProfile['percent'] }}%</h2>
+                    <div class="mt-5 h-3 overflow-hidden rounded-full bg-white/10">
+                        <div class="h-full rounded-full bg-gradient-to-r from-orange-300 via-pink-400 to-violet-400" style="width: {{ $clientProfile['percent'] }}%"></div>
+                    </div>
+                    <p class="mt-4 text-sm leading-6 text-white/60">
+                        Остава да добавите:
+                        <strong class="text-white">{{ empty($clientProfile['missing']) ? 'нищо — профилът изглежда готов.' : implode(', ', $clientProfile['missing']) }}</strong>
+                    </p>
+                </div>
+
+                <div class="grid gap-3 sm:grid-cols-2">
+                    @foreach($clientProfile['items'] as $item)
+                        <a href="{{ $item['href'] ?? route('dashboard.client.profile.edit') }}" class="rounded-3xl border {{ $item['complete'] ? 'border-emerald-300/20 bg-emerald-300/10' : 'border-white/10 bg-slate-950/45' }} p-4 transition hover:-translate-y-0.5 hover:bg-white/10">
+                            <div class="flex items-start gap-3">
+                                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl {{ $item['complete'] ? 'bg-emerald-400 text-slate-950' : 'bg-white/10 text-white/55' }}">{{ $item['complete'] ? '✓' : '•' }}</span>
+                                <div>
+                                    <p class="font-black text-white">{{ $item['label'] }}</p>
+                                    <p class="mt-1 text-xs font-bold text-white/45">{{ $item['weight'] }}% от профила</p>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <section id="offers" class="mt-6 rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <h2 class="text-2xl font-black">Моите freelance проекти</h2>
+                    <p class="mt-1 text-sm leading-6 text-white/55">Тук виждаш публикуваните задачи към фрийлансъри, получените оферти и избрания специалист.</p>
+                </div>
+                <a href="{{ route('freelancer.projects.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-violet-950/30">
+                    Публикувай проект
+                </a>
+            </div>
+
+            <div class="mt-5 grid gap-4">
+                @forelse($customerFreelancerJobs as $job)
+                    @php
+                        $applications = $job->relationLoaded('applications') ? $job->applications : collect();
+                        $selectedApplication = $applications->firstWhere('status', 'accepted');
+                    @endphp
+                    <article class="rounded-3xl border border-white/10 bg-slate-950/55 p-5">
+                        <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                            <div class="min-w-0">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="rounded-full border border-blue-300/25 bg-blue-300/10 px-3 py-1 text-xs font-black text-blue-100">{{ $job->category ?: 'Проект' }}</span>
+                                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-white/55">{{ $job->status === 'open' ? 'Отворен' : 'Затворен' }}</span>
+                                    @if($job->work_mode)
+                                        <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-white/55">{{ ['online' => 'Онлайн', 'onsite' => 'На място', 'hybrid' => 'Хибридно'][$job->work_mode] ?? $job->work_mode }}</span>
+                                    @endif
+                                </div>
+                                <h3 class="mt-3 text-xl font-black">{{ $job->title }}</h3>
+                                <p class="mt-2 line-clamp-3 text-sm leading-6 text-white/60">{{ $job->description }}</p>
+                                <div class="mt-4 grid gap-2 text-sm text-white/65 sm:grid-cols-3">
+                                    <p><span class="text-white/35">Бюджет:</span> {{ $job->budget ? number_format((float) $job->budget, 2, ',', ' ') . ' €' : 'По договаряне' }}</p>
+                                    <p><span class="text-white/35">Срок:</span> {{ $job->deadline ? $job->deadline->format('d.m.Y') : 'Гъвкав' }}</p>
+                                    <p><span class="text-white/35">Оферти:</span> {{ $applications->count() }}</p>
+                                </div>
+                            </div>
+
+                            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 lg:w-72">
+                                <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Избран фрийлансър</p>
+                                @if($selectedApplication?->freelancer)
+                                    <p class="mt-3 font-black">{{ $selectedApplication->freelancer->name }}</p>
+                                    <p class="mt-1 text-sm text-white/55">{{ $selectedApplication->proposed_price ?: 'Цена по оферта' }} · {{ $selectedApplication->proposed_timeframe ?: 'срок по оферта' }}</p>
+                                @else
+                                    <p class="mt-3 text-sm leading-6 text-white/55">Все още няма избран специалист.</p>
+                                @endif
+                            </div>
+                        </div>
+
+                        @if($applications->isNotEmpty())
+                            <div class="mt-5 grid gap-3">
+                                @foreach($applications->take(4) as $application)
+                                    @php($candidateTrust = $application->freelancer?->trustSummary())
+                                    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                                        <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                                            <div>
+                                                <p class="font-black">{{ $application->freelancer?->name ?: 'Фрийлансър' }}</p>
+                                                <p class="mt-1 text-sm text-white/55">{{ $application->cover_message ?: 'Изпратена оферта към проекта.' }}</p>
+                                            </div>
+                                            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-black text-white/65">{{ $application->status }}</span>
+                                        </div>
+                                        <div class="mt-3 grid gap-2 text-sm text-white/65 sm:grid-cols-4">
+                                            <p><span class="text-white/35">Цена:</span> {{ $application->proposed_price ?: 'Не е посочена' }}</p>
+                                            <p><span class="text-white/35">Срок:</span> {{ $application->proposed_timeframe ?: 'Не е посочен' }}</p>
+                                            <p><span class="text-white/35">Trust:</span> {{ $candidateTrust['trust_score'] ?? 0 }}/100</p>
+                                            <p><span class="text-white/35">Проекти:</span> {{ $candidateTrust['completed_projects_count'] ?? 0 }}</p>
+                                        </div>
+                                        @if($application->freelancer)
+                                            <a href="{{ route('freelancers.show', $application->freelancer) }}" class="mt-3 inline-flex min-h-10 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-xs font-black text-white hover:bg-white/15">
+                                                Виж профил
+                                            </a>
+                                        @endif
+                                        @if(!$selectedApplication && $application->status === 'submitted' && $job->status === 'open')
+                                            <form action="{{ route('business.jobs.applications.select', $application) }}" method="POST" class="mt-3">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button class="min-h-10 w-full rounded-2xl bg-gradient-to-r from-blue-500 to-violet-500 px-4 py-2 text-xs font-black text-white shadow-lg shadow-blue-950/25 sm:w-auto">
+                                                    Избери фрийлансър
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </article>
+                @empty
+                    <div class="rounded-3xl border border-dashed border-white/15 bg-slate-950/50 p-6 text-center">
+                        <p class="text-xl font-black">Все още няма публикувани freelance проекти</p>
+                        <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">Публикувай първия проект и фрийлансърите в BON ще могат да изпратят оферта.</p>
+                        <a href="{{ route('freelancer.projects.create') }}" class="mt-5 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-6 py-3 font-black text-white">
+                            Публикувай проект
+                        </a>
+                    </div>
+                @endforelse
+            </div>
+        </section>
+
+        <span id="selected" class="sr-only"></span>
+        <section id="requests" class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
             <div class="rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6">
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
@@ -252,7 +392,7 @@
             </div>
 
             <aside class="space-y-6">
-                <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
+                <div id="favorites" class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <div class="flex items-center justify-between gap-3">
                         <div>
                             <p class="text-xs font-black uppercase tracking-[0.22em] text-orange-200/70">Любими</p>
@@ -299,7 +439,7 @@
                     </div>
                 </div>
 
-                <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
+                <div id="history" class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <h2 class="text-xl font-black">Основни настройки</h2>
                     <div class="mt-5 space-y-3 text-sm text-white/65">
                         <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">

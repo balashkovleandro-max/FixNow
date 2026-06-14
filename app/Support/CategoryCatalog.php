@@ -2,10 +2,8 @@
 
 namespace App\Support;
 
-use App\Models\ServiceCategory;
 use App\Models\User;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class CategoryCatalog
@@ -15,27 +13,16 @@ class CategoryCatalog
 
     public static function all(): Collection
     {
-        if (Schema::hasTable('service_categories')) {
-            $categories = ServiceCategory::query()
-                ->orderBy('sort_order')
-                ->orderBy('name')
-                ->get()
-                ->map(fn (ServiceCategory $category) => [
-                    'name' => $category->name,
-                    'slug' => $category->slug ?: self::slug($category->name),
-                    'group' => $category->group,
-                    'type' => $category->isRequestBased() ? self::TYPE_REQUEST_BASED : self::TYPE_DIRECTORY_BASED,
-                    'accepts_requests' => $category->isRequestBased(),
-                ]);
-
-            if ($categories->isNotEmpty()) {
-                return $categories
-                    ->reject(fn (array $category) => self::isHiddenCategory($category['name'] ?? null))
-                    ->values();
-            }
-        }
-
         return self::configDefinitions();
+    }
+
+    public static function names(): Collection
+    {
+        return self::all()
+            ->pluck('name')
+            ->filter()
+            ->unique(fn ($name) => mb_strtolower((string) $name))
+            ->values();
     }
 
     public static function grouped(): Collection
@@ -45,22 +32,7 @@ class CategoryCatalog
 
     public static function homepageGroups(): Collection
     {
-        $priority = [
-            'Ресторанти и кафенета',
-            'Хотели',
-            'Ремонти и строителство',
-            'ВиК',
-            'Електро услуги',
-            'Автосервизи',
-            'Почистване',
-            'Красота и грижа',
-            'Здраве и уелнес',
-            'Спорт и активности',
-        ];
-
-        return self::grouped()
-            ->only($priority)
-            ->sortBy(fn ($items, $group) => array_search($group, $priority, true));
+        return self::grouped();
     }
 
     public static function requestBased(): Collection
@@ -87,6 +59,20 @@ class CategoryCatalog
 
         return self::requestBased()
             ->contains(fn ($definition) => self::matches((string) $definition['name'], $category));
+    }
+
+    public static function displayName(?string $category): string
+    {
+        $category = trim((string) $category);
+
+        if ($category === '') {
+            return 'Друго';
+        }
+
+        $match = self::all()
+            ->first(fn ($definition) => self::matches((string) $definition['name'], $category));
+
+        return $match['name'] ?? 'Друго';
     }
 
     public static function businessHasRequestBasedCategories(User $business): bool
@@ -157,8 +143,8 @@ class CategoryCatalog
                     'name' => $item['name'],
                     'slug' => self::slug($item['name']),
                     'group' => $group,
-                    'type' => $item['type'],
-                    'accepts_requests' => $item['type'] === self::TYPE_REQUEST_BASED,
+                    'type' => $item['type'] ?? self::TYPE_REQUEST_BASED,
+                    'accepts_requests' => ($item['type'] ?? self::TYPE_REQUEST_BASED) === self::TYPE_REQUEST_BASED,
                     'sort_order' => $index,
                 ]);
             })
@@ -171,30 +157,70 @@ class CategoryCatalog
         $value = preg_replace('/\s+/u', ' ', trim(mb_strtolower($value))) ?? '';
 
         $aliases = [
-            'ремонти' => 'ремонти и строителство',
-            'remonti' => 'ремонти и строителство',
-            'repairs' => 'ремонти и строителство',
-            'repair specialist' => 'ремонти и строителство',
-            'електро услуги' => 'електро услуги',
-            'електроуслуги' => 'електро услуги',
-            'electric' => 'електро услуги',
-            'електротехник' => 'електро услуги',
-            'вик' => 'вик',
-            'вик услуги' => 'вик',
-            'vik' => 'вик',
-            'plumbing' => 'вик',
-            'автосервиз' => 'автосервизи',
-            'auto service' => 'автосервизи',
-            'autoservice' => 'автосервизи',
-            'cleaning' => 'почистване',
-            'красота и лични услуги' => 'красота и грижа',
-            'салони за красота' => 'красота и грижа',
             'ресторант' => 'ресторанти и кафенета',
             'ресторанти' => 'ресторанти и кафенета',
             'кафене' => 'ресторанти и кафенета',
             'кафенета' => 'ресторанти и кафенета',
-            'хотел' => 'хотели',
-            'hotel' => 'хотели',
+            'cafe' => 'ресторанти и кафенета',
+            'restaurant' => 'ресторанти и кафенета',
+            'хотели' => 'хотели и настаняване',
+            'хотел' => 'хотели и настаняване',
+            'hotel' => 'хотели и настаняване',
+            'къщи за гости' => 'хотели и настаняване',
+            'апартаменти за настаняване' => 'хотели и настаняване',
+            'красота' => 'красота и козметика',
+            'красота и грижа' => 'красота и козметика',
+            'красота и услуги' => 'красота и козметика',
+            'салони за красота' => 'красота и козметика',
+            'beauty' => 'красота и козметика',
+            'спорт' => 'фитнес и спорт',
+            'спорт и активности' => 'фитнес и спорт',
+            'fitness' => 'фитнес и спорт',
+            'ремонти' => 'ремонти и строителство',
+            'ремонт' => 'ремонти и строителство',
+            'remonti' => 'ремонти и строителство',
+            'repairs' => 'ремонти и строителство',
+            'repair specialist' => 'ремонти и строителство',
+            'вик' => 'домашни услуги',
+            'вик услуги' => 'домашни услуги',
+            'plumbing' => 'домашни услуги',
+            'електро услуги' => 'домашни услуги',
+            'електроуслуги' => 'домашни услуги',
+            'електротехник' => 'домашни услуги',
+            'electric' => 'домашни услуги',
+            'автосервиз' => 'автосервизи',
+            'auto service' => 'автосервизи',
+            'autoservice' => 'автосервизи',
+            'cleaning' => 'почистване',
+            'курсове' => 'образование и курсове',
+            'education' => 'образование и курсове',
+            'marketing' => 'маркетинг и реклама',
+            'social media' => 'маркетинг и реклама',
+            'copywriting' => 'маркетинг и реклама',
+            'sales' => 'маркетинг и реклама',
+            'web design' => 'уеб сайтове и софтуер',
+            'development' => 'уеб сайтове и софтуер',
+            'laravel' => 'уеб сайтове и софтуер',
+            'wordpress' => 'уеб сайтове и софтуер',
+            'ui/ux дизайн' => 'дизайн и брандинг',
+            'ui/ux дизайнер' => 'дизайн и брандинг',
+            'дизайн специалист' => 'дизайн и брандинг',
+            'ui/ux design' => 'дизайн и брандинг',
+            'branding' => 'дизайн и брандинг',
+            'brand design' => 'дизайн и брандинг',
+            'laravel developer' => 'уеб сайтове и софтуер',
+            'marketing specialist' => 'маркетинг и реклама',
+            'social media manager' => 'маркетинг и реклама',
+            'copywriter' => 'маркетинг и реклама',
+            'photographer' => 'събития и фотография',
+            'видео монтажист' => 'събития и фотография',
+            'finance' => 'счетоводство и финанси',
+            'business operations' => 'бизнес консултации',
+            'consulting' => 'бизнес консултации',
+            'video editing' => 'събития и фотография',
+            'photography' => 'събития и фотография',
+            'фотографи' => 'събития и фотография',
+            'събития и празници' => 'събития и фотография',
         ];
 
         return $aliases[$value] ?? $value;

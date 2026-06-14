@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Billing и план | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -153,7 +154,7 @@
                         <li class="flex gap-3"><span class="mt-2 h-2 w-2 rounded-full bg-orange-300"></span><span>Premium препоръки за растеж</span></li>
                     </ul>
                     @if($canStartCheckout)
-                        <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
+                        <form action="{{ route('business.billing.checkout') }}" method="POST" onsubmit="window.trackBonEvent('subscription_checkout_start', { plan: 'standard', source: 'business_billing' })" class="mt-6">
                             @csrf
                             <input type="hidden" name="plan" value="standard">
                              <button type="submit" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 font-black text-white hover:bg-white/20" data-testid="checkout-standard-button">
@@ -170,14 +171,14 @@
                     <h2 class="mt-4 text-3xl font-black">Ъпгрейд към Premium</h2>
                     <p class="mt-3 text-sm leading-6 text-white/70">Premium отключва разширен финансов анализ, по-подробен Business Health Score, калкулатори за клиенти и ценообразуване, месечен бизнес доклад, Premium препоръки за растеж и приоритетна поддръжка.</p>
                     @if($canStartCheckout)
-                        <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-6">
+                        <form action="{{ route('business.billing.checkout') }}" method="POST" onsubmit="window.trackBonEvent('subscription_checkout_start', { plan: 'premium', source: 'business_billing' })" class="mt-6">
                             @csrf
                             <input type="hidden" name="plan" value="premium">
                              <button type="submit" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-4 font-black text-white shadow-xl shadow-orange-600/25" data-testid="upgrade-premium-button">
                                 Вземи Premium - 24,99 €/месец
                             </button>
                         </form>
-                        <form action="{{ route('business.billing.checkout') }}" method="POST" class="mt-3">
+                        <form action="{{ route('business.billing.checkout') }}" method="POST" onsubmit="window.trackBonEvent('subscription_checkout_start', { plan: 'standard', source: 'business_billing' })" class="mt-3">
                             @csrf
                             <input type="hidden" name="plan" value="standard">
                              <button type="submit" class="min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 font-black text-white hover:bg-white/20" data-testid="checkout-standard-button">

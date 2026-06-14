@@ -153,7 +153,7 @@ class BusinessGrowthMetrics
 
         return $businesses
             ->filter(fn (User $business) => collect($business->serviceCategories())
-                ->contains(fn ($serviceCategory) => self::matchesCategory((string) $serviceCategory, $category)))
+                ->contains(fn ($serviceCategory) => CategoryCatalog::matches((string) $serviceCategory, $category)))
             ->values();
     }
 
@@ -161,7 +161,7 @@ class BusinessGrowthMetrics
     {
         return $businesses
             ->flatMap(fn (User $business) => $business->serviceCategories())
-            ->map(fn ($category) => trim((string) $category))
+            ->map(fn ($category) => CategoryCatalog::displayName((string) $category))
             ->filter()
             ->reject(fn ($category) => CategoryCatalog::isHiddenCategory((string) $category))
             ->countBy()

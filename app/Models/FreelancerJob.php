@@ -20,6 +20,11 @@ class FreelancerJob extends Model
         'deadline',
         'category',
         'location',
+        'work_mode',
+        'client_name',
+        'client_phone',
+        'client_email',
+        'attachment_path',
         'status',
     ];
 

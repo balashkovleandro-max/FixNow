@@ -1,17 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Услуги | BON</title>
     <meta name="description" content="Намерете услуги от активни бизнеси във BON. Търсете по категория, град, рейтинг, Premium и потвърдени локални професионалисти.">
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
 <body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
     @php
         $services = $services ?? collect();
-        $categories = ['Ресторанти и кафенета', 'Хотели', 'Ремонти и строителство', 'ВиК', 'Електро услуги', 'Автосервизи', 'Почистване', 'Красота и грижа', 'Здраве и уелнес', 'Спорт и активности'];
+        $categories = \App\Support\CategoryCatalog::names()->all();
         $trustFilters = [
             ['name' => 'premium', 'label' => 'Premium', 'value' => '1'],
             ['name' => 'verified', 'label' => 'Потвърден бизнес', 'value' => '1'],
@@ -45,12 +46,12 @@
                 <form method="GET" action="{{ route('services.index') }}" class="mt-3 grid gap-3">
                     <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
                         <span class="block text-xs font-black uppercase text-white/50">Категория</span>
-                        <select name="category" class="mt-2 min-h-12 w-full bg-transparent text-base text-white outline-none">
-                            <option class="bg-slate-950" value="">Всички категории</option>
+                        <input name="category" list="service-category-options-mobile" value="{{ request('category') }}" placeholder="Избери или напиши категория" class="mt-2 min-h-12 w-full bg-transparent text-base text-white outline-none placeholder:text-white/40">
+                        <datalist id="service-category-options-mobile">
                             @foreach($categories as $category)
-                                <option class="bg-slate-950" value="{{ $category }}" {{ request('category') === $category ? 'selected' : '' }}>{{ $category }}</option>
+                                <option value="{{ $category }}"></option>
                             @endforeach
-                        </select>
+                        </datalist>
                     </label>
                     <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
                         <span class="block text-xs font-black uppercase text-white/50">Град</span>
@@ -74,12 +75,12 @@
             <form method="GET" action="{{ route('services.index') }}" class="mt-8 hidden gap-3 rounded-3xl border border-white/10 bg-slate-950/60 p-3 lg:grid lg:grid-cols-[1fr_1fr_auto]">
                 <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
                     <span class="block text-xs font-black uppercase text-white/50">Категория</span>
-                    <select name="category" class="mt-2 w-full bg-transparent text-white outline-none">
-                        <option class="bg-slate-950" value="">Всички категории</option>
+                    <input name="category" list="service-category-options" value="{{ request('category') }}" placeholder="Избери или напиши категория" class="mt-2 w-full bg-transparent text-white outline-none placeholder:text-white/40">
+                    <datalist id="service-category-options">
                         @foreach($categories as $category)
-                            <option class="bg-slate-950" value="{{ $category }}" {{ request('category') === $category ? 'selected' : '' }}>{{ $category }}</option>
+                            <option value="{{ $category }}"></option>
                         @endforeach
-                    </select>
+                    </datalist>
                 </label>
 
                 <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
@@ -121,7 +122,7 @@
                             </a>
                             <div class="p-5">
                                 <div class="mb-3 flex flex-wrap gap-2">
-                                    <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-300">{{ $service->category }}</span>
+                                    <span class="rounded-full bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-300">{{ \App\Support\CategoryCatalog::displayName($service->category) }}</span>
                                     <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/70">{{ $service->city }}</span>
                                     @foreach(array_slice($badges, 0, 3) as $badge)
                                         <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/80">{{ $badge }}</span>

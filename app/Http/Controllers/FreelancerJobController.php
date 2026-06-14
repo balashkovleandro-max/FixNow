@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FreelancerJob;
 use App\Models\FreelancerJobApplication;
+use App\Support\CategoryCatalog;
 use App\Support\FreelancerCredits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,6 +38,7 @@ class FreelancerJobController extends Controller
             })
             ->when($request->filled('category'), fn ($query) => $query->where('category', $request->category))
             ->when($request->filled('location'), fn ($query) => $query->where('location', 'like', '%' . trim((string) $request->location) . '%'))
+            ->when($request->filled('work_mode') && Schema::hasColumn('freelancer_jobs', 'work_mode'), fn ($query) => $query->where('work_mode', $request->work_mode))
             ->latest()
             ->paginate(12)
             ->withQueryString();
@@ -45,6 +47,44 @@ class FreelancerJobController extends Controller
         $categories = $this->categories();
 
         return view('freelancer.jobs.index', compact('jobs', 'creditStats', 'categories'));
+    }
+
+    public function publicIndex(Request $request)
+    {
+        $jobs = FreelancerJob::query()
+            ->open()
+            ->with('business')
+            ->withCount('applications')
+            ->when($request->filled('q'), function ($query) use ($request) {
+                $term = '%' . trim((string) $request->q) . '%';
+
+                $query->where(function ($query) use ($term) {
+                    $query
+                        ->where('title', 'like', $term)
+                        ->orWhere('description', 'like', $term)
+                        ->orWhere('category', 'like', $term)
+                        ->orWhere('location', 'like', $term);
+                });
+            })
+            ->when($request->filled('category'), fn ($query) => $query->where('category', $request->category))
+            ->when($request->filled('location'), fn ($query) => $query->where('location', 'like', '%' . trim((string) $request->location) . '%'))
+            ->when($request->filled('work_mode') && Schema::hasColumn('freelancer_jobs', 'work_mode'), fn ($query) => $query->where('work_mode', $request->work_mode))
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        $categories = $this->categories();
+
+        return view('freelancer.jobs.public-index', compact('jobs', 'categories'));
+    }
+
+    public function publicShow(FreelancerJob $freelancerJob)
+    {
+        abort_unless($freelancerJob->isOpen(), 404);
+
+        $freelancerJob->load('business')->loadCount('applications');
+
+        return view('freelancer.jobs.public-show', compact('freelancerJob'));
     }
 
     public function show(Request $request, FreelancerJob $freelancerJob)
@@ -77,6 +117,9 @@ class FreelancerJobController extends Controller
             'cover_message' => ['nullable', 'string', 'max:3000'],
             'proposed_price' => ['nullable', 'string', 'max:120'],
             'proposed_timeframe' => ['nullable', 'string', 'max:120'],
+            'contact_phone' => ['nullable', 'string', 'max:80'],
+            'contact_email' => ['nullable', 'email', 'max:255'],
+            'portfolio_url' => ['nullable', 'url', 'max:255'],
         ]);
 
         try {
@@ -85,7 +128,10 @@ class FreelancerJobController extends Controller
                 $freelancerJob,
                 $validated['cover_message'] ?? null,
                 $validated['proposed_price'] ?? null,
-                $validated['proposed_timeframe'] ?? null
+                $validated['proposed_timeframe'] ?? null,
+                $validated['contact_phone'] ?? null,
+                $validated['contact_email'] ?? null,
+                $validated['portfolio_url'] ?? null
             );
         } catch (ValidationException $exception) {
             $errors = $exception->errors();
@@ -105,7 +151,7 @@ class FreelancerJobController extends Controller
     {
         $business = $request->user();
 
-        abort_unless($business && $business->isBusiness(), 403);
+        abort_unless($business && ($business->isBusiness() || $business->isCustomer()), 403);
 
         $application->loadMissing('job');
         $job = $application->job;
@@ -149,7 +195,7 @@ class FreelancerJobController extends Controller
     {
         $business = $request->user();
 
-        abort_unless($business && $business->isBusiness(), 403);
+        abort_unless($business && ($business->isBusiness() || $business->isCustomer()), 403);
 
         $jobs = $business->freelancerJobs()
             ->withCount('applications')
@@ -163,7 +209,7 @@ class FreelancerJobController extends Controller
     {
         $business = $request->user();
 
-        abort_unless($business && $business->isBusiness(), 403);
+        abort_unless($business && ($business->isBusiness() || $business->isCustomer()), 403);
 
         return view('business.freelancer-jobs.create', [
             'business' => $business,
@@ -175,9 +221,9 @@ class FreelancerJobController extends Controller
     {
         $business = $request->user();
 
-        abort_unless($business && $business->isBusiness(), 403);
+        abort_unless($business && ($business->isBusiness() || $business->isCustomer()), 403);
 
-        if (!$business->isTrialActive() && !$business->hasActiveSubscription()) {
+        if ($business->isBusiness() && !$business->isTrialActive() && !$business->hasActiveSubscription()) {
             return redirect()
                 ->route('business.billing')
                 ->withErrors(['plan' => 'Публикуването на обяви е достъпно за активни бизнес профили.']);
@@ -190,9 +236,23 @@ class FreelancerJobController extends Controller
             'deadline' => ['nullable', 'date', 'after_or_equal:today'],
             'category' => ['nullable', 'string', 'max:120'],
             'location' => ['nullable', 'string', 'max:160'],
+            'work_mode' => ['nullable', 'in:online,onsite,hybrid'],
+            'client_name' => ['nullable', 'string', 'max:160'],
+            'client_phone' => ['nullable', 'string', 'max:80'],
+            'client_email' => ['nullable', 'email', 'max:255'],
+            'attachment' => ['nullable', 'file', 'max:10240', 'mimes:jpg,jpeg,png,webp,pdf,doc,docx'],
         ]);
 
-        $job = $business->freelancerJobs()->create(array_merge($validated, [
+        $payload = collect($validated)
+            ->except('attachment')
+            ->filter(fn ($value, $column) => Schema::hasColumn('freelancer_jobs', $column))
+            ->all();
+
+        if ($request->hasFile('attachment') && Schema::hasColumn('freelancer_jobs', 'attachment_path')) {
+            $payload['attachment_path'] = $request->file('attachment')->store('freelancer-projects', 'public');
+        }
+
+        $job = $business->freelancerJobs()->create(array_merge($payload, [
             'status' => FreelancerJob::STATUS_OPEN,
         ]));
 
@@ -203,17 +263,6 @@ class FreelancerJobController extends Controller
 
     private function categories(): array
     {
-        return [
-            'Marketing',
-            'Web Design',
-            'Development',
-            'Copywriting',
-            'Sales',
-            'Video Editing',
-            'Photography',
-            'Consulting',
-            'Business Operations',
-            'Finance',
-        ];
+        return CategoryCatalog::names()->all();
     }
 }

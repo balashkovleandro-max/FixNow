@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Публикувай услуга | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -16,6 +17,7 @@
         $serviceCount = $business?->services()->count() ?? 0;
         $photoCount = $business?->photoCount() ?? 0;
         $canAddService = !$serviceLimit || $serviceCount < $serviceLimit;
+        $categories = \App\Support\CategoryCatalog::names()->all();
     @endphp
 
     <main class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
@@ -73,12 +75,12 @@
                     <div class="grid gap-5 md:grid-cols-2">
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-white/75">Категория</label>
-                            <select name="category" class="min-h-12 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-4 text-white outline-none focus:border-orange-300/50">
-                                <option value="">Избери категория</option>
-                                @foreach(['Ресторанти и кафенета','Хотели','Ремонти и строителство','ВиК','Електро услуги','Автосервизи','Почистване','Красота и грижа','Здраве и уелнес','Спорт и активности'] as $category)
-                                    <option value="{{ $category }}" {{ old('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
+                            <input name="category" list="service-create-category-options" value="{{ old('category') }}" placeholder="Избери или напиши категория" class="min-h-12 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-4 text-white outline-none placeholder:text-white/40 focus:border-orange-300/50">
+                            <datalist id="service-create-category-options">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category }}"></option>
                                 @endforeach
-                            </select>
+                            </datalist>
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-white/75">Град</label>

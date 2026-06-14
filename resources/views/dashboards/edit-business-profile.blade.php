@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Редакция на профил на бизнес | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
@@ -11,7 +12,7 @@
 
     @php
         $baseCities = ['Плевен','София','Пловдив','Варна','Бургас','Русе','Стара Загора','Велико Търново','Благоевград','Добрич','Шумен','Сливен','Хасково','Пазарджик'];
-        $baseCategories = ['Ресторанти и кафенета','Хотели','Ремонти и строителство','ВиК','Електро услуги','Автосервизи','Почистване','Красота и грижа','Здраве и уелнес','Спорт и активности'];
+        $baseCategories = \App\Support\CategoryCatalog::names()->all();
         $selectedServiceCities = old('service_cities', $user->serviceCities());
         $selectedServiceCities = is_array($selectedServiceCities) ? $selectedServiceCities : [];
         $availableServiceCities = array_values(array_unique(array_merge($baseCities, $selectedServiceCities)));
@@ -36,6 +37,7 @@
         $serviceAreas = old('service_areas', data_get($user, 'service_areas') ?: data_get($user, 'обслужвани_райони'));
         $emergencyServices = (bool) old('emergency_services', data_get($user, 'emergency_services', data_get($user, 'спешни_услуги', false)));
         $works247 = (bool) old('works_24_7', data_get($user, 'works_24_7', false));
+        $bookingEnabled = (bool) old('booking_enabled', data_get($user, 'booking_enabled', false));
         $responseTimeLabel = old('response_time_label', data_get($user, 'response_time_label'));
         $workingHoursText = old('working_hours_text', $user->working_hours ?: data_get($user, 'работно_време'));
         $endDate = $user->effectiveSubscriptionStatus() === 'trial' ? $user->trial_ends_at : $user->subscription_ends_at;
@@ -299,6 +301,14 @@
                             </span>
                         </label>
 
+                        <label class="mt-3 flex items-start gap-3 rounded-2xl border border-blue-300/20 bg-blue-400/10 p-4 text-sm font-bold text-blue-50">
+                            <input type="checkbox" name="booking_enabled" value="1" {{ $bookingEnabled ? 'checked' : '' }} class="mt-1 rounded border-white/20 bg-white/10 text-blue-400">
+                            <span>
+                                Онлайн записване на часове
+                                <span class="mt-1 block text-xs font-normal leading-5 text-blue-100/70">Показва “Запази час” само когато функцията е активирана за този профил. Календарният модул остава add-on.</span>
+                            </span>
+                        </label>
+
                         <div class="mt-5">
                             <label class="mb-2 block text-sm font-semibold text-white/75">Време за отговор</label>
                             <select name="response_time_label" class="w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-4 text-white outline-none focus:border-orange-300/50">
@@ -351,7 +361,7 @@
                         <div class="rounded-3xl border border-white/10 bg-slate-950/50 p-5">
                             <h2 class="text-xl font-black">Verified статус</h2>
                             @if($user->is_verified)
-                                <p class="mt-3 text-sm leading-6 text-emerald-100">Бизнесят е потвърден и има отделен Verified badge.</p>
+                                <p class="mt-3 text-sm leading-6 text-emerald-100">Бизнесът е потвърден и има отделен Verified badge.</p>
                             @else
                                 <p class="mt-3 text-sm leading-6 text-white/60">Потвърждаването се управлява от админ, за да остане badge-ът реален trust signal.</p>
                             @endif

@@ -27,12 +27,22 @@ class AuthController extends Controller
 
         $role = $validated['role'] === 'client' ? 'customer' : $validated['role'];
 
-        $user = User::create([
+        $userPayload = [
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $role,
-        ]);
+        ];
+
+        if (Schema::hasColumn('users', 'account_type')) {
+            $userPayload['account_type'] = $role === 'customer' ? 'client' : $role;
+        }
+
+        if (Schema::hasColumn('users', 'profile_type')) {
+            $userPayload['profile_type'] = in_array($role, ['business', 'freelancer'], true) ? $role : null;
+        }
+
+        $user = User::create($userPayload);
 
         Auth::login($user);
 
@@ -48,7 +58,7 @@ class AuthController extends Controller
             FreelancerCredits::ensureMonthlyCredits($user);
         }
 
-        return redirect()->route('bon.onboarding');
+        return $this->redirectAfterRegistration($user);
     }
 
     public function showLogin()
@@ -58,29 +68,45 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email', 'max:255'],
+        $validated = $request->validate([
+            'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'max:255'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $login = trim((string) $validated['email']);
+        $email = strcasecmp($login, 'Admin04') === 0 ? 'admin04@bon.bg' : $login;
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && Auth::attempt([
+            'email' => $email,
+            'password' => $validated['password'],
+        ], $request->boolean('remember'))) {
             $request->session()->regenerate();
 
             $user = $request->user();
+
+            if ($user && Schema::hasColumn('users', 'is_suspended') && $user->is_suspended) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => 'Този профил е спрян. Свържете се с администратор.',
+                ])->onlyInput('email');
+            }
 
             if ($user && Schema::hasColumn('users', 'last_active_at')) {
                 $user->forceFill(['last_active_at' => now()])->save();
             }
 
-            if ($user && $user->role === 'admin') {
-                return redirect('/dashboard');
+            if ($user && ($user->role === 'admin' || $user->accountType() === 'admin')) {
+                return redirect()->route('admin.dashboard');
             }
 
             if ($user && $user->isFreelancer()) {
                 FreelancerCredits::ensureMonthlyCredits($user);
             }
 
-            return redirect()->route('bon.onboarding');
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
@@ -96,5 +122,22 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    private function redirectAfterRegistration(User $user)
+    {
+        if ($user->role === 'admin' || $user->accountType() === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($user->isBusiness()) {
+            return redirect()->route('dashboard.business.profile.edit');
+        }
+
+        if ($user->isFreelancer()) {
+            return redirect()->route('dashboard.freelancer.profile.edit');
+        }
+
+        return redirect()->route('dashboard.client.profile.edit');
     }
 }

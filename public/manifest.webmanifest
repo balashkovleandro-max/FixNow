@@ -1,0 +1,50 @@
+{
+    "name": "BON",
+    "short_name": "BON",
+    "description": "BON е платформа за бизнес видимост, анализ, доверие и растеж.",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "display_override": ["standalone", "minimal-ui"],
+    "orientation": "portrait-primary",
+    "theme_color": "#2563EB",
+    "background_color": "#F8FAFF",
+    "categories": ["business", "productivity", "finance"],
+    "lang": "bg",
+    "dir": "ltr",
+    "icons": [
+        {
+            "src": "/icons/bon-icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/bon-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/bon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Dashboard",
+            "short_name": "Dashboard",
+            "url": "/dashboard",
+            "icons": [{ "src": "/icons/bon-icon-192.png", "sizes": "192x192", "type": "image/png" }]
+        },
+        {
+            "name": "BON Tools",
+            "short_name": "Tools",
+            "url": "/tools",
+            "icons": [{ "src": "/icons/bon-icon-192.png", "sizes": "192x192", "type": "image/png" }]
+        }
+    ]
+}

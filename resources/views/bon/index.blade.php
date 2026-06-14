@@ -1,6 +1,7 @@
 @php
     $navItems = [
         ['label' => 'Начало', 'href' => route('home')],
+        ['label' => 'Търсене', 'href' => route('search')],
         ['label' => 'За бизнеси', 'href' => route('business.landing')],
         ['label' => 'Фрилансъри', 'href' => route('bon.freelancers')],
         ['label' => 'Инструменти', 'href' => route('bon.tools')],
@@ -91,16 +92,7 @@
     $recommendedSpecialists = $recommendedSpecialists ?? collect();
     $smartJobs = $smartJobs ?? collect();
     $smartCategory = $smartCategory ?? request('category');
-    $smartCategories = $smartCategories ?? [
-        'Web Design',
-        'Development',
-        'Marketing',
-        'Ремонти',
-        'Почистване',
-        'Красота',
-        'Ресторанти',
-        'Хотели',
-    ];
+    $smartCategories = $smartCategories ?? \App\Support\CategoryCatalog::names()->all();
 @endphp
 
 <!DOCTYPE html>
@@ -111,6 +103,7 @@
     <title>BON | Бизнес видимост, анализ и растеж</title>
     <meta name="description" content="BON помага на локалните бизнеси да изградят по-силно онлайн присъствие, да следят ключови показатели, да подобряват репутацията си и да взимат по-добри решения за растеж.">
 
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 
@@ -121,11 +114,13 @@
                 linear-gradient(to bottom, rgba(37, 99, 235, .075) 1px, transparent 1px);
             background-size: 72px 72px;
             mask-image: radial-gradient(circle at 50% 24%, black 0%, transparent 78%);
+            pointer-events: none;
         }
 
         .bon-dot-field {
             background-image: radial-gradient(rgba(37, 99, 235, .34) 1.4px, transparent 1.4px);
             background-size: 16px 16px;
+            pointer-events: none;
         }
 
         .bon-float {
@@ -143,6 +138,16 @@
             min-height: 360px;
             align-items: center;
             justify-content: center;
+            pointer-events: none;
+            touch-action: pan-y;
+        }
+
+        .bon-globe-stage *,
+        .bon-orbit-card,
+        .bon-orbit-line,
+        .bon-connection-line,
+        .bon-connection-dot {
+            pointer-events: none;
         }
 
         .bon-globe-glow {
@@ -350,6 +355,7 @@
 
         .bon-modal-open {
             overflow: hidden;
+            touch-action: none;
         }
 
         @keyframes bon-float {
@@ -426,46 +432,46 @@
             }
 
             .bon-globe-stage {
-                height: 235px;
-                min-height: 235px;
+                height: 210px;
+                min-height: 210px;
                 margin-inline: auto;
                 max-width: 100%;
             }
 
             .bon-globe-glow,
             .bon-globe-ring-outer {
-                height: 210px;
-                width: 210px;
+                height: 190px;
+                width: 190px;
             }
 
             .bon-globe-shell {
-                height: 198px;
-                width: 198px;
+                height: 180px;
+                width: 180px;
             }
 
             .bon-globe-ring-inner {
-                height: 158px;
-                width: 158px;
+                height: 145px;
+                width: 145px;
             }
 
             .bon-globe-core {
-                height: 138px;
-                width: 138px;
+                height: 126px;
+                width: 126px;
             }
 
             .bon-globe-letter {
-                font-size: 3.45rem;
+                font-size: 3.1rem;
             }
 
             .bon-globe-halo {
-                bottom: 20px;
-                width: 170px;
+                bottom: 16px;
+                width: 150px;
             }
 
             .bon-globe-halo-ring {
-                bottom: 35px;
-                height: 32px;
-                width: 190px;
+                bottom: 28px;
+                height: 30px;
+                width: 170px;
             }
         }
 
@@ -484,7 +490,7 @@
 </head>
 
 <body class="antialiased">
-    <main class="relative min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.78)_42%,rgba(248,250,255,1)_100%)]"></div>
         <div class="bon-grid pointer-events-none absolute inset-0 opacity-[.38]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[35rem] w-[35rem] rounded-full bg-blue-400/22 blur-3xl"></div>
@@ -517,34 +523,57 @@
                     </nav>
 
                     <div class="flex items-center gap-2 sm:gap-3">
-                        <a href="{{ route('login') }}" class="hidden rounded-2xl border border-slate-200/80 bg-white/70 px-5 py-3 text-sm font-bold text-[#070B1F] shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:inline-flex">
+                        <a href="{{ route('login') }}" onclick="window.trackBonEvent('login_start', { source: 'header' })" class="hidden rounded-2xl border border-slate-200/80 bg-white/70 px-5 py-3 text-sm font-bold text-[#070B1F] shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:inline-flex">
                             Вход
                         </a>
-                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-3.5 py-2.5 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:px-6 sm:py-3">
+                        <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('sign_up_start', { source: 'header' })" class="hidden rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-3.5 py-2.5 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:inline-flex sm:px-6 sm:py-3">
                             Регистрация
                         </a>
+                        <details class="group relative lg:hidden">
+                            <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-slate-700 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition hover:text-blue-600" aria-label="Меню">
+                                <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+                                </svg>
+                                <svg class="hidden h-6 w-6 group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+                                </svg>
+                            </summary>
+
+                            <div class="absolute right-0 top-12 max-h-[calc(100dvh-5rem)] w-[min(21rem,calc(100vw-2rem))] overflow-y-auto rounded-[1.75rem] border border-white/70 bg-white/92 p-3 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:top-14">
+                                <div class="grid gap-1">
+                                    @foreach ($navItems as $item)
+                                        <a href="{{ $item['href'] }}" class="rounded-2xl px-4 py-3 text-sm font-black text-slate-600 hover:bg-blue-50 hover:text-blue-700">
+                                            {{ $item['label'] }}
+                                        </a>
+                                    @endforeach
+                                    <div class="my-1 h-px bg-slate-200/70"></div>
+                                    <a href="{{ route('login') }}" onclick="window.trackBonEvent('login_start', { source: 'mobile_header' })" class="rounded-2xl px-4 py-3 text-sm font-black text-slate-600 hover:bg-blue-50 hover:text-blue-700">Вход</a>
+                                    <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('sign_up_start', { source: 'mobile_header' })" class="rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-4 py-3 text-center text-sm font-black text-white shadow-lg shadow-violet-500/20">Регистрация</a>
+                                </div>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </header>
 
-            <section class="mx-auto max-w-[1440px] pt-9 sm:pt-12 lg:pt-16">
+            <section class="mx-auto max-w-[1440px] pt-7 sm:pt-12 lg:pt-16">
                 <div class="mx-auto max-w-5xl text-center">
                     <div class="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-white/80 px-3.5 py-2 text-xs font-semibold text-blue-700 shadow-sm shadow-blue-900/5 backdrop-blur-xl sm:px-4 sm:text-sm">
                         <span class="text-violet-600">✦</span>
                         BON Business OS
                     </div>
 
-                    <h1 class="mx-auto mt-5 max-w-5xl text-[34px] font-black leading-[1.08] tracking-[-0.035em] text-[#070B1F] sm:mt-6 sm:text-[60px] sm:tracking-[-0.055em] lg:text-[76px]">
+                    <h1 class="mx-auto mt-4 max-w-5xl text-[31px] font-black leading-[1.08] tracking-[-0.035em] text-[#070B1F] sm:mt-6 sm:text-[60px] sm:tracking-[-0.055em] lg:text-[76px]">
                         Управлявай <span class="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">видимостта</span>, финансите и <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-transparent">растежа</span> на бизнеса си от едно място.
                     </h1>
 
-                    <p class="mx-auto mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8">
+                    <p class="mx-auto mt-4 max-w-3xl text-[15px] leading-7 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8">
                         BON помага на локалните бизнеси да изградят по-силно онлайн присъствие, да следят ключови показатели,
                         да подобряват репутацията си и да взимат по-добри решения за растеж.
                     </p>
 
-                    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                        <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 sm:w-auto">
+                    <div class="mt-6 flex flex-col justify-center gap-3 sm:mt-8 sm:flex-row">
+                        <a href="{{ route('business.landing') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'home_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 sm:w-auto">
                             Добави своя бизнес
                         </a>
                         <a href="{{ route('plans') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
@@ -552,12 +581,35 @@
                         </a>
                     </div>
 
-                    <a href="#bon-tools" class="mt-5 inline-flex text-sm font-black text-blue-700 transition hover:text-violet-700">
+                    <a href="#bon-tools" class="mt-4 inline-flex text-sm font-black text-blue-700 transition hover:text-violet-700 sm:mt-5">
                         Виж инструментите в BON →
                     </a>
+
+                    <form action="{{ route('search') }}" method="GET" class="mx-auto mt-7 grid max-w-4xl gap-3 rounded-[1.5rem] border border-white/80 bg-white/80 p-3 text-left shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:mt-9 sm:grid-cols-[1fr_0.8fr_0.8fr_auto] sm:items-end">
+                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                            Услуга, име или специалист
+                            <input name="q" placeholder="фризьор, уеб дизайн, салон..." class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                        </label>
+                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                            Град
+                            <input name="city" placeholder="София" class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                        </label>
+                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                            Категория
+                            <input name="category" list="bon-home-category-options" placeholder="Избери или напиши категория" class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                            <datalist id="bon-home-category-options">
+                                @foreach($smartCategories as $category)
+                                    <option value="{{ $category }}">
+                                @endforeach
+                            </datalist>
+                        </label>
+                        <button type="submit" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5">
+                            Търси
+                        </button>
+                    </form>
                 </div>
 
-                <div class="relative mx-auto mt-6 max-w-full overflow-hidden sm:mt-12 sm:max-w-5xl">
+                <div class="relative mx-auto mt-3 max-w-full overflow-hidden sm:mt-12 sm:max-w-5xl">
                     <div class="bon-connection-line bon-connection-line-left hidden lg:block"></div>
                     <div class="bon-connection-line bon-connection-line-right hidden lg:block"></div>
                     <div class="bon-connection-dot left-[calc(50%_-_176px)] hidden bg-blue-400 shadow-lg shadow-blue-400/40 lg:block"></div>
@@ -656,26 +708,26 @@
                 </div>
             </section>
 
-            <section id="bon-tools" class="mx-auto mt-12 max-w-[1440px] sm:mt-16">
+            <section id="bon-tools" class="mx-auto mt-9 max-w-[1440px] sm:mt-16">
                 <div class="max-w-3xl">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">BON Tools</p>
-                    <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Инструменти в BON за анализ, видимост, доверие и растеж.</h2>
-                    <p class="mt-4 max-w-3xl text-base leading-8 text-slate-600">
+                    <h2 class="mt-3 text-[26px] font-black leading-tight tracking-tight sm:text-5xl">Инструменти в BON за анализ, видимост, доверие и растеж.</h2>
+                    <p class="mt-3 max-w-3xl text-[15px] leading-7 text-slate-600 sm:mt-4 sm:text-base sm:leading-8">
                         Практични бизнес инструменти, които помагат да виждаш числата, профила, репутацията и следващите действия по-ясно.
                     </p>
                 </div>
 
-                <div class="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     @foreach ($businessTools as $tool)
                         @php
                             $modalId = 'bon-tool-modal-' . $loop->index;
                         @endphp
-                        <button type="button" data-tool-open="{{ $modalId }}" class="group w-full rounded-[1.65rem] border border-white/70 bg-white/75 p-5 text-left shadow-2xl shadow-blue-900/5 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-200/80 hover:shadow-blue-900/10 sm:rounded-[2rem] sm:p-6">
-                            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br {{ $tool['color'] }} text-xl font-black text-white shadow-lg shadow-violet-500/20">
+                        <button type="button" data-tool-open="{{ $modalId }}" class="group w-full rounded-[1.45rem] border border-white/70 bg-white/75 p-4 text-left shadow-2xl shadow-blue-900/5 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-200/80 hover:shadow-blue-900/10 sm:rounded-[2rem] sm:p-6">
+                            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br {{ $tool['color'] }} text-lg font-black text-white shadow-lg shadow-violet-500/20 sm:mb-5 sm:h-12 sm:w-12 sm:text-xl">
                                 {{ $tool['icon'] }}
                             </div>
-                            <h3 class="text-xl font-black tracking-tight">{{ $tool['title'] }}</h3>
-                            <p class="mt-3 text-sm leading-7 text-slate-600">{{ $tool['text'] }}</p>
+                            <h3 class="text-lg font-black tracking-tight sm:text-xl">{{ $tool['title'] }}</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-600 sm:mt-3 sm:leading-7">{{ $tool['text'] }}</p>
                             <span class="mt-5 inline-flex items-center gap-2 text-sm font-black text-blue-700 transition group-hover:text-violet-700">
                                 Отвори инструмент
                                 <span class="transition group-hover:translate-x-1">→</span>
@@ -688,11 +740,11 @@
                     @php
                         $modalId = 'bon-tool-modal-' . $loop->index;
                     @endphp
-                    <div id="{{ $modalId }}" data-tool-modal class="fixed inset-0 z-[100] hidden px-3 py-3 sm:px-6 sm:py-5" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="{{ $modalId }}-title">
+                    <div id="{{ $modalId }}" data-tool-modal class="fixed inset-0 z-[100] hidden px-2.5 py-2.5 sm:px-6 sm:py-5" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="{{ $modalId }}-title">
                         <button type="button" data-tool-overlay class="absolute inset-0 bg-slate-950/45 opacity-0 backdrop-blur-md transition-opacity duration-300" aria-label="Затвори"></button>
 
                         <div class="relative z-10 mx-auto flex min-h-full max-w-3xl items-center justify-center">
-                            <div data-tool-panel class="max-h-[min(calc(100vh-1.5rem),48rem)] w-full translate-y-4 scale-95 overflow-y-auto rounded-[1.5rem] border border-white/70 bg-white/[0.94] p-4 opacity-0 shadow-2xl shadow-blue-950/20 backdrop-blur-2xl transition duration-300 sm:rounded-[2rem] sm:p-7">
+                            <div data-tool-panel class="max-h-[min(calc(100dvh-1rem),48rem)] w-full translate-y-4 scale-95 overflow-y-auto rounded-[1.35rem] border border-white/70 bg-white/[0.94] p-4 opacity-0 shadow-2xl shadow-blue-950/20 backdrop-blur-2xl transition duration-300 sm:rounded-[2rem] sm:p-7">
                                 <div class="flex items-start justify-between gap-4">
                                     <div>
                                         <div class="flex h-16 w-16 items-center justify-center rounded-[1.35rem] bg-gradient-to-br {{ $tool['color'] }} text-3xl font-black text-white shadow-xl shadow-violet-500/20">
@@ -907,7 +959,7 @@
                             <p class="mt-3 text-sm leading-7 text-white/75">
                                 Опиши проекта или нуждата си и BON ще помогне профилите в правилната категория да видят контекста.
                             </p>
-                            <a href="{{ route('request.service', array_filter(['category' => $smartCategory])) }}" class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-5 text-sm font-black text-violet-700 shadow-xl shadow-violet-950/10 sm:w-auto">
+                            <a href="{{ route('request.service', array_filter(['category' => $smartCategory])) }}" onclick="window.trackBonEvent('service_request_start', { source: 'home_cta' })" class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-5 text-sm font-black text-violet-700 shadow-xl shadow-violet-950/10 sm:w-auto">
                                 Публикувай заявка
                             </a>
                         </div>
@@ -929,7 +981,7 @@
                         </a>
                     @endauth
                     @guest
-                        <a href="{{ route('register') }}" data-track="cta_business_signup" class="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25 sm:w-auto">
+                        <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('sign_up_start', { source: 'financial_analysis_cta' })" class="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/25 sm:w-auto">
                             Създай бизнес профил
                         </a>
                     @endguest
@@ -1048,7 +1100,7 @@
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-white/70">Започни с BON</p>
                         <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Дай на бизнеса си по-професионално присъствие и по-ясна картина за растеж.</h2>
                     </div>
-                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl sm:w-auto">
+                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'final_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl sm:w-auto">
                         Добави своя бизнес
                     </a>
                 </div>
@@ -1081,6 +1133,7 @@
 
                     if (activeModal === modal) {
                         activeModal = null;
+                        document.documentElement.classList.remove('bon-modal-open');
                         document.body.classList.remove('bon-modal-open');
                     }
                 }, 260);
@@ -1102,6 +1155,7 @@
 
                 modal.classList.remove('hidden');
                 modal.setAttribute('aria-hidden', 'false');
+                document.documentElement.classList.add('bon-modal-open');
                 document.body.classList.add('bon-modal-open');
                 activeModal = modal;
 

@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Фрийлансър табло | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
-    <main class="relative min-h-screen overflow-hidden">
+<body class="min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
+    <main class="relative min-h-screen overflow-x-clip">
         <div class="pointer-events-none absolute -top-44 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-44 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute inset-0 opacity-[0.25]" style="background-image: linear-gradient(to right, rgba(37,99,235,.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(37,99,235,.08) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-        <div class="relative z-10 mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-            <header class="flex flex-col gap-4 rounded-[2rem] border border-white/70 bg-white/75 p-4 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <div class="relative z-10 mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-5 lg:px-8">
+            <header class="flex flex-col gap-4 rounded-[1.5rem] border border-white/70 bg-white/75 p-3.5 shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:flex-row sm:items-center sm:justify-between sm:rounded-[2rem] sm:p-5">
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
                     <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-xl font-black text-white shadow-xl shadow-violet-500/25">B</div>
                     <div>
@@ -23,8 +24,16 @@
                 </a>
                 <nav class="flex flex-wrap gap-2 text-sm font-bold">
                     <a href="{{ route('dashboard') }}" class="rounded-2xl bg-blue-50 px-4 py-2 text-blue-700">Обзор</a>
-                    <a href="{{ route('freelancer.credits.index') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Моите кредити</a>
-                    <a href="{{ route('freelancer.jobs.index') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Обяви</a>
+                    <a href="{{ route('freelancer.profile.edit') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Моят фриланс профил</a>
+                    <a href="{{ route('freelancer.profile.edit') }}#skills" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Услуги</a>
+                    <a href="#portfolio" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Портфолио</a>
+                    <a href="{{ route('freelancer.jobs.index') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Проекти</a>
+                    <a href="#offers" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Моите оферти</a>
+                    <a href="#invites" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Покани</a>
+                    <a href="#clients" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Клиенти</a>
+                    <a href="{{ route('freelancer.credits.index') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Кредити</a>
+                    <a href="#stats" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Статистика</a>
+                    <a href="{{ route('freelancer.profile.edit') }}#availability" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Настройки</a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Изход</button>
@@ -41,11 +50,11 @@
                 $portfolioItems = auth()->user()->relationLoaded('freelancerPortfolioItems') ? auth()->user()->freelancerPortfolioItems : collect();
             @endphp
 
-            <section class="mt-8 rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-8">
+            <section class="mt-6 rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Профилна завършеност</p>
-                        <h2 class="mt-3 text-3xl font-black">Профилът ви е завършен на {{ $profile['percent'] }}%</h2>
+                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Профилът ви е завършен на {{ $profile['percent'] }}%</h2>
                         <div class="mt-5 h-3 rounded-full bg-slate-200">
                             <div class="h-3 rounded-full bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500" style="width: {{ $profile['percent'] }}%"></div>
                         </div>
@@ -53,11 +62,25 @@
                             Остава да добавите:
                             <strong>{{ empty($profile['missing']) ? 'нищо — профилът изглежда готов.' : implode(', ', $profile['missing']) }}</strong>
                         </p>
+                        <div class="mt-5 grid gap-3 sm:grid-cols-3">
+                            <div class="rounded-2xl border border-slate-100 bg-white/70 p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-slate-400">Headline</p>
+                                <p class="mt-2 text-sm font-black text-slate-900">{{ auth()->user()->business_category ?: 'Добави професионално заглавие' }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-slate-100 bg-white/70 p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-slate-400">Статус</p>
+                                <p class="mt-2 text-sm font-black text-emerald-600">{{ (auth()->user()->is_suspended ?? false) ? 'Скрит' : 'Активен' }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-slate-100 bg-white/70 p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-slate-400">Наличност</p>
+                                <p class="mt-2 text-sm font-black text-violet-700">{{ ['available' => 'Свободен', 'busy' => 'Зает', 'negotiable' => 'По договаряне'][auth()->user()->availability] ?? 'Не е посочена' }}</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="grid gap-3 sm:grid-cols-2">
                         @foreach($profile['items'] as $item)
-                            <div class="rounded-3xl border {{ $item['complete'] ? 'border-emerald-100 bg-emerald-50' : 'border-slate-100 bg-white' }} p-4">
+                            <a href="{{ $item['href'] ?? route('freelancer.profile.edit') }}" class="rounded-3xl border {{ $item['complete'] ? 'border-emerald-100 bg-emerald-50' : 'border-slate-100 bg-white' }} p-4 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-900/5">
                                 <div class="flex items-start gap-3">
                                     <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl {{ $item['complete'] ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-500' }}">{{ $item['complete'] ? '✓' : '•' }}</span>
                                     <div>
@@ -65,48 +88,57 @@
                                         <p class="mt-1 text-xs font-bold text-slate-500">{{ $item['weight'] }}% от профила</p>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         @endforeach
                     </div>
                 </div>
             </section>
 
-            <section class="mt-8 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-                <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-8">
+            <section id="stats" class="mt-6 grid gap-5 sm:mt-8 sm:gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+                <div class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Моите кредити</p>
-                    <h1 class="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
+                    <h1 class="mt-3 text-[32px] font-black tracking-tight sm:text-5xl">
                         {{ $creditStats['available'] }} кредита
                     </h1>
-                    <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+                    <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600 sm:mt-4 sm:text-lg sm:leading-8">
                         Всеки месец получаваш 30 кредита. Кандидатстването по обява струва 3 кредита и се записва в историята ти.
                     </p>
-                    <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+                    <div class="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row">
                         <a href="{{ route('freelancer.jobs.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5">Виж обяви</a>
                         <a href="{{ route('freelancer.credits.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700">Купи кредити</a>
+                        <a href="{{ route('freelancer.profile.edit') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-violet-200 bg-violet-50 px-6 text-sm font-black text-violet-700 shadow-sm transition hover:-translate-y-0.5">Редактирай профил</a>
                     </div>
                 </div>
 
                 <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-                    <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
+                    <div class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6">
                         <p class="text-sm font-bold text-slate-500">Използвани кредити</p>
                         <p class="mt-2 text-3xl font-black">{{ $creditStats['used'] }}</p>
                     </div>
-                    <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
+                    <div class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6">
                         <p class="text-sm font-bold text-slate-500">Закупени кредити</p>
                         <p class="mt-2 text-3xl font-black">{{ $creditStats['purchased'] }}</p>
                     </div>
-                    <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
+                    <div class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6">
                         <p class="text-sm font-bold text-slate-500">Цена на кандидатстване</p>
                         <p class="mt-2 text-3xl font-black">3</p>
                     </div>
                 </div>
             </section>
 
-            <section class="mt-8 rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-8">
+            <div class="mt-6 sm:mt-8">
+                @include('partials.growth-tools', ['profile' => auth()->user(), 'variant' => 'light'])
+            </div>
+
+            <div class="mt-6 sm:mt-8">
+                @include('partials.bon-paid-services', ['profile' => auth()->user(), 'variant' => 'light', 'context' => 'freelancer-dashboard'])
+            </div>
+
+            <section id="portfolio" class="mt-6 rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Портфолио</p>
-                        <h2 class="mt-3 text-3xl font-black">Добави проекти към публичния си профил</h2>
+                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Добави проекти към публичния си профил</h2>
                         <p class="mt-3 text-sm leading-6 text-slate-600">Портфолиото помага на клиентите да оценят стил, опит и качество преди да се свържат с теб.</p>
 
                         <form action="{{ route('freelancer.portfolio.store') }}" method="POST" enctype="multipart/form-data" class="mt-6 grid gap-4">
@@ -169,8 +201,8 @@
                 </div>
             </section>
 
-            <section class="mt-8 grid gap-6 lg:grid-cols-[1fr_0.9fr]">
-                <div class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-8">
+            <section id="offers" class="mt-6 grid gap-5 sm:mt-8 sm:gap-6 lg:grid-cols-[1fr_0.9fr]">
+                <div class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Нови възможности</p>
@@ -224,6 +256,24 @@
                         @empty
                             <p class="rounded-3xl border border-slate-100 bg-white/80 p-5 text-sm text-slate-500">Все още няма кандидатствания.</p>
                         @endforelse
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-6 grid gap-5 sm:mt-8 sm:gap-6 lg:grid-cols-2">
+                <div id="invites" class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6">
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Покани</p>
+                    <h2 class="mt-2 text-2xl font-black">Получени покани към проекти</h2>
+                    <div class="mt-5 rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-sm leading-6 text-slate-500">
+                        Все още няма покани. Когато клиент или бизнес те покани към проект, поканата ще се появи тук.
+                    </div>
+                </div>
+
+                <div id="clients" class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6">
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Клиенти</p>
+                    <h2 class="mt-2 text-2xl font-black">Клиенти и приети проекти</h2>
+                    <div class="mt-5 rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-sm leading-6 text-slate-500">
+                        Приетите оферти и активните клиенти ще се подреждат тук, за да следиш работата си без смесване с бизнес профили.
                     </div>
                 </div>
             </section>

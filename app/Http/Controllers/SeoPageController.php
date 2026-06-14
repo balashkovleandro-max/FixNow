@@ -143,11 +143,11 @@ class SeoPageController extends Controller
     private function quickCategoryLinks(string $citySlug): array
     {
         return [
-            ['label' => 'Автосервизи', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'avtoservizi'])],
-            ['label' => 'Ремонти', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'remonti'])],
-            ['label' => 'Почистване', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'pochistvane'])],
-            ['label' => 'Електроуслуги', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'elektrouslugi'])],
-            ['label' => 'ВиК услуги', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'vik-uslugi'])],
+            ['label' => 'Ресторанти и кафенета', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'restoranti-kafeneta'])],
+            ['label' => 'Красота и козметика', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'krasota-kozmetika'])],
+            ['label' => 'Уеб сайтове и софтуер', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'web-softuer'])],
+            ['label' => 'Маркетинг и реклама', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'marketing-reklama'])],
+            ['label' => 'Бизнес консултации', 'url' => route('seo.city.category', ['city' => $citySlug, 'category' => 'biznes-konsultacii'])],
         ];
     }
 
@@ -245,12 +245,27 @@ class SeoPageController extends Controller
     private function categoryMap(): array
     {
         return [
+            'restoranti-kafeneta' => ['slug' => 'restoranti-kafeneta', 'label' => 'Ресторанти и кафенета', 'terms' => ['ресторант', 'кафе', 'кафене', 'храна']],
+            'hoteli-nastanyavane' => ['slug' => 'hoteli-nastanyavane', 'label' => 'Хотели и настаняване', 'terms' => ['хотел', 'настаняване', 'къща за гости']],
+            'krasota-kozmetika' => ['slug' => 'krasota-kozmetika', 'label' => 'Красота и козметика', 'terms' => ['красота', 'салон', 'фризьор', 'маникюр', 'козметика']],
+            'fitnes-sport' => ['slug' => 'fitnes-sport', 'label' => 'Фитнес и спорт', 'terms' => ['фитнес', 'спорт', 'тренировки', 'йога']],
+            'zdrave-uelnes' => ['slug' => 'zdrave-uelnes', 'label' => 'Здраве и уелнес', 'terms' => ['здраве', 'уелнес', 'масаж', 'терапия']],
             'avtoservizi' => ['slug' => 'avtoservizi', 'label' => 'Автосервизи', 'terms' => ['автосервиз', 'авто сервиз', 'автомобил']],
-            'remonti' => ['slug' => 'remonti', 'label' => 'Ремонти', 'terms' => ['ремонт', 'строителство']],
-            'vik-uslugi' => ['slug' => 'vik-uslugi', 'label' => 'ВиК услуги', 'terms' => ['вик', 'водопровод']],
-            'elektrouslugi' => ['slug' => 'elektrouslugi', 'label' => 'Електроуслуги', 'terms' => ['електро', 'електротехник']],
-            'saloni' => ['slug' => 'saloni', 'label' => 'Салони за красота', 'terms' => ['салон', 'красота', 'фризьор', 'маникюр']],
+            'remonti-stroitelstvo' => ['slug' => 'remonti-stroitelstvo', 'label' => 'Ремонти и строителство', 'terms' => ['ремонт', 'строителство', 'майстор']],
+            'domashni-uslugi' => ['slug' => 'domashni-uslugi', 'label' => 'Домашни услуги', 'terms' => ['домашни услуги', 'вик', 'електро', 'поддръжка']],
             'pochistvane' => ['slug' => 'pochistvane', 'label' => 'Почистване', 'terms' => ['почистване']],
+            'obrazovanie-kursove' => ['slug' => 'obrazovanie-kursove', 'label' => 'Образование и курсове', 'terms' => ['обучение', 'курс', 'уроци']],
+            'marketing-reklama' => ['slug' => 'marketing-reklama', 'label' => 'Маркетинг и реклама', 'terms' => ['маркетинг', 'реклама', 'social media', 'copywriting']],
+            'web-softuer' => ['slug' => 'web-softuer', 'label' => 'Уеб сайтове и софтуер', 'terms' => ['уеб сайт', 'софтуер', 'development', 'laravel']],
+            'dizain-branding' => ['slug' => 'dizain-branding', 'label' => 'Дизайн и брандинг', 'terms' => ['дизайн', 'брандинг', 'ui', 'ux']],
+            'schetovodstvo-finansi' => ['slug' => 'schetovodstvo-finansi', 'label' => 'Счетоводство и финанси', 'terms' => ['счетоводство', 'финанси']],
+            'pravni-uslugi' => ['slug' => 'pravni-uslugi', 'label' => 'Правни услуги', 'terms' => ['правни', 'адвокат', 'договор']],
+            'nedvijimi-imoti' => ['slug' => 'nedvijimi-imoti', 'label' => 'Недвижими имоти', 'terms' => ['имоти', 'брокер']],
+            'sabitia-fotografia' => ['slug' => 'sabitia-fotografia', 'label' => 'Събития и фотография', 'terms' => ['събитие', 'фотография', 'видео']],
+            'turizam-razvlechenia' => ['slug' => 'turizam-razvlechenia', 'label' => 'Туризъм и развлечения', 'terms' => ['туризъм', 'развлечения']],
+            'magazini-targovia' => ['slug' => 'magazini-targovia', 'label' => 'Магазини и търговия', 'terms' => ['магазин', 'търговия']],
+            'biznes-konsultacii' => ['slug' => 'biznes-konsultacii', 'label' => 'Бизнес консултации', 'terms' => ['консултации', 'стратегия', 'операции']],
+            'freelance-uslugi' => ['slug' => 'freelance-uslugi', 'label' => 'Фрийланс услуги', 'terms' => ['фрийланс', 'freelance', 'специалист']],
         ];
     }
 }

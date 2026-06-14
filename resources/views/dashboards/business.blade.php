@@ -1,12 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Панел на бизнес | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
+<body class="min-h-screen overflow-x-clip bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
 
     @php
@@ -82,8 +83,8 @@
             : 'border-amber-300/30 bg-amber-400/10 text-amber-100';
     @endphp
 
-    <div class="mx-auto grid max-w-[1500px] gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[280px_1fr] lg:px-8">
-        <header class="rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl lg:hidden">
+    <div class="mx-auto grid max-w-[1500px] gap-5 px-3 py-4 sm:gap-6 sm:px-6 sm:py-6 lg:grid-cols-[280px_1fr] lg:px-8">
+        <header class="rounded-[1.5rem] border border-white/10 bg-white/10 p-3.5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-4 lg:hidden">
             <div class="flex items-center justify-between gap-3">
                 <a href="{{ url('/') }}" class="flex min-w-0 items-center gap-3">
                     <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 font-black">B</div>
@@ -113,15 +114,15 @@
 
             <nav class="mt-8 grid gap-2 text-sm font-bold">
                 <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-3 text-orange-100">Обзор</a>
-                <a href="{{ route('business.insights.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Финансов анализ</a>
-                <a href="{{ route('business.jobs.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Обяви към фрийлансъри</a>
-                <a href="{{ route('business.profile.edit') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Редакция на профил</a>
-                <a href="{{ route('services.create') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Добави услуга</a>
-                <a href="{{ route('business.service-requests.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Заявки</a>
-                <a href="{{ route('businesses.show', $business) }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Виж публичния профил</a>
-                <a href="{{ route('businesses.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Публични бизнеси</a>
-                <a href="{{ route('services.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Услуги</a>
-                <a href="{{ url('/categories') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Категории</a>
+                <a href="{{ route('business.profile.edit') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Моят бизнес профил</a>
+                <a href="{{ route('business.jobs.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Обяви</a>
+                <a href="{{ route('business.service-requests.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Заявки от клиенти</a>
+                <a href="{{ route('business.service-requests.index') }}#inquiries" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Получени запитвания</a>
+                <a href="{{ route('business.service-requests.index') }}#offers" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Оферти</a>
+                <a href="{{ route('businesses.show', $business) }}#reviews" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Отзиви</a>
+                <a href="{{ route('business.billing') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Абонамент</a>
+                <a href="{{ route('business.insights.index') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Статистика</a>
+                <a href="{{ route('business.profile.edit') }}#settings" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Настройки</a>
                 <a href="{{ url('/') }}" class="rounded-2xl px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white">Начало</a>
             </nav>
 
@@ -132,23 +133,24 @@
         </aside>
 
         <main class="grid min-w-0 gap-6">
-            <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
+            <section class="rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-8">
                 <div class="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Business control center</p>
-                        <h1 class="mt-3 text-3xl font-black sm:text-5xl">
+                        <h1 class="mt-3 text-[30px] font-black leading-tight sm:text-5xl">
                             Управлявайте <span class="bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent">{{ $business->business_name ?: $business->name }}</span>
                         </h1>
                         <p class="mt-3 max-w-3xl text-white/60">Попълвайте профила си, следете активността и управлявайте видимостта си във BON без нужда от админ намеса.</p>
                     </div>
                     <div class="flex flex-col gap-3 sm:flex-row">
-                        <a href="{{ route('business.profile.edit') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-4 text-center font-black text-white shadow-lg shadow-orange-600/25">Редактирай профила</a>
-                        <a href="{{ route('businesses.show', $business) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-center font-black text-white hover:bg-white/10">Виж публичния профил</a>
+                        <a href="{{ route('business.profile.edit') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3.5 text-center text-sm font-black text-white shadow-lg shadow-orange-600/25 sm:py-4 sm:text-base">Редактирай профила</a>
+                        <a href="{{ route('business.jobs.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-orange-300/25 bg-orange-300/10 px-6 py-3.5 text-center text-sm font-black text-orange-100 hover:bg-orange-300/15 sm:py-4 sm:text-base">Публикувай обява</a>
+                        <a href="{{ route('businesses.show', $business) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3.5 text-center text-sm font-black text-white hover:bg-white/10 sm:py-4 sm:text-base">Виж публичния профил</a>
                     </div>
                 </div>
             </section>
 
-            <section data-testid="dashboard-billing-card" class="rounded-[32px] border border-orange-300/20 bg-gradient-to-br from-orange-400/10 via-orange-500/10 to-orange-600/10 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
+            <section data-testid="dashboard-billing-card" class="rounded-[1.5rem] border border-orange-300/20 bg-gradient-to-br from-orange-400/10 via-orange-500/10 to-orange-600/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-8">
                 <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Billing и план</p>
@@ -165,6 +167,10 @@
                     </div>
                 </div>
             </section>
+
+            @include('partials.growth-tools', ['profile' => $business, 'variant' => 'dark'])
+
+            @include('partials.bon-paid-services', ['profile' => $business, 'variant' => 'dark', 'context' => 'business-dashboard'])
 
             <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" data-testid="business-offer-points-summary">
                 <div class="rounded-[28px] border border-orange-300/20 bg-orange-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
@@ -205,7 +211,7 @@
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">BON Talent Network</p>
                         <h2 class="mt-3 text-2xl font-black sm:text-3xl">Обяви, кандидатури и избрани специалисти</h2>
-                        <p class="mt-2 max-w-3xl text-sm leading-6 text-white/60">Публикувайте проект към фрийлансъри, сравнявайте кандидатури и избирайте подходящ специалист от business dashboard-а.</p>
+                        <p class="mt-2 max-w-3xl text-sm leading-6 text-white/60">Публикувайте обява към фрийлансъри, сравнявайте кандидатури и избирайте подходящ специалист от business dashboard-а.</p>
                     </div>
                     <div class="flex flex-col gap-3 sm:flex-row">
                         <a href="{{ route('business.jobs.create') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-orange-600/20">Публикувай заявка</a>
@@ -236,7 +242,7 @@
                                     <div class="flex items-start justify-between gap-3">
                                         <div>
                                             <p class="font-black">{{ $job->title }}</p>
-                                            <p class="mt-1 text-sm text-white/50">{{ $job->category ?: 'Проект' }} · {{ $job->applications_count }} кандидатури</p>
+                                            <p class="mt-1 text-sm text-white/50">{{ $job->category ?: 'Обява' }} · {{ $job->applications_count }} кандидатури</p>
                                         </div>
                                         <span class="rounded-full {{ $job->status === 'open' ? 'bg-emerald-400/10 text-emerald-100' : 'bg-white/10 text-white/55' }} px-3 py-1 text-xs font-black">{{ $job->status === 'open' ? 'Отворена' : 'Затворена' }}</span>
                                     </div>
@@ -356,7 +362,7 @@
 
                 <div class="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                     @foreach($onboardingItems as $item)
-                        <div data-testid="onboarding-item-{{ $item['key'] }}" class="rounded-3xl border {{ $item['complete'] ? 'border-emerald-300/20 bg-emerald-400/10' : 'border-white/10 bg-slate-950/45' }} p-5">
+                        <a href="{{ $item['href'] ?? route('business.profile.edit') }}" data-testid="onboarding-item-{{ $item['key'] }}" class="rounded-3xl border {{ $item['complete'] ? 'border-emerald-300/20 bg-emerald-400/10' : 'border-white/10 bg-slate-950/45' }} p-5 transition hover:-translate-y-0.5 hover:bg-white/10">
                             <div class="flex items-start gap-3">
                                 <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl {{ $item['complete'] ? 'bg-emerald-400/20 text-emerald-100' : 'bg-white/10 text-white/55' }}">
                                     {{ $item['complete'] ? '✓' : '•' }}
@@ -367,7 +373,7 @@
                                     <p class="mt-2 text-xs font-black {{ $item['complete'] ? 'text-emerald-100' : 'text-amber-100' }}">{{ $item['complete'] ? 'Готово' : 'Липсва' }}</p>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
 

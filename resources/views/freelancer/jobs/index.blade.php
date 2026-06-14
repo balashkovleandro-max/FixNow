@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обяви за фрийлансъри | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
-    <main class="relative min-h-screen overflow-hidden">
+    <main class="relative min-h-screen overflow-x-clip">
         <div class="pointer-events-none absolute -top-44 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-44 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
 
@@ -36,13 +37,19 @@
                     <a href="{{ route('freelancer.credits.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25">Купи кредити</a>
                 </div>
 
-                <form method="GET" action="{{ route('freelancer.jobs.index') }}" class="mt-8 grid gap-3 md:grid-cols-[1fr_220px_220px_auto]">
+                <form method="GET" action="{{ route('freelancer.jobs.index') }}" class="mt-8 grid gap-3 md:grid-cols-[1fr_200px_180px_180px_auto]">
                     <input name="q" value="{{ request('q') }}" placeholder="Търси по задача, умение или бизнес" class="min-h-12 rounded-2xl border border-slate-200 bg-white/80 px-4 text-slate-900 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
-                    <select name="category" class="min-h-12 rounded-2xl border border-slate-200 bg-white/80 px-4 text-slate-900 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
-                        <option value="">Всички категории</option>
+                    <input name="category" list="freelancer-job-category-options" value="{{ request('category') }}" placeholder="Всички категории" class="min-h-12 rounded-2xl border border-slate-200 bg-white/80 px-4 text-slate-900 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                    <datalist id="freelancer-job-category-options">
                         @foreach($categories as $category)
-                            <option value="{{ $category }}" @selected(request('category') === $category)>{{ $category }}</option>
+                            <option value="{{ $category }}"></option>
                         @endforeach
+                    </datalist>
+                    <select name="work_mode" class="min-h-12 rounded-2xl border border-slate-200 bg-white/80 px-4 text-slate-900 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                        <option value="">Тип работа</option>
+                        <option value="online" @selected(request('work_mode') === 'online')>Онлайн</option>
+                        <option value="onsite" @selected(request('work_mode') === 'onsite')>На място</option>
+                        <option value="hybrid" @selected(request('work_mode') === 'hybrid')>Хибридно</option>
                     </select>
                     <input name="location" value="{{ request('location') }}" placeholder="Локация" class="min-h-12 rounded-2xl border border-slate-200 bg-white/80 px-4 text-slate-900 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
                     <button class="min-h-12 rounded-2xl bg-slate-950 px-6 text-sm font-black text-white">Филтрирай</button>
@@ -64,6 +71,7 @@
                         <div class="mt-5 flex flex-wrap gap-2 text-xs font-bold text-slate-500">
                             @if($job->budget)<span class="rounded-full bg-slate-100 px-3 py-1">Бюджет: {{ number_format((float) $job->budget, 2, ',', ' ') }} €</span>@endif
                             @if($job->deadline)<span class="rounded-full bg-slate-100 px-3 py-1">Срок: {{ $job->deadline->format('d.m.Y') }}</span>@endif
+                            @if($job->work_mode)<span class="rounded-full bg-slate-100 px-3 py-1">{{ ['online' => 'Онлайн', 'onsite' => 'На място', 'hybrid' => 'Хибридно'][$job->work_mode] ?? $job->work_mode }}</span>@endif
                             <span class="rounded-full bg-slate-100 px-3 py-1">{{ $job->applications_count }} кандидатури</span>
                         </div>
                         <a href="{{ route('freelancer.jobs.show', $job) }}" class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 text-sm font-black text-white shadow-xl shadow-blue-600/20 sm:w-auto">Виж и кандидатствай</a>

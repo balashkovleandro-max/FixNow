@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Command Center | BON</title>
     <meta name="description" content="BON Command Center показва какво спира бизнеса, каква е диагнозата и какво действие трябва да последва.">
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>

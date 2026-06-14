@@ -124,6 +124,14 @@ class ServiceRequestController extends Controller
         return redirect()
             ->route('request.service')
             ->with('success', 'Заявката ви е изпратена успешно. Подходящи бизнеси ще могат да ви изпратят оферта.')
-            ->with('offers_url', $serviceRequest->public_token ? route('service-requests.offers.show', ['serviceRequest' => $serviceRequest->public_token]) : null);
+            ->with('offers_url', $serviceRequest->public_token ? route('service-requests.offers.show', ['serviceRequest' => $serviceRequest->public_token]) : null)
+            ->with('bon_event', [
+                'name' => 'service_request_submit',
+                'params' => [
+                    'source' => 'request_form',
+                    'request_id' => $serviceRequest->id,
+                    'category' => $serviceRequest->category,
+                ],
+            ]);
     }
 }

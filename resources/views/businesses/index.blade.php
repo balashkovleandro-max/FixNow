@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Бизнеси | BON</title>
     <meta name="description" content="Разгледайте активни бизнеси, услуги и места в BON. Филтрирайте по град, категория, Premium, проверени профили, рейтинг и локални услуги.">
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
@@ -18,7 +19,7 @@
             ['name' => 'works_24_7', 'label' => '24/7', 'value' => '1'],
             ['name' => 'rating', 'label' => '4+ рейтинг', 'value' => '4plus'],
         ];
-        $categories = ['Ресторанти и кафенета', 'Хотели', 'Ремонти и строителство', 'ВиК', 'Електро услуги', 'Автосервизи', 'Почистване', 'Красота и грижа', 'Здраве и уелнес', 'Спорт и активности'];
+        $categories = \App\Support\CategoryCatalog::names()->all();
     @endphp
 
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
@@ -48,12 +49,12 @@
                 <form method="GET" action="{{ route('businesses.index') }}" class="mt-3 grid gap-3">
                     <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
                         <span class="block text-xs font-black uppercase text-white/50">Категория</span>
-                        <select name="category" class="mt-2 min-h-12 w-full bg-transparent text-base text-white outline-none">
-                            <option class="bg-slate-950" value="">Всички категории</option>
+                        <input name="category" list="business-category-options-mobile" value="{{ request('category') }}" placeholder="Избери или напиши категория" class="mt-2 min-h-12 w-full bg-transparent text-base text-white outline-none placeholder:text-white/40">
+                        <datalist id="business-category-options-mobile">
                             @foreach($categories as $category)
-                                <option class="bg-slate-950" value="{{ $category }}" {{ request('category') === $category ? 'selected' : '' }}>{{ $category }}</option>
+                                <option value="{{ $category }}"></option>
                             @endforeach
-                        </select>
+                        </datalist>
                     </label>
                     <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
                         <span class="block text-xs font-black uppercase text-white/50">Град</span>
@@ -77,12 +78,12 @@
             <form method="GET" action="{{ route('businesses.index') }}" class="mt-8 hidden gap-3 rounded-3xl border border-white/10 bg-slate-950/60 p-3 lg:grid lg:grid-cols-[1fr_1fr_auto]">
                 <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">
                     <span class="block text-xs font-black uppercase text-white/50">Категория</span>
-                    <select name="category" class="mt-2 w-full bg-transparent text-white outline-none">
-                        <option class="bg-slate-950" value="">Всички категории</option>
+                    <input name="category" list="business-category-options" value="{{ request('category') }}" placeholder="Избери или напиши категория" class="mt-2 w-full bg-transparent text-white outline-none placeholder:text-white/40">
+                    <datalist id="business-category-options">
                         @foreach($categories as $category)
-                            <option class="bg-slate-950" value="{{ $category }}" {{ request('category') === $category ? 'selected' : '' }}>{{ $category }}</option>
+                            <option value="{{ $category }}"></option>
                         @endforeach
-                    </select>
+                    </datalist>
                 </label>
 
                 <label class="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">

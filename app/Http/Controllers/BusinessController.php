@@ -79,6 +79,12 @@ class BusinessController extends Controller
             $relations[] = 'businessPhotos';
         }
 
+        if (Schema::hasTable('freelancer_jobs')) {
+            $relations['freelancerJobs'] = function ($query) {
+                $query->latest();
+            };
+        }
+
         $user->loadMissing($relations);
 
         $approvedReviews = collect();
@@ -131,7 +137,10 @@ class BusinessController extends Controller
         $recommendationsCount = $user->recommendationsCount();
         $trustSummary = ProfileTrust::summary($user);
         $similarBusinesses = ProfileTrust::ranked(ProfileTrust::attach($similarBusinesses));
+        $businessJobs = Schema::hasTable('freelancer_jobs')
+            ? $user->freelancerJobs()->withCount('applications')->latest()->take(6)->get()
+            : collect();
 
-        return view('businesses.show', compact('user', 'similarBusinesses', 'approvedReviews', 'reviewsCount', 'averageRating', 'recommendationsCount', 'trustSummary'));
+        return view('businesses.show', compact('user', 'similarBusinesses', 'approvedReviews', 'reviewsCount', 'averageRating', 'recommendationsCount', 'trustSummary', 'businessJobs'));
     }
 }

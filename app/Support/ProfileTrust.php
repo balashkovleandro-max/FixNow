@@ -50,7 +50,7 @@ class ProfileTrust
         ];
 
         $summary['badges'] = self::badges($profile, $summary);
-        $summary['reasons'] = self::reasons($summary);
+        $summary['reasons'] = self::reasons($profile, $summary);
         $summary['sort_tuple'] = [
             $profile->isPremium() ? 1 : 0,
             $summary['trust_score'],
@@ -127,7 +127,7 @@ class ProfileTrust
         return array_values(array_unique($badges));
     }
 
-    public static function reasons(array $summary): array
+    public static function reasons(User $profile, array $summary): array
     {
         $reasons = [];
 
@@ -140,7 +140,9 @@ class ProfileTrust
         }
 
         if ($summary['completed_projects_count'] > 0) {
-            $reasons[] = 'Има завършени проекти и реална история в BON.';
+            $reasons[] = $profile->isBusiness()
+                ? 'Има изпълнени заявки и реална история в BON.'
+                : 'Има завършени проекти и реална история в BON.';
         }
 
         if ($summary['response_label']) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FreelancerJob;
 use App\Models\User;
 use App\Support\BusinessGrowthMetrics;
+use App\Support\CategoryCatalog;
 use App\Support\ProfileTrust;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -16,16 +17,7 @@ class BonHomeController extends Controller
     {
         $smartCategory = trim((string) $request->query('category', ''));
 
-        $smartCategories = [
-            'Web Design',
-            'Development',
-            'Marketing',
-            'Ремонти',
-            'Почистване',
-            'Красота',
-            'Ресторанти',
-            'Хотели',
-        ];
+        $smartCategories = CategoryCatalog::names()->all();
 
         $recommendedSpecialists = $this->recommendedSpecialists($smartCategory)->take(8);
         $smartJobs = $this->smartJobs($smartCategory);

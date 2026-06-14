@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обяви към фрийлансъри | BON</title>
+    <title>Проекти към фрийлансъри | BON</title>
+    @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
-    <main class="relative min-h-screen overflow-hidden">
+    <main class="relative min-h-screen overflow-x-clip">
         <div class="pointer-events-none absolute -top-44 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-44 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
 
@@ -16,7 +17,7 @@
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
                     <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-xl font-black text-white shadow-xl shadow-violet-500/25">B</div>
                     <div>
-                        <p class="text-xl font-black">BON Business Jobs</p>
+                        <p class="text-xl font-black">BON Projects</p>
                         <p class="text-sm text-slate-500">{{ $business->business_name ?: $business->name }}</p>
                     </div>
                 </a>
@@ -31,13 +32,13 @@
             @endif
 
             <section class="mt-8 rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-8">
-                <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Заявки и проекти</p>
+                <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Проекти и задачи</p>
                 <div class="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                     <div>
-                        <h1 class="text-4xl font-black tracking-tight sm:text-5xl">Публикувай обява към BON фрийлансъри.</h1>
-                        <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-600">Опиши задачата, бюджета и срока. Фрийлансърите кандидатстват с кредити, а кандидатурите се записват към обявата.</p>
+                        <h1 class="text-4xl font-black tracking-tight sm:text-5xl">Публикувай проект към BON фрийлансъри.</h1>
+                        <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-600">Опиши задачата, бюджета и срока. Фрийлансърите кандидатстват с оферти, а ти избираш най-подходящия специалист.</p>
                     </div>
-                    <a href="{{ route('business.jobs.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25">Създай обява</a>
+                    <a href="{{ route('business.jobs.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25">Създай проект</a>
                 </div>
             </section>
 
@@ -46,7 +47,7 @@
                     <article class="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
                         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                             <div>
-                                <p class="text-xs font-black uppercase tracking-[0.2em] text-violet-600">{{ $job->category ?: 'Проект' }}</p>
+                                <p class="text-xs font-black uppercase tracking-[0.2em] text-violet-600">{{ $job->category ?: 'Обява' }}</p>
                                 <h2 class="mt-2 text-2xl font-black">{{ $job->title }}</h2>
                                 <p class="mt-2 text-sm text-slate-500">
                                     {{ $job->status === 'open' ? 'Отворена' : 'Затворена' }}
@@ -86,7 +87,14 @@
                                     <div class="mt-3 grid gap-2 text-sm text-slate-600 sm:grid-cols-2">
                                         <p class="rounded-2xl bg-slate-50 px-3 py-2">Цена: <strong class="text-slate-900">{{ $application->proposed_price ?: 'Не е посочена' }}</strong></p>
                                         <p class="rounded-2xl bg-slate-50 px-3 py-2">Срок: <strong class="text-slate-900">{{ $application->proposed_timeframe ?: 'Не е посочен' }}</strong></p>
+                                        <p class="rounded-2xl bg-slate-50 px-3 py-2">Телефон: <strong class="text-slate-900">{{ $application->contact_phone ?: $application->freelancer?->phone ?: 'Не е посочен' }}</strong></p>
+                                        <p class="rounded-2xl bg-slate-50 px-3 py-2">Имейл: <strong class="text-slate-900">{{ $application->contact_email ?: $application->freelancer?->email ?: 'Не е посочен' }}</strong></p>
                                     </div>
+                                    @if($application->portfolio_url)
+                                        <a href="{{ $application->portfolio_url }}" target="_blank" rel="noopener" class="mt-3 inline-flex min-h-10 items-center justify-center rounded-2xl border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-black text-blue-700">
+                                            Виж портфолио
+                                        </a>
+                                    @endif
                                     @if($candidateTrust)
                                         <div class="mt-3 flex flex-wrap gap-2">
                                             <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">Trust {{ $candidateTrust['trust_score'] }}/100</span>
