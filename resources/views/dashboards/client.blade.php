@@ -62,15 +62,15 @@
                     </div>
                 </a>
 
-                <nav class="flex flex-wrap items-center gap-2 text-sm font-bold text-white/70">
-                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-orange-300/10 px-4 py-2 text-orange-100">Обзор</a>
-                    <a href="{{ route('request.service') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Публикувай заявка</a>
-                    <a href="#requests" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Моите заявки</a>
-                    <a href="#offers" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Получени оферти</a>
-                    <a href="#selected" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Избрани изпълнители</a>
-                    <a href="#favorites" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Любими</a>
-                    <a href="#history" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">История</a>
-                    <a href="{{ route('dashboard.client.profile.edit') }}" class="rounded-2xl px-4 py-2 hover:bg-white/10 hover:text-white">Профил</a>
+                <nav class="grid grid-cols-2 gap-2 text-sm font-bold text-white/70 sm:flex sm:flex-wrap sm:items-center">
+                    <a href="{{ route('dashboard') }}" class="min-h-11 rounded-2xl bg-orange-300/10 px-3 py-3 text-center text-orange-100 sm:px-4 sm:py-2">Обзор</a>
+                    <a href="{{ route('request.service') }}" class="min-h-11 rounded-2xl px-3 py-3 text-center hover:bg-white/10 hover:text-white sm:px-4 sm:py-2">Публикувай заявка</a>
+                    <a href="#requests" class="min-h-11 rounded-2xl px-3 py-3 text-center hover:bg-white/10 hover:text-white sm:px-4 sm:py-2">Моите заявки</a>
+                    <a href="#offers" class="min-h-11 rounded-2xl px-3 py-3 text-center hover:bg-white/10 hover:text-white sm:px-4 sm:py-2">Получени оферти</a>
+                    <a href="#selected" class="min-h-11 rounded-2xl px-3 py-3 text-center hover:bg-white/10 hover:text-white sm:px-4 sm:py-2">Избрани</a>
+                    <a href="#favorites" class="min-h-11 rounded-2xl px-3 py-3 text-center hover:bg-white/10 hover:text-white sm:px-4 sm:py-2">Любими</a>
+                    <a href="#history" class="min-h-11 rounded-2xl px-3 py-3 text-center hover:bg-white/10 hover:text-white sm:px-4 sm:py-2">История</a>
+                    <a href="{{ route('dashboard.client.profile.edit') }}" class="min-h-11 rounded-2xl px-3 py-3 text-center hover:bg-white/10 hover:text-white sm:px-4 sm:py-2">Профил</a>
                 </nav>
 
                 <form action="{{ route('logout') }}" method="POST">
@@ -148,7 +148,7 @@
             </div>
         </section>
 
-        <section id="offers" class="mt-6 rounded-[32px] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:p-6">
+        <section id="offers" class="mt-6 rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-6">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 class="text-2xl font-black">Моите freelance проекти</h2>

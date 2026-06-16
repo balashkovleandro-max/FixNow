@@ -22,18 +22,18 @@
                         <p class="text-sm text-slate-500">Freelancer Network</p>
                     </div>
                 </a>
-                <nav class="flex flex-wrap gap-2 text-sm font-bold">
-                    <a href="{{ route('dashboard') }}" class="rounded-2xl bg-blue-50 px-4 py-2 text-blue-700">Обзор</a>
-                    <a href="{{ route('freelancer.profile.edit') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Моят фриланс профил</a>
-                    <a href="{{ route('freelancer.profile.edit') }}#skills" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Услуги</a>
-                    <a href="#portfolio" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Портфолио</a>
-                    <a href="{{ route('freelancer.jobs.index') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Проекти</a>
-                    <a href="#offers" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Моите оферти</a>
-                    <a href="#invites" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Покани</a>
-                    <a href="#clients" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Клиенти</a>
-                    <a href="{{ route('freelancer.credits.index') }}" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Кредити</a>
-                    <a href="#stats" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Статистика</a>
-                    <a href="{{ route('freelancer.profile.edit') }}#availability" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Настройки</a>
+                <nav class="grid grid-cols-2 gap-2 text-sm font-bold sm:flex sm:flex-wrap">
+                    <a href="{{ route('dashboard') }}" class="min-h-11 rounded-2xl bg-blue-50 px-3 py-3 text-center text-blue-700 sm:px-4 sm:py-2">Обзор</a>
+                    <a href="{{ route('freelancer.profile.edit') }}" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Профил</a>
+                    <a href="{{ route('freelancer.profile.edit') }}#skills" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Услуги</a>
+                    <a href="#portfolio" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Портфолио</a>
+                    <a href="{{ route('freelancer.jobs.index') }}" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Проекти</a>
+                    <a href="#offers" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Оферти</a>
+                    <a href="#invites" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Покани</a>
+                    <a href="#clients" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Клиенти</a>
+                    <a href="{{ route('freelancer.credits.index') }}" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Кредити</a>
+                    <a href="#stats" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Статистика</a>
+                    <a href="{{ route('freelancer.profile.edit') }}#availability" class="min-h-11 rounded-2xl px-3 py-3 text-center text-slate-600 hover:bg-white hover:text-blue-700 sm:px-4 sm:py-2">Настройки</a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="rounded-2xl px-4 py-2 text-slate-600 hover:bg-white hover:text-blue-700">Изход</button>
@@ -167,11 +167,11 @@
                     <div class="grid gap-3">
                         @forelse($portfolioItems as $item)
                             <article class="rounded-3xl border border-slate-100 bg-white/85 p-4 shadow-sm">
-                                <div class="flex gap-4">
+                                <div class="flex flex-col gap-4 sm:flex-row">
                                     @if($item->image_path)
-                                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->title }}" class="h-20 w-24 rounded-2xl object-cover">
+                                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->title }}" class="h-40 w-full rounded-2xl object-cover sm:h-20 sm:w-24">
                                     @else
-                                        <div class="grid h-20 w-24 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-blue-50 to-fuchsia-50 text-xl font-black text-blue-700">B</div>
+                                        <div class="grid h-32 w-full shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-blue-50 to-fuchsia-50 text-xl font-black text-blue-700 sm:h-20 sm:w-24">B</div>
                                     @endif
                                     <div class="min-w-0 flex-1">
                                         <p class="font-black">{{ $item->title }}</p>

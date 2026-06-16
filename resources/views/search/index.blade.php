@@ -40,17 +40,17 @@
                 <form action="{{ route('search') }}" method="GET" class="grid gap-3 rounded-[1.5rem] border border-white/80 bg-white/80 p-3 shadow-xl shadow-blue-900/5 backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4">
                     <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
                         Име / ключова дума
-                        <input name="q" value="{{ $query }}" placeholder="Studio, Laravel, салон..." class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                        <input name="q" value="{{ $query }}" placeholder="Studio, Laravel, салон..." class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
                     </label>
 
                     <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
                         Град
-                        <input name="city" value="{{ $city }}" placeholder="София, Варна..." class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                        <input name="city" value="{{ $city }}" placeholder="София, Варна..." class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
                     </label>
 
                     <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
                         Категория
-                        <input name="category" list="bon-search-category-options" value="{{ $category }}" placeholder="Избери или напиши категория" class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                        <input name="category" list="bon-search-category-options" value="{{ $category }}" placeholder="Избери или напиши категория" class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
                         <datalist id="bon-search-category-options">
                             @foreach($categories as $option)
                                 <option value="{{ $option }}">
@@ -60,7 +60,7 @@
 
                     <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
                         Услуга
-                        <input name="service" value="{{ $service }}" placeholder="фризьор, уеб дизайн..." class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+                        <input name="service" value="{{ $service }}" placeholder="фризьор, уеб дизайн..." class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
                     </label>
 
                     <div class="sm:col-span-2 lg:col-span-4">

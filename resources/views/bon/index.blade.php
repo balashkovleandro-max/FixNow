@@ -123,6 +123,115 @@
             pointer-events: none;
         }
 
+        .bon-home-aurora {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(47, 140, 255, .22) 0%, rgba(124, 58, 237, .13) 38%, transparent 64%),
+                radial-gradient(circle at 18% 18%, rgba(59, 130, 246, .15), transparent 34%),
+                radial-gradient(circle at 82% 18%, rgba(217, 70, 239, .14), transparent 34%),
+                linear-gradient(180deg, rgba(2, 6, 23, 1) 0%, rgba(6, 16, 31, .98) 54%, rgba(3, 7, 18, 1) 100%);
+        }
+
+        .bon-home-shell {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            background: #020617;
+            color: #f8fbff;
+        }
+
+        .bon-home-shell [class*="text-[#070B1F]"],
+        .bon-home-shell [class*="text-slate-900"],
+        .bon-home-shell [class*="text-slate-800"] {
+            color: #f8fbff !important;
+        }
+
+        .bon-home-shell [class*="text-slate-700"],
+        .bon-home-shell [class*="text-slate-600"] {
+            color: #d6deed !important;
+        }
+
+        .bon-home-shell [class*="text-slate-500"],
+        .bon-home-shell [class*="text-slate-400"] {
+            color: #9aa8bd !important;
+        }
+
+        .bon-home-shell [class*="text-blue-700"],
+        .bon-home-shell [class*="text-blue-600"] {
+            color: #60a5fa !important;
+        }
+
+        .bon-home-shell [class*="text-violet-700"],
+        .bon-home-shell [class*="text-violet-600"] {
+            color: #c4b5fd !important;
+        }
+
+        .bon-home-shell [class*="text-fuchsia-700"],
+        .bon-home-shell [class*="text-fuchsia-600"] {
+            color: #f0abfc !important;
+        }
+
+        .bon-home-shell [class*="bg-white/"],
+        .bon-home-shell [class*="bg-white"],
+        .bon-home-shell [class*="bg-slate-50"],
+        .bon-home-shell [class*="bg-blue-50"],
+        .bon-home-shell [class*="bg-fuchsia-50"] {
+            background: rgba(13, 24, 46, .74) !important;
+        }
+
+        .bon-home-shell [class*="border-white/"],
+        .bon-home-shell [class*="border-slate-"],
+        .bon-home-shell [class*="border-blue-200"],
+        .bon-home-shell [class*="border-violet-200"] {
+            border-color: rgba(132, 154, 196, .22) !important;
+        }
+
+        .bon-home-shell input,
+        .bon-home-shell select,
+        .bon-home-shell textarea {
+            border-color: rgba(132, 154, 196, .24) !important;
+            background: rgba(7, 15, 30, .92) !important;
+            color: #f8fbff !important;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+        }
+
+        .bon-home-shell input::placeholder,
+        .bon-home-shell textarea::placeholder {
+            color: #6f7c93 !important;
+        }
+
+        .bon-home-shell input:focus,
+        .bon-home-shell select:focus,
+        .bon-home-shell textarea:focus {
+            border-color: rgba(96, 165, 250, .68) !important;
+            box-shadow: 0 0 0 4px rgba(47, 140, 255, .14) !important;
+        }
+
+        .bon-home-header-card,
+        .bon-home-search,
+        .bon-orbit-card,
+        .bon-home-mobile-chips > div {
+            border-color: rgba(132, 154, 196, .24) !important;
+            background: rgba(12, 24, 46, .76) !important;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .05) !important;
+        }
+
+        .bon-home-shell article,
+        .bon-home-shell section > div[class*="rounded-"],
+        .bon-home-shell form[class*="rounded-"] {
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .04);
+        }
+
+        .bon-home-title {
+            overflow-wrap: break-word;
+            text-wrap: balance;
+        }
+
+        .bon-home-title span {
+            display: inline-block;
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+
         .bon-float {
             animation: bon-float 7s ease-in-out infinite;
         }
@@ -134,15 +243,18 @@
         .bon-globe-stage {
             position: relative;
             display: flex;
-            height: 360px;
-            min-height: 360px;
+            height: 470px;
+            min-height: 470px;
             align-items: center;
             justify-content: center;
+            isolation: isolate;
             pointer-events: none;
             touch-action: pan-y;
         }
 
         .bon-globe-stage *,
+        .bon-globe-link,
+        .bon-globe-node,
         .bon-orbit-card,
         .bon-orbit-line,
         .bon-connection-line,
@@ -152,21 +264,24 @@
 
         .bon-globe-glow {
             position: absolute;
-            height: 310px;
-            width: 310px;
+            height: 390px;
+            width: 390px;
             border-radius: 9999px;
-            background: radial-gradient(circle, rgba(96, 165, 250, .38), rgba(124, 58, 237, .24) 42%, rgba(236, 72, 153, .18) 72%, transparent 100%);
-            filter: blur(34px);
+            background: radial-gradient(circle, rgba(59, 130, 246, .58), rgba(124, 58, 237, .34) 42%, rgba(217, 70, 239, .24) 72%, transparent 100%);
+            filter: blur(38px);
         }
 
         .bon-globe-shell {
             position: absolute;
-            height: 285px;
-            width: 285px;
+            height: 342px;
+            width: 342px;
             border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, .86);
-            background: radial-gradient(circle at 35% 20%, rgba(255, 255, 255, .78), rgba(255, 255, 255, .24) 44%, rgba(124, 58, 237, .08) 100%);
-            box-shadow: 0 34px 90px rgba(79, 70, 229, .16), inset 0 1px 18px rgba(255, 255, 255, .58);
+            border: 1px solid rgba(148, 163, 255, .28);
+            background:
+                radial-gradient(circle at 35% 20%, rgba(255, 255, 255, .20), transparent 30%),
+                radial-gradient(circle at 60% 70%, rgba(124, 58, 237, .30), transparent 46%),
+                rgba(9, 18, 38, .58);
+            box-shadow: 0 34px 100px rgba(47, 140, 255, .22), inset 0 1px 24px rgba(255, 255, 255, .08);
             backdrop-filter: blur(18px);
         }
 
@@ -177,16 +292,16 @@
         }
 
         .bon-globe-ring-outer {
-            height: 305px;
-            width: 305px;
+            height: 370px;
+            width: 370px;
             background: conic-gradient(from 0deg, transparent 0 16%, rgba(37, 99, 235, .54) 24%, transparent 35% 52%, rgba(236, 72, 153, .58) 61%, transparent 72% 100%);
             mask: radial-gradient(circle, transparent 66%, black 67% 70%, transparent 71%);
             animation: bon-spin 16s linear infinite;
         }
 
         .bon-globe-ring-inner {
-            height: 235px;
-            width: 235px;
+            height: 292px;
+            width: 292px;
             background: conic-gradient(from 90deg, transparent 0 18%, rgba(34, 211, 238, .48) 27%, transparent 40% 58%, rgba(139, 92, 246, .5) 67%, transparent 80% 100%);
             mask: radial-gradient(circle, transparent 64%, black 65% 69%, transparent 70%);
             animation: bon-spin-reverse 22s linear infinite;
@@ -195,18 +310,18 @@
         .bon-globe-core {
             position: relative;
             display: grid;
-            height: 210px;
-            width: 210px;
+            height: 246px;
+            width: 246px;
             place-items: center;
             overflow: hidden;
             border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, .52);
+            border: 1px solid rgba(191, 219, 254, .34);
             background:
-                radial-gradient(circle at 32% 22%, rgba(255, 255, 255, .88) 0 8%, transparent 18%),
-                radial-gradient(circle at 65% 72%, rgba(236, 72, 153, .72), transparent 35%),
-                radial-gradient(circle at 30% 70%, rgba(34, 211, 238, .55), transparent 35%),
-                linear-gradient(135deg, #2563eb 0%, #5b5ff0 42%, #8b5cf6 68%, #ec4899 100%);
-            box-shadow: 0 24px 70px rgba(79, 70, 229, .36), inset 0 18px 34px rgba(255, 255, 255, .26), inset 0 -28px 44px rgba(30, 41, 59, .2);
+                radial-gradient(circle at 32% 22%, rgba(255, 255, 255, .52) 0 7%, transparent 18%),
+                radial-gradient(circle at 65% 72%, rgba(217, 70, 239, .78), transparent 35%),
+                radial-gradient(circle at 30% 70%, rgba(34, 211, 238, .58), transparent 35%),
+                linear-gradient(135deg, #0b4fc9 0%, #2563eb 30%, #6d28d9 68%, #d946ef 100%);
+            box-shadow: 0 26px 80px rgba(59, 130, 246, .34), inset 0 18px 34px rgba(255, 255, 255, .18), inset 0 -28px 44px rgba(2, 6, 23, .38);
         }
 
         .bon-globe-core::before {
@@ -214,12 +329,12 @@
             position: absolute;
             inset: 16px;
             border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, .36);
+            border: 1px solid rgba(255, 255, 255, .24);
             background:
-                linear-gradient(90deg, transparent 45%, rgba(255, 255, 255, .22) 50%, transparent 55%),
-                linear-gradient(0deg, transparent 44%, rgba(255, 255, 255, .16) 50%, transparent 56%),
-                repeating-radial-gradient(ellipse at center, transparent 0 18px, rgba(255, 255, 255, .13) 19px 20px, transparent 21px 42px);
-            opacity: .72;
+                linear-gradient(90deg, transparent 45%, rgba(255, 255, 255, .18) 50%, transparent 55%),
+                linear-gradient(0deg, transparent 44%, rgba(255, 255, 255, .12) 50%, transparent 56%),
+                repeating-radial-gradient(ellipse at center, transparent 0 18px, rgba(255, 255, 255, .10) 19px 20px, transparent 21px 42px);
+            opacity: .78;
             animation: bon-spin 18s linear infinite;
         }
 
@@ -231,7 +346,7 @@
             height: 44px;
             width: 86px;
             border-radius: 9999px;
-            background: rgba(255, 255, 255, .42);
+            background: rgba(255, 255, 255, .35);
             filter: blur(8px);
             transform: rotate(-18deg);
         }
@@ -240,10 +355,37 @@
             position: relative;
             z-index: 2;
             color: white;
-            font-size: 5.4rem;
+            font-size: 6.2rem;
             font-weight: 950;
             line-height: 1;
             text-shadow: 0 12px 28px rgba(15, 23, 42, .32);
+        }
+
+        .bon-globe-network {
+            position: absolute;
+            inset: 22px;
+            z-index: 1;
+            border-radius: 9999px;
+            opacity: .88;
+        }
+
+        .bon-globe-link {
+            position: absolute;
+            height: 1px;
+            transform-origin: left center;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, transparent, rgba(191, 219, 254, .42), rgba(217, 70, 239, .25), transparent);
+            filter: drop-shadow(0 0 8px rgba(96, 165, 250, .28));
+        }
+
+        .bon-globe-node {
+            position: absolute;
+            height: .55rem;
+            width: .55rem;
+            border-radius: 9999px;
+            background: #bfdbfe;
+            box-shadow: 0 0 0 5px rgba(96, 165, 250, .10), 0 0 18px rgba(96, 165, 250, .86);
+            animation: bon-node-pulse 4.8s ease-in-out infinite;
         }
 
         .bon-globe-halo {
@@ -251,10 +393,10 @@
             bottom: 30px;
             left: 50%;
             height: 34px;
-            width: 235px;
+            width: 280px;
             transform: translateX(-50%);
             border-radius: 9999px;
-            background: radial-gradient(ellipse, rgba(139, 92, 246, .34), rgba(34, 211, 238, .16) 48%, transparent 74%);
+            background: radial-gradient(ellipse, rgba(139, 92, 246, .46), rgba(34, 211, 238, .20) 48%, transparent 74%);
             filter: blur(10px);
         }
 
@@ -263,11 +405,11 @@
             bottom: 48px;
             left: 50%;
             height: 44px;
-            width: 260px;
+            width: 310px;
             transform: translateX(-50%);
             border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, .72);
-            box-shadow: 0 0 28px rgba(124, 58, 237, .2);
+            border: 1px solid rgba(148, 163, 255, .26);
+            box-shadow: 0 0 30px rgba(124, 58, 237, .32);
         }
 
         .bon-connection-line {
@@ -302,16 +444,16 @@
             position: absolute;
             z-index: 4;
             display: flex;
-            min-width: 12rem;
+            min-width: 11.5rem;
             align-items: center;
             gap: .75rem;
-            border: 1px solid rgba(255, 255, 255, .76);
+            border: 1px solid rgba(132, 154, 196, .26);
             border-radius: 1.35rem;
-            background: rgba(255, 255, 255, .76);
+            background: rgba(13, 24, 46, .78);
             padding: .75rem .9rem;
-            box-shadow: 0 22px 60px rgba(30, 64, 175, .10);
+            box-shadow: 0 22px 70px rgba(0, 0, 0, .30), inset 0 1px 0 rgba(255, 255, 255, .05);
             backdrop-filter: blur(22px);
-            animation: bon-card-drift 8s ease-in-out infinite;
+            animation: bon-card-drift 10s ease-in-out infinite;
         }
 
         .bon-orbit-icon {
@@ -332,7 +474,7 @@
             width: .55rem;
             flex-shrink: 0;
             border-radius: 9999px;
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, .72);
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, .72), 0 0 18px currentColor;
         }
 
         .bon-orbit-line {
@@ -383,7 +525,12 @@
 
         @keyframes bon-card-drift {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes bon-node-pulse {
+            0%, 100% { opacity: .58; transform: scale(.92); }
+            50% { opacity: 1; transform: scale(1.18); }
         }
 
         @media (max-width: 1023px) {
@@ -417,6 +564,15 @@
                 font-size: 4.1rem;
             }
 
+            .bon-globe-network {
+                inset: 16px;
+            }
+
+            .bon-globe-node {
+                height: .44rem;
+                width: .44rem;
+            }
+
             .bon-connection-line,
             .bon-connection-dot,
             .bon-orbit-card,
@@ -426,52 +582,141 @@
         }
 
         @media (max-width: 640px) {
+            .bon-home-shell {
+                max-width: 100vw;
+            }
+
+            .bon-home-shell > .relative {
+                width: 100%;
+                max-width: 100%;
+                padding-left: .75rem;
+                padding-right: .75rem;
+            }
+
+            .bon-home-shell header,
+            .bon-home-shell section,
+            .bon-home-search {
+                width: calc(100vw - 1.5rem);
+                max-width: calc(100vw - 1.5rem);
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .bon-home-header-card {
+                width: 100%;
+                min-height: 60px;
+                border-radius: 1.25rem;
+                padding: .65rem;
+            }
+
+            .bon-home-header-card > a {
+                max-width: calc(100% - 3.25rem);
+            }
+
+            .bon-home-header-card details {
+                display: block;
+                flex-shrink: 0;
+            }
+
+            .bon-home-title {
+                max-width: 18.25rem;
+                font-size: 1.5rem;
+                line-height: 1.16;
+                letter-spacing: -.015em;
+            }
+
+            .bon-home-subtitle {
+                max-width: 19rem;
+                font-size: .95rem;
+                line-height: 1.65;
+            }
+
+            .bon-home-actions,
+            .bon-home-search,
+            .bon-home-orb-wrap,
+            .bon-home-mobile-chips {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .bon-home-search {
+                overflow: hidden;
+                border-radius: 1.25rem;
+            }
+
+            .bon-home-search label,
+            .bon-home-search input {
+                min-width: 0;
+            }
+
+            .bon-home-mobile-chips {
+                grid-template-columns: 1fr;
+            }
+
             .bon-grid {
                 background-size: 46px 46px;
                 opacity: .24;
             }
 
             .bon-globe-stage {
-                height: 210px;
-                min-height: 210px;
+                height: 196px;
+                min-height: 196px;
                 margin-inline: auto;
                 max-width: 100%;
             }
 
             .bon-globe-glow,
             .bon-globe-ring-outer {
-                height: 190px;
-                width: 190px;
+                height: 174px;
+                width: 174px;
             }
 
             .bon-globe-shell {
-                height: 180px;
-                width: 180px;
+                height: 164px;
+                width: 164px;
             }
 
             .bon-globe-ring-inner {
-                height: 145px;
-                width: 145px;
+                height: 132px;
+                width: 132px;
             }
 
             .bon-globe-core {
-                height: 126px;
-                width: 126px;
+                height: 116px;
+                width: 116px;
             }
 
             .bon-globe-letter {
-                font-size: 3.1rem;
+                font-size: 2.85rem;
+            }
+
+            .bon-globe-network {
+                inset: 12px;
+            }
+
+            .bon-globe-node {
+                height: .34rem;
+                width: .34rem;
+                box-shadow: 0 0 0 4px rgba(96, 165, 250, .10), 0 0 12px rgba(96, 165, 250, .76);
             }
 
             .bon-globe-halo {
-                bottom: 16px;
-                width: 150px;
+                bottom: 18px;
+                width: 138px;
             }
 
             .bon-globe-halo-ring {
-                bottom: 28px;
-                height: 30px;
-                width: 170px;
+                bottom: 30px;
+                height: 26px;
+                width: 154px;
+            }
+
+            .bon-float,
+            .bon-pulse,
+            .bon-globe-ring-outer,
+            .bon-globe-ring-inner,
+            .bon-globe-core::before {
+                animation-duration: 12s;
             }
         }
 
@@ -481,6 +726,7 @@
             .bon-globe-ring-outer,
             .bon-globe-ring-inner,
             .bon-globe-core::before,
+            .bon-globe-node,
             .bon-orbit-card,
             .bon-orbit-line::after {
                 animation: none;
@@ -490,8 +736,8 @@
 </head>
 
 <body class="antialiased">
-    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.78)_42%,rgba(248,250,255,1)_100%)]"></div>
+    <main class="bon-home-shell relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#020617] text-slate-50">
+        <div class="bon-home-aurora pointer-events-none absolute inset-0"></div>
         <div class="bon-grid pointer-events-none absolute inset-0 opacity-[.38]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[35rem] w-[35rem] rounded-full bg-blue-400/22 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-40 right-[-10rem] h-[35rem] w-[35rem] rounded-full bg-fuchsia-400/22 blur-3xl"></div>
@@ -500,9 +746,9 @@
         <div class="bon-dot-field pointer-events-none absolute left-6 top-56 hidden h-40 w-36 opacity-30 lg:block"></div>
         <div class="bon-dot-field pointer-events-none absolute bottom-10 right-6 hidden h-40 w-36 opacity-25 lg:block" style="background-image: radial-gradient(rgba(236,72,153,.36) 1.4px, transparent 1.4px);"></div>
 
-        <div class="relative z-10 px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
-            <header class="mx-auto mt-4 max-w-[1440px]">
-                <div class="flex min-h-[68px] items-center justify-between rounded-[1.5rem] border border-white/70 bg-white/75 px-3 py-3 shadow-[0_24px_80px_rgba(30,41,100,.09)] backdrop-blur-2xl sm:min-h-[76px] sm:rounded-[1.75rem] sm:px-6">
+        <div class="relative z-10 px-3 pb-12 sm:px-6 sm:pb-16 lg:px-8">
+            <header class="mx-auto mt-4 w-full max-w-[1440px]">
+                <div class="bon-home-header-card flex min-h-[68px] items-center justify-between rounded-[1.5rem] border border-white/70 bg-white/75 px-3 py-3 shadow-[0_24px_80px_rgba(30,41,100,.09)] backdrop-blur-2xl sm:min-h-[76px] sm:rounded-[1.75rem] sm:px-6">
                     <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3 sm:gap-4">
                         <span class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-xl font-black text-white shadow-xl shadow-violet-500/25 sm:h-[52px] sm:w-[52px] sm:text-2xl">
                             <span class="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.42),transparent_38%)]"></span>
@@ -556,28 +802,32 @@
                 </div>
             </header>
 
-            <section class="mx-auto max-w-[1440px] pt-7 sm:pt-12 lg:pt-16">
-                <div class="mx-auto max-w-5xl text-center">
+            <section class="mx-auto w-full max-w-[1440px] pt-6 sm:pt-12 lg:pt-16">
+                <div class="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(420px,0.78fr)] lg:items-center xl:gap-10">
+                <div class="mx-auto w-full max-w-5xl text-center lg:mx-0 lg:max-w-3xl lg:text-left">
                     <div class="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-white/80 px-3.5 py-2 text-xs font-semibold text-blue-700 shadow-sm shadow-blue-900/5 backdrop-blur-xl sm:px-4 sm:text-sm">
                         <span class="text-violet-600">✦</span>
                         BON Business OS
                     </div>
 
-                    <h1 class="mx-auto mt-4 max-w-5xl text-[31px] font-black leading-[1.08] tracking-[-0.035em] text-[#070B1F] sm:mt-6 sm:text-[60px] sm:tracking-[-0.055em] lg:text-[76px]">
-                        Управлявай <span class="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">видимостта</span>, финансите и <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-transparent">растежа</span> на бизнеса си от едно място.
+                    <h1 class="bon-home-title mx-auto mt-4 max-w-full text-[28px] font-black leading-[1.1] tracking-tight text-[#070B1F] sm:mt-6 sm:max-w-5xl sm:text-[60px] sm:tracking-[-0.055em] lg:mx-0 lg:text-[64px] xl:text-[74px]">
+                        BON помага на бизнеси да намират <span class="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">решения</span>, хора и инструменти за <span class="bg-gradient-to-r from-fuchsia-500 to-pink-500 bg-clip-text text-transparent">растеж</span>.
                     </h1>
 
-                    <p class="mx-auto mt-4 max-w-3xl text-[15px] leading-7 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8">
-                        BON помага на локалните бизнеси да изградят по-силно онлайн присъствие, да следят ключови показатели,
-                        да подобряват репутацията си и да взимат по-добри решения за растеж.
+                    <p class="bon-home-subtitle mx-auto mt-4 max-w-full text-[15px] leading-7 text-slate-600 sm:mt-6 sm:max-w-3xl sm:text-xl sm:leading-8 lg:mx-0">
+                        Платформа за бизнеси, фрийлансъри и потребители — с инструменти, консултации, задачи, профили,
+                        резервации и възможности за развитие.
                     </p>
 
-                    <div class="mt-6 flex flex-col justify-center gap-3 sm:mt-8 sm:flex-row">
+                    <div class="bon-home-actions mt-6 flex flex-col justify-center gap-3 sm:mt-8 sm:flex-row lg:justify-start">
                         <a href="{{ route('business.landing') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'home_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 sm:w-auto">
-                            Добави своя бизнес
+                            Започни като бизнес
                         </a>
-                        <a href="{{ route('plans') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
-                            Виж плановете
+                        <a href="{{ route('register') }}" onclick="window.trackBonEvent('freelancer_registration_start', { source: 'home_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
+                            Стани фрийлансър
+                        </a>
+                        <a href="{{ route('search') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
+                            Намери услуга
                         </a>
                     </div>
 
@@ -585,31 +835,9 @@
                         Виж инструментите в BON →
                     </a>
 
-                    <form action="{{ route('search') }}" method="GET" class="mx-auto mt-7 grid max-w-4xl gap-3 rounded-[1.5rem] border border-white/80 bg-white/80 p-3 text-left shadow-2xl shadow-blue-900/5 backdrop-blur-2xl sm:mt-9 sm:grid-cols-[1fr_0.8fr_0.8fr_auto] sm:items-end">
-                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
-                            Услуга, име или специалист
-                            <input name="q" placeholder="фризьор, уеб дизайн, салон..." class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
-                        </label>
-                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
-                            Град
-                            <input name="city" placeholder="София" class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
-                        </label>
-                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
-                            Категория
-                            <input name="category" list="bon-home-category-options" placeholder="Избери или напиши категория" class="min-h-12 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
-                            <datalist id="bon-home-category-options">
-                                @foreach($smartCategories as $category)
-                                    <option value="{{ $category }}">
-                                @endforeach
-                            </datalist>
-                        </label>
-                        <button type="submit" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5">
-                            Търси
-                        </button>
-                    </form>
                 </div>
 
-                <div class="relative mx-auto mt-3 max-w-full overflow-hidden sm:mt-12 sm:max-w-5xl">
+                <div class="bon-home-orb-wrap relative mx-auto mt-4 w-full max-w-full overflow-hidden sm:mt-12 sm:max-w-5xl lg:mx-0 lg:mt-0 lg:max-w-[640px] lg:justify-self-end">
                     <div class="bon-connection-line bon-connection-line-left hidden lg:block"></div>
                     <div class="bon-connection-line bon-connection-line-right hidden lg:block"></div>
                     <div class="bon-connection-dot left-[calc(50%_-_176px)] hidden bg-blue-400 shadow-lg shadow-blue-400/40 lg:block"></div>
@@ -623,39 +851,30 @@
                     <div class="bon-orbit-line hidden lg:block" style="right: 18%; top: 74%; width: 24%; transform: rotate(12deg); background: linear-gradient(90deg, rgba(34,211,238,.04), rgba(236,72,153,.34), rgba(236,72,153,.08));"></div>
 
                     <div class="bon-orbit-card left-0 top-3 hidden lg:flex" style="animation-delay: -0.3s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-blue-600 to-cyan-400">↗</span>
+                        <span class="bon-orbit-icon bg-gradient-to-br from-blue-600 to-cyan-400">B</span>
                         <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Нови клиенти</span>
-                            <span class="block text-xs font-semibold text-slate-500">повече интерес</span>
+                            <span class="block text-sm font-black text-[#070B1F]">Businesses</span>
+                            <span class="block text-xs font-semibold text-slate-500">profiles & growth</span>
                         </span>
                         <span class="bon-orbit-status bg-emerald-400"></span>
                     </div>
 
                     <div class="bon-orbit-card left-10 top-[38%] hidden lg:flex" style="animation-delay: -1.4s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-sky-500 to-blue-600">✉</span>
+                        <span class="bon-orbit-icon bg-gradient-to-br from-sky-500 to-blue-600">F</span>
                         <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Запитвания</span>
-                            <span class="block text-xs font-semibold text-slate-500">реални сигнали</span>
+                            <span class="block text-sm font-black text-[#070B1F]">Freelancers</span>
+                            <span class="block text-xs font-semibold text-slate-500">talent network</span>
                         </span>
                         <span class="bon-orbit-status bg-blue-400"></span>
                     </div>
 
                     <div class="bon-orbit-card bottom-12 left-4 hidden lg:flex" style="animation-delay: -2.1s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-violet-500 to-blue-500">◌</span>
+                        <span class="bon-orbit-icon bg-gradient-to-br from-violet-500 to-blue-500">U</span>
                         <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Профилна видимост</span>
-                            <span class="block text-xs font-semibold text-slate-500">ясно представяне</span>
+                            <span class="block text-sm font-black text-[#070B1F]">Users</span>
+                            <span class="block text-xs font-semibold text-slate-500">requests & reviews</span>
                         </span>
                         <span class="bon-orbit-status bg-violet-400"></span>
-                    </div>
-
-                    <div class="bon-orbit-card left-[18%] top-[14%] hidden xl:flex" style="animation-delay: -3s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-cyan-400 to-emerald-400">✓</span>
-                        <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Проверен бизнес</span>
-                            <span class="block text-xs font-semibold text-slate-500">доверие</span>
-                        </span>
-                        <span class="bon-orbit-status bg-emerald-400"></span>
                     </div>
 
                     <div class="bon-globe-stage bon-float">
@@ -666,55 +885,151 @@
                         <div class="bon-globe-ring bon-globe-ring-outer"></div>
                         <div class="bon-globe-ring bon-globe-ring-inner"></div>
                         <div class="bon-globe-core">
+                            <span class="bon-globe-network" aria-hidden="true">
+                                <span class="bon-globe-link" style="left: 18%; top: 31%; width: 50%; transform: rotate(18deg);"></span>
+                                <span class="bon-globe-link" style="left: 25%; top: 62%; width: 52%; transform: rotate(-22deg);"></span>
+                                <span class="bon-globe-link" style="left: 32%; top: 18%; width: 34%; transform: rotate(74deg);"></span>
+                                <span class="bon-globe-link" style="left: 50%; top: 28%; width: 32%; transform: rotate(116deg);"></span>
+                                <span class="bon-globe-link" style="left: 18%; top: 50%; width: 58%; transform: rotate(0deg);"></span>
+                                <span class="bon-globe-node" style="left: 16%; top: 28%; animation-delay: -.2s;"></span>
+                                <span class="bon-globe-node" style="left: 48%; top: 16%; animation-delay: -1.1s;"></span>
+                                <span class="bon-globe-node" style="left: 72%; top: 36%; animation-delay: -2s;"></span>
+                                <span class="bon-globe-node" style="left: 26%; top: 64%; animation-delay: -2.7s;"></span>
+                                <span class="bon-globe-node" style="left: 62%; top: 72%; animation-delay: -3.4s;"></span>
+                            </span>
                             <span class="bon-globe-letter">B</span>
                         </div>
                     </div>
 
                     <div class="bon-orbit-card right-0 top-6 hidden lg:flex" style="animation-delay: -0.8s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-fuchsia-500 to-pink-500">★</span>
+                        <span class="bon-orbit-icon bg-gradient-to-br from-fuchsia-500 to-pink-500">T</span>
                         <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Premium позициониране</span>
-                            <span class="block text-xs font-semibold text-slate-500">по-силна видимост</span>
+                            <span class="block text-sm font-black text-[#070B1F]">Tools</span>
+                            <span class="block text-xs font-semibold text-slate-500">insights & reports</span>
                         </span>
                         <span class="bon-orbit-status bg-pink-400"></span>
                     </div>
 
                     <div class="bon-orbit-card right-10 top-[39%] hidden lg:flex" style="animation-delay: -1.8s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-violet-600 to-fuchsia-500">⌁</span>
+                        <span class="bon-orbit-icon bg-gradient-to-br from-violet-600 to-fuchsia-500">O</span>
                         <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Бизнес анализ</span>
-                            <span class="block text-xs font-semibold text-slate-500">ключови показатели</span>
+                            <span class="block text-sm font-black text-[#070B1F]">Opportunities</span>
+                            <span class="block text-xs font-semibold text-slate-500">tasks & growth</span>
                         </span>
                         <span class="bon-orbit-status bg-violet-400"></span>
                     </div>
+                </div>
 
-                    <div class="bon-orbit-card bottom-14 right-4 hidden lg:flex" style="animation-delay: -2.7s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-pink-500 to-rose-500">☎</span>
-                        <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Повече обаждания</span>
-                            <span class="block text-xs font-semibold text-slate-500">по-лесен контакт</span>
-                        </span>
-                        <span class="bon-orbit-status bg-rose-400"></span>
-                    </div>
-
-                    <div class="bon-orbit-card right-[18%] top-[15%] hidden xl:flex" style="animation-delay: -3.4s;">
-                        <span class="bon-orbit-icon bg-gradient-to-br from-cyan-400 to-blue-500">↗</span>
-                        <span>
-                            <span class="block text-sm font-black text-[#070B1F]">Месечен доклад</span>
-                            <span class="block text-xs font-semibold text-slate-500">ясни следващи стъпки</span>
-                        </span>
-                        <span class="bon-orbit-status bg-cyan-300"></span>
-                    </div>
+                <div class="bon-home-mobile-chips mx-auto mt-4 grid max-w-md grid-cols-2 gap-2 lg:hidden">
+                    @foreach ([
+                        ['label' => 'Businesses', 'detail' => 'Profiles & growth', 'accent' => 'from-blue-600 to-cyan-400'],
+                        ['label' => 'Freelancers', 'detail' => 'Talent network', 'accent' => 'from-sky-500 to-blue-600'],
+                        ['label' => 'Users', 'detail' => 'Requests & reviews', 'accent' => 'from-violet-500 to-blue-500'],
+                        ['label' => 'Tools', 'detail' => 'Insights & reports', 'accent' => 'from-fuchsia-500 to-pink-500'],
+                        ['label' => 'Opportunities', 'detail' => 'Tasks & growth', 'accent' => 'from-violet-600 to-fuchsia-500'],
+                    ] as $chip)
+                        <div class="flex min-h-14 items-center gap-2 rounded-2xl border border-white/70 bg-white/76 px-3 py-2 text-left shadow-xl shadow-blue-900/5 backdrop-blur-xl">
+                            <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br {{ $chip['accent'] }}"></span>
+                            <span>
+                                <span class="block text-xs font-black leading-4 text-slate-700">{{ $chip['label'] }}</span>
+                                <span class="block text-[11px] font-semibold leading-4 text-slate-500">{{ $chip['detail'] }}</span>
+                            </span>
+                        </div>
+                    @endforeach
+                </div>
                 </div>
             </section>
 
-            <section id="bon-tools" class="mx-auto mt-9 max-w-[1440px] sm:mt-16">
+            <section id="bon-search" class="mx-auto mt-8 w-full max-w-[1180px] sm:mt-12">
+                <div class="rounded-[1.65rem] border border-white/10 bg-white/[0.06] p-4 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6 lg:p-7">
+                    <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                            <p class="text-xs font-black uppercase tracking-[0.22em] text-blue-300">Search layer</p>
+                            <h2 class="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">Намери профил, услуга или специалист в BON.</h2>
+                        </div>
+                        <p class="max-w-md text-sm leading-6 text-slate-400">
+                            Търсачката е вход към мрежата, но BON остава платформа за инструменти, доверие и растеж.
+                        </p>
+                    </div>
+
+                    <form action="{{ route('search') }}" method="GET" class="bon-home-search grid gap-3 text-left sm:grid-cols-[1fr_0.75fr_0.85fr_auto] sm:items-end">
+                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                            Услуга, име или специалист
+                            <input name="q" placeholder="фризьор, уеб дизайн, салон..." class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
+                        </label>
+                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                            Град
+                            <input name="city" placeholder="София" class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
+                        </label>
+                        <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                            Категория
+                            <input name="category" list="bon-home-category-options" placeholder="Избери или напиши категория" class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
+                            <datalist id="bon-home-category-options">
+                                @foreach($smartCategories as $category)
+                                    <option value="{{ $category }}">
+                                @endforeach
+                            </datalist>
+                        </label>
+                        <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5">
+                            Намери в BON
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="mx-auto mt-7 grid w-full max-w-[1440px] gap-3 sm:mt-10 md:grid-cols-3">
+                @foreach ([
+                    ['label' => 'За бизнеси', 'icon' => 'B', 'title' => 'Операционна система за видимост и растеж.', 'text' => 'Инструменти, диагностика, статистика, задачи, резервации, отзиви и платени опции за по-силен профил.', 'href' => route('business.landing'), 'cta' => 'Виж бизнес платформата', 'accent' => 'from-blue-500 to-cyan-400'],
+                    ['label' => 'За фрийлансъри', 'icon' => 'F', 'title' => 'Професионален профил, портфолио и нови възможности.', 'text' => 'Умения, проекти, оферти, кандидатури и доверие, подредени в работещ фриланс профил.', 'href' => route('bon.freelancers'), 'cta' => 'Виж фрийланс мрежата', 'accent' => 'from-violet-500 to-fuchsia-500'],
+                    ['label' => 'За потребители', 'icon' => 'U', 'title' => 'По-лесен път до правилната услуга.', 'text' => 'Търсене, любими, запитвания, резервации и отзиви без усещане за хаотичен каталог.', 'href' => route('search'), 'cta' => 'Намери подходящ профил', 'accent' => 'from-fuchsia-500 to-pink-500'],
+                ] as $audience)
+                    <article class="group rounded-[1.45rem] border border-white/10 bg-white/[0.06] p-4 shadow-2xl shadow-black/20 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-400/30 sm:rounded-[2rem] sm:p-6">
+                        <div class="flex items-center gap-3">
+                            <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br {{ $audience['accent'] }} text-sm font-black text-white shadow-lg shadow-violet-500/30">{{ $audience['icon'] }}</span>
+                            <span class="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{{ $audience['label'] }}</span>
+                        </div>
+                        <h2 class="mt-4 text-xl font-black leading-tight tracking-tight text-white sm:text-2xl">{{ $audience['title'] }}</h2>
+                        <p class="mt-3 text-sm leading-6 text-slate-400 sm:text-[15px] sm:leading-7">{{ $audience['text'] }}</p>
+                        <a href="{{ $audience['href'] }}" class="mt-5 inline-flex items-center gap-2 text-sm font-black text-blue-300 transition group-hover:text-violet-200">
+                            {{ $audience['cta'] }}
+                            <span class="transition group-hover:translate-x-1">→</span>
+                        </a>
+                    </article>
+                @endforeach
+            </section>
+
+            <section id="bon-tools" class="mx-auto mt-9 w-full max-w-[1440px] sm:mt-16">
                 <div class="max-w-3xl">
-                    <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">BON Tools</p>
-                    <h2 class="mt-3 text-[26px] font-black leading-tight tracking-tight sm:text-5xl">Инструменти в BON за анализ, видимост, доверие и растеж.</h2>
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Business tools</p>
+                    <h2 class="mt-3 text-[26px] font-black leading-tight tracking-tight sm:text-5xl">BON е работна система за решения, не каталог.</h2>
                     <p class="mt-3 max-w-3xl text-[15px] leading-7 text-slate-600 sm:mt-4 sm:text-base sm:leading-8">
-                        Практични бизнес инструменти, които помагат да виждаш числата, профила, репутацията и следващите действия по-ясно.
+                        Бизнесът получава инструменти за анализ, стратегия, задачи, фрийлансъри, резервации, статистика и платени опции за растеж.
                     </p>
+                </div>
+
+                <div class="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                    @foreach ([
+                        ['title' => 'Бизнес диагностика', 'text' => 'Подрежда проблема, причините и следващите действия, преди да харчиш време и бюджет.', 'accent' => 'from-blue-500 to-cyan-400'],
+                        ['title' => 'Стратегия за развитие', 'text' => 'Growth насоки за профил, оферта, комуникация, снимки, услуги и видимост.', 'accent' => 'from-violet-500 to-fuchsia-500'],
+                        ['title' => 'Консултации', 'text' => 'Платени разговори и насоки от BON за по-добро позициониране и повече възможности.', 'accent' => 'from-fuchsia-500 to-pink-500'],
+                        ['title' => 'Анализ приходи/разходи', 'text' => 'Финансов поглед върху маржове, разходи, персонал, break-even и бизнес здраве.', 'accent' => 'from-cyan-400 to-blue-500'],
+                        ['title' => 'Публикуване на задачи', 'text' => 'Бизнесите могат да публикуват задачи към специалисти и да получават кандидатури.', 'accent' => 'from-blue-600 to-violet-600'],
+                        ['title' => 'Намиране на фрийлансъри', 'text' => 'Достъп до профили с умения, портфолио, доверие, отзиви и кандидатури.', 'accent' => 'from-violet-600 to-purple-500'],
+                        ['title' => 'Статистика', 'text' => 'Преглеждания, кликове, запитвания, репутация и сигнали за подобрение.', 'accent' => 'from-emerald-400 to-cyan-400'],
+                        ['title' => 'Резервации / booking', 'text' => 'Заключена premium/add-on функция за бизнеси, които работят с часове и резервации.', 'accent' => 'from-pink-500 to-rose-500'],
+                        ['title' => 'Абонамент / план', 'text' => 'Standard и Premium отключват различни нива на видимост, инструменти и подкрепа.', 'accent' => 'from-blue-500 to-fuchsia-500'],
+                    ] as $tool)
+                        <article class="rounded-[1.45rem] border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-400/30 sm:rounded-[1.75rem]">
+                            <span class="mb-4 block h-1.5 w-14 rounded-full bg-gradient-to-r {{ $tool['accent'] }}"></span>
+                            <h3 class="text-lg font-black tracking-tight text-white">{{ $tool['title'] }}</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-400">{{ $tool['text'] }}</p>
+                        </article>
+                    @endforeach
+                </div>
+
+                <div class="mt-8 max-w-3xl">
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-300">Interactive tools</p>
+                    <h3 class="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">Бързи инструменти, които показват как работи BON.</h3>
                 </div>
 
                 <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -830,15 +1145,107 @@
                 @endforeach
             </section>
 
-            <section id="recommended-specialists" class="mx-auto mt-12 max-w-[1440px] sm:mt-16">
+            <section class="mx-auto mt-12 w-full max-w-[1440px] sm:mt-16">
+                <div class="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-300">Freelancer Network</p>
+                        <h2 class="mt-3 text-2xl font-black tracking-tight text-white sm:text-5xl">Мрежа от специалисти, които могат да изпълнят правилната задача.</h2>
+                        <p class="mt-4 text-base leading-8 text-slate-400">
+                            Фрийлансърите в BON имат професионален профил, портфолио, умения, кандидатури, отзиви и достъп до задачи от бизнеси.
+                        </p>
+                        <a href="{{ route('bon.freelancers') }}" class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/12 bg-white/[0.06] px-6 text-sm font-black text-slate-100 transition hover:-translate-y-0.5 hover:border-violet-300/40 sm:w-auto">
+                            Виж фрийланс мрежата
+                        </a>
+                    </div>
+
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        @foreach ([
+                            ['title' => 'Проекти / Портфолио', 'text' => 'Завършени работи, снимки, линкове, резултати и примери от реална работа.'],
+                            ['title' => 'Кандидатури', 'text' => 'Оферти към задачи с цена, срок, съобщение и статус.'],
+                            ['title' => 'Умения', 'text' => 'Категории, услуги, технологии, стил, опит и начин на работа.'],
+                            ['title' => 'Отзиви', 'text' => 'Рейтинг, доверие, завършени проекти и сигнали за качество.'],
+                            ['title' => 'Статистика', 'text' => 'Преглеждания, покани, кликове, кандидатури и приети проекти.'],
+                            ['title' => 'Намери задачи', 'text' => 'Достъп до публикувани задачи от бизнеси, които търсят изпълнение.'],
+                        ] as $item)
+                            <article class="rounded-[1.45rem] border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl">
+                                <h3 class="text-lg font-black text-white">{{ $item['title'] }}</h3>
+                                <p class="mt-2 text-sm leading-6 text-slate-400">{{ $item['text'] }}</p>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+            <section class="mx-auto mt-12 w-full max-w-[1440px] rounded-[1.65rem] border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:mt-16 sm:rounded-[2rem] sm:p-8">
+                <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-300">Consumer experience</p>
+                        <h2 class="mt-3 text-2xl font-black tracking-tight text-white sm:text-5xl">Потребителите стигат по-лесно до правилния бизнес.</h2>
+                        <p class="mt-4 text-base leading-8 text-slate-400">
+                            Търсенето е само вход. След него BON помага с профили, доверие, любими, запитвания, резервации и отзиви.
+                        </p>
+                    </div>
+
+                    <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                        @foreach ([
+                            'Търсене на бизнеси',
+                            'Любими профили',
+                            'Резервации и запитвания',
+                            'Отзиви и рейтинг',
+                            'Подходяща услуга',
+                            'Проверени профили',
+                        ] as $item)
+                            <div class="flex min-h-20 items-center gap-3 rounded-3xl border border-white/10 bg-[#071326]/80 p-4">
+                                <span class="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-blue-400 to-fuchsia-400 shadow-lg shadow-blue-500/30"></span>
+                                <span class="text-sm font-black text-slate-100">{{ $item }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+            <section class="mx-auto mt-12 w-full max-w-[1440px] sm:mt-16">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div class="max-w-3xl">
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-300">Consultations & paid options</p>
+                        <h2 class="mt-3 text-2xl font-black tracking-tight text-white sm:text-5xl">Допълнителна помощ, когато бизнесът иска по-бърз напредък.</h2>
+                        <p class="mt-4 text-base leading-8 text-slate-400">
+                            Платените опции са отделни от основната логика: визуално показваме възможностите, без да създаваме нов checkout flow.
+                        </p>
+                    </div>
+                    <a href="{{ route('plans') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 sm:w-auto">
+                        Виж планове и опции
+                    </a>
+                </div>
+
+                <div class="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    @foreach ([
+                        ['title' => 'Бизнес консултация', 'text' => 'Разговор за профил, оферта, видимост и следващи действия.'],
+                        ['title' => 'Growth пакет', 'text' => 'Структуриран план за подобрение на представянето и повече възможности.'],
+                        ['title' => 'Help / Setup пакет', 'text' => 'BON помага с подреждане на профил, снимки, услуги и описание.'],
+                        ['title' => 'Premium visibility', 'text' => 'По-силно позициониране, badge, статистика и повече инструменти.'],
+                        ['title' => 'Advanced tools', 'text' => 'Разширени доклади, анализ, препоръки и business health сигнали.'],
+                        ['title' => 'Booking tools', 'text' => 'Резервации и часове като add-on за бизнеси, за които има смисъл.'],
+                        ['title' => 'Subscription plans', 'text' => 'Standard и Premium като основа за бизнес присъствие и инструменти.'],
+                        ['title' => 'Early partner support', 'text' => 'Приоритетна помощ за бизнеси в beta периода на BON.'],
+                    ] as $option)
+                        <article class="rounded-[1.45rem] border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl">
+                            <h3 class="text-lg font-black text-white">{{ $option['title'] }}</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-400">{{ $option['text'] }}</p>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+
+            <section id="recommended-specialists" class="mx-auto mt-12 w-full max-w-[1440px] sm:mt-16">
                 <div class="rounded-[2rem] border border-white/70 bg-white/75 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:p-7 lg:p-8">
                     <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Smart BON Home</p>
-                            <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-4xl">Препоръчани специалисти според нуждата.</h2>
+                            <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Network intelligence</p>
+                            <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-4xl">BON подрежда профили и задачи според контекста.</h2>
                             <p class="mt-4 max-w-3xl text-base leading-8 text-slate-600">
-                                Избери категория и виж доверени бизнеси, фрийлансъри и активни обяви в същия контекст.
-                                Подреждането дава предимство на Premium профили, Trust Score, рейтинг, завършени проекти и активност.
+                                Категорията е само сигнал. BON комбинира профили, задачи, Trust Score, рейтинг, активност и Premium видимост,
+                                за да покаже по-подходящи следващи възможности.
                             </p>
                         </div>
 
@@ -955,7 +1362,7 @@
 
                         <div class="rounded-[1.75rem] border border-white/80 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-6 text-white shadow-2xl shadow-violet-500/20">
                             <p class="text-sm font-black uppercase tracking-[0.22em] text-white/65">Публикувай нужда</p>
-                            <h3 class="mt-3 text-2xl font-black">Искаш предложения от подходящи профили?</h3>
+                            <h3 class="mt-3 text-2xl font-black">Искаш BON да подаде нуждата към правилните профили?</h3>
                             <p class="mt-3 text-sm leading-7 text-white/75">
                                 Опиши проекта или нуждата си и BON ще помогне профилите в правилната категория да видят контекста.
                             </p>
@@ -967,7 +1374,7 @@
                 </div>
             </section>
 
-            <section class="mx-auto mt-10 grid max-w-[1440px] gap-6 sm:mt-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <section class="mx-auto mt-10 grid w-full max-w-[1440px] gap-6 sm:mt-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
                 <div>
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Финансов анализ</p>
                     <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Виж реалната печалба, не само оборота.</h2>
@@ -1008,7 +1415,7 @@
                 </div>
             </section>
 
-            <section class="mx-auto mt-10 grid max-w-[1440px] gap-6 sm:mt-14 lg:grid-cols-2">
+            <section class="mx-auto mt-10 grid w-full max-w-[1440px] gap-6 sm:mt-14 lg:grid-cols-2">
                 <article class="rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Business Health Score</p>
                     <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Оценка от 0 до 100 за финансовото здраве.</h2>
@@ -1045,7 +1452,7 @@
                 </article>
             </section>
 
-            <section class="mx-auto mt-10 max-w-[1440px] rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:mt-14 sm:rounded-[2rem] sm:p-8">
+            <section class="mx-auto mt-10 w-full max-w-[1440px] rounded-[1.65rem] border border-white/70 bg-white/76 p-5 shadow-2xl shadow-blue-900/8 backdrop-blur-2xl sm:mt-14 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Репутация и отзиви</p>
@@ -1066,7 +1473,7 @@
                 </div>
             </section>
 
-            <section class="mx-auto mt-10 max-w-[1440px] sm:mt-14">
+            <section class="mx-auto mt-10 w-full max-w-[1440px] sm:mt-14">
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Планове</p>
@@ -1094,15 +1501,23 @@
                 </div>
             </section>
 
-            <section class="mx-auto mt-10 max-w-[1440px] rounded-[1.65rem] border border-white/70 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-5 text-white shadow-2xl shadow-violet-500/20 sm:mt-14 sm:rounded-[2rem] sm:p-8">
+            <section class="mx-auto mt-10 w-full max-w-[1440px] rounded-[1.65rem] border border-white/70 bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 p-5 text-white shadow-2xl shadow-violet-500/20 sm:mt-14 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-white/70">Започни с BON</p>
-                        <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Дай на бизнеса си по-професионално присъствие и по-ясна картина за растеж.</h2>
+                        <h2 class="mt-3 text-2xl font-black tracking-tight sm:text-5xl">Избери своя вход към business operating network.</h2>
                     </div>
-                    <a href="{{ route('business.landing') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'final_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-6 text-sm font-black text-[#070B1F] shadow-xl sm:w-auto">
-                        Добави своя бизнес
-                    </a>
+                    <div class="grid gap-3 sm:grid-cols-3 lg:min-w-[38rem] xl:min-w-[44rem]">
+                        <a href="{{ route('business.landing') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'final_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-5 text-sm font-black text-[#070B1F] shadow-xl">
+                            Създай бизнес профил
+                        </a>
+                        <a href="{{ route('register') }}" onclick="window.trackBonEvent('freelancer_registration_start', { source: 'final_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-5 text-sm font-black text-white backdrop-blur-xl">
+                            Регистрирай се като фрийлансър
+                        </a>
+                        <a href="{{ route('search') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-5 text-sm font-black text-white backdrop-blur-xl">
+                            Намери бизнес
+                        </a>
+                    </div>
                 </div>
             </section>
         </div>
