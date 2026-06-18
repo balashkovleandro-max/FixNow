@@ -19,13 +19,13 @@
             'title' => 'Калкулатор “Колко клиенти ми трябват?”',
             'text' => 'Изчислява колко клиенти или поръчки са нужни на месец, за да покриеш разходите и да постигнеш желаната печалба.',
             'icon' => '◎',
-            'color' => 'from-violet-500 to-purple-500',
+            'color' => 'from-violet-500 to-emerald-400',
         ],
         [
             'title' => 'Visibility Score',
             'text' => 'Показва колко добре е представен бизнесът онлайн — снимки, описание, услуги, градове, отзиви, активност и Premium видимост.',
             'icon' => '◈',
-            'color' => 'from-fuchsia-500 to-pink-500',
+            'color' => 'from-amber-400 to-fuchsia-500',
         ],
         [
             'title' => 'Калкулатор за ценообразуване',
@@ -37,13 +37,13 @@
             'title' => 'Репутация и отзиви',
             'text' => 'Помага на бизнеса да събира повече отзиви, да следи средния рейтинг и да разбира какво влияе на доверието.',
             'icon' => '✦',
-            'color' => 'from-blue-600 to-violet-600',
+            'color' => 'from-cyan-400 to-violet-500',
         ],
         [
             'title' => 'Месечен бизнес доклад',
             'text' => 'Обобщава резултатите за месеца — видимост, профил, финанси, отзиви и конкретни следващи стъпки.',
             'icon' => '↗',
-            'color' => 'from-violet-600 to-fuchsia-500',
+            'color' => 'from-emerald-400 to-blue-500',
         ],
     ];
 
@@ -142,11 +142,40 @@
         }
 
         .bon-home-aurora {
+            overflow: hidden;
             background:
-                radial-gradient(circle at 50% 0%, rgba(47, 140, 255, .22) 0%, rgba(124, 58, 237, .13) 38%, transparent 64%),
-                radial-gradient(circle at 18% 18%, rgba(59, 130, 246, .15), transparent 34%),
-                radial-gradient(circle at 82% 18%, rgba(217, 70, 239, .14), transparent 34%),
+                radial-gradient(circle at 50% 0%, rgba(47, 140, 255, .24) 0%, rgba(124, 58, 237, .14) 38%, transparent 64%),
+                radial-gradient(circle at 16% 18%, rgba(34, 211, 238, .16), transparent 34%),
+                radial-gradient(circle at 84% 16%, rgba(217, 70, 239, .15), transparent 34%),
+                radial-gradient(circle at 22% 72%, rgba(52, 211, 153, .10), transparent 32%),
+                radial-gradient(circle at 78% 72%, rgba(245, 158, 11, .09), transparent 30%),
                 linear-gradient(180deg, rgba(2, 6, 23, 1) 0%, rgba(6, 16, 31, .98) 54%, rgba(3, 7, 18, 1) 100%);
+        }
+
+        .bon-home-aurora::before,
+        .bon-home-aurora::after {
+            content: "";
+            position: absolute;
+            width: min(34rem, 58vw);
+            height: min(34rem, 58vw);
+            border-radius: 9999px;
+            filter: blur(58px);
+            opacity: .22;
+            pointer-events: none;
+            animation: bon-blob-drift 18s ease-in-out infinite;
+        }
+
+        .bon-home-aurora::before {
+            left: -8%;
+            top: 18%;
+            background: radial-gradient(circle, rgba(34, 211, 238, .64), transparent 62%);
+        }
+
+        .bon-home-aurora::after {
+            right: -10%;
+            top: 42%;
+            background: radial-gradient(circle, rgba(245, 158, 11, .34), rgba(168, 85, 247, .28), transparent 66%);
+            animation-delay: -7s;
         }
 
         .bon-home-shell {
@@ -239,6 +268,93 @@
             box-shadow: 0 24px 80px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .04);
         }
 
+        .bon-home-shell > .relative > section {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .bon-home-shell > .relative > section::before {
+            content: "";
+            position: absolute;
+            inset: -1.75rem;
+            z-index: -1;
+            border-radius: 2rem;
+            pointer-events: none;
+            opacity: .36;
+            background: var(--bon-section-glow, radial-gradient(circle at 50% 0%, rgba(47, 140, 255, .16), transparent 54%));
+        }
+
+        .bon-home-shell > .relative > section:nth-of-type(2) {
+            --bon-section-glow: radial-gradient(circle at 12% 18%, rgba(34, 211, 238, .18), transparent 42%), radial-gradient(circle at 88% 30%, rgba(124, 58, 237, .14), transparent 44%);
+        }
+
+        .bon-home-shell > .relative > section:nth-of-type(3) {
+            --bon-section-glow: radial-gradient(circle at 18% 28%, rgba(52, 211, 153, .14), transparent 42%), radial-gradient(circle at 82% 34%, rgba(34, 211, 238, .12), transparent 40%);
+        }
+
+        .bon-home-shell > .relative > section:nth-of-type(4) {
+            --bon-section-glow: radial-gradient(circle at 12% 28%, rgba(59, 130, 246, .14), transparent 42%), radial-gradient(circle at 88% 36%, rgba(245, 158, 11, .10), transparent 40%);
+        }
+
+        .bon-home-shell > .relative > section:nth-of-type(5) {
+            --bon-section-glow: radial-gradient(circle at 18% 24%, rgba(139, 92, 246, .16), transparent 42%), radial-gradient(circle at 84% 50%, rgba(52, 211, 153, .10), transparent 40%);
+        }
+
+        .bon-home-shell > .relative > section:nth-of-type(6) {
+            --bon-section-glow: radial-gradient(circle at 18% 24%, rgba(245, 158, 11, .12), transparent 42%), radial-gradient(circle at 84% 50%, rgba(34, 211, 238, .12), transparent 40%);
+        }
+
+        .bon-home-shell article,
+        .bon-home-shell button[data-tool-open],
+        .bon-home-stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bon-home-shell article::before,
+        .bon-home-shell button[data-tool-open]::before,
+        .bon-home-stat-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 1.25rem auto;
+            height: 2px;
+            border-radius: 9999px;
+            background: var(--bon-card-gradient, linear-gradient(90deg, #38bdf8, #8b5cf6, #d946ef));
+            opacity: .78;
+            pointer-events: none;
+        }
+
+        .bon-home-shell article:nth-of-type(4n+1),
+        .bon-home-shell button[data-tool-open]:nth-of-type(4n+1),
+        .bon-home-stat-card:nth-child(4n+1) {
+            --bon-card-gradient: linear-gradient(90deg, #22d3ee, #3b82f6);
+        }
+
+        .bon-home-shell article:nth-of-type(4n+2),
+        .bon-home-shell button[data-tool-open]:nth-of-type(4n+2),
+        .bon-home-stat-card:nth-child(4n+2) {
+            --bon-card-gradient: linear-gradient(90deg, #8b5cf6, #34d399);
+        }
+
+        .bon-home-shell article:nth-of-type(4n+3),
+        .bon-home-shell button[data-tool-open]:nth-of-type(4n+3),
+        .bon-home-stat-card:nth-child(4n+3) {
+            --bon-card-gradient: linear-gradient(90deg, #f59e0b, #fb7185);
+        }
+
+        .bon-home-shell article:nth-of-type(4n+4),
+        .bon-home-shell button[data-tool-open]:nth-of-type(4n+4),
+        .bon-home-stat-card:nth-child(4n+4) {
+            --bon-card-gradient: linear-gradient(90deg, #34d399, #22d3ee, #a855f7);
+        }
+
+        .bon-home-shell article:hover,
+        .bon-home-shell button[data-tool-open]:hover,
+        .bon-home-stat-card:hover {
+            border-color: rgba(125, 211, 252, .35) !important;
+            box-shadow: 0 28px 90px rgba(0, 0, 0, .30), 0 0 36px rgba(47, 140, 255, .10), inset 0 1px 0 rgba(255, 255, 255, .06) !important;
+        }
+
         .bon-home-title {
             overflow-wrap: break-word;
             text-wrap: balance;
@@ -255,6 +371,58 @@
         .bon-home-shell input,
         .bon-home-shell select {
             touch-action: manipulation;
+        }
+
+        .bon-home-shell a[class*="rounded-2xl"],
+        .bon-home-shell button[class*="rounded-2xl"] {
+            transition-duration: 240ms;
+            transition-timing-function: cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .bon-home-shell a[class*="bg-gradient-to-r"]:hover,
+        .bon-home-shell button[class*="bg-gradient-to-r"]:hover,
+        .bon-home-shell a[class*="bg-white"]:hover,
+        .bon-home-shell button[class*="bg-white"]:hover {
+            filter: saturate(1.08);
+            transform: translateY(-2px);
+        }
+
+        .bon-icon-pulse {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .bon-icon-pulse::after {
+            content: "";
+            position: absolute;
+            inset: -4px;
+            z-index: -1;
+            border-radius: inherit;
+            background: inherit;
+            opacity: .34;
+            filter: blur(10px);
+            animation: bon-icon-glow 3.8s ease-in-out infinite;
+        }
+
+        .bon-step-card {
+            position: relative;
+        }
+
+        .bon-step-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.08) 38%, transparent 64%);
+            opacity: 0;
+            transform: translateX(-42%);
+            transition: opacity 240ms ease, transform 560ms ease;
+            pointer-events: none;
+        }
+
+        .bon-step-card:hover::after {
+            opacity: 1;
+            transform: translateX(42%);
         }
 
         .bon-category-chip-grid {
@@ -288,6 +456,26 @@
             border-radius: 9999px;
             background: linear-gradient(135deg, #3b82f6, #8b5cf6 58%, #d946ef);
             box-shadow: 0 0 18px rgba(96, 165, 250, .28);
+        }
+
+        .bon-category-chip:nth-child(5n+2)::before {
+            background: linear-gradient(135deg, #22d3ee, #34d399);
+            box-shadow: 0 0 18px rgba(34, 211, 238, .24);
+        }
+
+        .bon-category-chip:nth-child(5n+3)::before {
+            background: linear-gradient(135deg, #8b5cf6, #d946ef);
+            box-shadow: 0 0 18px rgba(168, 85, 247, .24);
+        }
+
+        .bon-category-chip:nth-child(5n+4)::before {
+            background: linear-gradient(135deg, #f59e0b, #fb7185);
+            box-shadow: 0 0 18px rgba(245, 158, 11, .22);
+        }
+
+        .bon-category-chip:nth-child(5n+5)::before {
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            box-shadow: 0 0 18px rgba(56, 189, 248, .22);
         }
 
         .bon-category-chip:hover {
@@ -615,6 +803,16 @@
             50% { opacity: 1; transform: scale(1.18); }
         }
 
+        @keyframes bon-blob-drift {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(2.2rem, -1.4rem, 0) scale(1.08); }
+        }
+
+        @keyframes bon-icon-glow {
+            0%, 100% { opacity: .22; transform: scale(.96); }
+            50% { opacity: .5; transform: scale(1.08); }
+        }
+
         @media (max-width: 1023px) {
             .bon-globe-stage {
                 height: 290px;
@@ -749,6 +947,14 @@
                 overflow-wrap: anywhere;
             }
 
+            .bon-home-shell a[class*="bg-gradient-to-r"]:hover,
+            .bon-home-shell button[class*="bg-gradient-to-r"]:hover,
+            .bon-home-shell a[class*="bg-white"]:hover,
+            .bon-home-shell button[class*="bg-white"]:hover,
+            .bon-category-chip:hover {
+                transform: none;
+            }
+
             .bon-home-mobile-chips {
                 grid-template-columns: 1fr;
             }
@@ -815,8 +1021,19 @@
             .bon-pulse,
             .bon-globe-ring-outer,
             .bon-globe-ring-inner,
-            .bon-globe-core::before {
+            .bon-globe-core::before,
+            .bon-home-aurora::before,
+            .bon-home-aurora::after,
+            .bon-icon-pulse::after {
                 animation-duration: 12s;
+            }
+
+            .bon-home-aurora::before,
+            .bon-home-aurora::after {
+                width: 15rem;
+                height: 15rem;
+                filter: blur(48px);
+                opacity: .14;
             }
         }
 
@@ -828,8 +1045,16 @@
             .bon-globe-core::before,
             .bon-globe-node,
             .bon-orbit-card,
-            .bon-orbit-line::after {
+            .bon-orbit-line::after,
+            .bon-home-aurora::before,
+            .bon-home-aurora::after,
+            .bon-icon-pulse::after {
                 animation: none;
+            }
+
+            .bon-home-shell *,
+            .bon-step-card::after {
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -875,7 +1100,7 @@
                         <a href="{{ route('register') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('sign_up_start', { source: 'header' })" class="hidden rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-3.5 py-2.5 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:inline-flex sm:px-6 sm:py-3">
                             Регистрация
                         </a>
-                        <details class="group relative lg:hidden">
+                        <details data-mobile-menu class="group relative lg:hidden">
                             <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-slate-700 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition hover:text-blue-600" aria-label="Меню">
                                 <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                     <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
@@ -934,6 +1159,19 @@
                     <a href="#bon-tools" class="mt-4 inline-flex text-sm font-black text-blue-700 transition hover:text-violet-700 sm:mt-5">
                         Виж инструментите в BON →
                     </a>
+
+                    <div class="mt-5 grid gap-2 sm:grid-cols-3 lg:max-w-2xl">
+                        @foreach ([
+                            ['label' => 'Бизнес диагностика', 'accent' => 'from-cyan-400 to-blue-500'],
+                            ['label' => 'Trust профили', 'accent' => 'from-violet-500 to-fuchsia-500'],
+                            ['label' => 'Задачи и растеж', 'accent' => 'from-emerald-400 to-cyan-400'],
+                        ] as $proof)
+                            <div class="flex min-h-11 items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.055] px-3 py-2 text-left shadow-lg shadow-black/10 backdrop-blur-xl">
+                                <span class="bon-icon-pulse h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-br {{ $proof['accent'] }}"></span>
+                                <span class="text-xs font-black text-slate-300">{{ $proof['label'] }}</span>
+                            </div>
+                        @endforeach
+                    </div>
 
                 </div>
 
@@ -1040,6 +1278,28 @@
                 </div>
             </section>
 
+            <section class="mx-auto mt-7 w-full max-w-[1180px] sm:mt-10">
+                <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    @foreach ([
+                        ['label' => 'Видимост', 'value' => 'Profiles', 'text' => 'Профили, снимки, отзиви и сигнали за доверие.', 'icon' => 'V', 'accent' => 'from-cyan-400 to-blue-500'],
+                        ['label' => 'Растеж', 'value' => 'Growth', 'text' => 'Инструменти, препоръки и следващи действия.', 'icon' => 'G', 'accent' => 'from-emerald-400 to-cyan-400'],
+                        ['label' => 'Доверие', 'value' => 'Trust', 'text' => 'Badges, рейтинг и по-добро представяне.', 'icon' => 'T', 'accent' => 'from-violet-500 to-fuchsia-500'],
+                        ['label' => 'Действие', 'value' => 'Ops', 'text' => 'Задачи, консултации, booking и Premium опции.', 'icon' => 'O', 'accent' => 'from-amber-400 to-rose-400'],
+                    ] as $stat)
+                        <article class="bon-home-stat-card rounded-[1.35rem] border border-white/10 bg-white/[0.055] p-4 shadow-2xl shadow-black/20 backdrop-blur-2xl transition hover:-translate-y-1 sm:rounded-[1.75rem] sm:p-5">
+                            <div class="flex items-center gap-3">
+                                <span class="bon-icon-pulse grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br {{ $stat['accent'] }} text-sm font-black text-white shadow-lg shadow-blue-500/20">{{ $stat['icon'] }}</span>
+                                <div>
+                                    <p class="text-[11px] font-black uppercase tracking-[0.18em] text-slate-500">{{ $stat['label'] }}</p>
+                                    <p class="mt-1 text-lg font-black leading-none text-white">{{ $stat['value'] }}</p>
+                                </div>
+                            </div>
+                            <p class="mt-3 text-sm leading-6 text-slate-400">{{ $stat['text'] }}</p>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
+
             <section id="bon-search" class="mx-auto mt-8 w-full max-w-[1180px] sm:mt-12">
                 <div class="rounded-[1.65rem] border border-white/10 bg-white/[0.06] p-4 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6 lg:p-7">
                     <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -1098,11 +1358,11 @@
                 @foreach ([
                     ['label' => 'За бизнеси', 'icon' => 'B', 'title' => 'Операционна система за видимост и растеж.', 'text' => 'Инструменти, диагностика, статистика, задачи, резервации, отзиви и платени опции за по-силен профил.', 'href' => route('business.landing'), 'cta' => 'Виж бизнес платформата', 'accent' => 'from-blue-500 to-cyan-400'],
                     ['label' => 'За фрийлансъри', 'icon' => 'F', 'title' => 'Професионален профил, портфолио и нови възможности.', 'text' => 'Умения, проекти, оферти, кандидатури и доверие, подредени в работещ фриланс профил.', 'href' => route('bon.freelancers'), 'cta' => 'Виж фрийланс мрежата', 'accent' => 'from-violet-500 to-fuchsia-500'],
-                    ['label' => 'За потребители', 'icon' => 'U', 'title' => 'По-лесен път до правилната услуга.', 'text' => 'Търсене, любими, запитвания, резервации и отзиви без усещане за хаотичен каталог.', 'href' => route('search'), 'cta' => 'Намери подходящ профил', 'accent' => 'from-fuchsia-500 to-pink-500'],
+                    ['label' => 'За потребители', 'icon' => 'U', 'title' => 'По-лесен път до правилната услуга.', 'text' => 'Търсене, любими, запитвания, резервации и отзиви без усещане за хаотичен каталог.', 'href' => route('search'), 'cta' => 'Намери подходящ профил', 'accent' => 'from-amber-400 to-cyan-400'],
                 ] as $audience)
                     <article class="group rounded-[1.45rem] border border-white/10 bg-white/[0.06] p-4 shadow-2xl shadow-black/20 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-400/30 sm:rounded-[2rem] sm:p-6">
                         <div class="flex items-center gap-3">
-                            <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br {{ $audience['accent'] }} text-sm font-black text-white shadow-lg shadow-violet-500/30">{{ $audience['icon'] }}</span>
+                            <span class="bon-icon-pulse grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br {{ $audience['accent'] }} text-sm font-black text-white shadow-lg shadow-violet-500/30">{{ $audience['icon'] }}</span>
                             <span class="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{{ $audience['label'] }}</span>
                         </div>
                         <h2 class="mt-4 text-xl font-black leading-tight tracking-tight text-white sm:text-2xl">{{ $audience['title'] }}</h2>
@@ -1113,6 +1373,45 @@
                         </a>
                     </article>
                 @endforeach
+            </section>
+
+            <section id="bon-how" class="mx-auto mt-9 w-full max-w-[1440px] sm:mt-16">
+                <div class="relative overflow-hidden rounded-[1.65rem] border border-white/10 bg-white/[0.055] p-5 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8">
+                    <div class="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-emerald-400/10 blur-3xl"></div>
+                    <div class="pointer-events-none absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl"></div>
+
+                    <div class="relative flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                        <div class="max-w-3xl">
+                            <p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-300">How BON works</p>
+                            <h2 class="mt-3 text-[26px] font-black leading-tight tracking-tight text-white sm:text-5xl">
+                                От профил и доверие до реално действие.
+                            </h2>
+                            <p class="mt-3 text-[15px] leading-7 text-slate-400 sm:text-base sm:leading-8">
+                                BON комбинира публично присъствие, фрийланс мрежа, бизнес инструменти и consumer discovery в един подреден flow.
+                            </p>
+                        </div>
+                        <a href="{{ route('bon.tools') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/12 bg-white/[0.07] px-6 text-sm font-black text-slate-100 shadow-lg shadow-black/10 transition hover:border-cyan-300/40 sm:w-auto">
+                            Виж инструментите
+                        </a>
+                    </div>
+
+                    <div class="relative mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                        @foreach ([
+                            ['step' => '01', 'title' => 'Създай силен профил', 'text' => 'Бизнесът или фрийлансърът подрежда услуги, снимки, портфолио, контакти и доверителни сигнали.', 'accent' => 'from-cyan-400 to-blue-500'],
+                            ['step' => '02', 'title' => 'Добави инструменти', 'text' => 'Активирай анализи, задачи, консултации, статистика, booking и paid options според нуждите.', 'accent' => 'from-violet-500 to-fuchsia-500'],
+                            ['step' => '03', 'title' => 'Покажи доверие', 'text' => 'BON изкарва напред badges, reviews, Trust Score, Premium сигнали и актуална активност.', 'accent' => 'from-emerald-400 to-cyan-400'],
+                            ['step' => '04', 'title' => 'Превърни интереса в действие', 'text' => 'Потребителите изпращат запитвания, бизнесите публикуват задачи, а фрийлансърите кандидатстват по проекти.', 'accent' => 'from-amber-400 to-rose-400'],
+                        ] as $flow)
+                            <article class="bon-step-card rounded-[1.45rem] border border-white/10 bg-[#071326]/80 p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl transition hover:-translate-y-1 sm:rounded-[1.75rem]">
+                                <div class="bon-icon-pulse mb-5 inline-flex h-11 min-w-11 items-center justify-center rounded-2xl bg-gradient-to-br {{ $flow['accent'] }} px-3 text-sm font-black text-white shadow-lg shadow-blue-500/20">
+                                    {{ $flow['step'] }}
+                                </div>
+                                <h3 class="text-lg font-black tracking-tight text-white">{{ $flow['title'] }}</h3>
+                                <p class="mt-3 text-sm leading-6 text-slate-400">{{ $flow['text'] }}</p>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
             </section>
 
             <section id="bon-tools" class="mx-auto mt-9 w-full max-w-[1440px] sm:mt-16">
@@ -1128,16 +1427,16 @@
                     @foreach ([
                         ['title' => 'Бизнес диагностика', 'text' => 'Подрежда проблема, причините и следващите действия, преди да харчиш време и бюджет.', 'accent' => 'from-blue-500 to-cyan-400'],
                         ['title' => 'Стратегия за развитие', 'text' => 'Growth насоки за профил, оферта, комуникация, снимки, услуги и видимост.', 'accent' => 'from-violet-500 to-fuchsia-500'],
-                        ['title' => 'Консултации', 'text' => 'Платени разговори и насоки от BON за по-добро позициониране и повече възможности.', 'accent' => 'from-fuchsia-500 to-pink-500'],
-                        ['title' => 'Анализ приходи/разходи', 'text' => 'Финансов поглед върху маржове, разходи, персонал, break-even и бизнес здраве.', 'accent' => 'from-cyan-400 to-blue-500'],
-                        ['title' => 'Публикуване на задачи', 'text' => 'Бизнесите могат да публикуват задачи към специалисти и да получават кандидатури.', 'accent' => 'from-blue-600 to-violet-600'],
-                        ['title' => 'Намиране на фрийлансъри', 'text' => 'Достъп до профили с умения, портфолио, доверие, отзиви и кандидатури.', 'accent' => 'from-violet-600 to-purple-500'],
+                        ['title' => 'Консултации', 'text' => 'Платени разговори и насоки от BON за по-добро позициониране и повече възможности.', 'accent' => 'from-amber-400 to-fuchsia-500'],
+                        ['title' => 'Анализ приходи/разходи', 'text' => 'Финансов поглед върху маржове, разходи, персонал, break-even и бизнес здраве.', 'accent' => 'from-emerald-400 to-cyan-400'],
+                        ['title' => 'Публикуване на задачи', 'text' => 'Бизнесите могат да публикуват задачи към специалисти и да получават кандидатури.', 'accent' => 'from-amber-400 to-orange-500'],
+                        ['title' => 'Намиране на фрийлансъри', 'text' => 'Достъп до профили с умения, портфолио, доверие, отзиви и кандидатури.', 'accent' => 'from-violet-500 to-emerald-400'],
                         ['title' => 'Статистика', 'text' => 'Преглеждания, кликове, запитвания, репутация и сигнали за подобрение.', 'accent' => 'from-emerald-400 to-cyan-400'],
-                        ['title' => 'Резервации / booking', 'text' => 'Заключена premium/add-on функция за бизнеси, които работят с часове и резервации.', 'accent' => 'from-pink-500 to-rose-500'],
-                        ['title' => 'Абонамент / план', 'text' => 'Standard и Premium отключват различни нива на видимост, инструменти и подкрепа.', 'accent' => 'from-blue-500 to-fuchsia-500'],
+                        ['title' => 'Резервации / booking', 'text' => 'Заключена premium/add-on функция за бизнеси, които работят с часове и резервации.', 'accent' => 'from-amber-400 to-rose-500'],
+                        ['title' => 'Абонамент / план', 'text' => 'Standard и Premium отключват различни нива на видимост, инструменти и подкрепа.', 'accent' => 'from-cyan-400 to-violet-500'],
                     ] as $tool)
                         <article class="rounded-[1.45rem] border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl transition hover:-translate-y-1 hover:border-blue-400/30 sm:rounded-[1.75rem]">
-                            <span class="mb-4 block h-1.5 w-14 rounded-full bg-gradient-to-r {{ $tool['accent'] }}"></span>
+                            <span class="bon-icon-pulse mb-4 block h-1.5 w-14 rounded-full bg-gradient-to-r {{ $tool['accent'] }}"></span>
                             <h3 class="text-lg font-black tracking-tight text-white">{{ $tool['title'] }}</h3>
                             <p class="mt-2 text-sm leading-6 text-slate-400">{{ $tool['text'] }}</p>
                         </article>
@@ -1712,6 +2011,27 @@
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && activeModal) {
                     closeModal(activeModal);
+                }
+            });
+
+            window.addEventListener('pagehide', () => {
+                if (activeModal) {
+                    activeModal.classList.add('hidden');
+                    activeModal.setAttribute('aria-hidden', 'true');
+                    activeModal = null;
+                }
+
+                document.documentElement.classList.remove('bon-modal-open');
+                document.body.classList.remove('bon-modal-open');
+            });
+
+            window.addEventListener('pageshow', () => {
+                const visibleModal = document.querySelector('[data-tool-modal]:not(.hidden)');
+
+                if (!visibleModal) {
+                    activeModal = null;
+                    document.documentElement.classList.remove('bon-modal-open');
+                    document.body.classList.remove('bon-modal-open');
                 }
             });
         });

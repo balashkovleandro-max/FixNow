@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-clip bg-[#020617] font-sans text-slate-50 antialiased">
+<body class="min-h-screen overflow-x-hidden bg-[#020617] font-sans text-slate-50 antialiased">
     <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div class="absolute left-1/2 top-[-28rem] h-[52rem] w-[72rem] -translate-x-1/2 rounded-full bg-blue-500/[0.18] blur-3xl"></div>
         <div class="absolute right-[-16rem] top-48 h-[36rem] w-[36rem] rounded-full bg-pink-500/[0.14] blur-3xl"></div>

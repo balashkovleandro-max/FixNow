@@ -177,18 +177,28 @@
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             document.documentElement.classList.add('overflow-hidden');
+            document.body.classList.add('overflow-hidden');
         };
 
         const close = () => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             document.documentElement.classList.remove('overflow-hidden');
+            document.body.classList.remove('overflow-hidden');
         };
 
         openers.forEach((button) => button.addEventListener('click', () => open(button)));
         closers.forEach((button) => button.addEventListener('click', close));
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && !modal.classList.contains('hidden')) close();
+        });
+
+        window.addEventListener('pagehide', close);
+        window.addEventListener('pageshow', () => {
+            if (modal.classList.contains('hidden')) {
+                document.documentElement.classList.remove('overflow-hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
         });
     })();
 </script>

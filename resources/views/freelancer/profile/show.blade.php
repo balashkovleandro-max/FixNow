@@ -8,10 +8,10 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-    <body class="bon-dark-page min-h-screen overflow-x-clip bg-[#020617] text-white">
+    <body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020617] text-white">
     @include('partials.public-header')
 
-    <main class="relative overflow-x-clip">
+    <main class="relative overflow-x-hidden">
         @php
             $bookingEnabled = (bool) data_get($user, 'booking_enabled', false);
         @endphp

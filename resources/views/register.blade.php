@@ -26,7 +26,7 @@
 </head>
 
 <body class="bon-dark-page antialiased">
-    <main class="relative min-h-screen overflow-x-clip bg-[#020617] text-white">
+    <main class="relative min-h-screen overflow-x-hidden bg-[#020617] text-white">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,.18)_0%,rgba(2,6,23,.82)_42%,rgba(2,6,23,1)_100%)]"></div>
         <div class="bon-auth-grid pointer-events-none absolute inset-0 opacity-[.36]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/22 blur-3xl"></div>

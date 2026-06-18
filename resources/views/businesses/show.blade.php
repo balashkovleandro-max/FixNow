@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="fn-premium-page bon-dark-page min-h-screen overflow-x-clip pb-44 text-white md:pb-28 lg:pb-0">
+<body class="fn-premium-page bon-dark-page min-h-screen overflow-x-hidden pb-44 text-white md:pb-28 lg:pb-0">
     @php
         $businessName = $user->business_name ?: $user->name;
         $businessCategories = collect($user->serviceCategories())

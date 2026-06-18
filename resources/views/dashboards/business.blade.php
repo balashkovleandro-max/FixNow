@@ -7,7 +7,7 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bon-dark-page min-h-screen overflow-x-clip bg-[#020812] pb-24 text-white md:pb-0">
+<body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(47,140,255,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(217,70,239,0.18),transparent_30%),linear-gradient(180deg,#020617,#061426,#020617)]"></div>
 
     @php

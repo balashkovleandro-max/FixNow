@@ -122,7 +122,7 @@
 </head>
 
 <body class="bon-dark-page antialiased">
-    <main class="relative min-h-screen overflow-x-clip bg-[#020617] text-white">
+    <main class="relative min-h-screen overflow-x-hidden bg-[#020617] text-white">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,.18)_0%,rgba(2,6,23,.82)_42%,rgba(2,6,23,1)_100%)]"></div>
         <div class="bon-grid pointer-events-none absolute inset-0 opacity-[.38]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[35rem] w-[35rem] rounded-full bg-blue-400/22 blur-3xl"></div>
@@ -161,7 +161,7 @@
                         <a href="{{ route('register') }}" onclick="window.trackBonEvent('sign_up_start', { source: 'pricing_header' })" class="hidden rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-3.5 py-2.5 text-sm font-bold text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35 sm:inline-flex sm:px-6 sm:py-3">
                             Регистрация
                         </a>
-                        <details class="group relative lg:hidden">
+                        <details data-mobile-menu class="group relative lg:hidden">
                             <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-slate-700 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition hover:text-blue-600" aria-label="Меню">
                                 <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                                     <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>

@@ -44,7 +44,7 @@
             @endauth
         </div>
 
-        <details class="group relative md:hidden">
+        <details data-mobile-menu class="group relative md:hidden">
             <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white shadow-lg shadow-black/20 backdrop-blur-xl transition hover:bg-white/15" aria-label="Меню">
                 <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                     <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>

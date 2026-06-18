@@ -75,3 +75,77 @@ window.addEventListener('appinstalled', () => {
     bonDeferredInstallPrompt = null;
     hideInstallPrompt();
 });
+
+const bonHasVisibleModal = () => {
+    return Boolean(document.querySelector(
+        '[aria-modal="true"]:not(.hidden), [data-tool-modal]:not(.hidden), [data-bon-service-modal]:not(.hidden), [data-growth-modal]:not(.hidden)'
+    ));
+};
+
+const bonUnlockPageScrollIfSafe = () => {
+    if (bonHasVisibleModal()) {
+        return;
+    }
+
+    document.documentElement.classList.remove('bon-modal-open', 'overflow-hidden');
+    document.body.classList.remove('bon-modal-open', 'overflow-hidden');
+
+    if (document.documentElement.style.overflow === 'hidden') {
+        document.documentElement.style.overflow = '';
+    }
+
+    if (document.body.style.overflow === 'hidden') {
+        document.body.style.overflow = '';
+    }
+};
+
+const bonCloseMobileMenus = (except = null) => {
+    document.querySelectorAll('details[data-mobile-menu][open]').forEach((menu) => {
+        if (menu !== except) {
+            menu.open = false;
+        }
+    });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenus = Array.from(document.querySelectorAll('details[data-mobile-menu]'));
+
+    mobileMenus.forEach((menu) => {
+        menu.addEventListener('toggle', () => {
+            if (menu.open) {
+                bonCloseMobileMenus(menu);
+            }
+
+            bonUnlockPageScrollIfSafe();
+        });
+
+        menu.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                menu.open = false;
+                bonUnlockPageScrollIfSafe();
+            });
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        const clickedMenu = event.target.closest?.('details[data-mobile-menu]');
+
+        if (!clickedMenu) {
+            bonCloseMobileMenus();
+            bonUnlockPageScrollIfSafe();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            bonCloseMobileMenus();
+            bonUnlockPageScrollIfSafe();
+        }
+    });
+
+    window.addEventListener('pageshow', bonUnlockPageScrollIfSafe);
+    window.addEventListener('pagehide', () => {
+        bonCloseMobileMenus();
+        bonUnlockPageScrollIfSafe();
+    });
+});

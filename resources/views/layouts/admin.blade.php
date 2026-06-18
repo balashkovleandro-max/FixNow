@@ -7,7 +7,7 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-clip bg-[#050816] text-white antialiased">
+<body class="min-h-screen overflow-x-hidden bg-[#050816] text-white antialiased">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(37,99,235,.24),transparent_32%),radial-gradient(circle_at_84%_12%,rgba(236,72,153,.18),transparent_34%),radial-gradient(circle_at_50%_52%,rgba(124,58,237,.14),transparent_42%),linear-gradient(180deg,#050816_0%,#07111f_58%,#050816_100%)]"></div>
     <div class="pointer-events-none fixed inset-0 -z-10 opacity-[.16]" style="background-image: linear-gradient(to right, rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 72px 72px;"></div>
 

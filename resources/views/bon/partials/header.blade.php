@@ -27,7 +27,7 @@
             </a>
         </div>
 
-        <details class="group relative lg:hidden">
+        <details data-mobile-menu class="group relative lg:hidden">
             <summary class="flex size-11 cursor-pointer list-none items-center justify-center rounded-2xl border border-white/12 bg-white/[0.06] text-white shadow-sm [&::-webkit-details-marker]:hidden" aria-label="Отвори меню">
                 <span class="space-y-1.5">
                     <span class="block h-0.5 w-5 rounded-full bg-white"></span>

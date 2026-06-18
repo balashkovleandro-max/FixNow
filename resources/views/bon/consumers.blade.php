@@ -34,7 +34,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bon-dark-page antialiased">
-    <main class="relative min-h-screen overflow-x-clip text-white">
+    <main class="relative min-h-screen overflow-x-hidden text-white">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,.18)_0%,rgba(2,6,23,.82)_42%,rgba(2,6,23,1)_100%)]"></div>
         <div class="pointer-events-none absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-pink-300/18 blur-3xl"></div>
         <div class="pointer-events-none absolute -right-40 top-20 h-[34rem] w-[34rem] rounded-full bg-violet-400/18 blur-3xl"></div>

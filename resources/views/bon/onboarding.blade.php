@@ -75,7 +75,7 @@
     </style>
 </head>
 <body class="bon-dark-page antialiased">
-    <main class="relative min-h-screen overflow-x-clip text-white">
+    <main class="relative min-h-screen overflow-x-hidden text-white">
         <div class="pointer-events-none absolute -left-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -right-40 top-10 h-[32rem] w-[32rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute left-1/2 top-1/3 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-violet-400/15 blur-3xl"></div>
