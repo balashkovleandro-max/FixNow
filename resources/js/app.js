@@ -82,15 +82,8 @@ const bonHasVisibleModal = () => {
     ));
 };
 
-const bonHasOpenMobileMenu = () => Boolean(document.querySelector('details[data-mobile-menu][open]'));
-
-const bonLockPageScrollForMenu = () => {
-    document.documentElement.classList.add('bon-menu-open');
-    document.body.classList.add('bon-menu-open');
-};
-
 const bonUnlockPageScrollIfSafe = () => {
-    if (bonHasVisibleModal() || bonHasOpenMobileMenu()) {
+    if (bonHasVisibleModal()) {
         return;
     }
 
@@ -115,11 +108,6 @@ const bonCloseMobileMenus = (except = null) => {
 };
 
 const bonSyncMobileMenuScrollLock = () => {
-    if (bonHasOpenMobileMenu()) {
-        bonLockPageScrollForMenu();
-        return;
-    }
-
     bonUnlockPageScrollIfSafe();
 };
 
@@ -130,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menu.addEventListener('toggle', () => {
             if (menu.open) {
                 bonCloseMobileMenus(menu);
-                bonLockPageScrollForMenu();
+                bonUnlockPageScrollIfSafe();
                 return;
             }
 

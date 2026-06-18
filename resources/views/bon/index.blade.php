@@ -861,6 +861,32 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .bon-home-shell {
+                overflow-x: hidden;
+            }
+
+            .bon-home-title {
+                max-width: min(100%, 38rem);
+                font-size: clamp(1.85rem, 7.2vw, 3rem);
+                line-height: 1.12;
+                letter-spacing: 0;
+            }
+
+            .bon-home-subtitle {
+                max-width: min(100%, 35rem);
+                line-height: 1.65;
+            }
+
+            .bon-home-actions {
+                gap: .75rem;
+            }
+
+            .bon-home-actions a {
+                min-height: 3.1rem;
+            }
+        }
+
         @media (max-width: 640px) {
             .bon-home-shell {
                 max-width: 100vw;
