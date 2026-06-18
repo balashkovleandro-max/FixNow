@@ -358,44 +358,80 @@
     .bon-dark-page [class*="bg-slate-50"],
     .bon-dark-page [class*="bg-slate-100"],
     .bon-dark-page [class*="bg-slate-200"],
+    .bon-dark-page [class*="bg-gray-"],
+    .bon-dark-page [class*="bg-zinc-"],
+    .bon-dark-page [class*="bg-neutral-"],
+    .bon-dark-page [class*="bg-stone-"],
     .bon-dark-page [class*="bg-blue-50"],
     .bon-dark-page [class*="bg-violet-50"],
     .bon-dark-page [class*="bg-fuchsia-50"],
     .bon-dark-page [class*="bg-cyan-50"],
     .bon-dark-page [class*="bg-emerald-50"],
     .bon-dark-page [class*="bg-rose-50"] {
-        background: var(--bon-panel);
+        background: var(--bon-panel) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
     }
 
     .bon-dark-page [class*="border-white/"],
     .bon-dark-page [class*="border-slate-"],
+    .bon-dark-page [class*="border-gray-"],
+    .bon-dark-page [class*="border-zinc-"],
+    .bon-dark-page [class*="border-neutral-"],
     .bon-dark-page [class*="border-blue-"],
     .bon-dark-page [class*="border-violet-"],
     .bon-dark-page [class*="border-fuchsia-"],
     .bon-dark-page [class*="border-emerald-"] {
-        border-color: var(--bon-border);
+        border-color: var(--bon-border) !important;
     }
 
     .bon-dark-page [class*="text-[#070B1F]"],
     .bon-dark-page [class*="text-[#11183B]"],
     .bon-dark-page [class*="text-slate-900"],
-    .bon-dark-page [class*="text-slate-800"] {
-        color: var(--bon-ink);
+    .bon-dark-page [class*="text-slate-800"],
+    .bon-dark-page [class*="text-gray-900"],
+    .bon-dark-page [class*="text-gray-800"],
+    .bon-dark-page [class*="text-zinc-900"],
+    .bon-dark-page [class*="text-neutral-900"] {
+        color: var(--bon-ink) !important;
     }
 
     .bon-dark-page [class*="text-slate-700"],
-    .bon-dark-page [class*="text-slate-600"] {
-        color: #d7deeb;
+    .bon-dark-page [class*="text-slate-600"],
+    .bon-dark-page [class*="text-gray-700"],
+    .bon-dark-page [class*="text-gray-600"],
+    .bon-dark-page [class*="text-zinc-700"],
+    .bon-dark-page [class*="text-neutral-700"] {
+        color: #d7deeb !important;
     }
 
     .bon-dark-page [class*="text-slate-500"],
-    .bon-dark-page [class*="text-slate-400"] {
-        color: var(--bon-muted);
+    .bon-dark-page [class*="text-slate-400"],
+    .bon-dark-page [class*="text-gray-500"],
+    .bon-dark-page [class*="text-gray-400"],
+    .bon-dark-page [class*="text-zinc-500"],
+    .bon-dark-page [class*="text-neutral-500"] {
+        color: var(--bon-muted) !important;
+    }
+
+    .bon-dark-page [class*="text-blue-700"],
+    .bon-dark-page [class*="text-blue-600"] {
+        color: #60a5fa !important;
+    }
+
+    .bon-dark-page [class*="text-violet-700"],
+    .bon-dark-page [class*="text-violet-600"] {
+        color: #c4b5fd !important;
+    }
+
+    .bon-dark-page [class*="text-fuchsia-700"],
+    .bon-dark-page [class*="text-fuchsia-600"],
+    .bon-dark-page [class*="text-pink-600"] {
+        color: #f0abfc !important;
     }
 
     .bon-dark-page [class*="text-orange"],
     .bon-dark-page [class*="text-amber"] {
-        color: #93c5fd;
+        color: #93c5fd !important;
     }
 
     .bon-dark-page [class*="from-orange"],
@@ -408,14 +444,21 @@
     .bon-dark-page input,
     .bon-dark-page select,
     .bon-dark-page textarea {
-        border-color: var(--bon-border);
-        background: rgba(8, 16, 32, 0.86);
-        color: var(--bon-ink);
+        border-color: var(--bon-border) !important;
+        background: rgba(8, 16, 32, 0.88) !important;
+        color: var(--bon-ink) !important;
     }
 
     .bon-dark-page input::placeholder,
     .bon-dark-page textarea::placeholder {
-        color: #6f7c93;
+        color: #7c8aa2 !important;
+    }
+
+    .bon-dark-page input:focus,
+    .bon-dark-page select:focus,
+    .bon-dark-page textarea:focus {
+        border-color: rgba(96, 165, 250, 0.68) !important;
+        box-shadow: 0 0 0 4px rgba(47, 140, 255, 0.14) !important;
     }
 
     .bon-dark-page a,
@@ -458,6 +501,48 @@
         border-color: rgba(96, 165, 250, 0.34);
         background: linear-gradient(135deg, #2563eb 0%, #7c3aed 55%, #ec4899 100%);
         color: #fff;
+    }
+
+    @media (max-width: 640px) {
+        .bon-dark-page,
+        .bon-dark-page main,
+        .bon-home-shell {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .bon-dark-page *,
+        .bon-home-shell * {
+            min-width: 0;
+        }
+
+        .bon-dark-page h1[class*="text-6xl"],
+        .bon-dark-page h2[class*="text-5xl"],
+        .bon-home-shell h1[class*="text-6xl"],
+        .bon-home-shell h2[class*="text-5xl"] {
+            font-size: 2.35rem;
+            line-height: 1.08;
+        }
+
+        .bon-dark-page [class*="rounded-[2rem]"],
+        .bon-home-shell [class*="rounded-[2rem]"] {
+            border-radius: 1.5rem;
+        }
+
+        .bon-dark-page a[class*="min-h-12"],
+        .bon-dark-page button[class*="min-h-12"],
+        .bon-home-shell a[class*="min-h-12"],
+        .bon-home-shell button[class*="min-h-12"] {
+            width: 100%;
+            min-height: 3rem;
+        }
+
+        .bon-dark-page [class*="px-8"],
+        .bon-home-shell [class*="px-8"] {
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+        }
     }
 }
 

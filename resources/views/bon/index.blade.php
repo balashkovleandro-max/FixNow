@@ -835,7 +835,7 @@
     </style>
 </head>
 
-<body class="antialiased">
+<body class="bon-dark-page antialiased">
     <main class="bon-home-shell relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#020617] text-slate-50">
         <div class="bon-home-aurora pointer-events-none absolute inset-0"></div>
         <div class="bon-grid pointer-events-none absolute inset-0 opacity-[.38]"></div>
