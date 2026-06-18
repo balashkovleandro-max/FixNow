@@ -7,8 +7,8 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-clip bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+<body class="bon-dark-page min-h-screen overflow-x-clip bg-[#020812] pb-24 text-white md:pb-0">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(47,140,255,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(217,70,239,0.18),transparent_30%),linear-gradient(180deg,#020617,#061426,#020617)]"></div>
 
     @php
         $business = auth()->user();
@@ -81,6 +81,21 @@
         $approvalClass = $business->is_verified
             ? 'border-emerald-300/30 bg-emerald-400/10 text-emerald-100'
             : 'border-amber-300/30 bg-amber-400/10 text-amber-100';
+        $businessPhotos = $business->relationLoaded('businessPhotos') ? $business->businessPhotos : collect();
+        $dashboardCoverPhoto = $businessPhotos->firstWhere('is_cover', true) ?: $businessPhotos->first();
+        $dashboardCoverPath = $dashboardCoverPhoto?->path;
+        $dashboardGallery = $businessPhotos->take(6);
+        $dashboardCategories = collect($business->serviceCategories())
+            ->map(fn ($profileCategory) => \App\Support\CategoryCatalog::displayName($profileCategory))
+            ->filter()
+            ->unique()
+            ->values();
+        $dashboardCategoryLabel = $dashboardCategories->isNotEmpty()
+            ? $dashboardCategories->implode(', ')
+            : ($business->business_category ? \App\Support\CategoryCatalog::displayName($business->business_category) : 'Бизнес профил');
+        $dashboardCityLabel = !empty($business->serviceCities())
+            ? implode(', ', $business->serviceCities())
+            : ($business->city ?: 'България');
     @endphp
 
     <div class="mx-auto grid max-w-[1500px] gap-5 px-3 py-4 sm:gap-6 sm:px-6 sm:py-6 lg:grid-cols-[280px_1fr] lg:px-8">
@@ -146,6 +161,82 @@
                         <a href="{{ route('business.profile.edit') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3.5 text-center text-sm font-black text-white shadow-lg shadow-orange-600/25 sm:py-4 sm:text-base">Редактирай профила</a>
                         <a href="{{ route('business.jobs.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-orange-300/25 bg-orange-300/10 px-6 py-3.5 text-center text-sm font-black text-orange-100 hover:bg-orange-300/15 sm:py-4 sm:text-base">Публикувай обява</a>
                         <a href="{{ route('businesses.show', $business) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3.5 text-center text-sm font-black text-white hover:bg-white/10 sm:py-4 sm:text-base">Виж публичния профил</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-6">
+                <div class="grid gap-5 xl:grid-cols-[0.95fr_1.05fr] xl:items-stretch">
+                    <div class="overflow-hidden rounded-[1.25rem] border border-white/10 bg-slate-950/45 sm:rounded-[28px]">
+                        @if($dashboardCoverPath)
+                            <img src="{{ asset('storage/' . $dashboardCoverPath) }}" alt="{{ $business->business_name ?: $business->name }}" class="h-56 w-full object-cover sm:h-72 xl:h-full">
+                        @else
+                            <div class="grid min-h-56 place-items-center bg-[radial-gradient(circle_at_50%_30%,rgba(47,140,255,.28),transparent_34%),linear-gradient(135deg,rgba(37,99,235,.22),rgba(124,58,237,.22),rgba(217,70,239,.18))] p-8 text-center sm:min-h-72">
+                                <div>
+                                    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 text-3xl font-black shadow-2xl shadow-violet-900/30">B</div>
+                                    <p class="mt-4 text-lg font-black">Добавете cover снимка</p>
+                                    <p class="mt-2 text-sm leading-6 text-white/55">Актуалните снимки правят бизнес профила по-доверен и по-професионален.</p>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="grid gap-4">
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-blue-200/80">Business control profile</p>
+                            <h2 class="mt-3 text-2xl font-black sm:text-3xl">{{ $business->business_name ?: $business->name }}</h2>
+                            <p class="mt-2 text-sm leading-6 text-white/60">{{ $dashboardCategoryLabel }} · {{ $dashboardCityLabel }}</p>
+                        </div>
+
+                        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
+                            <a href="{{ route('business.service-requests.index') }}" class="bon-profile-action bon-profile-action--primary px-4 py-3 text-sm">Message</a>
+                            @if($business->phone)
+                                <a href="tel:{{ preg_replace('/[^\d+]/', '', $business->phone) }}" class="bon-profile-action px-4 py-3 text-sm">Call</a>
+                            @else
+                                <a href="{{ route('business.profile.edit') }}" class="bon-profile-action px-4 py-3 text-sm">Phone</a>
+                            @endif
+                            <a href="{{ route('businesses.show', $business) }}" class="bon-profile-action px-4 py-3 text-sm">Preview</a>
+                            <button type="button" data-url="{{ route('businesses.show', $business) }}" onclick="navigator.clipboard?.writeText(this.dataset.url)" class="bon-profile-action px-4 py-3 text-sm">Share</button>
+                            <a href="{{ route('business.profile.edit') }}#gallery" class="bon-profile-action px-4 py-3 text-sm">Photos</a>
+                            <a href="{{ route('business.insights.index') }}" class="bon-profile-action px-4 py-3 text-sm">Tools</a>
+                        </div>
+
+                        <div class="rounded-[1.25rem] border border-white/10 bg-slate-950/45 p-4 sm:rounded-[28px]">
+                            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                                <div>
+                                    <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-200/80">Актуални снимки</p>
+                                    <p class="mt-2 text-sm leading-6 text-white/60">Добавете актуални снимки, за да покажете бизнеса си в момента.</p>
+                                </div>
+                                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-black text-white/65">{{ $businessPhotos->count() }} / {{ $business->photoLimit() }}</span>
+                            </div>
+
+                            @if($dashboardGallery->isNotEmpty())
+                                <div class="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6 xl:grid-cols-3">
+                                    @foreach($dashboardGallery as $photo)
+                                        <img src="{{ asset('storage/' . $photo->path) }}" alt="{{ $photo->alt_text ?: ($business->business_name ?: $business->name) }}" loading="lazy" class="aspect-square rounded-2xl object-cover">
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="mt-4 rounded-3xl border border-dashed border-white/15 bg-white/[0.03] p-5 text-sm leading-6 text-white/55">
+                                    Все още няма качени снимки. Добавете галерия, за да покажете обект, продукти, екип или завършени услуги.
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="grid gap-3 sm:grid-cols-3">
+                            <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Рейтинг</p>
+                                <p class="mt-2 text-2xl font-black">{{ $averageReviewRating ? number_format($averageReviewRating, 1, '.', '') . '/5' : 'Няма още' }}</p>
+                            </div>
+                            <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Отзиви</p>
+                                <p class="mt-2 text-2xl font-black">{{ $reviewStats['approved'] ?? 0 }}</p>
+                            </div>
+                            <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Видимост</p>
+                                <p class="mt-2 text-2xl font-black">{{ $business->isPubliclyVisible() ? 'Видим' : 'Скрит' }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

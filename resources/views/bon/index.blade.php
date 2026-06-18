@@ -108,6 +108,24 @@
     @include('partials.analytics-head')
 
     <style>
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body {
+            touch-action: pan-y;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .bon-home-shell *,
+        .bon-home-shell *::before,
+        .bon-home-shell *::after {
+            box-sizing: border-box;
+        }
+
         .bon-grid {
             background-image:
                 linear-gradient(to right, rgba(37, 99, 235, .075) 1px, transparent 1px),
@@ -230,6 +248,70 @@
             display: inline-block;
             max-width: 100%;
             overflow-wrap: break-word;
+        }
+
+        .bon-home-shell a,
+        .bon-home-shell button,
+        .bon-home-shell input,
+        .bon-home-shell select {
+            touch-action: manipulation;
+        }
+
+        .bon-category-chip-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: .55rem;
+        }
+
+        .bon-category-chip {
+            display: flex;
+            min-height: 3rem;
+            align-items: center;
+            gap: .65rem;
+            border: 1px solid rgba(132, 154, 196, .22);
+            border-radius: 1rem;
+            background: rgba(7, 15, 30, .78);
+            padding: .72rem .8rem;
+            color: #d6deed;
+            font-size: .78rem;
+            font-weight: 850;
+            line-height: 1.25;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+            transition: border-color .18s ease, background .18s ease, transform .18s ease;
+        }
+
+        .bon-category-chip::before {
+            content: "";
+            height: .55rem;
+            width: .55rem;
+            flex: 0 0 auto;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6 58%, #d946ef);
+            box-shadow: 0 0 18px rgba(96, 165, 250, .28);
+        }
+
+        .bon-category-chip:hover {
+            transform: translateY(-1px);
+            border-color: rgba(96, 165, 250, .5);
+            background: rgba(15, 27, 52, .9);
+        }
+
+        @media (min-width: 390px) {
+            .bon-category-chip-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 768px) {
+            .bon-category-chip-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .bon-category-chip-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
         }
 
         .bon-float {
@@ -619,14 +701,14 @@
             }
 
             .bon-home-title {
-                max-width: 18.25rem;
-                font-size: 1.5rem;
+                max-width: 21rem;
+                font-size: 1.75rem;
                 line-height: 1.16;
                 letter-spacing: -.015em;
             }
 
             .bon-home-subtitle {
-                max-width: 19rem;
+                max-width: 20.5rem;
                 font-size: .95rem;
                 line-height: 1.65;
             }
@@ -642,11 +724,29 @@
             .bon-home-search {
                 overflow: hidden;
                 border-radius: 1.25rem;
+                gap: .8rem;
             }
 
             .bon-home-search label,
-            .bon-home-search input {
+            .bon-home-search input,
+            .bon-home-search select,
+            .bon-home-search button {
                 min-width: 0;
+                width: 100%;
+            }
+
+            .bon-home-shell section {
+                margin-top: 2.25rem;
+            }
+
+            .bon-home-shell section:first-of-type {
+                margin-top: 0;
+            }
+
+            .bon-home-shell article,
+            .bon-home-shell button,
+            .bon-category-chip {
+                overflow-wrap: anywhere;
             }
 
             .bon-home-mobile-chips {
@@ -944,36 +1044,53 @@
                 <div class="rounded-[1.65rem] border border-white/10 bg-white/[0.06] p-4 shadow-2xl shadow-black/25 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6 lg:p-7">
                     <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                         <div>
-                            <p class="text-xs font-black uppercase tracking-[0.22em] text-blue-300">Search layer</p>
-                            <h2 class="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">Намери профил, услуга или специалист в BON.</h2>
+                            <p class="text-xs font-black uppercase tracking-[0.22em] text-blue-300">Consumer discovery</p>
+                            <h2 class="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">Намери правилния профил в BON.</h2>
                         </div>
                         <p class="max-w-md text-sm leading-6 text-slate-400">
-                            Търсачката е вход към мрежата, но BON остава платформа за инструменти, доверие и растеж.
+                            Търсачката е вход към платформата: помага на потребителите да откриват бизнеси, услуги и специалисти, докато BON остава система за инструменти, доверие и растеж.
                         </p>
                     </div>
 
                     <form action="{{ route('search') }}" method="GET" class="bon-home-search grid gap-3 text-left sm:grid-cols-[1fr_0.75fr_0.85fr_auto] sm:items-end">
                         <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
                             Услуга, име или специалист
-                            <input name="q" placeholder="фризьор, уеб дизайн, салон..." class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
+                            <input name="q" value="{{ request('q') }}" placeholder="фризьор, уеб дизайн, салон..." class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
                         </label>
                         <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
                             Град
-                            <input name="city" placeholder="София" class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
+                            <input name="city" value="{{ request('city') }}" placeholder="София" class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
                         </label>
                         <label class="grid gap-1 text-xs font-black uppercase tracking-[0.16em] text-slate-400">
                             Категория
-                            <input name="category" list="bon-home-category-options" placeholder="Избери или напиши категория" class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
-                            <datalist id="bon-home-category-options">
+                            <select name="category" class="min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-base font-semibold normal-case tracking-normal text-[#070B1F] outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-100 sm:text-sm">
+                                <option value="">Всички категории</option>
                                 @foreach($smartCategories as $category)
-                                    <option value="{{ $category }}">
+                                    <option value="{{ $category }}" @selected((string) $smartCategory === (string) $category)>{{ $category }}</option>
                                 @endforeach
-                            </datalist>
+                            </select>
                         </label>
                         <button type="submit" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5">
                             Намери в BON
                         </button>
                     </form>
+
+                    <div class="mt-5 rounded-[1.35rem] border border-white/10 bg-[#061126]/70 p-3 shadow-inner shadow-black/20 sm:mt-6 sm:p-4">
+                        <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                            <div>
+                                <p class="text-xs font-black uppercase tracking-[0.18em] text-violet-300">Категории в BON</p>
+                                <p class="mt-1 text-sm leading-6 text-slate-400">Бързи входове към consumer discovery слоя, без BON да се превръща в обикновен каталог.</p>
+                            </div>
+                        </div>
+
+                        <div class="bon-category-chip-grid mt-3">
+                            @foreach(collect($smartCategories) as $category)
+                                <a href="{{ route('search', ['category' => $category]) }}" class="bon-category-chip">
+                                    {{ $category }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </section>
 

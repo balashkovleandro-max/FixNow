@@ -16,7 +16,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+<body class="bon-dark-page min-h-screen overflow-x-hidden text-white antialiased">
     <div class="pointer-events-none fixed inset-0 -z-10">
         <div class="absolute -top-40 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="absolute -top-40 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>

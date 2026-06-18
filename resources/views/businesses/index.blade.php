@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="fn-premium-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
+<body class="fn-premium-page bon-dark-page min-h-screen overflow-x-hidden pb-24 text-white md:pb-0">
     @php
         $businesses = $businesses ?? collect();
         $filterChips = [

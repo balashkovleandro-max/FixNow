@@ -7,8 +7,8 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+<body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(47,140,255,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(217,70,239,0.18),transparent_30%),linear-gradient(180deg,#020617,#061426,#020617)]"></div>
 
     @php
         $baseCities = ['Плевен','София','Пловдив','Варна','Бургас','Русе','Стара Загора','Велико Търново','Благоевград','Добрич','Шумен','Сливен','Хасково','Пазарджик'];
@@ -389,8 +389,8 @@
             <aside class="lg:sticky lg:top-8 lg:self-start">
                 <div class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/25 backdrop-blur-xl">
                     <p class="text-sm font-black uppercase text-orange-200/80">Live preview</p>
-                    <div class="mt-5 h-36 rounded-3xl bg-gradient-to-br from-orange-400/20 via-orange-500/10 to-orange-600/20"></div>
-                    <div class="-mt-10 flex h-20 w-20 items-center justify-center rounded-2xl border-4 border-slate-950 bg-gradient-to-br from-orange-400 to-orange-600 text-2xl font-black">
+                    <div class="mt-5 h-36 rounded-3xl bg-gradient-to-br from-blue-500/20 via-violet-500/10 to-fuchsia-500/20"></div>
+                    <div class="-mt-10 flex h-20 w-20 items-center justify-center rounded-2xl border-4 border-slate-950 bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 text-2xl font-black">
                         {{ strtoupper(mb_substr($user->business_name ?: $user->name, 0, 1)) }}
                     </div>
                     <h2 class="mt-4 text-2xl font-black">{{ $user->business_name ?: $user->name }}</h2>

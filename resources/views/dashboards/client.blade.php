@@ -48,8 +48,8 @@
     $customerFreelancerJobs = $customerFreelancerJobs ?? collect();
     $clientProfile = \App\Support\ProfileCompletion::summary(auth()->user());
 @endphp
-<body class="min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.20),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.18),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+<body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(47,140,255,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(217,70,239,0.18),transparent_30%),linear-gradient(180deg,#020617,#061426,#020617)]"></div>
 
     <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <header class="mb-6 rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
@@ -151,11 +151,11 @@
         <section id="offers" class="mt-6 rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-6">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h2 class="text-2xl font-black">Моите freelance проекти</h2>
+                    <h2 class="text-2xl font-black">Заявки към фрийлансъри</h2>
                     <p class="mt-1 text-sm leading-6 text-white/55">Тук виждаш публикуваните задачи към фрийлансъри, получените оферти и избрания специалист.</p>
                 </div>
                 <a href="{{ route('freelancer.projects.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-violet-950/30">
-                    Публикувай проект
+                    Публикувай задача
                 </a>
             </div>
 
@@ -169,7 +169,7 @@
                         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                             <div class="min-w-0">
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="rounded-full border border-blue-300/25 bg-blue-300/10 px-3 py-1 text-xs font-black text-blue-100">{{ $job->category ?: 'Проект' }}</span>
+                                    <span class="rounded-full border border-blue-300/25 bg-blue-300/10 px-3 py-1 text-xs font-black text-blue-100">{{ $job->category ?: 'Задача' }}</span>
                                     <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-white/55">{{ $job->status === 'open' ? 'Отворен' : 'Затворен' }}</span>
                                     @if($job->work_mode)
                                         <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-white/55">{{ ['online' => 'Онлайн', 'onsite' => 'На място', 'hybrid' => 'Хибридно'][$job->work_mode] ?? $job->work_mode }}</span>
@@ -203,7 +203,7 @@
                                         <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                             <div>
                                                 <p class="font-black">{{ $application->freelancer?->name ?: 'Фрийлансър' }}</p>
-                                                <p class="mt-1 text-sm text-white/55">{{ $application->cover_message ?: 'Изпратена оферта към проекта.' }}</p>
+                                                <p class="mt-1 text-sm text-white/55">{{ $application->cover_message ?: 'Изпратена оферта към задачата.' }}</p>
                                             </div>
                                             <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-black text-white/65">{{ $application->status }}</span>
                                         </div>
@@ -211,7 +211,7 @@
                                             <p><span class="text-white/35">Цена:</span> {{ $application->proposed_price ?: 'Не е посочена' }}</p>
                                             <p><span class="text-white/35">Срок:</span> {{ $application->proposed_timeframe ?: 'Не е посочен' }}</p>
                                             <p><span class="text-white/35">Trust:</span> {{ $candidateTrust['trust_score'] ?? 0 }}/100</p>
-                                            <p><span class="text-white/35">Проекти:</span> {{ $candidateTrust['completed_projects_count'] ?? 0 }}</p>
+                                            <p><span class="text-white/35">Завършени задачи:</span> {{ $candidateTrust['completed_projects_count'] ?? 0 }}</p>
                                         </div>
                                         @if($application->freelancer)
                                             <a href="{{ route('freelancers.show', $application->freelancer) }}" class="mt-3 inline-flex min-h-10 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-xs font-black text-white hover:bg-white/15">
@@ -234,10 +234,10 @@
                     </article>
                 @empty
                     <div class="rounded-3xl border border-dashed border-white/15 bg-slate-950/50 p-6 text-center">
-                        <p class="text-xl font-black">Все още няма публикувани freelance проекти</p>
-                        <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">Публикувай първия проект и фрийлансърите в BON ще могат да изпратят оферта.</p>
+                        <p class="text-xl font-black">Все още няма публикувани задачи към фрийлансъри</p>
+                        <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">Публикувай първата задача и фрийлансърите в BON ще могат да изпратят оферта.</p>
                         <a href="{{ route('freelancer.projects.create') }}" class="mt-5 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-6 py-3 font-black text-white">
-                            Публикувай проект
+                            Публикувай задача
                         </a>
                     </div>
                 @endforelse
@@ -361,7 +361,7 @@
                                                         <div class="mt-3 grid gap-2 text-sm text-white/65 sm:grid-cols-3">
                                                             <p><span class="text-white/40">Trust Score:</span> {{ $offerTrust['trust_score'] ?? 0 }}/100</p>
                                                             <p><span class="text-white/40">Рейтинг:</span> {{ ($offerTrust['average_rating'] ?? null) ? number_format($offerTrust['average_rating'], 1, '.', '') . '/5' : 'Няма още' }}</p>
-                                                            <p><span class="text-white/40">Проекти:</span> {{ $offerTrust['completed_projects_count'] ?? 0 }}</p>
+                                                            <p><span class="text-white/40">Завършени задачи:</span> {{ $offerTrust['completed_projects_count'] ?? 0 }}</p>
                                                         </div>
                                                         <a href="{{ route('businesses.show', $offer->business) }}" class="mt-3 inline-flex min-h-10 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-xs font-black text-white hover:bg-white/15">
                                                             Виж профил

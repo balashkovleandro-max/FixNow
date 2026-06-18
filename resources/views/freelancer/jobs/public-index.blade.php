@@ -8,7 +8,7 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
+<body class="bon-dark-page min-h-screen overflow-x-clip bg-[#020617] text-white">
     <main class="relative min-h-screen overflow-x-clip">
         <div class="pointer-events-none absolute -top-44 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-44 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="flex flex-col gap-3 sm:flex-row">
                             <a href="{{ route('freelancer.projects.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25">
-                                Публикувай проект
+                                Публикувай задача
                             </a>
                             <a href="{{ route('register', ['role' => 'freelancer']) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white/80 px-6 text-sm font-black text-slate-700 shadow-sm">
                                 Стани фрилансър

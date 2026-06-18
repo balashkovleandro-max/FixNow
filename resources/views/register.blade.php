@@ -25,9 +25,9 @@
     </style>
 </head>
 
-<body class="antialiased">
-    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.82)_42%,rgba(248,250,255,1)_100%)]"></div>
+<body class="bon-dark-page antialiased">
+    <main class="relative min-h-screen overflow-x-clip bg-[#020617] text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,.18)_0%,rgba(2,6,23,.82)_42%,rgba(2,6,23,1)_100%)]"></div>
         <div class="bon-auth-grid pointer-events-none absolute inset-0 opacity-[.36]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/22 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-40 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/22 blur-3xl"></div>
@@ -55,27 +55,27 @@
             <section class="mx-auto grid w-full max-w-[1180px] flex-1 items-center gap-6 py-5 sm:gap-8 sm:py-10 lg:grid-cols-[1fr_520px] lg:py-12">
                 <aside class="hidden lg:block">
                     <div class="max-w-xl">
-                        <div class="inline-flex items-center gap-2 rounded-full border border-violet-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-violet-700 shadow-sm shadow-violet-900/5 backdrop-blur-xl">
+                        <div class="inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-white/10 px-4 py-2 text-sm font-semibold text-violet-100 shadow-sm shadow-violet-950/20 backdrop-blur-xl">
                             <span>✦</span>
                             BON Profile
                         </div>
 
-                        <h1 class="mt-5 text-[52px] font-black leading-[1.04] tracking-[-0.055em] text-[#070B1F]">
-                            Избери посока и започни от <span class="bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">правилната стъпка.</span>
+                        <h1 class="mt-5 text-[52px] font-black leading-[1.04] tracking-[-0.055em] text-white">
+                            Избери своя профил в <span class="bg-gradient-to-r from-blue-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">BON.</span>
                         </h1>
 
-                        <p class="mt-5 max-w-lg text-lg leading-8 text-slate-600">
-                            BON помага на бизнесите да изградят по-силно онлайн присъствие, а на хората - да откриват по-добре представени и доверени профили.
+                        <p class="mt-5 max-w-lg text-lg leading-8 text-slate-300">
+                            BON е работна платформа за бизнеси, фрийлансъри и потребители: профили, задачи, инструменти, доверие и растеж.
                         </p>
 
                         <div class="mt-8 grid max-w-xl gap-4">
-                            <div class="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
-                                <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Бизнес</p>
-                                <p class="mt-2 text-sm leading-6 text-slate-500">Открий какво те спира и подреди следващите действия.</p>
+                            <div class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-2xl">
+                                <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-200">Business</p>
+                                <p class="mt-2 text-sm leading-6 text-slate-400">Профил, инструменти, задачи, консултации и статистика.</p>
                             </div>
-                            <div class="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
-                                <p class="text-sm font-black uppercase tracking-[0.22em] text-pink-500">Потребител</p>
-                                <p class="mt-2 text-sm leading-6 text-slate-500">Опиши нуждата си и стигни до правилното решение.</p>
+                            <div class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-2xl">
+                                <p class="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-200">Freelancer</p>
+                                <p class="mt-2 text-sm leading-6 text-slate-400">Портфолио, задачи, оферти, умения и доверие.</p>
                             </div>
                         </div>
                     </div>
@@ -112,24 +112,24 @@
                                     <label class="group cursor-pointer">
                                         <input type="radio" name="role" value="customer" class="peer sr-only" {{ in_array($selectedRole, ['customer', 'client'], true) ? 'checked' : '' }}>
                                         <span class="block rounded-2xl border border-slate-200/80 bg-white/75 p-3.5 shadow-sm shadow-blue-900/5 transition peer-checked:border-pink-300 peer-checked:bg-pink-50/70 peer-checked:ring-4 peer-checked:ring-pink-100 group-hover:-translate-y-0.5 sm:rounded-3xl sm:p-4">
-                                            <span class="block text-sm font-black text-pink-500">Потребител</span>
-                                            <span class="mt-1 block text-xs leading-5 text-slate-500">Търся решение</span>
+                                            <span class="block text-sm font-black text-pink-500">Consumer</span>
+                                            <span class="mt-2 block text-xs leading-5 text-slate-500">Намирайте бизнеси, запазвайте любими и правете резервации/запитвания.</span>
                                         </span>
                                     </label>
 
                                     <label class="group cursor-pointer" onclick="window.trackBonEvent('business_registration_start', { source: 'registration_page' })">
                                         <input type="radio" name="role" value="business" class="peer sr-only" {{ $selectedRole === 'business' ? 'checked' : '' }}>
                                         <span class="block rounded-2xl border border-slate-200/80 bg-white/75 p-3.5 shadow-sm shadow-blue-900/5 transition peer-checked:border-blue-300 peer-checked:bg-blue-50/70 peer-checked:ring-4 peer-checked:ring-blue-100 group-hover:-translate-y-0.5 sm:rounded-3xl sm:p-4">
-                                            <span class="block text-sm font-black text-blue-600">Бизнес</span>
-                                            <span class="mt-1 block text-xs leading-5 text-slate-500">Искам бизнес профил</span>
+                                            <span class="block text-sm font-black text-blue-600">Business</span>
+                                            <span class="mt-2 block text-xs leading-5 text-slate-500">Създайте бизнес профил и използвайте инструменти, задачи, консултации и статистика.</span>
                                         </span>
                                     </label>
 
                                     <label class="group cursor-pointer" onclick="window.trackBonEvent('freelancer_registration_start', { source: 'registration_page' })">
                                         <input type="radio" name="role" value="freelancer" class="peer sr-only" {{ $selectedRole === 'freelancer' ? 'checked' : '' }}>
                                         <span class="block rounded-2xl border border-slate-200/80 bg-white/75 p-3.5 shadow-sm shadow-blue-900/5 transition peer-checked:border-violet-300 peer-checked:bg-violet-50/70 peer-checked:ring-4 peer-checked:ring-violet-100 group-hover:-translate-y-0.5 sm:rounded-3xl sm:p-4">
-                                            <span class="block text-sm font-black text-violet-600">Фрийлансър</span>
-                                            <span class="mt-1 block text-xs leading-5 text-slate-500">Кандидатствам с кредити</span>
+                                            <span class="block text-sm font-black text-violet-600">Freelancer</span>
+                                            <span class="mt-2 block text-xs leading-5 text-slate-500">Създайте портфолио, намирайте задачи и работете с бизнеси в BON.</span>
                                         </span>
                                     </label>
                                 </div>

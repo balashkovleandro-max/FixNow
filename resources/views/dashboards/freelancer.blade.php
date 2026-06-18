@@ -7,7 +7,7 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
+<body class="bon-dark-page min-h-screen overflow-x-clip bg-[#020617] text-white">
     <main class="relative min-h-screen overflow-x-clip">
         <div class="pointer-events-none absolute -top-44 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-44 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
@@ -46,9 +46,88 @@
             @endif
 
             @php
-                $profile = $profile ?? \App\Support\ProfileCompletion::summary(auth()->user());
-                $portfolioItems = auth()->user()->relationLoaded('freelancerPortfolioItems') ? auth()->user()->freelancerPortfolioItems : collect();
+                $freelancer = auth()->user();
+                $profile = $profile ?? \App\Support\ProfileCompletion::summary($freelancer);
+                $portfolioItems = $freelancer->relationLoaded('freelancerPortfolioItems') ? $freelancer->freelancerPortfolioItems : collect();
+                $freelancerCategories = collect($freelancer->serviceCategories())
+                    ->map(fn ($profileCategory) => \App\Support\CategoryCatalog::displayName($profileCategory))
+                    ->filter()
+                    ->unique()
+                    ->values();
+                $freelancerLocation = !empty($freelancer->serviceCities())
+                    ? implode(', ', $freelancer->serviceCities())
+                    : ($freelancer->city ?: 'Онлайн / дистанционно');
+                $creditStats = array_merge([
+                    'available' => 0,
+                    'used' => 0,
+                    'purchased' => 0,
+                ], $creditStats ?? []);
             @endphp
+
+            <section class="mt-6 overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
+                <div class="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-stretch">
+                    <div>
+                        <div class="flex flex-col gap-5 sm:flex-row sm:items-center">
+                            <div class="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-blue-500 via-violet-500 to-fuchsia-500 text-3xl font-black text-white shadow-2xl shadow-violet-950/35 sm:h-24 sm:w-24 sm:rounded-[2rem] sm:text-4xl">
+                                {{ strtoupper(mb_substr($freelancer->name, 0, 1)) }}
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-200/80">Freelancer work profile</p>
+                                <h1 class="mt-2 text-[30px] font-black leading-tight sm:text-5xl">{{ $freelancer->name }}</h1>
+                                <p class="mt-3 max-w-3xl text-sm leading-7 text-white/65 sm:text-base">
+                                    {{ $freelancer->business_category ? \App\Support\CategoryCatalog::displayName($freelancer->business_category) : 'Фрийланс профил' }} · {{ $freelancerLocation }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex flex-wrap gap-2">
+                            @forelse($freelancerCategories as $category)
+                                <span class="rounded-full border border-blue-300/20 bg-blue-400/10 px-3 py-1 text-xs font-black text-blue-100">{{ $category }}</span>
+                            @empty
+                                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-black text-white/60">Добавете умения и услуги</span>
+                            @endforelse
+                            <span class="rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-1 text-xs font-black text-emerald-100">
+                                {{ ($freelancer->is_suspended ?? false) ? 'Скрит профил' : 'Активен профил' }}
+                            </span>
+                            <span class="rounded-full border border-fuchsia-300/20 bg-fuchsia-400/10 px-3 py-1 text-xs font-black text-fuchsia-100">
+                                {{ ['available' => 'Свободен', 'busy' => 'Зает', 'negotiable' => 'По договаряне'][$freelancer->availability] ?? 'Наличност не е посочена' }}
+                            </span>
+                        </div>
+
+                        <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                            <a href="{{ route('freelancer.profile.edit') }}" class="bon-profile-action bon-profile-action--primary px-4 py-3 text-sm">Редактирай профил</a>
+                            <a href="#portfolio" class="bon-profile-action px-4 py-3 text-sm">Добави проект</a>
+                            <a href="{{ route('freelancer.jobs.index') }}" class="bon-profile-action px-4 py-3 text-sm">Виж задачи</a>
+                            <a href="{{ route('freelancers.show', $freelancer) }}" class="bon-profile-action px-4 py-3 text-sm">Публичен профил</a>
+                        </div>
+                    </div>
+
+                    <aside class="rounded-[1.25rem] border border-white/10 bg-slate-950/45 p-5 sm:rounded-[28px]">
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-200/80">Работно табло</p>
+                        <div class="mt-5 grid grid-cols-2 gap-3">
+                            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-white/40">Кредити</p>
+                                <p class="mt-2 text-2xl font-black">{{ $creditStats['available'] }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-white/40">Портфолио</p>
+                                <p class="mt-2 text-2xl font-black">{{ $portfolioItems->count() }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-white/40">Нови задачи</p>
+                                <p class="mt-2 text-2xl font-black">{{ $openJobs->count() }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                                <p class="text-xs font-black uppercase tracking-[0.16em] text-white/40">Оферти</p>
+                                <p class="mt-2 text-2xl font-black">{{ $recentApplications->count() }}</p>
+                            </div>
+                        </div>
+                        <p class="mt-5 text-sm leading-6 text-white/55">
+                            Фрийланс профилът е портфолио и работно табло за кандидатури, проекти, покани, клиенти и кредити.
+                        </p>
+                    </aside>
+                </div>
+            </section>
 
             <section class="mt-6 rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
@@ -127,19 +206,19 @@
             </section>
 
             <div class="mt-6 sm:mt-8">
-                @include('partials.growth-tools', ['profile' => auth()->user(), 'variant' => 'light'])
+                @include('partials.growth-tools', ['profile' => auth()->user(), 'variant' => 'dark'])
             </div>
 
             <div class="mt-6 sm:mt-8">
-                @include('partials.bon-paid-services', ['profile' => auth()->user(), 'variant' => 'light', 'context' => 'freelancer-dashboard'])
+                @include('partials.bon-paid-services', ['profile' => auth()->user(), 'variant' => 'dark', 'context' => 'freelancer-dashboard'])
             </div>
 
             <section id="portfolio" class="mt-6 rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Портфолио</p>
-                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Добави проекти към публичния си профил</h2>
-                        <p class="mt-3 text-sm leading-6 text-slate-600">Портфолиото помага на клиентите да оценят стил, опит и качество преди да се свържат с теб.</p>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Проекти / Портфолио</p>
+                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Добави завършени работи към публичния си профил</h2>
+                        <p class="mt-3 text-sm leading-6 text-slate-600">Покажете най-добрите си проекти, резултати и примери от работата си.</p>
 
                         <form action="{{ route('freelancer.portfolio.store') }}" method="POST" enctype="multipart/form-data" class="mt-6 grid gap-4">
                             @csrf

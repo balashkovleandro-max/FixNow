@@ -10,7 +10,7 @@
 @php
     $selectedCategories = collect(old('preferred_categories', $user->preferred_categories ?? []))->filter()->values()->all();
 @endphp
-<body class="min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+<body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020617] text-white">
     <main class="relative min-h-screen overflow-x-clip">
         <div class="pointer-events-none absolute -top-44 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-44 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>

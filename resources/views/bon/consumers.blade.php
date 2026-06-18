@@ -33,9 +33,9 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased">
-    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.82)_42%,rgba(248,250,255,1)_100%)]"></div>
+<body class="bon-dark-page antialiased">
+    <main class="relative min-h-screen overflow-x-clip text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,.18)_0%,rgba(2,6,23,.82)_42%,rgba(2,6,23,1)_100%)]"></div>
         <div class="pointer-events-none absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-pink-300/18 blur-3xl"></div>
         <div class="pointer-events-none absolute -right-40 top-20 h-[34rem] w-[34rem] rounded-full bg-violet-400/18 blur-3xl"></div>
         <div class="pointer-events-none absolute inset-0 opacity-[.28]" style="background-image: linear-gradient(to right, rgba(236,72,153,.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(37,99,235,.07) 1px, transparent 1px); background-size: 72px 72px;"></div>

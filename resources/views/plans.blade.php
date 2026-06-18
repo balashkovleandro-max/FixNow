@@ -55,6 +55,16 @@
         ],
     ];
 
+    $paidOptions = [
+        ['title' => 'Бизнес консултация', 'text' => 'Разговор за профил, оферта, видимост и следващи действия.', 'status' => 'Add-on'],
+        ['title' => 'Growth пакет', 'text' => 'Структуриран план за подобрение на представянето, снимките, офертата и комуникацията.', 'status' => 'Еднократно'],
+        ['title' => 'Help / setup пакет', 'text' => 'Екипът на BON подрежда профила, услугите, снимките и основните trust сигнали вместо вас.', 'status' => 'Еднократно'],
+        ['title' => 'Premium visibility', 'text' => 'По-силно позициониране, badge, препоръчано показване и повече видимост в BON.', 'status' => 'Premium'],
+        ['title' => 'Advanced tools', 'text' => 'Разширени доклади, бизнес анализ, препоръки и Business Health сигнали.', 'status' => 'Premium'],
+        ['title' => 'Booking / reservation tools', 'text' => 'Онлайн записване като add-on за салони, консултанти, треньори, студиа и услуги с часове.', 'status' => 'Add-on'],
+        ['title' => 'Subscription plans', 'text' => 'Standard и Premium са основата за бизнес присъствие, инструменти, статистика и подкрепа.', 'status' => 'Абонамент'],
+    ];
+
     $faqs = [
         [
             'question' => 'За какво плаща бизнесът?',
@@ -111,9 +121,9 @@
     </style>
 </head>
 
-<body class="antialiased">
-    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.78)_42%,rgba(248,250,255,1)_100%)]"></div>
+<body class="bon-dark-page antialiased">
+    <main class="relative min-h-screen overflow-x-clip bg-[#020617] text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,.18)_0%,rgba(2,6,23,.82)_42%,rgba(2,6,23,1)_100%)]"></div>
         <div class="bon-grid pointer-events-none absolute inset-0 opacity-[.38]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[35rem] w-[35rem] rounded-full bg-blue-400/22 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-40 right-[-10rem] h-[35rem] w-[35rem] rounded-full bg-fuchsia-400/22 blur-3xl"></div>
@@ -282,8 +292,31 @@
                     @endforeach
                 </section>
 
+                <section class="mx-auto mt-8 max-w-5xl rounded-[1.45rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:mt-10 sm:rounded-[2rem] sm:p-7 lg:mt-14">
+                    <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-200/80">Paid options</p>
+                            <h2 class="mt-3 text-2xl font-black tracking-tight text-white sm:text-4xl">Платени възможности извън безплатното откриване.</h2>
+                            <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+                                BON показва безплатно основната посока, но бизнесите могат да отключват инструменти, консултации, Premium видимост и допълнителна помощ според нуждите си.
+                            </p>
+                        </div>
+                        <a href="#bon-extra-help" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 text-sm font-black text-white hover:bg-white/10">Виж пакетите</a>
+                    </div>
+
+                    <div class="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                        @foreach($paidOptions as $option)
+                            <article class="rounded-3xl border border-white/10 bg-slate-950/45 p-4">
+                                <span class="rounded-full border border-violet-300/20 bg-violet-400/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-violet-100">{{ $option['status'] }}</span>
+                                <h3 class="mt-4 text-lg font-black">{{ $option['title'] }}</h3>
+                                <p class="mt-2 text-sm leading-6 text-white/60">{{ $option['text'] }}</p>
+                            </article>
+                        @endforeach
+                    </div>
+                </section>
+
                 <section class="mx-auto mt-8 max-w-5xl sm:mt-10 lg:mt-14">
-                    @include('partials.bon-paid-services', ['profile' => auth()->user(), 'variant' => 'light', 'context' => 'plans'])
+                    @include('partials.bon-paid-services', ['profile' => auth()->user(), 'variant' => 'dark', 'context' => 'plans'])
                 </section>
 
                 <section class="mx-auto mt-8 max-w-5xl rounded-[1.45rem] border border-white/70 bg-white/75 p-4 shadow-[0_28px_80px_rgba(30,41,100,.10)] backdrop-blur-2xl sm:mt-10 sm:rounded-[2rem] sm:p-7 lg:mt-14">

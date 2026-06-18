@@ -8,7 +8,7 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-    <body class="min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
+    <body class="bon-dark-page min-h-screen overflow-x-clip bg-[#020617] text-white">
     @include('partials.public-header')
 
     <main class="relative overflow-x-clip">
@@ -32,7 +32,7 @@
                             @endif
                         </div>
                         <div class="mt-4">
-                            @include('partials.favorite-button', ['profile' => $user, 'variant' => 'light'])
+                            @include('partials.favorite-button', ['profile' => $user, 'variant' => 'dark'])
                             @auth
                                 @if(auth()->id() === $user->id)
                                     <a href="{{ route('freelancer.profile.edit') }}" class="mt-3 inline-flex min-h-10 items-center justify-center rounded-2xl border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-black text-blue-700">
@@ -203,8 +203,9 @@
             <section class="mt-6 rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                        <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Портфолио</p>
-                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Избрани проекти</h2>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Проекти / Портфолио</p>
+                        <h2 class="mt-3 text-2xl font-black sm:text-3xl">Завършени работи и резултати</h2>
+                        <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Портфолиото показва реални примери: сайтове, дизайни, кампании, снимки, видеа, резултати и линкове към работа.</p>
                     </div>
                     <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">{{ $portfolioItems->count() }} проекта</span>
                 </div>
@@ -225,6 +226,8 @@
                                     <p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{{ $item->description }}</p>
                                 @endif
                                 <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="rounded-2xl bg-slate-100 px-4 py-2 text-xs font-black text-slate-600">{{ $user->business_category ? \App\Support\CategoryCatalog::displayName($user->business_category) : 'Портфолио' }}</span>
+                                    <span class="rounded-2xl bg-slate-100 px-4 py-2 text-xs font-black text-slate-600">{{ $item->created_at?->format('d.m.Y') }}</span>
                                     @if($item->project_url)
                                         <a href="{{ $item->project_url }}" target="_blank" rel="noopener" class="rounded-2xl bg-blue-50 px-4 py-2 text-xs font-black text-blue-700">Линк</a>
                                     @endif

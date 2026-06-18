@@ -7,7 +7,7 @@
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[#F8FAFF] text-[#070B1F]">
+<body class="bon-dark-page min-h-screen overflow-x-hidden text-white antialiased">
     @include('partials.public-header')
 
     <main class="relative overflow-x-clip">

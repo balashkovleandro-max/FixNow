@@ -20,9 +20,9 @@
     </style>
 </head>
 
-<body class="antialiased">
-    <main class="relative min-h-screen overflow-x-clip bg-[#F8FAFF] text-[#070B1F]">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.98)_0%,rgba(248,250,255,.82)_42%,rgba(248,250,255,1)_100%)]"></div>
+<body class="bon-dark-page antialiased">
+    <main class="relative min-h-screen overflow-x-clip bg-[#020617] text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,.18)_0%,rgba(2,6,23,.82)_42%,rgba(2,6,23,1)_100%)]"></div>
         <div class="bon-auth-grid pointer-events-none absolute inset-0 opacity-[.36]"></div>
         <div class="pointer-events-none absolute -top-40 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/22 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-40 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/22 blur-3xl"></div>
@@ -50,31 +50,31 @@
             <section class="mx-auto grid w-full max-w-[1180px] flex-1 items-center gap-6 py-5 sm:gap-8 sm:py-10 lg:grid-cols-[1fr_460px] lg:py-12">
                 <aside class="hidden lg:block">
                     <div class="max-w-xl">
-                        <div class="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm shadow-blue-900/5 backdrop-blur-xl">
-                            <span class="text-violet-600">✦</span>
+                        <div class="inline-flex items-center gap-2 rounded-full border border-blue-300/20 bg-white/10 px-4 py-2 text-sm font-semibold text-blue-100 shadow-sm shadow-blue-950/20 backdrop-blur-xl">
+                            <span class="text-violet-200">✦</span>
                             BON Access
                         </div>
 
-                        <h1 class="mt-5 text-[52px] font-black leading-[1.04] tracking-[-0.055em] text-[#070B1F]">
-                            Открий <span class="bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">правилната следваща стъпка.</span>
+                        <h1 class="mt-5 text-[52px] font-black leading-[1.04] tracking-[-0.055em] text-white">
+                            Влез в <span class="bg-gradient-to-r from-blue-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">business operating platform.</span>
                         </h1>
 
-                        <p class="mt-5 max-w-lg text-lg leading-8 text-slate-600">
-                            BON помага да откриеш какво те спира и да стигнеш до правилната следваща стъпка.
+                        <p class="mt-5 max-w-lg text-lg leading-8 text-slate-300">
+                            BON събира профил, инструменти, задачи, консултации и статистика в един професионален работен център.
                         </p>
 
                         <div class="mt-8 grid max-w-xl grid-cols-3 gap-4">
                             <div class="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
-                                <p class="text-2xl font-black text-blue-600">BON</p>
-                                <p class="mt-2 text-sm text-slate-500">анализ</p>
+                                <p class="text-2xl font-black text-blue-200">BON</p>
+                                <p class="mt-2 text-sm text-slate-400">анализ</p>
                             </div>
                             <div class="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
-                                <p class="text-2xl font-black text-violet-600">BON</p>
-                                <p class="mt-2 text-sm text-slate-500">оператор</p>
+                                <p class="text-2xl font-black text-violet-200">BON</p>
+                                <p class="mt-2 text-sm text-slate-400">оператор</p>
                             </div>
                             <div class="rounded-3xl border border-white/70 bg-white/70 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl">
-                                <p class="text-2xl font-black text-pink-500">→</p>
-                                <p class="mt-2 text-sm text-slate-500">действия</p>
+                                <p class="text-2xl font-black text-fuchsia-200">→</p>
+                                <p class="mt-2 text-sm text-slate-400">действия</p>
                             </div>
                         </div>
                     </div>

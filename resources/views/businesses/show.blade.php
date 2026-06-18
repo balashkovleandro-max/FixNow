@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')
 </head>
-<body class="fn-premium-page min-h-screen overflow-x-clip pb-44 text-white md:pb-28 lg:pb-0">
+<body class="fn-premium-page bon-dark-page min-h-screen overflow-x-clip pb-44 text-white md:pb-28 lg:pb-0">
     @php
         $businessName = $user->business_name ?: $user->name;
         $businessCategories = collect($user->serviceCategories())
@@ -82,7 +82,7 @@
         };
     @endphp
 
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(249,115,22,0.24),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(245,158,11,0.20),transparent_30%),linear-gradient(180deg,#030712,#061426,#020812)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(47,140,255,0.24),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(217,70,239,0.20),transparent_30%),linear-gradient(180deg,#020617,#061426,#020617)]"></div>
 
 
     @include('partials.public-header')
@@ -91,7 +91,7 @@
         <section class="fn-glass-card overflow-hidden rounded-[1.5rem] sm:rounded-[34px]">
             <div class="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
                 <div class="relative min-h-0 p-5 sm:min-h-[430px] sm:p-8 lg:p-10">
-                    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_15%,rgba(251,146,60,0.20),transparent_28%),radial-gradient(circle_at_80%_12%,rgba(245,158,11,0.16),transparent_28%)]"></div>
+                    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_15%,rgba(47,140,255,0.22),transparent_28%),radial-gradient(circle_at_80%_12%,rgba(217,70,239,0.16),transparent_28%)]"></div>
 
                     <div data-testid="main-business-badges" class="flex flex-wrap items-center gap-2">
                         @if($user->isPremium())
@@ -208,11 +208,11 @@
                         @if($mainImage)
                                 <img src="{{ asset('storage/' . $mainImage) }}" alt="{{ $businessName }}" class="h-full min-h-[220px] w-full object-cover sm:min-h-[280px]">
                         @else
-                            <div class="flex h-full min-h-[220px] items-center justify-center bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-orange-600/25 sm:min-h-[280px]">
+                            <div class="flex h-full min-h-[220px] items-center justify-center bg-gradient-to-br from-blue-500/20 via-violet-400/10 to-fuchsia-600/25 sm:min-h-[280px]">
                                 <div class="px-6 text-center">
                                     <p class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-950/60 text-2xl font-black text-blue-100">B</p>
                                     <p class="mt-4 font-black">Снимките ще се появят тук</p>
-                                    <p class="mt-2 text-sm text-white/55">Бизнесят все още не е качил галерия.</p>
+                                    <p class="mt-2 text-sm text-white/55">Бизнесът все още не е качил галерия.</p>
                                 </div>
                             </div>
                         @endif
@@ -226,7 +226,7 @@
                             @if($galleryImage)
                                 <img src="{{ asset('storage/' . $galleryImage) }}" alt="{{ $businessName }} снимка" loading="lazy" class="h-full w-full object-cover">
                             @else
-                                <div class="flex h-full items-center justify-center bg-gradient-to-br from-orange-500/20 via-amber-400/10 to-orange-600/20 text-sm font-bold text-white/50">Галерия</div>
+                                <div class="flex h-full items-center justify-center bg-gradient-to-br from-blue-500/20 via-violet-400/10 to-fuchsia-600/20 text-sm font-bold text-white/50">Галерия</div>
                             @endif
                         </div>
                     @endforeach
@@ -260,10 +260,10 @@
                 <section id="send-request" class="rounded-[1.5rem] border border-orange-300/20 bg-gradient-to-br from-orange-500/10 via-amber-400/10 to-orange-600/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-8">
                     <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Заявка към бизнеся</p>
+                            <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Заявка към бизнеса</p>
                             <h2 class="mt-3 text-2xl font-black sm:text-3xl">Изпрати заявка</h2>
                             <p class="mt-3 text-sm leading-6 text-white/65">
-                                Опишете накратко от каква услуга имате нужда. Заявката отива директно към {{ $businessName }} и бизнесят ще може да я управлява от своя панел.
+                                Опишете накратко от каква услуга имате нужда. Заявката отива директно към {{ $businessName }} и бизнесът ще може да я управлява от своя панел.
                             </p>
 
                             @if(session('service_request_success'))
@@ -306,7 +306,7 @@
 
                             <label class="block">
                                 <span class="mb-2 block text-sm font-semibold text-white/75">Описание на проблема</span>
-                                <textarea name="message" rows="5" class="w-full rounded-2xl border {{ $errors->has('message') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Опишете каква услуга търсите, кога ви е удобно и как бизнесят да ви помогне.">{{ old('message') }}</textarea>
+                                <textarea name="message" rows="5" class="w-full rounded-2xl border {{ $errors->has('message') ? 'border-rose-300/60' : 'border-white/10' }} bg-white/10 px-4 py-4 text-white outline-none placeholder:text-white/35 focus:border-orange-300/50" placeholder="Опишете каква услуга търсите, кога ви е удобно и как бизнесът да ви помогне.">{{ old('message') }}</textarea>
                                 @error('message')<span class="mt-2 block text-sm text-rose-200">{{ $message }}</span>@enderror
                             </label>
 
@@ -352,7 +352,7 @@
                     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Галерия</p>
-                            <h2 class="mt-3 text-2xl font-black sm:text-3xl">Снимки от бизнеся</h2>
+                            <h2 class="mt-3 text-2xl font-black sm:text-3xl">Актуални снимки</h2>
                         </div>
                         <p class="text-sm font-bold text-white/50">{{ $businessPhotos->count() }} / {{ $user->photoLimit() }} снимки</p>
                     </div>
@@ -369,7 +369,7 @@
                         <div class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
                             <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                             <p class="mt-4 text-lg font-black">Все още няма качени снимки</p>
-                            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато бизнесят добави снимки в своята галерия, те ще се показват тук.</p>
+                            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато бизнесът добави снимки в своята галерия, те ще се показват тук.</p>
                         </div>
                     @endif
                 </section>
@@ -378,7 +378,7 @@
                     <div class="flex items-center justify-between gap-4">
                         <div>
                             <p class="text-sm font-black uppercase tracking-[0.24em] text-orange-200/80">Услуги</p>
-                            <h2 class="mt-3 text-2xl font-black sm:text-3xl">Какво предлага бизнесят</h2>
+                            <h2 class="mt-3 text-2xl font-black sm:text-3xl">Какво предлага бизнесът</h2>
                         </div>
                         <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" onclick="window.trackBonEvent('contact_click', { source: 'profile_page_services', profile_id: '{{ $user->id }}', profile_type: 'business' })" class="hidden rounded-2xl border border-orange-300/20 bg-orange-300/10 px-5 py-3 text-sm font-black text-orange-100 hover:bg-orange-400/15 sm:inline-flex">Заяви оферта</a>
                     </div>
@@ -496,7 +496,7 @@
                         </div>
                         <div class="rounded-3xl border border-white/10 bg-slate-950/45 p-5">
                             <p class="text-lg font-black">Бърз контакт</p>
-                            <p class="mt-3 text-sm leading-6 text-white/60">Бутоните за оферта, телефон и запитване помагат на клиентите да се свържат с бизнеся по най-бързия начин.</p>
+                            <p class="mt-3 text-sm leading-6 text-white/60">Бутоните за оферта, телефон и запитване помагат на клиентите да се свържат с бизнеса по най-бързия начин.</p>
                         </div>
                     </div>
                 </section>
@@ -616,7 +616,7 @@
             <aside id="contact" class="lg:sticky lg:top-24 lg:self-start">
                 <div class="rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-6">
                     <h2 class="text-2xl font-black">Контакт</h2>
-                    <p class="mt-2 text-sm leading-6 text-white/60">Изберете удобен начин за връзка с бизнеся.</p>
+                    <p class="mt-2 text-sm leading-6 text-white/60">Изберете удобен начин за връзка с бизнеса.</p>
 
                     <div class="mt-6 grid gap-3">
                         <a href="{{ route('businesses.track.inquiry', $user) }}" data-track="cta_send_inquiry" onclick="window.trackBonEvent('contact_click', { source: 'profile_page_sidebar', profile_id: '{{ $user->id }}', profile_type: 'business' })" class="rounded-2xl bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600 px-5 py-4 text-center font-black text-white shadow-lg shadow-orange-600/25">Заяви оферта</a>
