@@ -59,7 +59,9 @@
     }
 
     html.bon-modal-open,
-    body.bon-modal-open {
+    body.bon-modal-open,
+    html.bon-menu-open,
+    body.bon-menu-open {
         overflow: hidden;
         touch-action: none;
     }
@@ -588,9 +590,127 @@
         -webkit-tap-highlight-color: transparent;
     }
 
+    details[data-mobile-menu] > summary::-webkit-details-marker {
+        display: none;
+    }
+
     details[data-mobile-menu] > div {
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
+    }
+
+    @media (max-width: 1023px) {
+        details[data-mobile-menu] {
+            position: static !important;
+            z-index: 90;
+        }
+
+        details[data-mobile-menu] > summary {
+            position: relative;
+            z-index: 130;
+        }
+
+        details[data-mobile-menu][open] > summary {
+            position: fixed;
+            top: max(1rem, env(safe-area-inset-top));
+            right: max(1rem, env(safe-area-inset-right));
+            z-index: 150;
+            border-color: rgba(255, 255, 255, 0.18) !important;
+            background: rgba(15, 23, 42, 0.9) !important;
+            color: #ffffff !important;
+            box-shadow: 0 22px 70px rgba(0, 0, 0, 0.38), 0 0 24px rgba(96, 165, 250, 0.14) !important;
+        }
+
+        details[data-mobile-menu] > div {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 140 !important;
+            width: 100vw !important;
+            max-width: none !important;
+            max-height: none !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            padding: calc(max(1rem, env(safe-area-inset-top)) + 4.25rem) 1rem max(1rem, env(safe-area-inset-bottom)) !important;
+            background:
+                radial-gradient(circle at 16% 4%, rgba(47, 140, 255, 0.28), transparent 34%),
+                radial-gradient(circle at 82% 14%, rgba(217, 70, 239, 0.22), transparent 36%),
+                radial-gradient(circle at 50% 92%, rgba(34, 211, 238, 0.12), transparent 34%),
+                linear-gradient(180deg, rgba(2, 6, 23, 0.96), rgba(6, 16, 31, 0.98)) !important;
+            box-shadow: none !important;
+            backdrop-filter: blur(26px);
+            -webkit-backdrop-filter: blur(26px);
+        }
+
+        details[data-mobile-menu] > div::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.22;
+            background-image:
+                linear-gradient(to right, rgba(96, 165, 250, 0.12) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(96, 165, 250, 0.10) 1px, transparent 1px);
+            background-size: 54px 54px;
+        }
+
+        details[data-mobile-menu] > div > div {
+            width: min(100%, 28rem);
+            margin: 0 auto;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 1.75rem;
+            background: rgba(12, 24, 46, 0.78);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+        }
+
+        details[data-mobile-menu] > div a,
+        details[data-mobile-menu] > div button {
+            display: flex;
+            min-height: 3.1rem;
+            width: 100%;
+            align-items: center;
+            justify-content: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.055);
+            color: #f8fbff !important;
+            box-shadow: none;
+            text-align: left;
+            transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+        }
+
+        details[data-mobile-menu] > div a:hover,
+        details[data-mobile-menu] > div button:hover {
+            border-color: rgba(125, 211, 252, 0.28);
+            background: rgba(255, 255, 255, 0.10);
+            transform: translateY(-1px);
+        }
+
+        details[data-mobile-menu] > div a[class*="bg-gradient"],
+        details[data-mobile-menu] > div button[class*="bg-gradient"] {
+            justify-content: center;
+            border-color: rgba(255, 255, 255, 0.16);
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 56%, #ec4899 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 20px 54px rgba(124, 58, 237, 0.25);
+            text-align: center;
+        }
+
+        details[data-mobile-menu] > div form {
+            width: 100%;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        html.bon-menu-open,
+        body.bon-menu-open {
+            overflow-y: auto;
+            touch-action: pan-y;
+        }
     }
 
     @media (max-width: 640px) {

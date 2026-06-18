@@ -82,13 +82,20 @@ const bonHasVisibleModal = () => {
     ));
 };
 
+const bonHasOpenMobileMenu = () => Boolean(document.querySelector('details[data-mobile-menu][open]'));
+
+const bonLockPageScrollForMenu = () => {
+    document.documentElement.classList.add('bon-menu-open');
+    document.body.classList.add('bon-menu-open');
+};
+
 const bonUnlockPageScrollIfSafe = () => {
-    if (bonHasVisibleModal()) {
+    if (bonHasVisibleModal() || bonHasOpenMobileMenu()) {
         return;
     }
 
-    document.documentElement.classList.remove('bon-modal-open', 'overflow-hidden');
-    document.body.classList.remove('bon-modal-open', 'overflow-hidden');
+    document.documentElement.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
+    document.body.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
 
     if (document.documentElement.style.overflow === 'hidden') {
         document.documentElement.style.overflow = '';
@@ -107,6 +114,15 @@ const bonCloseMobileMenus = (except = null) => {
     });
 };
 
+const bonSyncMobileMenuScrollLock = () => {
+    if (bonHasOpenMobileMenu()) {
+        bonLockPageScrollForMenu();
+        return;
+    }
+
+    bonUnlockPageScrollIfSafe();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const mobileMenus = Array.from(document.querySelectorAll('details[data-mobile-menu]'));
 
@@ -114,16 +130,27 @@ document.addEventListener('DOMContentLoaded', () => {
         menu.addEventListener('toggle', () => {
             if (menu.open) {
                 bonCloseMobileMenus(menu);
+                bonLockPageScrollForMenu();
+                return;
             }
 
-            bonUnlockPageScrollIfSafe();
+            requestAnimationFrame(bonSyncMobileMenuScrollLock);
         });
 
         menu.querySelectorAll('a').forEach((link) => {
             link.addEventListener('click', () => {
                 menu.open = false;
-                bonUnlockPageScrollIfSafe();
+                requestAnimationFrame(bonUnlockPageScrollIfSafe);
             });
+        });
+
+        const menuOverlay = Array.from(menu.children).find((child) => child.tagName === 'DIV');
+
+        menuOverlay?.addEventListener('click', (event) => {
+            if (event.target === menuOverlay) {
+                menu.open = false;
+                requestAnimationFrame(bonUnlockPageScrollIfSafe);
+            }
         });
     });
 
@@ -132,20 +159,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!clickedMenu) {
             bonCloseMobileMenus();
-            bonUnlockPageScrollIfSafe();
+            requestAnimationFrame(bonUnlockPageScrollIfSafe);
         }
     });
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             bonCloseMobileMenus();
-            bonUnlockPageScrollIfSafe();
+            requestAnimationFrame(bonUnlockPageScrollIfSafe);
         }
     });
 
-    window.addEventListener('pageshow', bonUnlockPageScrollIfSafe);
+    window.addEventListener('pageshow', () => {
+        bonCloseMobileMenus();
+        requestAnimationFrame(bonUnlockPageScrollIfSafe);
+    });
+
     window.addEventListener('pagehide', () => {
         bonCloseMobileMenus();
-        bonUnlockPageScrollIfSafe();
+        requestAnimationFrame(bonUnlockPageScrollIfSafe);
     });
 });

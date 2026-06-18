@@ -900,13 +900,15 @@
 
             .bon-home-title {
                 max-width: 21rem;
-                font-size: 1.75rem;
-                line-height: 1.16;
-                letter-spacing: -.015em;
+                margin-top: 1rem;
+                font-size: clamp(1.78rem, 7.6vw, 2.15rem);
+                line-height: 1.14;
+                letter-spacing: 0;
             }
 
             .bon-home-subtitle {
                 max-width: 20.5rem;
+                margin-top: 1rem;
                 font-size: .95rem;
                 line-height: 1.65;
             }
@@ -923,6 +925,17 @@
                 overflow: hidden;
                 border-radius: 1.25rem;
                 gap: .8rem;
+            }
+
+            .bon-home-actions {
+                margin-top: 1.25rem;
+                gap: .75rem;
+            }
+
+            .bon-home-actions a {
+                min-height: 3.15rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
 
             .bon-home-search label,
