@@ -97,6 +97,22 @@ const bonUnlockPageScrollIfSafe = () => {
     if (document.body.style.overflow === 'hidden') {
         document.body.style.overflow = '';
     }
+
+    if (document.documentElement.style.position === 'fixed') {
+        document.documentElement.style.position = '';
+    }
+
+    if (document.body.style.position === 'fixed') {
+        document.body.style.position = '';
+    }
+
+    if (document.documentElement.style.height === '100vh' || document.documentElement.style.height === '100dvh') {
+        document.documentElement.style.height = '';
+    }
+
+    if (document.body.style.height === '100vh' || document.body.style.height === '100dvh') {
+        document.body.style.height = '';
+    }
 };
 
 const bonCloseMobileMenus = (except = null) => {
