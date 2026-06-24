@@ -82,10 +82,40 @@ const bonHasVisibleModal = () => {
     ));
 };
 
-const bonUnlockPageScrollIfSafe = () => {
-    if (bonHasVisibleModal()) {
+let bonMenuScrollY = 0;
+let bonMenuScrollLocked = false;
+
+const bonHasOpenMobileMenu = () => Boolean(document.querySelector('details[data-mobile-menu][open]'));
+
+const bonLockPageScrollForMenu = () => {
+    if (bonMenuScrollLocked) {
         return;
     }
+
+    bonMenuScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    bonMenuScrollLocked = true;
+
+    document.documentElement.classList.add('bon-menu-open', 'overflow-hidden');
+    document.body.classList.add('bon-menu-open', 'overflow-hidden');
+
+    document.documentElement.style.overflow = 'hidden';
+    document.documentElement.style.height = '100%';
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${bonMenuScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
+};
+
+const bonUnlockPageScrollIfSafe = () => {
+    if (bonHasVisibleModal() || bonHasOpenMobileMenu()) {
+        return;
+    }
+
+    const shouldRestoreScroll = bonMenuScrollLocked;
+    const restoreScrollY = bonMenuScrollY;
 
     document.documentElement.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
     document.body.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
@@ -106,12 +136,43 @@ const bonUnlockPageScrollIfSafe = () => {
         document.body.style.position = '';
     }
 
-    if (document.documentElement.style.height === '100vh' || document.documentElement.style.height === '100dvh') {
+    if (document.body.style.top) {
+        document.body.style.top = '';
+    }
+
+    if (document.body.style.left === '0px' || document.body.style.left === '0') {
+        document.body.style.left = '';
+    }
+
+    if (document.body.style.right === '0px' || document.body.style.right === '0') {
+        document.body.style.right = '';
+    }
+
+    if (document.body.style.width === '100%') {
+        document.body.style.width = '';
+    }
+
+    if (
+        document.documentElement.style.height === '100vh'
+        || document.documentElement.style.height === '100dvh'
+        || document.documentElement.style.height === '100%'
+    ) {
         document.documentElement.style.height = '';
     }
 
-    if (document.body.style.height === '100vh' || document.body.style.height === '100dvh') {
+    if (
+        document.body.style.height === '100vh'
+        || document.body.style.height === '100dvh'
+        || document.body.style.height === '100%'
+    ) {
         document.body.style.height = '';
+    }
+
+    bonMenuScrollLocked = false;
+    bonMenuScrollY = 0;
+
+    if (shouldRestoreScroll) {
+        requestAnimationFrame(() => window.scrollTo(0, restoreScrollY));
     }
 };
 
@@ -124,6 +185,11 @@ const bonCloseMobileMenus = (except = null) => {
 };
 
 const bonSyncMobileMenuScrollLock = () => {
+    if (bonHasOpenMobileMenu()) {
+        bonLockPageScrollForMenu();
+        return;
+    }
+
     bonUnlockPageScrollIfSafe();
 };
 
@@ -134,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menu.addEventListener('toggle', () => {
             if (menu.open) {
                 bonCloseMobileMenus(menu);
-                bonUnlockPageScrollIfSafe();
+                requestAnimationFrame(bonLockPageScrollForMenu);
                 return;
             }
 

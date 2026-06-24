@@ -767,76 +767,88 @@
 
     html.bon-menu-open,
     body.bon-menu-open {
-        overflow-x: hidden;
-        overflow-y: auto;
-        touch-action: pan-y;
-        -webkit-overflow-scrolling: touch;
+        overflow: hidden !important;
+        overscroll-behavior: none;
     }
 
-    @media (max-width: 768px) {
-        details[data-mobile-menu] {
-            position: relative !important;
-            z-index: 70;
+    body.bon-menu-open {
+        position: fixed;
+        width: 100%;
+    }
+
+    @media (max-width: 1023px) {
+        details[data-mobile-menu][open] {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 9999 !important;
+            width: 100% !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            max-width: 100% !important;
+            overflow: hidden !important;
+            pointer-events: auto;
         }
 
         details[data-mobile-menu] > summary {
             position: relative;
-            z-index: 72;
+            z-index: 2;
         }
 
         details[data-mobile-menu][open] > summary {
-            position: relative;
-            top: auto;
-            right: auto;
-            z-index: 74;
+            position: fixed !important;
+            top: max(0.75rem, env(safe-area-inset-top)) !important;
+            right: max(1rem, env(safe-area-inset-right)) !important;
+            z-index: 10001 !important;
             border-color: rgba(255, 255, 255, 0.18) !important;
             background: rgba(15, 23, 42, 0.84) !important;
             color: #ffffff !important;
             box-shadow: 0 14px 38px rgba(0, 0, 0, 0.28), 0 0 18px rgba(96, 165, 250, 0.10) !important;
         }
 
-        details[data-mobile-menu] > div {
-            position: absolute !important;
-            top: calc(100% + 0.65rem) !important;
-            right: 0 !important;
-            bottom: auto !important;
-            left: auto !important;
-            z-index: 73 !important;
-            width: min(21rem, calc(100vw - 1.25rem)) !important;
+        details[data-mobile-menu][open] > div {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 10000 !important;
+            width: 100% !important;
+            height: 100vh !important;
+            height: 100dvh !important;
             max-width: none !important;
-            max-height: min(70dvh, calc(100dvh - 5rem)) !important;
+            max-height: none !important;
+            margin: 0 !important;
             overflow-x: hidden !important;
             overflow-y: auto !important;
+            touch-action: pan-y;
             border: 1px solid rgba(255, 255, 255, 0.13) !important;
-            border-radius: 1.4rem !important;
-            padding: 0.6rem !important;
+            border-radius: 0 !important;
+            padding: calc(5rem + env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1.25rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)) !important;
             background:
-                radial-gradient(circle at 15% 0%, rgba(47, 140, 255, 0.18), transparent 36%),
-                radial-gradient(circle at 90% 20%, rgba(217, 70, 239, 0.14), transparent 38%),
-                rgba(8, 16, 32, 0.90) !important;
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
+                radial-gradient(circle at 18% 0%, rgba(47, 140, 255, 0.18), transparent 38%),
+                radial-gradient(circle at 86% 18%, rgba(217, 70, 239, 0.14), transparent 42%),
+                rgba(2, 6, 23, 0.94) !important;
+            box-shadow: none !important;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
         }
 
-        details[data-mobile-menu] > div::before {
+        details[data-mobile-menu][open] > div::before {
             display: none;
         }
 
-        details[data-mobile-menu] > div > div {
+        details[data-mobile-menu][open] > div > div {
             width: 100%;
-            margin: 0;
-            padding: 0;
-            border: 0;
-            border-radius: 1rem;
-            background: transparent;
-            box-shadow: none;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
+            max-width: 28rem;
+            margin: 0 auto;
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            background: rgba(8, 16, 32, 0.72);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
-        details[data-mobile-menu] > div a,
-        details[data-mobile-menu] > div button {
+        details[data-mobile-menu][open] > div a,
+        details[data-mobile-menu][open] > div button {
             display: flex;
             min-height: 2.9rem;
             width: 100%;
@@ -850,15 +862,15 @@
             transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
         }
 
-        details[data-mobile-menu] > div a:hover,
-        details[data-mobile-menu] > div button:hover {
+        details[data-mobile-menu][open] > div a:hover,
+        details[data-mobile-menu][open] > div button:hover {
             border-color: rgba(125, 211, 252, 0.28);
             background: rgba(255, 255, 255, 0.10);
             transform: translateY(-1px);
         }
 
-        details[data-mobile-menu] > div a[class*="bg-gradient"],
-        details[data-mobile-menu] > div button[class*="bg-gradient"] {
+        details[data-mobile-menu][open] > div a[class*="bg-gradient"],
+        details[data-mobile-menu][open] > div button[class*="bg-gradient"] {
             justify-content: center;
             border-color: rgba(255, 255, 255, 0.16);
             background: linear-gradient(135deg, #2563eb 0%, #7c3aed 56%, #ec4899 100%) !important;
@@ -867,14 +879,15 @@
             text-align: center;
         }
 
-        details[data-mobile-menu] > div form {
+        details[data-mobile-menu][open] > div form {
             width: 100%;
         }
     }
 
     @media (max-width: 430px) {
-        details[data-mobile-menu] > div {
-            width: min(20rem, calc(100vw - 1rem)) !important;
+        details[data-mobile-menu][open] > div {
+            padding-right: max(0.875rem, env(safe-area-inset-right)) !important;
+            padding-left: max(0.875rem, env(safe-area-inset-left)) !important;
         }
     }
 
