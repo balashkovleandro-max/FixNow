@@ -84,8 +84,114 @@ const bonHasVisibleModal = () => {
 
 let bonMenuScrollY = 0;
 let bonMenuScrollLocked = false;
+let bonActiveMobileMenu = null;
+let bonMobileMenuBackdrop = null;
 
 const bonHasOpenMobileMenu = () => Boolean(document.querySelector('details[data-mobile-menu][open]'));
+
+const bonGetMobileMenuPanel = (menu) => {
+    return menu._bonPortalPanel || Array.from(menu.children).find((child) => child.tagName === 'DIV');
+};
+
+const bonRemoveMobileMenuBackdrop = () => {
+    bonMobileMenuBackdrop?.remove();
+    bonMobileMenuBackdrop = null;
+};
+
+const bonEnsureMobileMenuBackdrop = () => {
+    if (bonMobileMenuBackdrop?.isConnected) {
+        return bonMobileMenuBackdrop;
+    }
+
+    bonMobileMenuBackdrop = document.createElement('div');
+    bonMobileMenuBackdrop.className = 'bon-mobile-menu-backdrop';
+    bonMobileMenuBackdrop.setAttribute('aria-hidden', 'true');
+    bonMobileMenuBackdrop.addEventListener('click', () => {
+        if (bonActiveMobileMenu) {
+            bonActiveMobileMenu.open = false;
+            return;
+        }
+
+        bonCloseMobileMenus();
+    });
+
+    document.body.appendChild(bonMobileMenuBackdrop);
+
+    return bonMobileMenuBackdrop;
+};
+
+const bonMountMobileMenu = (menu) => {
+    const panel = bonGetMobileMenuPanel(menu);
+
+    if (!panel) {
+        return;
+    }
+
+    if (!menu._bonPortalPlaceholder && panel.parentNode) {
+        menu._bonPortalPlaceholder = document.createComment('bon mobile menu portal');
+        panel.parentNode.insertBefore(menu._bonPortalPlaceholder, panel);
+    }
+
+    if (!menu._bonPortalCloseButton) {
+        const closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'bon-mobile-menu-close';
+        closeButton.setAttribute('aria-label', 'Затвори меню');
+        closeButton.innerHTML = `
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4">
+                <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+            </svg>
+        `;
+        closeButton.addEventListener('click', () => {
+            menu.open = false;
+        });
+        menu._bonPortalCloseButton = closeButton;
+    }
+
+    if (!menu._bonPortalCloseButton.isConnected) {
+        panel.prepend(menu._bonPortalCloseButton);
+    }
+
+    panel.dataset.bonMenuPortal = 'active';
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-label', 'BON мобилно меню');
+
+    menu._bonPortalPanel = panel;
+    bonEnsureMobileMenuBackdrop();
+    document.body.appendChild(panel);
+    bonActiveMobileMenu = menu;
+};
+
+const bonRestoreMobileMenu = (menu) => {
+    const panel = menu._bonPortalPanel || document.querySelector('body > [data-bon-menu-portal="active"]');
+    const placeholder = menu._bonPortalPlaceholder;
+
+    menu._bonPortalCloseButton?.remove();
+
+    if (panel && placeholder?.parentNode) {
+        placeholder.parentNode.insertBefore(panel, placeholder);
+        placeholder.remove();
+    }
+
+    if (panel) {
+        panel.removeAttribute('data-bon-menu-portal');
+        panel.removeAttribute('role');
+        panel.removeAttribute('aria-modal');
+        panel.removeAttribute('aria-label');
+    }
+
+    menu._bonPortalPanel = null;
+    menu._bonPortalPlaceholder = null;
+
+    if (bonActiveMobileMenu === menu) {
+        bonActiveMobileMenu = null;
+    }
+
+    if (!bonHasOpenMobileMenu()) {
+        bonRemoveMobileMenuBackdrop();
+    }
+};
 
 const bonLockPageScrollForMenu = () => {
     if (bonMenuScrollLocked) {
@@ -100,6 +206,7 @@ const bonLockPageScrollForMenu = () => {
 
     document.documentElement.style.overflow = 'hidden';
     document.documentElement.style.height = '100%';
+    document.documentElement.style.touchAction = 'none';
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.top = `-${bonMenuScrollY}px`;
@@ -107,6 +214,7 @@ const bonLockPageScrollForMenu = () => {
     document.body.style.right = '0';
     document.body.style.width = '100%';
     document.body.style.height = '100%';
+    document.body.style.touchAction = 'none';
 };
 
 const bonUnlockPageScrollIfSafe = () => {
@@ -126,6 +234,14 @@ const bonUnlockPageScrollIfSafe = () => {
 
     if (document.body.style.overflow === 'hidden') {
         document.body.style.overflow = '';
+    }
+
+    if (document.documentElement.style.touchAction === 'none') {
+        document.documentElement.style.touchAction = '';
+    }
+
+    if (document.body.style.touchAction === 'none') {
+        document.body.style.touchAction = '';
     }
 
     if (document.documentElement.style.position === 'fixed') {
@@ -170,6 +286,7 @@ const bonUnlockPageScrollIfSafe = () => {
 
     bonMenuScrollLocked = false;
     bonMenuScrollY = 0;
+    bonRemoveMobileMenuBackdrop();
 
     if (shouldRestoreScroll) {
         requestAnimationFrame(() => window.scrollTo(0, restoreScrollY));
@@ -200,10 +317,12 @@ document.addEventListener('DOMContentLoaded', () => {
         menu.addEventListener('toggle', () => {
             if (menu.open) {
                 bonCloseMobileMenus(menu);
+                bonMountMobileMenu(menu);
                 requestAnimationFrame(bonLockPageScrollForMenu);
                 return;
             }
 
+            bonRestoreMobileMenu(menu);
             requestAnimationFrame(bonSyncMobileMenuScrollLock);
         });
 
@@ -226,8 +345,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', (event) => {
         const clickedMenu = event.target.closest?.('details[data-mobile-menu]');
+        const clickedPortal = event.target.closest?.('[data-bon-menu-portal="active"], .bon-mobile-menu-backdrop, .bon-mobile-menu-close');
 
-        if (!clickedMenu) {
+        if (!clickedMenu && !clickedPortal) {
             bonCloseMobileMenus();
             requestAnimationFrame(bonUnlockPageScrollIfSafe);
         }
