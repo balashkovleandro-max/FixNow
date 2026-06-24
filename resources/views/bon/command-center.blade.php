@@ -27,16 +27,16 @@
 
             <nav class="mt-9 grid gap-2 text-[15px] font-semibold text-slate-600">
                 @foreach([
-                    ['Обзор', 'M4 12h16M4 6h16M4 18h10', 'bg-blue-50 text-blue-700 shadow-sm'],
-                    ['BON Operator', 'M8 10h8M9 15h6M12 3a7 7 0 0 1 7 7v4a7 7 0 0 1-14 0v-4a7 7 0 0 1 7-7Z', 'hover:bg-slate-50'],
-                    ['Диагностика', 'M4 13h4l2-7 4 14 2-7h4', 'hover:bg-slate-50'],
-                    ['Действия', 'M9 12l2 2 4-5M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z', 'hover:bg-slate-50'],
-                    ['Пазарни сигнали', 'M12 3v18M4 12h16M6 7c2 2 4 3 6 3s4-1 6-3M6 17c2-2 4-3 6-3s4 1 6 3', 'hover:bg-slate-50'],
-                    ['Резултати', 'M5 19V9m5 10V5m5 14v-7m5 7V3', 'hover:bg-slate-50'],
-                    ['Растеж', 'M5 17 10 12l4 4 6-10', 'hover:bg-slate-50'],
-                    ['Настройки', 'M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z', 'hover:bg-slate-50'],
+                    ['Обзор', 'M4 12h16M4 6h16M4 18h10', 'bg-blue-50 text-blue-700 shadow-sm', '#overview'],
+                    ['BON Operator', 'M8 10h8M9 15h6M12 3a7 7 0 0 1 7 7v4a7 7 0 0 1-14 0v-4a7 7 0 0 1 7-7Z', 'hover:bg-slate-50', '#operator'],
+                    ['Диагностика', 'M4 13h4l2-7 4 14 2-7h4', 'hover:bg-slate-50', '#diagnostics'],
+                    ['Действия', 'M9 12l2 2 4-5M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z', 'hover:bg-slate-50', '#actions'],
+                    ['Пазарни сигнали', 'M12 3v18M4 12h16M6 7c2 2 4 3 6 3s4-1 6-3M6 17c2-2 4-3 6-3s4 1 6 3', 'hover:bg-slate-50', '#signals'],
+                    ['Резултати', 'M5 19V9m5 10V5m5 14v-7m5 7V3', 'hover:bg-slate-50', '#results'],
+                    ['Растеж', 'M5 17 10 12l4 4 6-10', 'hover:bg-slate-50', '#growth'],
+                    ['Настройки', 'M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z', 'hover:bg-slate-50', '#settings'],
                 ] as $item)
-                    <a href="#" class="flex items-center gap-3 rounded-[18px] px-4 py-3 transition {{ $item[2] }}">
+                    <a href="{{ $item[3] }}" class="flex items-center gap-3 rounded-[18px] px-4 py-3 transition {{ $item[2] }}">
                         <svg class="size-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="{{ $item[1] }}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -75,14 +75,14 @@
             </header>
 
             <main class="grid gap-6 p-5 sm:p-8 xl:grid-cols-[1fr_360px]">
-                <section class="min-w-0">
+                <section id="overview" class="min-w-0">
                     <div class="mb-6">
                         <h1 class="text-[36px] font-black leading-[1.05] tracking-[-0.04em] text-[#060B2B] sm:text-[48px]">Какво спира бизнеса ти днес?</h1>
                         <p class="mt-3 text-[16px] leading-7 text-slate-500">BON открива проблемите, предлага следващото действие и помага за реално решение.</p>
                     </div>
 
                     <div class="grid gap-4 lg:grid-cols-3">
-                        <article class="rounded-[26px] border border-red-100 bg-gradient-to-br from-red-50 to-white p-6 shadow-xl shadow-red-950/[0.05]">
+                        <article id="diagnostics" class="rounded-[26px] border border-red-100 bg-gradient-to-br from-red-50 to-white p-6 shadow-xl shadow-red-950/[0.05]">
                             <div class="flex items-start justify-between gap-4">
                                 <p class="text-[15px] font-black text-red-600">Активен проблем</p>
                                 <span class="text-red-500">△</span>
@@ -115,7 +115,7 @@
                     </div>
 
                     <div class="mt-4 grid gap-4 lg:grid-cols-3">
-                        <article class="rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
+                        <article id="actions" class="rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
                             <h2 class="text-[16px] font-black">Следващи действия</h2>
                             <div class="mt-5 grid gap-3">
                                 @foreach(['Добави оферта', 'Подобри профила', 'Активирай локална кампания'] as $index => $action)
@@ -127,7 +127,7 @@
                             </div>
                         </article>
 
-                        <article class="rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
+                        <article id="signals" class="rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
                             <h2 class="text-[16px] font-black">Пазарни сигнали</h2>
                             <div class="mt-5 grid gap-3">
                                 <div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-sm font-semibold text-emerald-900">Има засилено търсене във вашия район</div>
@@ -135,7 +135,7 @@
                             </div>
                         </article>
 
-                        <article class="rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
+                        <article id="results" class="rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
                             <h2 class="text-[16px] font-black">Резултати</h2>
                             <div class="mt-5 grid grid-cols-2 gap-3">
                                 @foreach([['+18%', 'интерес'], ['12', 'нови заявки'], ['4', 'резервации'], ['1 240 лв', 'потенциална стойност']] as $metric)
@@ -148,7 +148,7 @@
                         </article>
                     </div>
 
-                    <article class="mt-4 rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
+                    <article id="growth" class="mt-4 rounded-[26px] border border-white/90 bg-white/[0.86] p-6 shadow-xl shadow-blue-950/[0.05]">
                         <h2 class="text-center text-[16px] font-black">Системата за бизнес спасяване и растеж</h2>
                         <div class="mt-6 grid gap-4 md:grid-cols-4">
                             @foreach([['Проблем', 'Откриваме какво спира бизнеса ти'], ['Диагноза', 'BON подрежда данни, поведение и пазар'], ['Действие', 'Ясни препоръки и конкретни стъпки'], ['Решение', 'Повече клиенти и повече резултати']] as $flow)
@@ -161,7 +161,7 @@
                     </article>
                 </section>
 
-                <aside class="rounded-[28px] border border-white/90 bg-white/[0.86] p-6 shadow-2xl shadow-blue-950/[0.07]">
+                <aside id="operator" class="rounded-[28px] border border-white/90 bg-white/[0.86] p-6 shadow-2xl shadow-blue-950/[0.07]">
                     <div class="flex items-start justify-between">
                         <div>
                             <h2 class="text-xl font-black">BON Operator</h2>
@@ -200,7 +200,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2">
+                    <div id="settings" class="mt-6 flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2">
                         <input type="text" placeholder="Попитай BON Operator..." class="min-h-11 w-full rounded-xl border-0 bg-transparent px-3 text-sm outline-none placeholder:text-slate-400">
                         <button type="button" class="grid size-11 place-items-center rounded-xl bg-blue-600 text-white">
                             <span class="sr-only">Изпрати</span>

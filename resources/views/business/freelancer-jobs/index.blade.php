@@ -77,7 +77,11 @@
                                 <div class="rounded-3xl border border-slate-100 bg-white p-4">
                                     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                         <div>
-                                            <a href="{{ $application->freelancer ? route('freelancers.show', $application->freelancer) : '#' }}" class="font-black text-blue-700 hover:text-violet-700">{{ $application->freelancer?->name }}</a>
+                                            @if($application->freelancer)
+                                                <a href="{{ route('freelancers.show', $application->freelancer) }}" class="font-black text-blue-700 hover:text-violet-700">{{ $application->freelancer->name }}</a>
+                                            @else
+                                                <span class="font-black text-slate-700">Фрийлансър профилът не е наличен</span>
+                                            @endif
                                             <p class="mt-1 text-sm text-slate-500">{{ $application->freelancer?->email }} · {{ $application->created_at?->format('d.m.Y H:i') }} · -{{ $application->credits_spent }} кредита</p>
                                         </div>
                                         <span class="rounded-full {{ $application->status === 'accepted' ? 'bg-emerald-50 text-emerald-700' : ($application->status === 'not_selected' ? 'bg-slate-100 text-slate-500' : 'bg-blue-50 text-blue-700') }} px-3 py-1 text-xs font-black">

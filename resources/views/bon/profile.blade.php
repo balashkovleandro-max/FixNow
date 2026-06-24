@@ -78,16 +78,16 @@
 
         <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_370px] lg:items-start">
             <section class="grid gap-6">
-                <article class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
+                <article id="about" class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
                     <h2 class="text-xl font-black text-[#070B1F]">За бизнеса</h2>
                     <p class="mt-4 text-[15px] leading-7 text-slate-600">Studio Dental Care е модерна дентална клиника, създадена с мисията да предоставя висококачествена грижа и комфорт на всеки пациент. BON профилът показва доверие, активност и ясни действия.</p>
-                    <a href="#" class="mt-4 inline-flex text-sm font-bold text-blue-600">Виж повече</a>
+                    <a href="#contact" class="mt-4 inline-flex text-sm font-bold text-blue-600">Виж контакт</a>
                 </article>
 
-                <article class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
+                <article id="services" class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
                     <div class="flex items-center justify-between gap-4">
                         <h2 class="text-xl font-black text-[#070B1F]">Услуги</h2>
-                        <a href="#" class="text-sm font-bold text-blue-600">Виж всички услуги</a>
+                        <a href="{{ route('request.service') }}" class="text-sm font-bold text-blue-600">Заяви оферта</a>
                     </div>
                     <div class="mt-5 grid gap-4 md:grid-cols-3">
                         @foreach([
@@ -104,10 +104,10 @@
                     </div>
                 </article>
 
-                <article class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
+                <article id="reviews" class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
                     <div class="flex items-center justify-between gap-4">
                         <h2 class="text-xl font-black text-[#070B1F]">Отзиви</h2>
-                        <a href="#" class="text-sm font-bold text-blue-600">Виж всички отзиви</a>
+                        <a href="{{ route('search') }}" class="text-sm font-bold text-blue-600">Виж още профили</a>
                     </div>
                     <div class="mt-5 grid gap-4 md:grid-cols-2">
                         @foreach([
@@ -123,10 +123,10 @@
                     </div>
                 </article>
 
-                <article class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
+                <article id="gallery" class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
                     <div class="flex items-center justify-between gap-4">
                         <h2 class="text-xl font-black text-[#070B1F]">Галерия</h2>
-                        <a href="#" class="text-sm font-bold text-blue-600">Виж всички снимки</a>
+                        <a href="#contact" class="text-sm font-bold text-blue-600">Свържи се</a>
                     </div>
                     <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                         @foreach(['from-blue-100 to-cyan-50', 'from-violet-100 to-blue-50', 'from-pink-100 to-violet-50', 'from-emerald-100 to-blue-50'] as $gradient)
@@ -154,12 +154,12 @@
                     </div>
                 </article>
 
-                <article class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
+                <article id="contact" class="rounded-[26px] border border-white/80 bg-white/[0.82] p-6 shadow-xl shadow-blue-950/[0.04]">
                     <h2 class="text-xl font-black text-[#070B1F]">Бърз контакт</h2>
                     <div class="mt-5 grid gap-3 text-sm font-semibold text-slate-700">
                         <a href="tel:+359888123456" class="rounded-2xl bg-slate-50 px-4 py-3">0888 123 456</a>
                         <a href="mailto:hello@studiodentalcare.bg" class="rounded-2xl bg-slate-50 px-4 py-3">hello@studiodentalcare.bg</a>
-                        <a href="#" class="rounded-2xl bg-slate-50 px-4 py-3">studiodentalcare.bg</a>
+                        <a href="https://studiodentalcare.bg" target="_blank" rel="noopener" class="rounded-2xl bg-slate-50 px-4 py-3">studiodentalcare.bg</a>
                     </div>
                 </article>
 

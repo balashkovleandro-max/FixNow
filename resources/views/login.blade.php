@@ -8,6 +8,7 @@
 
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 
     <style>
         .bon-auth-grid {

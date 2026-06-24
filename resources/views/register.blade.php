@@ -13,6 +13,7 @@
 
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 
     <style>
         .bon-auth-grid {
@@ -77,6 +78,10 @@
                                 <p class="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-200">Freelancer</p>
                                 <p class="mt-2 text-sm leading-6 text-slate-400">Портфолио, задачи, оферти, умения и доверие.</p>
                             </div>
+                            <div class="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-xl shadow-black/20 backdrop-blur-2xl">
+                                <p class="text-sm font-black uppercase tracking-[0.22em] text-emerald-200">Consumer</p>
+                                <p class="mt-2 text-sm leading-6 text-slate-400">Заявки, любими профили, отзиви и по-лесен избор на услуга.</p>
+                            </div>
                         </div>
                     </div>
                 </aside>
@@ -89,6 +94,18 @@
                             <p class="mt-3 text-sm leading-6 text-slate-500">
                                 Избери посока — бизнес, потребител или фрийлансър — и започни от правилната стъпка.
                             </p>
+                            <div class="mt-4 grid gap-2 sm:grid-cols-3">
+                                @foreach ([
+                                    ['label' => 'Verified профили', 'accent' => 'from-emerald-400 to-cyan-400'],
+                                    ['label' => 'Premium видимост', 'accent' => 'from-violet-500 to-fuchsia-500'],
+                                    ['label' => 'Ясен onboarding', 'accent' => 'from-blue-500 to-cyan-400'],
+                                ] as $trustItem)
+                                    <div class="rounded-2xl border border-slate-200/80 bg-white/70 px-3 py-2 text-left">
+                                        <span class="mb-2 block h-1.5 w-8 rounded-full bg-gradient-to-r {{ $trustItem['accent'] }}"></span>
+                                        <span class="text-xs font-black text-slate-700">{{ $trustItem['label'] }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
 
                         <form action="{{ route('register.post') }}" method="POST" class="mt-6 space-y-4 sm:mt-7">
@@ -136,6 +153,9 @@
                                 <p class="mt-3 rounded-2xl border border-violet-100 bg-violet-50/70 px-4 py-3 text-xs font-semibold leading-5 text-violet-700">
                                     Фрийлансър профилът получава 30 кредита месечно и кандидатства по обяви с по 3 кредита.
                                 </p>
+                                <div class="mt-3 rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 text-xs font-semibold leading-5 text-slate-600">
+                                    След регистрация BON ще те насочи към правилното табло: бизнес инструменти, фрийланс портфолио или клиентски заявки.
+                                </div>
                                 @error('role')<p class="mt-2 rounded-2xl bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-600">{{ $message }}</p>@enderror
                             </div>
 
@@ -152,7 +172,7 @@
                             </div>
 
                             <button type="submit" onclick="window.trackBonEvent('sign_up_start', { source: 'registration_page_submit', role: document.querySelector('input[name=role]:checked')?.value || 'unknown' })" class="min-h-12 w-full rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 py-4 font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 hover:shadow-violet-500/35">
-                                Създай профил
+                                Създай профил и продължи
                             </button>
                         </form>
 

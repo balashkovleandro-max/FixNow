@@ -1298,6 +1298,129 @@
         color: #fff;
     }
 
+    .bon-dark-page .bon-public-profile,
+    .bon-dark-page .bon-dashboard-shell {
+        isolation: isolate;
+    }
+
+    .bon-dark-page .bon-public-profile > section,
+    .bon-dark-page .bon-dashboard-shell > section,
+    .bon-dark-page .bon-dashboard-shell > div,
+    .bon-dark-page .bon-saas-panel {
+        position: relative;
+    }
+
+    .bon-dark-page .bon-profile-hero {
+        border-color: rgba(125, 211, 252, 0.18) !important;
+        background:
+            radial-gradient(circle at 12% 0%, rgba(47, 140, 255, 0.18), transparent 34%),
+            radial-gradient(circle at 88% 10%, rgba(217, 70, 239, 0.14), transparent 34%),
+            rgba(12, 23, 45, 0.76) !important;
+        box-shadow:
+            0 34px 110px rgba(0, 0, 0, 0.34),
+            0 0 54px rgba(47, 140, 255, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    }
+
+    .bon-dark-page .bon-profile-hero::after {
+        content: '';
+        position: absolute;
+        inset: 1rem 1rem auto auto;
+        width: min(22rem, 44vw);
+        height: 12rem;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(124, 58, 237, 0.12), rgba(217, 70, 239, 0.10));
+        filter: blur(38px);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .bon-dark-page .bon-metric-strip > * {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .bon-dark-page .bon-dashboard-shell section > .grid > div[class*="rounded"] {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .bon-dark-page .bon-metric-strip > *::before,
+    .bon-dark-page .bon-dashboard-shell section > .grid > div[class*="rounded"]::before {
+        content: '';
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 3px;
+        border-radius: 9999px;
+        background: linear-gradient(180deg, var(--bon-cyan), var(--bon-violet), var(--bon-pink));
+        opacity: 0.65;
+        pointer-events: none;
+    }
+
+    .bon-dark-page .bon-dashboard-shell :is(section, article, aside, div)[class*="rounded"][class*="border"] {
+        border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+
+    .bon-dark-page .bon-dashboard-shell :is(section, article, aside)[class*="bg-white/10"],
+    .bon-dark-page .bon-dashboard-shell :is(section, article, aside)[class*="bg-white/80"],
+    .bon-dark-page .bon-dashboard-shell :is(section, article, aside)[class*="bg-white/75"],
+    .bon-dark-page .bon-dashboard-shell :is(section, article, aside)[class*="bg-white/85"],
+    .bon-dark-page .bon-public-profile :is(section, article, aside)[class*="bg-white/80"],
+    .bon-dark-page .bon-public-profile :is(section, article, aside)[class*="bg-white/85"] {
+        background:
+            radial-gradient(circle at 14% 0%, rgba(47, 140, 255, 0.10), transparent 34%),
+            rgba(13, 24, 46, 0.72) !important;
+        box-shadow:
+            0 26px 86px rgba(0, 0, 0, 0.26),
+            inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
+    }
+
+    .bon-dark-page .bon-dashboard-shell :is(.grid, .flex) > a[class*="rounded"],
+    .bon-dark-page .bon-public-profile :is(.grid, .flex) > a[class*="rounded"],
+    .bon-dark-page .bon-dashboard-shell :is(.grid, .flex) > button[class*="rounded"],
+    .bon-dark-page .bon-public-profile :is(.grid, .flex) > button[class*="rounded"] {
+        text-decoration: none;
+    }
+
+    .bon-dark-page .bon-dashboard-shell nav a,
+    .bon-dark-page .bon-dashboard-shell nav button {
+        border: 1px solid transparent;
+    }
+
+    .bon-dark-page .bon-dashboard-shell nav a:hover,
+    .bon-dark-page .bon-dashboard-shell nav button:hover {
+        border-color: rgba(125, 211, 252, 0.18);
+    }
+
+    .bon-dark-page .bon-dashboard-shell [class*="text-4xl"],
+    .bon-dark-page .bon-dashboard-shell [class*="text-5xl"],
+    .bon-dark-page .bon-public-profile [class*="text-4xl"],
+    .bon-dark-page .bon-public-profile [class*="text-5xl"] {
+        letter-spacing: -0.015em;
+    }
+
+    .bon-dark-page .bon-dashboard-shell [data-empty-state],
+    .bon-dark-page .bon-public-profile [data-empty-state] {
+        display: grid;
+        place-items: center;
+        min-height: 9rem;
+        text-align: center;
+    }
+
+    .bon-dark-page .bon-dashboard-shell [data-empty-state] :is(a, button),
+    .bon-dark-page .bon-public-profile [data-empty-state] :is(a, button) {
+        margin-inline: auto;
+    }
+
+    .bon-dark-page .bon-dashboard-shell form label,
+    .bon-dark-page .bon-public-profile form label {
+        color: rgba(226, 232, 240, 0.78) !important;
+    }
+
+    .bon-dark-page .bon-dashboard-shell input[type="file"] {
+        cursor: pointer;
+    }
+
     @media (max-width: 640px) {
         .bon-dark-page,
         .bon-dark-page main,
@@ -1337,6 +1460,24 @@
         .bon-home-shell [class*="px-8"] {
             padding-left: 1.25rem;
             padding-right: 1.25rem;
+        }
+
+        .bon-dark-page .bon-dashboard-shell {
+            gap: 1rem;
+        }
+
+        .bon-dark-page .bon-profile-hero::after {
+            width: 14rem;
+            height: 9rem;
+            opacity: 0.75;
+        }
+
+        .bon-dark-page .bon-metric-strip {
+            grid-template-columns: 1fr !important;
+        }
+
+        .bon-dark-page .bon-dashboard-shell nav {
+            max-width: 100%;
         }
     }
 }

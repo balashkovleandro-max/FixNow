@@ -83,6 +83,20 @@
                 </p>
             </div>
 
+            <div class="mt-5 grid gap-3 md:grid-cols-3">
+                @foreach ([
+                    ['title' => 'Verified badges', 'text' => 'Проверените профили показват по-ясен сигнал за доверие.', 'accent' => 'from-emerald-400 to-cyan-400'],
+                    ['title' => 'Premium профили', 'text' => 'Premium статусът отличава активните профили с по-силна видимост.', 'accent' => 'from-violet-500 to-fuchsia-500'],
+                    ['title' => 'Отзиви и Trust Score', 'text' => 'Рейтинг, брой отзиви и Trust Score помагат за по-спокоен избор.', 'accent' => 'from-amber-300 to-orange-400'],
+                ] as $searchTrustItem)
+                    <div class="rounded-3xl border border-white/10 bg-white/[0.06] p-4 shadow-xl shadow-black/10 backdrop-blur-2xl">
+                        <span class="mb-3 block h-1.5 w-10 rounded-full bg-gradient-to-r {{ $searchTrustItem['accent'] }}"></span>
+                        <p class="text-sm font-black text-white">{{ $searchTrustItem['title'] }}</p>
+                        <p class="mt-2 text-xs leading-5 text-slate-400">{{ $searchTrustItem['text'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+
             @if($results->count())
                 <div class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                     @foreach($results as $profile)
@@ -206,12 +220,21 @@
                     {{ $results->links() }}
                 </div>
             @else
-                <div class="mt-6 rounded-[2rem] border border-white/70 bg-white/80 p-8 text-center shadow-2xl shadow-blue-900/5 backdrop-blur-2xl">
-                    <p class="text-3xl font-black">Няма намерени профили.</p>
-                    <p class="mx-auto mt-3 max-w-2xl text-slate-600">Опитай с по-широка ключова дума, различен град или без избрана категория.</p>
-                    <a href="{{ route('search') }}" class="mt-6 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25">
-                        Изчисти търсенето
-                    </a>
+                <div data-empty-state class="mt-6 rounded-[2rem] border border-white/70 bg-white/80 p-8 text-center shadow-2xl shadow-blue-900/5 backdrop-blur-2xl">
+                    <div class="mx-auto grid h-14 w-14 place-items-center rounded-3xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-xl font-black text-white shadow-xl shadow-violet-500/25">B</div>
+                    <p class="mt-5 text-3xl font-black text-[#070B1F]">Няма намерени профили.</p>
+                    <p class="mx-auto mt-3 max-w-2xl text-slate-600">Опитай с по-широка ключова дума, различен град или публикувай заявка, за да могат подходящи бизнеси и фрийлансъри да отговорят.</p>
+                    <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+                        <a href="{{ route('request.service') }}" onclick="window.trackBonEvent('service_request_start', { source: 'search_empty_state' })" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25">
+                            Публикувай заявка
+                        </a>
+                        <a href="{{ route('business.landing') }}" onclick="window.trackBonEvent('business_registration_start', { source: 'search_empty_state' })" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 text-sm font-black text-slate-700">
+                            Добави бизнес
+                        </a>
+                        <a href="{{ route('search') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 text-sm font-black text-slate-700">
+                            Изчисти търсенето
+                        </a>
+                    </div>
                 </div>
             @endif
         </section>

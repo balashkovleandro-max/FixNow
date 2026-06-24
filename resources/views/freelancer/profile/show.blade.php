@@ -11,7 +11,7 @@
     <body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020617] text-white">
     @include('partials.public-header')
 
-    <main class="relative overflow-x-hidden">
+    <main class="bon-public-profile relative overflow-x-hidden">
         @php
             $bookingEnabled = (bool) data_get($user, 'booking_enabled', false);
         @endphp
@@ -20,7 +20,7 @@
         <div class="pointer-events-none absolute inset-0 opacity-[0.20]" style="background-image: linear-gradient(to right, rgba(37,99,235,.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(37,99,235,.08) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
         <div class="relative z-10 mx-auto max-w-7xl px-3 py-5 sm:px-6 sm:py-8 lg:px-8">
-            <section class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8 lg:p-10">
+            <section class="bon-profile-hero rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:rounded-[2rem] sm:p-8 lg:p-10">
                 <div class="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-start">
                     <div>
                         <div class="flex flex-wrap gap-2">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
+                        <div class="bon-metric-strip mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
                             <div class="rounded-2xl bg-blue-50 p-3.5 sm:rounded-3xl sm:p-4">
                                 <p class="text-xs font-black uppercase tracking-[0.18em] text-blue-700">Trust Score</p>
                                 <p class="mt-2 text-2xl font-black sm:text-3xl">{{ $trustSummary['trust_score'] }}/100</p>
@@ -238,8 +238,12 @@
                             </div>
                         </article>
                     @empty
-                        <div class="rounded-3xl border border-dashed border-slate-200 bg-white/70 p-8 text-center text-sm text-slate-500 md:col-span-2 lg:col-span-3">
-                            Този фрийлансър все още не е добавил публично портфолио.
+                        <div data-empty-state class="rounded-3xl border border-dashed border-slate-200 bg-white/70 p-8 text-center text-sm text-slate-500 md:col-span-2 lg:col-span-3">
+                            <p class="text-lg font-black text-[#070B1F]">Този фрийлансър все още не е добавил публично портфолио.</p>
+                            <p class="mx-auto mt-2 max-w-xl leading-6">Профилът все пак показва Trust Score, умения, контакт и активност. Ако услугите пасват на проекта ви, изпратете кратка покана.</p>
+                            <a href="{{ $user->email ? 'mailto:' . $user->email . '?subject=' . rawurlencode('Покана за проект през BON') : route('login') }}" onclick="window.trackBonEvent('contact_click', { source: 'freelancer_portfolio_empty', profile_id: '{{ $user->id }}', profile_type: 'freelancer' })" class="mt-4 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-violet-500/20">
+                                Покани към проект
+                            </a>
                         </div>
                     @endforelse
                 </div>
@@ -268,7 +272,10 @@
                                 <p class="mt-1 text-sm text-slate-500">{{ $application->created_at?->format('d.m.Y') }} · статус {{ $application->status }}</p>
                             </div>
                         @empty
-                            <p class="rounded-3xl border border-slate-100 bg-white/80 p-5 text-sm text-slate-500">Този профил все още няма публична история от завършени или потвърдени проекти.</p>
+                            <div data-empty-state class="rounded-3xl border border-slate-100 bg-white/80 p-5 text-sm text-slate-500">
+                                <p class="font-black text-[#070B1F]">Все още няма публична история от завършени или потвърдени проекти.</p>
+                                <p class="mt-2 leading-6">Използвайте уменията, Trust Score-а и директния контакт, за да прецените дали този специалист е подходящ за първи разговор.</p>
+                            </div>
                         @endforelse
                     </div>
                 </div>

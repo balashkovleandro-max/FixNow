@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пусни заявка за оферта | BON</title>
+    <meta name="description" content="Публикувайте заявка в BON и получете оферти от подходящи бизнеси и фрийлансъри според категория, град, бюджет и срок.">
     @include('partials.pwa-head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.analytics-head')

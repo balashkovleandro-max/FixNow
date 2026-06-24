@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020617] text-white">
-    <main class="relative min-h-screen overflow-x-hidden">
+    <main class="bon-dashboard-shell relative min-h-screen overflow-x-hidden">
         <div class="pointer-events-none absolute -top-44 left-[-12rem] h-[34rem] w-[34rem] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -top-44 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-fuchsia-400/20 blur-3xl"></div>
         <div class="pointer-events-none absolute inset-0 opacity-[0.25]" style="background-image: linear-gradient(to right, rgba(37,99,235,.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(37,99,235,.08) 1px, transparent 1px); background-size: 72px 72px;"></div>
@@ -64,7 +64,7 @@
                 ], $creditStats ?? []);
             @endphp
 
-            <section class="mt-6 overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
+            <section class="bon-profile-hero mt-6 overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-8">
                 <div class="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-stretch">
                     <div>
                         <div class="flex flex-col gap-5 sm:flex-row sm:items-center">
@@ -104,7 +104,7 @@
 
                     <aside class="rounded-[1.25rem] border border-white/10 bg-slate-950/45 p-5 sm:rounded-[28px]">
                         <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-200/80">Работно табло</p>
-                        <div class="mt-5 grid grid-cols-2 gap-3">
+                        <div class="bon-metric-strip mt-5 grid grid-cols-2 gap-3">
                             <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                                 <p class="text-xs font-black uppercase tracking-[0.16em] text-white/40">Кредити</p>
                                 <p class="mt-2 text-2xl font-black">{{ $creditStats['available'] }}</p>
@@ -126,6 +126,36 @@
                             Фрийланс профилът е портфолио и работно табло за кандидатури, проекти, покани, клиенти и кредити.
                         </p>
                     </aside>
+                </div>
+            </section>
+
+            <section class="mt-6 rounded-[1.5rem] border border-blue-200/70 bg-white/80 p-5 shadow-xl shadow-blue-900/10 backdrop-blur-2xl sm:mt-8 sm:rounded-[2rem] sm:p-6" data-testid="freelancer-next-step">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Следваща препоръчана стъпка</p>
+                        @if(($profile['percent'] ?? 0) < 100)
+                            <h2 class="mt-2 text-2xl font-black">Завършете фрийланс профила.</h2>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">Липсва: {{ implode(', ', array_slice($profile['missing'] ?? [], 0, 3)) ?: 'професионална информация' }}.</p>
+                        @elseif($portfolioItems->isEmpty())
+                            <h2 class="mt-2 text-2xl font-black">Добавете първи portfolio проект.</h2>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">Портфолиото помага на бизнесите да изберат специалист по качество, не само по цена.</p>
+                        @elseif(($creditStats['available'] ?? 0) < 3)
+                            <h2 class="mt-2 text-2xl font-black">Проверете кредитите си.</h2>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">За кандидатстване по проект са нужни 3 кредита.</p>
+                        @else
+                            <h2 class="mt-2 text-2xl font-black">Разгледайте подходящи задачи.</h2>
+                            <p class="mt-2 text-sm leading-6 text-slate-600">Изпратете оферта към проект, който пасва на уменията и портфолиото ви.</p>
+                        @endif
+                    </div>
+                    @if(($profile['percent'] ?? 0) < 100)
+                        <a href="{{ route('freelancer.profile.edit') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-violet-500/20">Попълни профила</a>
+                    @elseif($portfolioItems->isEmpty())
+                        <a href="#portfolio" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-violet-500/20">Добави проект</a>
+                    @elseif(($creditStats['available'] ?? 0) < 3)
+                        <a href="{{ route('freelancer.credits.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-violet-500/20">Виж кредити</a>
+                    @else
+                        <a href="{{ route('freelancer.jobs.index') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-violet-500/20">Виж задачи</a>
+                    @endif
                 </div>
             </section>
 
@@ -272,8 +302,12 @@
                                 </form>
                             </article>
                         @empty
-                            <div class="rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm text-slate-500">
-                                Все още няма добавени проекти.
+                            <div data-empty-state class="rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm text-slate-500">
+                                <p class="text-lg font-black text-[#070B1F]">Все още няма добавени проекти.</p>
+                                <p class="mx-auto mt-2 max-w-xl leading-6">Портфолиото е най-силният trust сигнал за фрийлансър профил. Добавете първия проект с описание, снимка и линк.</p>
+                                <a href="#portfolio" class="mt-4 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-violet-500/20">
+                                    Добави проект
+                                </a>
                             </div>
                         @endforelse
                     </div>
@@ -304,9 +338,12 @@
                                 <a href="{{ route('freelancer.jobs.show', $job) }}" class="mt-4 inline-flex rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-3 text-sm font-black text-white">Детайли</a>
                             </article>
                         @empty
-                            <div class="rounded-3xl border border-slate-100 bg-white/80 p-8 text-center">
+                            <div data-empty-state class="rounded-3xl border border-slate-100 bg-white/80 p-8 text-center">
                                 <p class="font-black">Все още няма активни обяви</p>
                                 <p class="mt-2 text-sm text-slate-500">Когато бизнес публикува проект, той ще се появи тук.</p>
+                                <a href="{{ route('freelancer.jobs.index') }}" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white">
+                                    Прегледай всички обяви
+                                </a>
                             </div>
                         @endforelse
                     </div>
@@ -333,7 +370,13 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="rounded-3xl border border-slate-100 bg-white/80 p-5 text-sm text-slate-500">Все още няма кандидатствания.</p>
+                            <div data-empty-state class="rounded-3xl border border-slate-100 bg-white/80 p-5 text-sm text-slate-500">
+                                <p class="font-black text-[#070B1F]">Все още няма кандидатствания.</p>
+                                <p class="mt-2 leading-6">Изберете подходящ проект и изпратете оферта. Балансът с кредити се обновява след всяко кандидатстване.</p>
+                                <a href="{{ route('freelancer.jobs.index') }}" class="mt-4 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-3 text-sm font-black text-white">
+                                    Виж налични задачи
+                                </a>
+                            </div>
                         @endforelse
                     </div>
                 </div>
@@ -343,7 +386,7 @@
                 <div id="invites" class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-600">Покани</p>
                     <h2 class="mt-2 text-2xl font-black">Получени покани към проекти</h2>
-                    <div class="mt-5 rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-sm leading-6 text-slate-500">
+                    <div data-empty-state class="mt-5 rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-sm leading-6 text-slate-500">
                         Все още няма покани. Когато клиент или бизнес те покани към проект, поканата ще се появи тук.
                     </div>
                 </div>
@@ -351,7 +394,7 @@
                 <div id="clients" class="rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 backdrop-blur-2xl sm:rounded-[2rem] sm:p-6">
                     <p class="text-sm font-black uppercase tracking-[0.22em] text-violet-600">Клиенти</p>
                     <h2 class="mt-2 text-2xl font-black">Клиенти и приети проекти</h2>
-                    <div class="mt-5 rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-sm leading-6 text-slate-500">
+                    <div data-empty-state class="mt-5 rounded-3xl border border-dashed border-slate-200 bg-white/70 p-6 text-sm leading-6 text-slate-500">
                         Приетите оферти и активните клиенти ще се подреждат тук, за да следиш работата си без смесване с бизнес профили.
                     </div>
                 </div>

@@ -51,7 +51,7 @@
 <body class="bon-dark-page min-h-screen overflow-x-hidden bg-[#020812] pb-24 text-white md:pb-0">
     <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(47,140,255,0.22),transparent_30%),radial-gradient(circle_at_82%_16%,rgba(217,70,239,0.18),transparent_30%),linear-gradient(180deg,#020617,#061426,#020617)]"></div>
 
-    <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <main class="bon-dashboard-shell mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <header class="mb-6 rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
             <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <a href="{{ url('/') }}" class="flex items-center gap-3">
@@ -80,7 +80,7 @@
             </div>
         </header>
 
-        <section class="rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
+        <section class="bon-profile-hero rounded-[32px] border border-white/10 bg-white/10 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Клиентски панел</p>
@@ -103,7 +103,32 @@
             </div>
         </section>
 
-        <section class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <section class="mt-6 rounded-[28px] border border-orange-300/20 bg-orange-300/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl" data-testid="client-next-step">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <p class="text-sm font-black uppercase tracking-[0.22em] text-orange-100/80">Следваща препоръчана стъпка</p>
+                    @if(($clientProfile['percent'] ?? 0) < 100)
+                        <h2 class="mt-2 text-2xl font-black">Завършете клиентския профил.</h2>
+                        <p class="mt-2 text-sm leading-6 text-white/60">Липсва: {{ implode(', ', array_slice($clientProfile['missing'] ?? [], 0, 3)) ?: 'основна информация' }}.</p>
+                    @elseif(($stats['total'] ?? 0) === 0)
+                        <h2 class="mt-2 text-2xl font-black">Публикувайте първата заявка.</h2>
+                        <p class="mt-2 text-sm leading-6 text-white/60">Опишете нуждата си и сравнете оферти от подходящи бизнеси или специалисти.</p>
+                    @else
+                        <h2 class="mt-2 text-2xl font-black">Запазете доверени профили.</h2>
+                        <p class="mt-2 text-sm leading-6 text-white/60">Създайте кратък списък с любими бизнеси и фрийлансъри за по-бърз избор следващия път.</p>
+                    @endif
+                </div>
+                @if(($clientProfile['percent'] ?? 0) < 100)
+                    <a href="{{ route('dashboard.client.profile.edit') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3 text-sm font-black text-white shadow-lg shadow-orange-950/30">Попълни профила</a>
+                @elseif(($stats['total'] ?? 0) === 0)
+                    <a href="{{ route('request.service') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3 text-sm font-black text-white shadow-lg shadow-orange-950/30">Публикувай заявка</a>
+                @else
+                    <a href="{{ route('search') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-6 py-3 text-sm font-black text-white shadow-lg shadow-orange-950/30">Намери профили</a>
+                @endif
+            </div>
+        </section>
+
+        <section class="bon-metric-strip mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             @foreach([
                 ['label' => 'Всички заявки', 'value' => $stats['total'] ?? 0, 'note' => 'история на заявките'],
                 ['label' => 'Активни заявки', 'value' => $stats['open'] ?? 0, 'note' => 'чакат действие'],
@@ -233,7 +258,7 @@
                         @endif
                     </article>
                 @empty
-                    <div class="rounded-3xl border border-dashed border-white/15 bg-slate-950/50 p-6 text-center">
+                    <div data-empty-state class="rounded-3xl border border-dashed border-white/15 bg-slate-950/50 p-6 text-center">
                         <p class="text-xl font-black">Все още няма публикувани задачи към фрийлансъри</p>
                         <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">Публикувай първата задача и фрийлансърите в BON ще могат да изпратят оферта.</p>
                         <a href="{{ route('freelancer.projects.create') }}" class="mt-5 inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-6 py-3 font-black text-white">
@@ -258,7 +283,7 @@
                 </div>
 
                 @if($requests->isEmpty())
-                    <div class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/50 p-6 text-center">
+                    <div data-empty-state class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/50 p-6 text-center">
                         <p class="text-xl font-black">Все още нямате заявки</p>
                         <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-white/60">
                             Когато пуснете заявка за услуга, тя ще се появи тук заедно с получените оферти и избрания бизнес.
@@ -432,8 +457,12 @@
                                 </div>
                             </article>
                         @empty
-                            <div class="rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-5 text-sm leading-6 text-white/55">
-                                Все още няма запазени профили. Използвайте сърцето в картите и публичните профили, за да създадете кратък списък с доверени специалисти.
+                            <div data-empty-state class="rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-5 text-sm leading-6 text-white/55">
+                                <p class="font-black text-white">Все още няма запазени профили.</p>
+                                <p class="mt-2">Използвайте сърцето в картите и публичните профили, за да създадете кратък списък с доверени специалисти.</p>
+                                <a href="{{ route('search') }}" class="mt-4 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white">
+                                    Намери профили в BON
+                                </a>
                             </div>
                         @endforelse
                     </div>

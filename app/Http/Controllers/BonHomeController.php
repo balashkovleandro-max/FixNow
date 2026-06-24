@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FreelancerJob;
+use App\Models\Review;
 use App\Models\User;
 use App\Support\BusinessGrowthMetrics;
 use App\Support\CategoryCatalog;
@@ -21,8 +22,29 @@ class BonHomeController extends Controller
 
         $recommendedSpecialists = $this->recommendedSpecialists($smartCategory)->take(8);
         $smartJobs = $this->smartJobs($smartCategory);
+        $socialProofStats = $this->socialProofStats();
 
-        return view('bon.index', compact('recommendedSpecialists', 'smartCategory', 'smartCategories', 'smartJobs'));
+        return view('bon.index', compact('recommendedSpecialists', 'smartCategory', 'smartCategories', 'smartJobs', 'socialProofStats'));
+    }
+
+    private function socialProofStats(): array
+    {
+        $usersTableExists = Schema::hasTable('users');
+
+        return [
+            'businesses' => $usersTableExists
+                ? BusinessGrowthMetrics::publicBusinesses()->count()
+                : 0,
+            'freelancers' => $usersTableExists
+                ? User::query()->where('role', 'freelancer')->count()
+                : 0,
+            'open_jobs' => Schema::hasTable('freelancer_jobs')
+                ? FreelancerJob::query()->open()->count()
+                : 0,
+            'reviews' => Schema::hasTable('reviews')
+                ? Review::query()->approved()->count()
+                : 0,
+        ];
     }
 
     private function recommendedSpecialists(?string $category = null): Collection

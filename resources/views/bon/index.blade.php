@@ -93,6 +93,13 @@
     $smartJobs = $smartJobs ?? collect();
     $smartCategory = $smartCategory ?? request('category');
     $smartCategories = $smartCategories ?? \App\Support\CategoryCatalog::names()->all();
+    $socialProofStats = array_merge([
+        'businesses' => 0,
+        'freelancers' => 0,
+        'open_jobs' => 0,
+        'reviews' => 0,
+    ], $socialProofStats ?? []);
+    $formatBonCount = fn ($value) => (int) $value > 0 ? number_format((int) $value, 0, '.', ' ') : 'Скоро';
 @endphp
 
 <!DOCTYPE html>
@@ -1187,7 +1194,7 @@
                         <a href="{{ route('business.landing') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'home_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-500 px-6 text-sm font-black text-white shadow-xl shadow-violet-500/25 transition hover:-translate-y-0.5 sm:w-auto">
                             Започни като бизнес
                         </a>
-                        <a href="{{ route('register') }}" onclick="window.trackBonEvent('freelancer_registration_start', { source: 'home_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
+                        <a href="{{ route('register', ['role' => 'freelancer']) }}" onclick="window.trackBonEvent('freelancer_registration_start', { source: 'home_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
                             Стани фрийлансър
                         </a>
                         <a href="{{ route('search') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white/75 px-6 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-600 sm:w-auto">
@@ -1211,6 +1218,24 @@
                             </div>
                         @endforeach
                     </div>
+
+                    <div class="mt-5 grid gap-3 rounded-[1.5rem] border border-white/10 bg-slate-950/55 p-3 text-left shadow-2xl shadow-black/15 backdrop-blur-2xl sm:grid-cols-4 lg:max-w-3xl">
+                        @foreach ([
+                            ['value' => $formatBonCount($socialProofStats['businesses']), 'label' => 'бизнес профила', 'accent' => 'from-blue-400 to-cyan-300'],
+                            ['value' => $formatBonCount($socialProofStats['freelancers']), 'label' => 'фрийлансъри', 'accent' => 'from-violet-400 to-fuchsia-300'],
+                            ['value' => $formatBonCount($socialProofStats['open_jobs']), 'label' => 'отворени задачи', 'accent' => 'from-emerald-300 to-cyan-300'],
+                            ['value' => $formatBonCount($socialProofStats['reviews']), 'label' => 'одобрени отзиви', 'accent' => 'from-amber-300 to-orange-300'],
+                        ] as $stat)
+                            <div class="rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-3">
+                                <p class="bg-gradient-to-r {{ $stat['accent'] }} bg-clip-text text-xl font-black text-transparent">{{ $stat['value'] }}</p>
+                                <p class="mt-1 text-xs font-bold text-slate-300">{{ $stat['label'] }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <p class="mt-3 max-w-2xl text-center text-xs font-semibold leading-5 text-slate-500 lg:text-left">
+                        BON показва trust signals като Verified, Premium, отзиви, активност и profile completeness, за да се вземат по-спокойни решения.
+                    </p>
 
                 </div>
 
@@ -1781,8 +1806,14 @@
                                 </a>
                             </article>
                         @empty
-                            <div class="rounded-[1.75rem] border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm leading-6 text-slate-500 md:col-span-2 xl:col-span-4">
-                                Все още няма достатъчно профили за тази категория. След миграции и първи регистрации тук ще се появят препоръчани бизнеси и фрийлансъри.
+                            <div data-empty-state class="rounded-[1.75rem] border border-dashed border-slate-200 bg-white/70 p-6 text-center text-sm leading-6 text-slate-500 md:col-span-2 xl:col-span-4">
+                                <div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-fuchsia-500 text-lg font-black text-white shadow-lg shadow-violet-500/25">B</div>
+                                <p class="mt-4 text-xl font-black text-[#070B1F]">Бъди сред първите доверени профили в тази категория.</p>
+                                <p class="mx-auto mt-2 max-w-2xl">Когато има повече бизнеси и фрийлансъри, BON ще подрежда профилите по Premium статус, Trust Score, рейтинг и активност.</p>
+                                <div class="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
+                                    <a href="{{ route('business.landing') }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white">Добави бизнес</a>
+                                    <a href="{{ route('register', ['role' => 'freelancer']) }}" class="inline-flex min-h-11 items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700">Стани фрийлансър</a>
+                                </div>
                             </div>
                         @endforelse
                     </div>
@@ -1810,7 +1841,13 @@
                                         <p class="mt-3 line-clamp-2 text-sm leading-6 text-slate-600">{{ $job->description }}</p>
                                     </article>
                                 @empty
-                                    <p class="rounded-3xl border border-dashed border-slate-200 bg-white/70 p-5 text-sm leading-6 text-slate-500">Няма активни обяви за избраната категория.</p>
+                                    <div data-empty-state class="rounded-3xl border border-dashed border-slate-200 bg-white/70 p-5 text-sm leading-6 text-slate-500">
+                                        <p class="font-black text-[#070B1F]">Няма активни обяви за избраната категория.</p>
+                                        <p class="mt-2">Публикувайте първата нужда и BON ще я покаже на подходящи фрийлансъри и специалисти.</p>
+                                        <a href="{{ route('request.service', array_filter(['category' => $smartCategory])) }}" onclick="window.trackBonEvent('service_request_start', { source: 'smart_jobs_empty' })" class="mt-4 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-violet-500/20">
+                                            Публикувай заявка
+                                        </a>
+                                    </div>
                                 @endforelse
                             </div>
                         </div>
@@ -1966,7 +2003,7 @@
                         <a href="{{ route('business.landing') }}" data-track="cta_business_signup" onclick="window.trackBonEvent('business_registration_start', { source: 'final_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-white px-5 text-sm font-black text-[#070B1F] shadow-xl">
                             Създай бизнес профил
                         </a>
-                        <a href="{{ route('register') }}" onclick="window.trackBonEvent('freelancer_registration_start', { source: 'final_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-5 text-sm font-black text-white backdrop-blur-xl">
+                        <a href="{{ route('register', ['role' => 'freelancer']) }}" onclick="window.trackBonEvent('freelancer_registration_start', { source: 'final_cta' })" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-5 text-sm font-black text-white backdrop-blur-xl">
                             Регистрирай се като фрийлансър
                         </a>
                         <a href="{{ route('search') }}" class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-5 text-sm font-black text-white backdrop-blur-xl">

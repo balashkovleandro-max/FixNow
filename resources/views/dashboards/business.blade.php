@@ -147,8 +147,8 @@
             </form>
         </aside>
 
-        <main class="grid min-w-0 gap-6">
-            <section class="rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-8">
+        <main class="bon-dashboard-shell grid min-w-0 gap-6">
+            <section class="bon-profile-hero rounded-[1.5rem] border border-white/10 bg-white/10 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:rounded-[32px] sm:p-8">
                 <div class="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
                     <div>
                         <p class="text-sm font-black uppercase tracking-[0.25em] text-orange-200/80">Business control center</p>
@@ -162,6 +162,34 @@
                         <a href="{{ route('business.jobs.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-orange-300/25 bg-orange-300/10 px-6 py-3.5 text-center text-sm font-black text-orange-100 hover:bg-orange-300/15 sm:py-4 sm:text-base">Публикувай обява</a>
                         <a href="{{ route('businesses.show', $business) }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3.5 text-center text-sm font-black text-white hover:bg-white/10 sm:py-4 sm:text-base">Виж публичния профил</a>
                     </div>
+                </div>
+            </section>
+
+            <section class="rounded-[1.5rem] border border-blue-300/15 bg-blue-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl sm:rounded-[28px] sm:p-6" data-testid="business-next-step">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                        <p class="text-sm font-black uppercase tracking-[0.22em] text-blue-100/75">Следваща препоръчана стъпка</p>
+                        @if(!$isProfileComplete)
+                            <h2 class="mt-2 text-2xl font-black">Завършете профила, за да изглежда по-надежден.</h2>
+                            <p class="mt-2 text-sm leading-6 text-white/60">Липсва: {{ implode(', ', array_slice($profile['missing'] ?? [], 0, 3)) ?: 'основна информация' }}.</p>
+                        @elseif($photoCount === 0)
+                            <h2 class="mt-2 text-2xl font-black">Добавете актуални снимки.</h2>
+                            <p class="mt-2 text-sm leading-6 text-white/60">Снимките са силен trust сигнал и помагат на клиентите да разберат как изглежда бизнесът ви.</p>
+                        @elseif($serviceCount === 0)
+                            <h2 class="mt-2 text-2xl font-black">Добавете първата услуга.</h2>
+                            <p class="mt-2 text-sm leading-6 text-white/60">Ясните услуги правят профила по-разбираем и помагат при търсене в BON.</p>
+                        @else
+                            <h2 class="mt-2 text-2xl font-black">Пуснете BON диагностика.</h2>
+                            <p class="mt-2 text-sm leading-6 text-white/60">Получете структурирани насоки за профил, видимост, запитвания и следваща бизнес стъпка.</p>
+                        @endif
+                    </div>
+                    @if(!$isProfileComplete || $photoCount === 0)
+                        <a href="{{ route('business.profile.edit') }}#gallery" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-violet-600/20">Попълни профила</a>
+                    @elseif($serviceCount === 0)
+                        <a href="{{ route('services.create') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-violet-600/20">Добави услуга</a>
+                    @else
+                        <a href="{{ route('bon.business-problem') }}" class="inline-flex min-h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-6 py-3 text-sm font-black text-white shadow-lg shadow-violet-600/20">Стартирай диагностика</a>
+                    @endif
                 </div>
             </section>
 
@@ -263,7 +291,7 @@
 
             @include('partials.bon-paid-services', ['profile' => $business, 'variant' => 'dark', 'context' => 'business-dashboard'])
 
-            <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" data-testid="business-offer-points-summary">
+            <section class="bon-metric-strip grid gap-4 sm:grid-cols-2 xl:grid-cols-4" data-testid="business-offer-points-summary">
                 <div class="rounded-[28px] border border-orange-300/20 bg-orange-400/10 p-5 shadow-xl shadow-black/20 backdrop-blur-xl">
                     <p class="text-sm font-bold text-white/55">Оставащи точки</p>
                     <p class="mt-2 text-4xl font-black">{{ $offerStats['points_balance'] }}</p>
@@ -339,7 +367,13 @@
                                     </div>
                                 </div>
                             @empty
-                                <p class="rounded-2xl bg-white/5 px-4 py-4 text-sm text-white/55">Все още няма публикувани freelancer обяви.</p>
+                                <div data-empty-state class="rounded-2xl bg-white/5 px-4 py-4 text-sm text-white/55">
+                                    <p class="font-black text-white">Все още няма публикувани задачи към специалисти.</p>
+                                    <p class="mt-2">Публикувайте първата задача, за да получите оферти от фрийлансъри в BON.</p>
+                                    <a href="{{ route('business.jobs.create') }}" class="mt-4 inline-flex min-h-10 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-4 py-2 text-xs font-black text-white">
+                                        Публикувай задача
+                                    </a>
+                                </div>
                             @endforelse
                         </div>
                     </div>
@@ -362,7 +396,13 @@
                                     </div>
                                 </div>
                             @empty
-                                <p class="rounded-2xl bg-white/5 px-4 py-4 text-sm text-white/55">Все още няма кандидатури от freelancer профили.</p>
+                                <div data-empty-state class="rounded-2xl bg-white/5 px-4 py-4 text-sm text-white/55">
+                                    <p class="font-black text-white">Все още няма кандидатури от фрийлансъри.</p>
+                                    <p class="mt-2">Когато публикувате задача, офертите ще се появят тук с цена, срок и профил на кандидата.</p>
+                                    <a href="{{ route('business.jobs.index') }}" class="mt-4 inline-flex min-h-10 items-center justify-center rounded-2xl border border-white/10 bg-white/10 px-4 py-2 text-xs font-black text-white hover:bg-white/15">
+                                        Виж задачите
+                                    </a>
+                                </div>
                             @endforelse
                         </div>
                     </div>
@@ -396,8 +436,12 @@
                             <p class="mt-3 line-clamp-2 text-sm leading-6 text-white/60">{{ $diagnostic->likely_reason }}</p>
                         </a>
                     @empty
-                        <div class="rounded-3xl border border-dashed border-white/15 bg-slate-950/35 p-6 text-sm leading-6 text-white/55">
-                            Все още няма запазени BON диагностики. Пуснете първи анализ, за да получите структурирани насоки за следваща стъпка.
+                        <div data-empty-state class="rounded-3xl border border-dashed border-white/15 bg-slate-950/35 p-6 text-sm leading-6 text-white/55">
+                            <p class="font-black text-white">Все още няма запазени BON диагностики.</p>
+                            <p class="mt-2">Пуснете първи анализ, за да получите структурирани насоки за следваща стъпка.</p>
+                            <a href="{{ route('bon.business-problem') }}" class="mt-4 inline-flex min-h-11 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-violet-600/20">
+                                Стартирай диагностика
+                            </a>
                         </div>
                     @endforelse
                 </div>
@@ -719,7 +763,7 @@
                             <p class="mt-3 text-xs text-white/40">Изпратена: {{ $assignment->sent_at?->format('d.m.Y H:i') ?: $assignment->created_at?->format('d.m.Y H:i') }} · Заявка: {{ $serviceRequest->created_at?->format('d.m.Y H:i') }}</p>
                         </article>
                     @empty
-                        <div class="lg:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-8 text-center">
+                        <div data-empty-state class="lg:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-8 text-center">
                             <p class="font-black">Все още няма изпратени заявки</p>
                             <p class="mt-2 text-sm text-white/55">Когато системата или admin насочи заявка към вашия профил, тя ще се появи тук с контакт и описание.</p>
                             <a href="{{ route('businesses.show', $business) }}" class="mt-5 inline-flex rounded-2xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-5 py-3 text-sm font-black text-white">Сподели профила си</a>
@@ -767,7 +811,7 @@
                             <p class="mt-4 text-xs text-white/40">{{ $review->created_at?->format('d.m.Y H:i') }}</p>
                         </article>
                     @empty
-                        <div class="lg:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
+                        <div data-empty-state class="lg:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
                             <p class="font-black">Все още няма отзиви</p>
                             <p class="mt-2 text-sm text-white/55">Споделете публичния профил и поканете доволни клиенти да оставят мнение.</p>
                         </div>

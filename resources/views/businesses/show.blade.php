@@ -87,8 +87,8 @@
 
     @include('partials.public-header')
 
-<main class="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
-        <section class="fn-glass-card overflow-hidden rounded-[1.5rem] sm:rounded-[34px]">
+<main class="bon-public-profile mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
+        <section class="bon-profile-hero fn-glass-card overflow-hidden rounded-[1.5rem] sm:rounded-[34px]">
             <div class="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
                 <div class="relative min-h-0 p-5 sm:min-h-[430px] sm:p-8 lg:p-10">
                     <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_15%,rgba(47,140,255,0.22),transparent_28%),radial-gradient(circle_at_80%_12%,rgba(217,70,239,0.16),transparent_28%)]"></div>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 lg:grid-cols-6">
+                    <div class="bon-metric-strip mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 lg:grid-cols-6">
                         <div class="rounded-2xl border border-white/10 bg-slate-950/45 p-3.5 sm:rounded-3xl sm:p-4">
                             <p class="text-xs font-black uppercase tracking-[0.18em] text-white/40">Локация</p>
                             <p class="mt-2 font-black">{{ $cityLabel }}</p>
@@ -366,7 +366,7 @@
                             @endforeach
                         </div>
                     @else
-                        <div class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
+                        <div data-empty-state class="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
                             <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                             <p class="mt-4 text-lg font-black">Все още няма качени снимки</p>
                             <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато бизнесът добави снимки в своята галерия, те ще се показват тук.</p>
@@ -398,7 +398,7 @@
                                 <p class="mt-4 line-clamp-2 text-sm leading-6 text-white/60">{{ $service->description }}</p>
                             </a>
                         @empty
-                            <div class="md:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center" data-testid="business-profile-services-empty">
+                            <div data-empty-state class="md:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center" data-testid="business-profile-services-empty">
                                 <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                                 <p class="mt-4 text-lg font-black">Все още няма добавени услуги с цени</p>
                                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Можете да изпратите запитване, за да получите индивидуална оферта от този бизнес.</p>
@@ -444,7 +444,7 @@
                                 <p class="mt-4 line-clamp-3 text-sm leading-6 text-white/60">{{ $job->description }}</p>
                             </article>
                         @empty
-                            <div class="md:col-span-2 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
+                            <div data-empty-state class="md:col-span-2 rounded-3xl border border-dashed border-white/15 bg-slate-950/45 p-6 text-center">
                                 <p class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 text-xl font-black">B</p>
                                 <p class="mt-4 text-lg font-black">Няма публикувани обяви</p>
                                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55">Когато бизнесът публикува обява или работна позиция, тя ще се показва тук.</p>
@@ -532,7 +532,7 @@
                                 <p class="mt-4 text-xs text-white/40">{{ $review->approved_at?->format('d.m.Y') ?: $review->created_at?->format('d.m.Y') }}</p>
                             </article>
                         @empty
-                            <div class="md:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
+                            <div data-empty-state class="md:col-span-2 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
                                 <p class="font-black">Все още няма одобрени отзиви</p>
                                 <p class="mt-2 text-sm text-white/55">Новите отзиви се показват публично след одобрение от администратор.</p>
                             </div>
@@ -604,7 +604,7 @@
                         @forelse($similarBusinesses as $similarBusiness)
                             @include('partials.business-card', ['business' => $similarBusiness])
                         @empty
-                            <div class="md:col-span-3 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
+                            <div data-empty-state class="md:col-span-3 rounded-3xl border border-white/10 bg-slate-950/45 p-6 text-center">
                                 <p class="font-black">Все още няма подобни активни бизнеси</p>
                                 <p class="mt-2 text-sm text-white/55">Когато има други active или trial профили от тази категория или град, те ще се появят тук.</p>
                             </div>

@@ -129,9 +129,13 @@
                                     @endforeach
                                 </div>
                                 <h3 class="text-xl font-black">{{ $service->title }}</h3>
-                                <a href="{{ $business ? route('businesses.show', $business) : '#' }}" class="mt-1 inline-flex text-sm font-semibold text-orange-300 hover:text-white">
-                                    {{ $business?->business_name ?: $business?->name ?: 'Профил на бизнес' }}
-                                </a>
+                                @if($business)
+                                    <a href="{{ route('businesses.show', $business) }}" class="mt-1 inline-flex text-sm font-semibold text-orange-300 hover:text-white">
+                                        {{ $business->business_name ?: $business->name }}
+                                    </a>
+                                @else
+                                    <p class="mt-1 text-sm font-semibold text-white/55">Профилът на бизнеса не е наличен</p>
+                                @endif
                                 <p class="mt-3 line-clamp-3 text-sm leading-6 text-white/60">{{ $service->description }}</p>
                                 <div class="mt-5 grid gap-4 sm:flex sm:items-end sm:justify-between">
                                     <div>
