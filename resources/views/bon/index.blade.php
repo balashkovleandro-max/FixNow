@@ -123,7 +123,7 @@
         }
 
         body {
-            touch-action: pan-y;
+            touch-action: auto;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -526,7 +526,7 @@
             justify-content: center;
             isolation: isolate;
             pointer-events: none;
-            touch-action: pan-y;
+            touch-action: auto;
         }
 
         .bon-globe-stage *,

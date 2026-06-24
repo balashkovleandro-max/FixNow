@@ -36,6 +36,8 @@
         max-width: 100%;
         overflow-x: hidden;
         overflow-y: auto;
+        overscroll-behavior-x: none;
+        touch-action: auto;
         -webkit-text-size-adjust: 100%;
     }
 
@@ -46,8 +48,9 @@
         min-height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
+        overscroll-behavior-x: none;
         overscroll-behavior-y: auto;
-        touch-action: pan-y;
+        touch-action: auto;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -363,7 +366,7 @@
             radial-gradient(circle at 50% 34%, rgba(124, 58, 237, 0.14), transparent 42%),
             linear-gradient(180deg, #020617 0%, #06101f 48%, #030712 100%);
         color: var(--bon-ink);
-        touch-action: pan-y;
+        touch-action: auto;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -1763,29 +1766,94 @@
     }
 }
 
-@media (max-width: 767px) {
-    html,
-    body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-        overflow-y: auto;
-        touch-action: pan-y;
-        -webkit-overflow-scrolling: touch;
-    }
+    @media (max-width: 767px) {
+        html,
+        body {
+            height: auto;
+            min-height: 100%;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior-x: none;
+            touch-action: auto;
+            -webkit-overflow-scrolling: touch;
+        }
 
-    body {
-        min-width: 0;
-    }
+        body {
+            min-width: 0;
+        }
 
-    body > main,
-    .fn-premium-page main,
-    .bon-public-page main,
-    body[class*="bg-[#020812]"] main {
-        width: 100%;
-        max-width: 100vw;
-        overflow-x: hidden;
-    }
+        .min-h-screen {
+            min-height: 100svh;
+            min-height: 100dvh;
+        }
+
+        .h-screen {
+            height: 100svh;
+            height: 100dvh;
+        }
+
+        html.bon-menu-open,
+        body.bon-menu-open {
+            height: 100% !important;
+            overflow: hidden !important;
+            overscroll-behavior: none;
+            touch-action: none;
+        }
+
+        body > main,
+        .fn-premium-page main,
+        .bon-public-page main,
+        body[class*="bg-[#020812]"] main {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        main {
+            overflow-x: hidden;
+            overflow-y: visible;
+        }
+
+        section {
+            overflow-x: clip;
+            overflow-y: visible;
+        }
+
+        [aria-hidden="true"].fixed,
+        [aria-hidden="true"].absolute,
+        [class*="-z-10"],
+        [class*="-z-20"],
+        body > .pointer-events-none,
+        main > .pointer-events-none,
+        .bon-home-shell > .pointer-events-none,
+        .bon-home-aurora,
+        .bon-grid,
+        .bon-dot-field,
+        .bon-globe-stage,
+        .bon-globe-stage *,
+        .bon-orbit-card,
+        .bon-orbit-line,
+        .bon-connection-line,
+        .bon-connection-dot {
+            pointer-events: none !important;
+        }
+
+        .bon-float,
+        .bon-pulse,
+        .bon-globe-ring-outer,
+        .bon-globe-ring-inner,
+        .bon-globe-core::before,
+        .bon-globe-node,
+        .bon-orbit-card,
+        .bon-orbit-line::after,
+        .bon-home-aurora::before,
+        .bon-home-aurora::after,
+        .bon-icon-pulse::after {
+            animation: none !important;
+            will-change: auto !important;
+        }
 
     main,
     header,

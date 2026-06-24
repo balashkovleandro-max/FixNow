@@ -78,7 +78,7 @@ window.addEventListener('appinstalled', () => {
 
 const bonHasVisibleModal = () => {
     return Boolean(document.querySelector(
-        '[aria-modal="true"]:not(.hidden), [data-tool-modal]:not(.hidden), [data-bon-service-modal]:not(.hidden), [data-growth-modal]:not(.hidden)'
+        '[aria-modal="true"]:not(.hidden):not([aria-hidden="true"]):not([data-bon-menu-portal="active"]), [data-tool-modal]:not(.hidden), [data-bon-service-modal]:not(.hidden), [data-growth-modal]:not(.hidden)'
     ));
 };
 
@@ -86,6 +86,7 @@ let bonMenuScrollY = 0;
 let bonMenuScrollLocked = false;
 let bonActiveMobileMenu = null;
 let bonMobileMenuBackdrop = null;
+const bonScrollLockStyleProperties = ['overflow', 'height', 'position', 'top', 'left', 'right', 'width', 'touchAction'];
 
 const bonHasOpenMobileMenu = () => Boolean(document.querySelector('details[data-mobile-menu][open]'));
 
@@ -96,6 +97,16 @@ const bonGetMobileMenuPanel = (menu) => {
 const bonRemoveMobileMenuBackdrop = () => {
     bonMobileMenuBackdrop?.remove();
     bonMobileMenuBackdrop = null;
+};
+
+const bonClearPageScrollLockStyles = () => {
+    document.documentElement.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
+    document.body.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
+
+    bonScrollLockStyleProperties.forEach((property) => {
+        document.documentElement.style[property] = '';
+        document.body.style[property] = '';
+    });
 };
 
 const bonEnsureMobileMenuBackdrop = () => {
@@ -225,65 +236,7 @@ const bonUnlockPageScrollIfSafe = () => {
     const shouldRestoreScroll = bonMenuScrollLocked;
     const restoreScrollY = bonMenuScrollY;
 
-    document.documentElement.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
-    document.body.classList.remove('bon-modal-open', 'bon-menu-open', 'overflow-hidden');
-
-    if (document.documentElement.style.overflow === 'hidden') {
-        document.documentElement.style.overflow = '';
-    }
-
-    if (document.body.style.overflow === 'hidden') {
-        document.body.style.overflow = '';
-    }
-
-    if (document.documentElement.style.touchAction === 'none') {
-        document.documentElement.style.touchAction = '';
-    }
-
-    if (document.body.style.touchAction === 'none') {
-        document.body.style.touchAction = '';
-    }
-
-    if (document.documentElement.style.position === 'fixed') {
-        document.documentElement.style.position = '';
-    }
-
-    if (document.body.style.position === 'fixed') {
-        document.body.style.position = '';
-    }
-
-    if (document.body.style.top) {
-        document.body.style.top = '';
-    }
-
-    if (document.body.style.left === '0px' || document.body.style.left === '0') {
-        document.body.style.left = '';
-    }
-
-    if (document.body.style.right === '0px' || document.body.style.right === '0') {
-        document.body.style.right = '';
-    }
-
-    if (document.body.style.width === '100%') {
-        document.body.style.width = '';
-    }
-
-    if (
-        document.documentElement.style.height === '100vh'
-        || document.documentElement.style.height === '100dvh'
-        || document.documentElement.style.height === '100%'
-    ) {
-        document.documentElement.style.height = '';
-    }
-
-    if (
-        document.body.style.height === '100vh'
-        || document.body.style.height === '100dvh'
-        || document.body.style.height === '100%'
-    ) {
-        document.body.style.height = '';
-    }
-
+    bonClearPageScrollLockStyles();
     bonMenuScrollLocked = false;
     bonMenuScrollY = 0;
     bonRemoveMobileMenuBackdrop();
@@ -291,6 +244,30 @@ const bonUnlockPageScrollIfSafe = () => {
     if (shouldRestoreScroll) {
         requestAnimationFrame(() => window.scrollTo(0, restoreScrollY));
     }
+};
+
+const bonCleanupOrphanedScrollLocks = () => {
+    if (bonHasOpenMobileMenu()) {
+        return;
+    }
+
+    if (bonActiveMobileMenu && !bonActiveMobileMenu.open) {
+        bonRestoreMobileMenu(bonActiveMobileMenu);
+    }
+
+    document.querySelectorAll('body > [data-bon-menu-portal="active"]').forEach((panel) => {
+        panel.remove();
+    });
+
+    bonRemoveMobileMenuBackdrop();
+
+    if (bonHasVisibleModal()) {
+        return;
+    }
+
+    bonClearPageScrollLockStyles();
+    bonMenuScrollLocked = false;
+    bonMenuScrollY = 0;
 };
 
 const bonCloseMobileMenus = (except = null) => {
@@ -351,6 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
             bonCloseMobileMenus();
             requestAnimationFrame(bonUnlockPageScrollIfSafe);
         }
+
+        window.setTimeout(bonCleanupOrphanedScrollLocks, 360);
     });
 
     document.addEventListener('keydown', (event) => {
@@ -362,11 +341,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('pageshow', () => {
         bonCloseMobileMenus();
-        requestAnimationFrame(bonUnlockPageScrollIfSafe);
+        requestAnimationFrame(bonCleanupOrphanedScrollLocks);
     });
 
     window.addEventListener('pagehide', () => {
         bonCloseMobileMenus();
-        requestAnimationFrame(bonUnlockPageScrollIfSafe);
+        requestAnimationFrame(bonCleanupOrphanedScrollLocks);
     });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            requestAnimationFrame(bonCleanupOrphanedScrollLocks);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        requestAnimationFrame(bonCleanupOrphanedScrollLocks);
+    });
+
+    requestAnimationFrame(bonCleanupOrphanedScrollLocks);
 });
